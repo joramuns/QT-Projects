@@ -1,7 +1,12 @@
-TEMPLATE = app
-CONFIG += console c++17
-CONFIG -= app_bundle
-CONFIG -= qt
+QT += core gui printsupport charts
+
+CONFIG += c++17
+
+greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        mainwindow.cpp
+
+HEADERS += \
+    mainwindow.h
