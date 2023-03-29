@@ -5,10 +5,10 @@ CONFIG += c++17
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 SOURCES += \
-        genlayout.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        mybutton.cpp
 
 HEADERS += \
-    genlayout.h \
-    mainwindow.h
+    mainwindow.h \
+    mybutton.h

@@ -5,6 +5,8 @@
 #include <QOpenGLFunctions>
 #include <QMouseEvent>
 #include <QTimer>
+#include <QGridLayout>
+#include "mybutton.h"
 
 class MainWindow : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -21,9 +23,12 @@ public:
 
 private:
     QTimer m_timer;
+    QGridLayout *m_layout;
+    MyButton *createButton(QString text);
 
-private slots:
+public slots:
     void my_slot();
+    void left_move();
 };
 
 #endif // MAINWINDOW_H

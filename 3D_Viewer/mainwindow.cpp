@@ -7,16 +7,33 @@ MainWindow::MainWindow(QWidget *parent)
     point2 = {1.0, -1.0, 0.0};
     point3 = {0.0, 1.0, 0.0};
 
+//    QWidget *main = new QWidget();
+//    main->setLayout(m_layout);
+
+    //m_layout->addWidget(this, 0, 0, 8, 6);
+
     m_timer.start(33);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(my_slot()));
 
 }
 
+MyButton* MainWindow::createButton(QString text) {
+    MyButton *button = new MyButton(text);
+    connect(button, &MyButton::clicked, this,[=]() { left_move(); });
+    return button;
+}
+
 void MainWindow::my_slot()
 {
 //    for (int i = 0; i < 3; ++i){
-//        point1[i] *= 0.9;
-//    }
+//            point1[i] *= 0.9;
+//        }
+
+    repaint();
+}
+
+void MainWindow::left_move()
+{
     repaint();
 }
 
