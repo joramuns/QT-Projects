@@ -3,27 +3,75 @@
 Paint::Paint(QWidget *parent)
     :QOpenGLWidget(parent){
     this->setWindowTitle("3D_View");
-    point1 = {-1.0, -1.0, 0.0};
-    point2 = {1.0, -1.0, 0.0};
-    point3 = {0.0, 1.0, 0.0};
-
-//    QWidget *main = new QWidget();
-//    main->setLayout(m_layout);
-
-    //m_layout->addWidget(this, 0, 0, 8, 6);
-
-    m_timer.start(33);
-    connect(&m_timer, SIGNAL(timeout()), this, SLOT(my_slot()));
+    point1 = {-1.0, -1.0, 0.0, 1};
+    point2 = {1.0, -1.0, 0.0, 1};
+    point3 = {0.0, 1.0, 0.0, 1};
 
 }
 
-void Paint::my_slot()
+QVector<float> Paint::scaling(float x, float y, float z, QVector<float> point)
 {
-    repaint();
+    QVector<QVector<float>> matrix_scale(4, QVector<float>(4));
+    matrix_scale[0][0] = 1;
+    matrix_scale[0][1] = 0;
+    matrix_scale[0][2] = 0;
+    matrix_scale[0][3] = x;
+    matrix_scale[1][0] = 0;
+    matrix_scale[1][1] = 1;
+    matrix_scale[1][2] = 0;
+    matrix_scale[1][3] = y;
+    matrix_scale[2][0] = 0;
+    matrix_scale[2][1] = 0;
+    matrix_scale[2][2] = 1;
+    matrix_scale[2][3] = z;
+    matrix_scale[3][0] = 0;
+    matrix_scale[3][1] = 0;
+    matrix_scale[3][2] = 0;
+    matrix_scale[3][3] = 1;
+    QVector<float> result(4);
+        for (int i = 0; i < 4; i++) {
+            float sum = 0.0f;
+            for (int j = 0; j < 4; j++) {
+                sum += matrix_scale[i][j] *  point[j];
+            }
+            result[i] = sum;
+        }
+    return result;
 }
 
 void Paint::left_move()
 {
+    point1 = scaling(-0.01, 0.0, 0.0, point1);
+    point2 = scaling(-0.01, 0.0, 0.0, point2);
+    point3 = scaling(-0.01, 0.0, 0.0, point3);
+
+    repaint();
+}
+
+void Paint::right_move()
+{
+    point1 = scaling(0.01, 0.0, 0.0, point1);
+    point2 = scaling(0.01, 0.0, 0.0, point2);
+    point3 = scaling(0.01, 0.0, 0.0, point3);
+
+    repaint();
+}
+
+void Paint::up_move()
+{
+    point1 = scaling(0.0, 0.01, 0.0, point1);
+    point2 = scaling(0.0, 0.01, 0.0, point2);
+    point3 = scaling(0.0, 0.01, 0.0, point3);
+
+    repaint();
+}
+
+void Paint::down_move()
+{
+    point1 = scaling(0.0, -0.01, 0.0, point1);
+    point2 = scaling(0.0, -0.01, 0.0, point2);
+    point3 = scaling(0.0, -0.01, 0.0, point3);
+
     repaint();
 }
 

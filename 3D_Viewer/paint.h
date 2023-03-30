@@ -21,12 +21,18 @@ public:
     void resizeGL(int w, int h) override;
 
 private:
+    float x_scale;
+    float y_scale;
+    float z_scale;
     QTimer m_timer;
     QGridLayout *m_layout;
+    QVector<float>scaling(float x, float y, float z, QVector<float> point);
 
 public Q_SLOTS:
-    void my_slot();
     void left_move();
+    void right_move();
+    void up_move();
+    void down_move();
 };
 
 #endif // PAINT_H

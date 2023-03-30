@@ -1,4 +1,5 @@
 #include "mainwidget.h"
+#include <QLabel>
 
 MainWidget::MainWidget()
 {
@@ -11,9 +12,20 @@ MainWidget::MainWidget()
 
     MyButton *x_minus = createButton("Left");
     connect(x_minus, &QPushButton::clicked, m_paint_widget, &Paint::left_move);
+    MyButton *x_plus = createButton("Right");
+    connect(x_plus, &QPushButton::clicked, m_paint_widget, &Paint::right_move);
+    MyButton *y_plus = createButton("Up");
+    connect(y_plus, &QPushButton::clicked, m_paint_widget, &Paint::up_move);
+    MyButton *y_minus = createButton("Down");
+    connect(y_minus, &QPushButton::clicked, m_paint_widget, &Paint::down_move);
 
-    m_main_layout->addWidget(m_paint_widget, 0, 0, 8, 8);
-    m_main_layout->addWidget(x_minus, 8, 0, 1, 2);
+    m_main_layout->addWidget(m_paint_widget, 0, 0, 8, 16);
+    QLabel *fake_label = new QLabel("");
+    m_main_layout->addWidget(fake_label, 8, 0, 1, 16);
+    m_main_layout->addWidget(x_minus, 10, 0, 3, 2);
+    m_main_layout->addWidget(x_plus, 10, 3, 3, 2);
+    m_main_layout->addWidget(y_plus, 10, 6, 3, 2);
+    m_main_layout->addWidget(y_minus, 10, 10, 3, 2);
 }
 
 MyButton* MainWidget::createButton(QString text) {
