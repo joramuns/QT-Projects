@@ -12,3 +12,4 @@ QSize MyButton::sizeHint() const {
     size.rwidth() = qMax(size.width(), size.height());
     return size;
 }
+

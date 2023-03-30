@@ -6,9 +6,11 @@ greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-        mybutton.cpp
+        mainwidget.cpp \
+        mybutton.cpp \
+        paint.cpp
 
 HEADERS += \
-    mainwindow.h \
-    mybutton.h
+    mainwidget.h \
+    mybutton.h \
+    paint.h

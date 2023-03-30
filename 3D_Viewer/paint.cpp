@@ -1,6 +1,6 @@
-#include "mainwindow.h"
+#include "paint.h"
 
-MainWindow::MainWindow(QWidget *parent)
+Paint::Paint(QWidget *parent)
     :QOpenGLWidget(parent){
     this->setWindowTitle("3D_View");
     point1 = {-1.0, -1.0, 0.0};
@@ -17,27 +17,17 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-MyButton* MainWindow::createButton(QString text) {
-    MyButton *button = new MyButton(text);
-    connect(button, &MyButton::clicked, this,[=]() { left_move(); });
-    return button;
-}
-
-void MainWindow::my_slot()
-{
-//    for (int i = 0; i < 3; ++i){
-//            point1[i] *= 0.9;
-//        }
-
-    repaint();
-}
-
-void MainWindow::left_move()
+void Paint::my_slot()
 {
     repaint();
 }
 
-void MainWindow::initializeGL()
+void Paint::left_move()
+{
+    repaint();
+}
+
+void Paint::initializeGL()
 {
     initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
@@ -46,12 +36,12 @@ void MainWindow::initializeGL()
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
-void MainWindow::resizeGL(int w, int h)
+void Paint::resizeGL(int w, int h)
 {
     glViewport(0, 0, w, h);
 }
 
-void MainWindow::paintGL()
+void Paint::paintGL()
 {
     glClearColor(0.00f, 0.808f, 0.820f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -1,18 +1,17 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PAINT_H
+#define PAINT_H
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QMouseEvent>
 #include <QTimer>
 #include <QGridLayout>
-#include "mybutton.h"
 
-class MainWindow : public QOpenGLWidget, protected QOpenGLFunctions
+class Paint : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT;
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit Paint(QWidget *parent = nullptr);
     QVector<float> point1;
     QVector<float> point2;
     QVector<float> point3;
@@ -24,11 +23,10 @@ public:
 private:
     QTimer m_timer;
     QGridLayout *m_layout;
-    MyButton *createButton(QString text);
 
-public slots:
+public Q_SLOTS:
     void my_slot();
     void left_move();
 };
 
-#endif // MAINWINDOW_H
+#endif // PAINT_H
