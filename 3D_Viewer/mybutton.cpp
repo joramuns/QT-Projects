@@ -3,7 +3,7 @@
 MyButton::MyButton(QString text, QWidget *parent):
     QPushButton(parent){
     setText(text);
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }
 
 QSize MyButton::sizeHint() const {

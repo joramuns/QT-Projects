@@ -12,6 +12,21 @@ class MainWidget : public QWidget
 public:
     MainWidget();
 private:
+    MyButton *x_minus;
+    MyButton *x_plus;
+    MyButton *y_minus;
+    MyButton *y_plus;
+
+    MyButton *x_clockwise;
+    MyButton *x_counterclockwise;
+    MyButton *y_clockwise;
+    MyButton *y_counterclockwise;
+    MyButton *z_clockwise;
+    MyButton *z_counterclockwise;
+
+    MyButton *scale_plus;
+    MyButton *scale_minus;
+
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;
     Paint *m_paint_widget;

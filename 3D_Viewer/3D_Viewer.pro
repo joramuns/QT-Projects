@@ -1,5 +1,7 @@
 QT += core gui printsupport charts opengl
 
+LIBS += -lGLU -lGL
+
 CONFIG += c++17
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
