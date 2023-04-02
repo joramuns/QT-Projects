@@ -8,7 +8,7 @@ MainWidget::MainWidget()
     m_paint_widget = new Paint();
 
     this->setLayout(m_main_layout);
-    this->resize(1024, 800);
+    this->resize(1024, 1024);
 
     x_minus = createButton("Left");
     x_minus->setShortcut(QKeySequence(Qt::Key_Left));
