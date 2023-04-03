@@ -1,5 +1,6 @@
 #include "paint.h"
 #include <GL/glu.h>
+#include <math.h>
 
 #define SHIFT 0.03
 
