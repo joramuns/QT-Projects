@@ -1,5 +1,9 @@
 #include "paint.h"
-#include <GL/glu.h>
+#if defined(__APPLE__)
+  #include <OpenGL/glu.h>
+#elif defined(__unix__)
+  #include <GL/glu.h>
+#endif
 #include <math.h>
 
 #define SHIFT 0.03
