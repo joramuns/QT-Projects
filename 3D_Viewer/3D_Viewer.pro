@@ -1,6 +1,11 @@
 QT += core gui printsupport charts opengl
 
-LIBS += -lGLU -lGL
+macx {
+  LIBS += -framework OpenGL
+}
+unix:!macx {
+  LIBS += -lGLU -lGL
+}
 
 CONFIG += c++17
 
