@@ -78,63 +78,16 @@ void Paint::paintGL()
     glLoadIdentity();
     glTranslatef(0, 0, -2);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glBegin(GL_TRIANGLES);
+    /* glBegin(GL_TRIANGLES); */
     //front
     glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(point1[0], point1[1], point1[2]);
-    glVertex3f(point2[0], point2[1], point2[2]);
-    glVertex3f(point3[0], point3[1], point3[2]);
-
-    glVertex3f(point4[0], point4[1], point4[2]);
-    glVertex3f(point5[0], point5[1], point5[2]);
-    glVertex3f(point6[0], point6[1], point6[2]);
-    //rigth_side
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(point7[0], point7[1], point7[2]);
-    glVertex3f(point8[0], point8[1], point8[2]);
-    glVertex3f(point9[0], point9[1], point9[2]);
-
-    glVertex3f(point10[0], point10[1], point10[2]);
-    glVertex3f(point11[0], point11[1], point11[2]);
-    glVertex3f(point12[0], point12[1], point12[2]);
-    //down
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(point13[0], point13[1], point13[2]);
-    glVertex3f(point14[0], point14[1], point14[2]);
-    glVertex3f(point15[0], point15[1], point15[2]);
-
-    glVertex3f(point16[0], point16[1], point16[2]);
-    glVertex3f(point17[0], point17[1], point17[2]);
-    glVertex3f(point18[0], point18[1], point18[2]);
-    //left_side
-    glColor3f(1.0f, 1.0f, 0.0f);
-    glVertex3f(point19[0], point19[1], point19[2]);
-    glVertex3f(point20[0], point20[1], point20[2]);
-    glVertex3f(point21[0], point21[1], point21[2]);
-
-    glVertex3f(point22[0], point22[1], point22[2]);
-    glVertex3f(point23[0], point23[1], point23[2]);
-    glVertex3f(point24[0], point24[1], point24[2]);
-    //up
-    glColor3f(1.0f, 0.0f, 1.0f);
-    glVertex3f(point25[0], point25[1], point25[2]);
-    glVertex3f(point26[0], point26[1], point26[2]);
-    glVertex3f(point27[0], point27[1], point27[2]);
-
-    glVertex3f(point28[0], point28[1], point28[2]);
-    glVertex3f(point29[0], point29[1], point29[2]);
-    glVertex3f(point30[0], point30[1], point30[2]);
-    //back
-    glColor3f(1.0f, 0.5f, 0.5f);
-    glVertex3f(point31[0], point31[1], point31[2]);
-    glVertex3f(point32[0], point32[1], point32[2]);
-    glVertex3f(point33[0], point33[1], point33[2]);
-
-    glVertex3f(point34[0], point34[1], point34[2]);
-    glVertex3f(point35[0], point35[1], point35[2]);
-    glVertex3f(point36[0], point36[1], point36[2]);
-
-        glEnd();
+    float kek_point[] = {-0.5, -0.5, -0.5, 1, -0.5, 0.5, -0.5, 1, 0.5, 0.5, -0.5, 1};
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE,
+                        4 * sizeof(GL_FLOAT), kek_point);
+    glDrawArrays(GL_TRIANGLES, 0, 4);
+    glDisableVertexAttribArray(0);
+    /* glEnd(); */
 }
 
 QVector<float> Paint::coordinate_change(float x,
