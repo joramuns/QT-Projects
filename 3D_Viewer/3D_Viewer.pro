@@ -16,9 +16,11 @@ SOURCES += \
         main.cpp \
         mainwidget.cpp \
         mybutton.cpp \
-        paint.cpp
+       paint.cpp\
+        core.c
 
 HEADERS += \
     mainwidget.h \
     mybutton.h \
-    paint.h
+    paint.h\
+    core.h
