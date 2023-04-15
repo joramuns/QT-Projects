@@ -15,7 +15,6 @@ extern "C" {
 }
 #endif
 
-
 class Paint : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT;
 
@@ -27,7 +26,6 @@ public:
   void resizeGL(int w, int h) override;
 
   float *point_array;
-private:
 
 public Q_SLOTS:
   void left_move();
