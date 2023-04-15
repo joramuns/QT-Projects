@@ -13,10 +13,10 @@ CONFIG += c++17
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 SOURCES += \
-        main.cpp \
-        mainwidget.cpp \
-        mybutton.cpp \
-       paint.cpp\
+        main.cc \
+        mainwidget.cc \
+        mybutton.cc \
+       paint.cc\
         c-function/core/core.c\
         c-function/support/support_function.c
 
