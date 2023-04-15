@@ -10,7 +10,7 @@ int main() {
   int count_vertex = 0;
   int count_side = 0;
   int count_vertex_array = 0;
-  float point_array[36] = {0};
+  float point_array[32] = {0};
   int count_side_array = 0;
   int side_array[24] = {0};
   if (obj == NULL) {
@@ -29,7 +29,7 @@ int main() {
         count_vertex++;
       } else if (line[0] == 'f' && line[1] == ' ') {
         char *token_f = strtok(line, " ");
-         while (token_f) {
+        while (token_f) {
           if (isdigit(token_f[0])) {
             side_array[count_side_array] = my_atoi(token_f);
             count_side_array++;
@@ -50,6 +50,20 @@ int main() {
     printf("%d ", side_array[i]);
   }
   printf("\n");
+
+  // float sorted_array[96] = {0};
+
+  // for (int i = 0; i < count_side_array; i++) {
+  //   for (int j = 0; j < 4; j++) {
+  //     sorted_array[i * 4 + j] = point_array[side_array[i] + j];
+  //   }
+  // }
+
+  // for (int i = 0; i < count_side_array * 4; i++) {
+  //   printf("%f ", sorted_array[i]);
+  // }
+  // printf("\n");
+
   if (line)
     free(line);
   return exit_code;
