@@ -61,178 +61,42 @@ void Paint::down_move() {
   repaint();
 }
 
-QVector<float> Paint::turn_matrix_x(float theta, QVector<float> point) {
-  QVector<QVector<float>> matrix_scale(4, QVector<float>(4));
-
-  matrix_scale[0][0] = 1.0;
-  matrix_scale[0][1] = 0.0;
-  matrix_scale[0][2] = 0.0;
-  matrix_scale[0][3] = 0.0;
-
-  matrix_scale[1][0] = 0.0;
-  matrix_scale[1][1] = cos(theta);
-  matrix_scale[1][2] = -sin(theta);
-  matrix_scale[1][3] = 0.0;
-
-  matrix_scale[2][0] = 0.0;
-  matrix_scale[2][1] = sin(theta);
-  matrix_scale[2][2] = cos(theta);
-  matrix_scale[2][3] = 0.0;
-
-  matrix_scale[3][0] = 0.0;
-  matrix_scale[3][1] = 0.0;
-  matrix_scale[3][2] = 0.0;
-  matrix_scale[3][3] = 1.0;
-
-  QVector<float> result(4);
-  for (int i = 0; i < 4; i++) {
-    float sum = 0.0f;
-    for (int j = 0; j < 4; j++) {
-      sum += matrix_scale[i][j] * point[j];
-    }
-    result[i] = sum;
-  }
-  return result;
-}
-
-void Paint::curent_turn_x(float theta) {}
-
 void Paint::turn_x() {
-  curent_turn_x(SHIFT);
+  turn_matrix_x(SHIFT, point_array);
   repaint();
 }
 
 void Paint::turn_counter_x() {
-  curent_turn_x(-SHIFT);
+  turn_matrix_x(-SHIFT, point_array);
   repaint();
 }
 
-QVector<float> Paint::turn_matrix_y(float theta, QVector<float> point) {
-  QVector<QVector<float>> matrix_scale(4, QVector<float>(4));
-
-  matrix_scale[0][0] = cos(theta);
-  matrix_scale[0][1] = 0.0;
-  matrix_scale[0][2] = sin(theta);
-  matrix_scale[0][3] = 0.0;
-
-  matrix_scale[1][0] = 0.0;
-  matrix_scale[1][1] = 1.0;
-  matrix_scale[1][2] = 0.0;
-  matrix_scale[1][3] = 0.0;
-
-  matrix_scale[2][0] = -sin(theta);
-  matrix_scale[2][1] = 0.0;
-  matrix_scale[2][2] = cos(theta);
-  matrix_scale[2][3] = 0.0;
-
-  matrix_scale[3][0] = 0.0;
-  matrix_scale[3][1] = 0.0;
-  matrix_scale[3][2] = 0.0;
-  matrix_scale[3][3] = 1.0;
-
-  QVector<float> result(4);
-  for (int i = 0; i < 4; i++) {
-    float sum = 0.0f;
-    for (int j = 0; j < 4; j++) {
-      sum += matrix_scale[i][j] * point[j];
-    }
-    result[i] = sum;
-  }
-  return result;
-}
-
-void Paint::curent_turn_y(float theta) {}
-
 void Paint::turn_y() {
-  curent_turn_y(SHIFT);
+  turn_matrix_y(SHIFT, point_array);
   repaint();
 }
 
 void Paint::turn_counter_y() {
-  curent_turn_y(-SHIFT);
+  turn_matrix_y(-SHIFT, point_array);
   repaint();
 }
 
-QVector<float> Paint::turn_matrix_z(float theta, QVector<float> point) {
-  QVector<QVector<float>> matrix_scale(4, QVector<float>(4));
-
-  matrix_scale[0][0] = cos(theta);
-  matrix_scale[0][1] = -sin(theta);
-  matrix_scale[0][2] = 0.0;
-  matrix_scale[0][3] = 0.0;
-
-  matrix_scale[1][0] = sin(theta);
-  matrix_scale[1][1] = cos(theta);
-  matrix_scale[1][2] = 0.0;
-  matrix_scale[1][3] = 0.0;
-
-  matrix_scale[2][0] = 0.0;
-  matrix_scale[2][1] = 0.0;
-  matrix_scale[2][2] = 1.0;
-  matrix_scale[2][3] = 0.0;
-
-  matrix_scale[3][0] = 0.0;
-  matrix_scale[3][1] = 0.0;
-  matrix_scale[3][2] = 0.0;
-  matrix_scale[3][3] = 1.0;
-
-  QVector<float> result(4);
-  for (int i = 0; i < 4; i++) {
-    float sum = 0.0f;
-    for (int j = 0; j < 4; j++) {
-      sum += matrix_scale[i][j] * point[j];
-    }
-    result[i] = sum;
-  }
-  return result;
-}
-
-void Paint::curent_turn_z(float theta) {}
-
 void Paint::turn_z() {
-  curent_turn_z(SHIFT);
+  turn_matrix_z(SHIFT, point_array);
   repaint();
 }
 
 void Paint::turn_counter_z() {
-  curent_turn_z(-SHIFT);
+  turn_matrix_z(-SHIFT, point_array);
   repaint();
 }
 
-QVector<float> Paint::scaling(float x, QVector<float> point) {
-  QVector<QVector<float>> matrix_scale(4, QVector<float>(4));
-
-  matrix_scale[0][0] = x;
-  matrix_scale[0][1] = 0.0;
-  matrix_scale[0][2] = 0.0;
-  matrix_scale[0][3] = 0.0;
-
-  matrix_scale[1][0] = 0.0;
-  matrix_scale[1][1] = x;
-  matrix_scale[1][2] = 0.0;
-  matrix_scale[1][3] = 0.0;
-
-  matrix_scale[2][0] = 0.0;
-  matrix_scale[2][1] = 0.0;
-  matrix_scale[2][2] = x;
-  matrix_scale[2][3] = 0.0;
-
-  matrix_scale[3][0] = 0.0;
-  matrix_scale[3][1] = 0.0;
-  matrix_scale[3][2] = 0.0;
-  matrix_scale[3][3] = 1.0;
-
-  QVector<float> result(4);
-  for (int i = 0; i < 4; i++) {
-    float sum = 0.0f;
-    for (int j = 0; j < 4; j++) {
-      sum += matrix_scale[i][j] * point[j];
-    }
-    result[i] = sum;
-  }
-  return result;
+void Paint::scale_plus() {
+  scaling(1 + SHIFT, point_array);
+  repaint();
 }
 
-void Paint::scale_plus() { repaint(); }
-
-void Paint::scale_minus() { repaint(); }
+void Paint::scale_minus() {
+  scaling(1 - SHIFT, point_array);
+  repaint();
+}

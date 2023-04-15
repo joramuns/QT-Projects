@@ -17,10 +17,10 @@ SOURCES += \
         mainwidget.cpp \
         mybutton.cpp \
        paint.cpp\
-        core.c
+        c-function/core.c
 
 HEADERS += \
     mainwidget.h \
     mybutton.h \
     paint.h\
-    core.h
+    c-function/core.h
