@@ -32,7 +32,6 @@ open:
 	
 install:
 	cd $(PROJECT_NAME) && qmake -makefile $(PROJECT_FILE) && make
-	cp SmartCalc/SmartCalc.app/Contents/MacOS/SmartCalc $(DESTDIR)/
 	
 uninstall:
 	rm -rf 3D_Viewer/3D_Viewer.app
