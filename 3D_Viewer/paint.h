@@ -10,7 +10,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    #include "c-function/core.h"
+    #include "c-function/core/core.h"
 #ifdef __cplusplus
 }
 #endif
@@ -26,8 +26,8 @@ public:
   void paintGL() override;
   void resizeGL(int w, int h) override;
 
-private:
   float *point_array;
+private:
 
 public Q_SLOTS:
   void left_move();

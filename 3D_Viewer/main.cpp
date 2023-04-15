@@ -6,6 +6,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWidget h;
     h.show();
-    return a.exec();
+    int end = a.exec();
+    free(h.m_paint_widget->point_array);
+    return end;
 }
 

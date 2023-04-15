@@ -11,6 +11,7 @@ class MainWidget : public QWidget
     Q_OBJECT
 public:
     MainWidget();
+    Paint *m_paint_widget;
 private:
     MyButton *x_minus;
     MyButton *x_plus;
@@ -29,7 +30,6 @@ private:
 
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;
-    Paint *m_paint_widget;
 
 };
 
