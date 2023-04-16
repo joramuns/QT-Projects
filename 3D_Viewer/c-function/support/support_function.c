@@ -10,7 +10,6 @@ float *sort_array(float *point_array) {
   return point_array;
 }
 
-
 void identity_matrix(float *matrix_scale) {
   for (int i = 0; i < 4; i++)
     matrix_scale[i + i * 4] = 1.0;
