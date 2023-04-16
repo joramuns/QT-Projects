@@ -1,15 +1,5 @@
 #include "support_function.h"
 
-float *sort_array(float *point_array) {
-  float kek_point[] = {-0.5, -0.5, -0.5, 1,   -0.5, 0.5,
-                       -0.5, 1,    0.5,  0.5, -0.5, 1};
-  point_array = (float *)malloc(12 * sizeof(float));
-  for (int i = 0; i < 12; i++) {
-    point_array[i] = kek_point[i];
-  }
-  return point_array;
-}
-
 void identity_matrix(float *matrix_scale) {
   for (int i = 0; i < 4; i++)
     matrix_scale[i + i * 4] = 1.0;

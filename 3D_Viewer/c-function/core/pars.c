@@ -1,20 +1,17 @@
 #include "pars.h"
 
-int main() {
-  int exit_code = 0;
-  char *filename = "coub.obj";
+float *array_sort(float *sorted_array, char *filename, int *count_vertex, int *count_side) {
   FILE *obj = fopen(filename, "r");
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
-  int count_vertex = 0;
-  int count_side = 0;
+  *count_vertex = 0;
+  *count_side = 0;
   int count_vertex_array = 0;
   float point_array[32] = {0};
-  float sorted_array[96] = {0};
   int index_sorted_array = 0;
   if (obj == NULL) {
-    exit_code = 1;
+    exit -1;
   } else {
     while ((read = getline(&line, &len, obj)) != -1) {
       if (line[0] == 'v' && line[1] == ' ') {
@@ -30,7 +27,7 @@ int main() {
           }
           token = strtok(NULL, " ");
         }
-        count_vertex++;
+        *count_vertex++;
       } else if (line[0] == 'f' && line[1] == ' ') {
         char *token_f = strtok(line, " ");
         while (token_f) {
@@ -51,7 +48,7 @@ int main() {
 
   if (line)
     free(line);
-  return exit_code;
+  return sorted_array;
 }
 
 float my_atof(char *str) {

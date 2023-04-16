@@ -1,4 +1,4 @@
-#include "paint.h"
+#include "draw.h"
 #if defined(__APPLE__)
 #include <OpenGL/glu.h>
 #elif defined(__unix__)
@@ -8,17 +8,17 @@
 
 #define SHIFT 0.03
 
-Paint::Paint(QWidget *parent) : QOpenGLWidget(parent) {}
+Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
 
-void Paint::initializeGL() {
+void Draw::initializeGL() {
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
-  point_array = sort_array(point_array);
+  array_sort(point_array, "coub.obj", &count_vertex, &cound_side);
   this->resize(800, 800);
   this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
-void Paint::resizeGL(int w, int h) {
+void Draw::resizeGL(int w, int h) {
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -26,7 +26,7 @@ void Paint::resizeGL(int w, int h) {
   gluPerspective(60, 1, 0.5, 100);
 }
 
-void Paint::paintGL() {
+void Draw::paintGL() {
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
@@ -36,67 +36,67 @@ void Paint::paintGL() {
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GL_FLOAT),
                         point_array);
-  glDrawArrays(GL_TRIANGLES, 0, 4);
+  glDrawArrays(GL_LINES, 0, 4);
   glDisableVertexAttribArray(0);
   /* glEnd(); */
 }
 
-void Paint::left_move() {
+void Draw::left_move() {
   coordinate_change(-SHIFT, 0.0, 0.0, point_array);
   repaint();
 }
 
-void Paint::right_move() {
+void Draw::right_move() {
   coordinate_change(SHIFT, 0.0, 0.0, point_array);
   repaint();
 }
 
-void Paint::up_move() {
+void Draw::up_move() {
   coordinate_change(0.0, SHIFT, 0.0, point_array);
   repaint();
 }
 
-void Paint::down_move() {
+void Draw::down_move() {
   coordinate_change(0.0, -SHIFT, 0.0, point_array);
   repaint();
 }
 
-void Paint::turn_x() {
+void Draw::turn_x() {
   turn_matrix_x(SHIFT, point_array);
   repaint();
 }
 
-void Paint::turn_counter_x() {
+void Draw::turn_counter_x() {
   turn_matrix_x(-SHIFT, point_array);
   repaint();
 }
 
-void Paint::turn_y() {
+void Draw::turn_y() {
   turn_matrix_y(SHIFT, point_array);
   repaint();
 }
 
-void Paint::turn_counter_y() {
+void Draw::turn_counter_y() {
   turn_matrix_y(-SHIFT, point_array);
   repaint();
 }
 
-void Paint::turn_z() {
+void Draw::turn_z() {
   turn_matrix_z(SHIFT, point_array);
   repaint();
 }
 
-void Paint::turn_counter_z() {
+void Draw::turn_counter_z() {
   turn_matrix_z(-SHIFT, point_array);
   repaint();
 }
 
-void Paint::scale_plus() {
+void Draw::scale_plus() {
   scaling(1 + SHIFT, point_array);
   repaint();
 }
 
-void Paint::scale_minus() {
+void Draw::scale_minus() {
   scaling(1 - SHIFT, point_array);
   repaint();
 }

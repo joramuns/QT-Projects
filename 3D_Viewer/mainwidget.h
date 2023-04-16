@@ -4,14 +4,14 @@
 #include <QWidget>
 #include <QGridLayout>
 #include "mybutton.h"
-#include "paint.h"
+#include "draw.h"
 
 class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
     MainWidget();
-    Paint *m_paint_widget;
+    Draw *m_paint_widget;
 private:
     MyButton *x_minus;
     MyButton *x_plus;

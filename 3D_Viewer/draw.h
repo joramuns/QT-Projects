@@ -1,5 +1,5 @@
-#ifndef PAINT_H
-#define PAINT_H
+#ifndef DRAW_H
+#define DRAW_H
 
 #include <QGridLayout>
 #include <QMouseEvent>
@@ -11,21 +11,24 @@
 extern "C" {
 #endif
     #include "c-function/core/core.h"
+    #include "c-function/core/pars.h"
 #ifdef __cplusplus
 }
 #endif
 
-class Paint : public QOpenGLWidget, protected QOpenGLFunctions {
+class Draw : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT;
 
 public:
-  explicit Paint(QWidget *parent = nullptr);
+  explicit Draw(QWidget *parent = nullptr);
   
   void initializeGL() override;
   void paintGL() override;
   void resizeGL(int w, int h) override;
 
-  float *point_array;
+  float point_array[96];
+  int count_vertex;
+  int cound_side;
 
 public Q_SLOTS:
   void left_move();
@@ -46,4 +49,4 @@ public Q_SLOTS:
   void scale_minus();
 };
 
-#endif // PAINT_H
+#endif // DRAW_H

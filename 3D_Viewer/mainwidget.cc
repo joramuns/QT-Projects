@@ -5,52 +5,52 @@
 MainWidget::MainWidget()
 {
     m_main_layout = new QGridLayout();
-    m_paint_widget = new Paint();
+    m_paint_widget = new Draw();
 
     this->setLayout(m_main_layout);
     this->resize(1024, 1024);
 
     x_minus = createButton("Left");
     x_minus->setShortcut(QKeySequence(Qt::Key_Left));
-    connect(x_minus, &QPushButton::clicked, m_paint_widget, &Paint::left_move);
+    connect(x_minus, &QPushButton::clicked, m_paint_widget, &Draw::left_move);
 
     x_plus = createButton("Right");
     x_plus->setShortcut(QKeySequence(Qt::Key_Right));
-    connect(x_plus, &QPushButton::clicked, m_paint_widget, &Paint::right_move);
+    connect(x_plus, &QPushButton::clicked, m_paint_widget, &Draw::right_move);
 
     y_plus = createButton("Up");
     y_plus->setShortcut(QKeySequence(Qt::Key_Up));
-    connect(y_plus, &QPushButton::clicked, m_paint_widget, &Paint::up_move);
+    connect(y_plus, &QPushButton::clicked, m_paint_widget, &Draw::up_move);
 
     y_minus = createButton("Down");
     y_minus->setShortcut(QKeySequence(Qt::Key_Down));
-    connect(y_minus, &QPushButton::clicked, m_paint_widget, &Paint::down_move);
+    connect(y_minus, &QPushButton::clicked, m_paint_widget, &Draw::down_move);
 
     x_clockwise = createButton("Rotate x");
-    connect(x_clockwise, &QPushButton::clicked, m_paint_widget, &Paint::turn_x);
+    connect(x_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_x);
 
     x_counterclockwise = createButton("Rotate -x");
-    connect(x_counterclockwise, &QPushButton::clicked, m_paint_widget, &Paint::turn_counter_x);
+    connect(x_counterclockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_counter_x);
 
     y_clockwise = createButton("Rotate y");
-    connect(y_clockwise, &QPushButton::clicked, m_paint_widget, &Paint::turn_y);
+    connect(y_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_y);
 
     y_counterclockwise = createButton("Rotate -y");
-    connect(y_counterclockwise, &QPushButton::clicked, m_paint_widget, &Paint::turn_counter_y);
+    connect(y_counterclockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_counter_y);
 
     z_clockwise = createButton("Rotate z");
-    connect(z_clockwise, &QPushButton::clicked, m_paint_widget, &Paint::turn_z);
+    connect(z_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_z);
 
     z_counterclockwise = createButton("Rotate -z");
-    connect(z_counterclockwise, &QPushButton::clicked, m_paint_widget, &Paint::turn_counter_z);
+    connect(z_counterclockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_counter_z);
 
     scale_plus = createButton("+");
     scale_plus->setShortcut(QKeySequence(Qt::Key_Plus));
-    connect(scale_plus, &QPushButton::clicked, m_paint_widget, &Paint::scale_plus);
+    connect(scale_plus, &QPushButton::clicked, m_paint_widget, &Draw::scale_plus);
 
     scale_minus = createButton("-");
     scale_minus->setShortcut(QKeySequence(Qt::Key_Minus));
-    connect(scale_minus, &QPushButton::clicked, m_paint_widget, &Paint::scale_minus);
+    connect(scale_minus, &QPushButton::clicked, m_paint_widget, &Draw::scale_minus);
 
 
     m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);

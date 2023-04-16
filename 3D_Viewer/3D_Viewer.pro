@@ -16,13 +16,15 @@ SOURCES += \
         main.cc \
         mainwidget.cc \
         mybutton.cc \
-       paint.cc\
+       draw.cc\
         c-function/core/core.c\
+        c-function/core/pars.c\
         c-function/support/support_function.c
 
 HEADERS += \
     mainwidget.h \
     mybutton.h \
-    paint.h\
+    draw.h\
     c-function/core/core.h\
+    c-function/core/pars.h\
     c-function/support/support_function.h
