@@ -1,6 +1,7 @@
 #include "pars.h"
 
-float *array_sort(float *sorted_array, char *filename, int *count_vertex, int *count_side) {
+float *array_sort(float *sorted_array, char *filename, int *count_vertex,
+                  int *count_side) {
   FILE *obj = fopen(filename, "r");
   char *line = NULL;
   size_t len = 0;
@@ -8,16 +9,17 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex, int *c
   *count_vertex = 0;
   *count_side = 0;
   int count_vertex_array = 0;
-  float point_array[32] = {0};
+  float point_array[48] = {0};
   int index_sorted_array = 0;
   if (obj == NULL) {
-    exit -1;
+    printf("lol\n");
+    sorted_array = NULL;
   } else {
     while ((read = getline(&line, &len, obj)) != -1) {
       if (line[0] == 'v' && line[1] == ' ') {
         char *token = strtok(line, " ");
         for (int i = 0; i < 5; i++) {
-          if (i == 4 && token[0] == '\n') {
+          if (i == 4 && (token == NULL || token[0] == '\n')) {
             point_array[count_vertex_array] = 1.0;
             count_vertex_array++;
           } else if (isdigit(token[0]) ||
@@ -27,7 +29,7 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex, int *c
           }
           token = strtok(NULL, " ");
         }
-        *count_vertex++;
+        *count_vertex += 1;
       } else if (line[0] == 'f' && line[1] == ' ') {
         char *token_f = strtok(line, " ");
         while (token_f) {
@@ -35,17 +37,16 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex, int *c
             int vertex_number = my_atoi(token_f) - 1;
             for (int i = 0; i < 4; i++) {
               sorted_array[index_sorted_array] =
-                  point_array[vertex_number * 4 + i];              
+                  point_array[vertex_number * 4 + i];
               index_sorted_array++;
             }
           }
           token_f = strtok(NULL, " ");
         }
-        count_side++;
+        *count_side += 1;
       }
     }
   }
-
   if (line)
     free(line);
   return sorted_array;

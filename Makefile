@@ -94,6 +94,8 @@ style:
 
 rebuild: uninstall install
 
+go: clean install open
+
 leaks: clean main
 	leaks --atExit -- ./$(TEST_EXE)
 

@@ -26,7 +26,7 @@ public:
   void paintGL() override;
   void resizeGL(int w, int h) override;
 
-  float point_array[96];
+  float point_array[48];
   int count_vertex;
   int cound_side;
 

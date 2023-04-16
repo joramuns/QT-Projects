@@ -38,7 +38,7 @@ void cerate_scale_matrix(float *matrix_scale, float coef) {
 }
 
 void matrix_mul(float *matrix_scale, float *point_array) {
-  int size_ar = 12;
+  int size_ar = 48;
   for (int k = 0; k < size_ar / 4; k++) {
     float result[4] = {0};
     for (int i = 0; i < 4; i++) {
