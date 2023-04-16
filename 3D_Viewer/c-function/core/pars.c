@@ -1,16 +1,24 @@
 #include "pars.h"
 
 float *array_sort(float *sorted_array, char *filename, int *count_vertex,
-                  int *count_side) {
+                  int *count_side, int *size_sort_array) {
   FILE *obj = fopen(filename, "r");
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
+
   *count_vertex = 0;
   *count_side = 0;
+
   int count_vertex_array = 0;
-  float point_array[48] = {0};
   int index_sorted_array = 0;
+
+  int size_unsort_memory = 4;
+  int size_sort_memory = 4;
+
+  float *point_array = (float *)calloc(size_unsort_memory, sizeof(float));
+  sorted_array = (float *)calloc(size_sort_memory, sizeof(float));
+
   if (obj == NULL) {
     printf("lol\n");
     sorted_array = NULL;
@@ -19,6 +27,9 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex,
       if (line[0] == 'v' && line[1] == ' ') {
         char *token = strtok(line, " ");
         for (int i = 0; i < 5; i++) {
+          if (count_vertex_array == size_unsort_memory) {
+            memory_alloc(point_array, &size_unsort_memory);
+          }
           if (i == 4 && (token == NULL || token[0] == '\n')) {
             point_array[count_vertex_array] = 1.0;
             count_vertex_array++;
@@ -34,6 +45,9 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex,
         char *token_f = strtok(line, " ");
         while (token_f) {
           if (isdigit(token_f[0])) {
+            if (count_vertex_array == size_sort_memory) {
+              memory_alloc(sorted_array, &size_sort_memory);
+            }
             int vertex_number = my_atoi(token_f) - 1;
             for (int i = 0; i < 4; i++) {
               sorted_array[index_sorted_array] =
@@ -47,9 +61,18 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex,
       }
     }
   }
+  *size_sort_array = index_sorted_array;
+  if (point_array) {
+    free(point_array);
+  }
   if (line)
     free(line);
   return sorted_array;
+}
+
+void memory_alloc(float *array, int *size) {
+  *size *= 2;
+  array = (float *)realloc(array, *size);
 }
 
 float my_atof(char *str) {

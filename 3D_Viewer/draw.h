@@ -26,9 +26,10 @@ public:
   void paintGL() override;
   void resizeGL(int w, int h) override;
 
-  float point_array[48];
+  float *point_array;
   int count_vertex;
   int cound_side;
+  int size_sort_array;
 
 public Q_SLOTS:
   void left_move();

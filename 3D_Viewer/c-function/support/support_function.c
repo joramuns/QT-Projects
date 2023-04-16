@@ -37,8 +37,7 @@ void cerate_scale_matrix(float *matrix_scale, float coef) {
     matrix_scale[i + 4 * i] = coef;
 }
 
-void matrix_mul(float *matrix_scale, float *point_array) {
-  int size_ar = 48;
+void matrix_mul(float *matrix_scale, float *point_array, int size_ar) {
   for (int k = 0; k < size_ar / 4; k++) {
     float result[4] = {0};
     for (int i = 0; i < 4; i++) {
@@ -52,8 +51,4 @@ void matrix_mul(float *matrix_scale, float *point_array) {
       point_array[k * 4 + m] = result[m];
     }
   }
-}
-
-void clean_memory (float *point_array) {
-    free(point_array);
 }
