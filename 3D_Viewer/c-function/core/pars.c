@@ -1,7 +1,7 @@
 #include "pars.h"
 
-float *array_sort(float *sorted_array, char *filename, int *count_vertex,
-                  int *count_side, int *size_sort_array) {
+float *array_sort(char *filename, int *count_vertex, int *count_side,
+                  int *size_sort_array) {
   FILE *obj = fopen(filename, "r");
   char *line = NULL;
   size_t len = 0;
@@ -17,7 +17,7 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex,
   int size_sort_memory = 4;
 
   float *point_array = (float *)calloc(size_unsort_memory, sizeof(float));
-  sorted_array = (float *)calloc(size_sort_memory, sizeof(float));
+  float *sorted_array = (float *)calloc(size_sort_memory, sizeof(float));
 
   if (obj == NULL) {
     printf("lol\n");
@@ -28,15 +28,16 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex,
         char *token = strtok(line, " ");
         for (int i = 0; i < 5; i++) {
           if (count_vertex_array == size_unsort_memory) {
-            memory_alloc(point_array, &size_unsort_memory);
+            size_unsort_memory *= 2;
+            point_array = (float *)realloc(point_array, size_unsort_memory * sizeof(float));
           }
           if (i == 4 && (token == NULL || token[0] == '\n')) {
             point_array[count_vertex_array] = 1.0;
             count_vertex_array++;
           } else if (isdigit(token[0]) ||
                      (token[0] == '-' && isdigit(token[1]))) {
-            point_array[count_vertex_array] = my_atof(token);
-            count_vertex_array++;
+            point_array[count_vertex_array++] = my_atof(token);
+            // count_vertex_array++;
           }
           token = strtok(NULL, " ");
         }
@@ -45,8 +46,10 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex,
         char *token_f = strtok(line, " ");
         while (token_f) {
           if (isdigit(token_f[0])) {
-            if (count_vertex_array == size_sort_memory) {
-              memory_alloc(sorted_array, &size_sort_memory);
+            if (index_sorted_array == size_sort_memory) {
+              // memory_alloc(&sorted_array, &size_sort_memory);
+              size_sort_memory *= 2;
+              sorted_array = (float *)realloc(sorted_array, size_sort_memory * sizeof(float));
             }
             int vertex_number = my_atoi(token_f) - 1;
             for (int i = 0; i < 4; i++) {
@@ -68,11 +71,6 @@ float *array_sort(float *sorted_array, char *filename, int *count_vertex,
   if (line)
     free(line);
   return sorted_array;
-}
-
-void memory_alloc(float *array, int *size) {
-  *size *= 2;
-  array = (float *)realloc(array, *size);
 }
 
 float my_atof(char *str) {

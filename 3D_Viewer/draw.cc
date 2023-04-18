@@ -13,7 +13,7 @@ Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
 void Draw::initializeGL() {
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
-  array_sort(point_array,
+  point_array = array_sort(
              "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
              "c-function/core/coub.obj",
              &count_vertex, &cound_side, &size_sort_array);
@@ -41,7 +41,7 @@ void Draw::paintGL() {
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GL_FLOAT),
                         point_array);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  glDrawArrays(GL_TRIANGLES, 0, 4);
+  glDrawArrays(GL_TRIANGLES, 0, size_sort_array);
   glDisableVertexAttribArray(0);
   /* glEnd(); */
 }
