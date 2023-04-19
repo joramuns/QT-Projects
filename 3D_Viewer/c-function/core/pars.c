@@ -80,6 +80,8 @@ float *array_sort(char *filename, pars_counters *View) {
   }
   if (line)
     free(line);
+  if (obj)
+    fclose(obj);
   return sorted_array;
 }
 
