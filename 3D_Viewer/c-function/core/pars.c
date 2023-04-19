@@ -1,70 +1,81 @@
 #include "pars.h"
 
-float *array_sort(char *filename, int *count_vertex, int *count_side,
-                  int *size_sort_array) {
+// int main() {
+//   int count_vertex = 0, cound_side = 0, size_sort_array = 0;
+//   pars_counters A = {0, 0, 0, 0, 0};
+//   float *array =
+//       array_sort("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
+//                  "c-function/core/coub.obj",
+//                  &A);
+//   for (int i = 0; i < A.size_sort_array; i++) {
+//     if (i % 4 == 0) {
+//       printf("\n");
+//     }
+//     printf("%f ", array[i]);
+//   }
+//   printf("\ncount vertex - %d\n\ncount side - %d\n", A.count_vertex,
+//          A.count_side);
+//   if (array != NULL) {
+//     free(array);
+//   }
+//   return 0;
+// }
+
+float *array_sort(char *filename, pars_counters *View) {
   FILE *obj = fopen(filename, "r");
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
 
-  *count_vertex = 0;
-  *count_side = 0;
+  View->size_unsort_memory = 4;
+  View->size_sort_memory = 4;
 
-  int count_vertex_array = 0;
-  int index_sorted_array = 0;
-
-  int size_unsort_memory = 4;
-  int size_sort_memory = 4;
-
-  float *point_array = (float *)calloc(size_unsort_memory, sizeof(float));
-  float *sorted_array = (float *)calloc(size_sort_memory, sizeof(float));
+  float *point_array = (float *)calloc(View->size_unsort_memory, sizeof(float));
+  float *sorted_array = (float *)calloc(View->size_sort_memory, sizeof(float));
 
   if (obj == NULL) {
-    printf("lol\n");
+    free(sorted_array);
     sorted_array = NULL;
   } else {
     while ((read = getline(&line, &len, obj)) != -1) {
       if (line[0] == 'v' && line[1] == ' ') {
         char *token = strtok(line, " ");
         for (int i = 0; i < 5; i++) {
-          if (count_vertex_array == size_unsort_memory) {
-            size_unsort_memory *= 2;
-            point_array = (float *)realloc(point_array, size_unsort_memory * sizeof(float));
+          if (View->count_vertex == View->size_unsort_memory) {
+            View->size_unsort_memory *= 2;
+            point_array = (float *)realloc(point_array,
+                                           View->size_unsort_memory * sizeof(float));
           }
           if (i == 4 && (token == NULL || token[0] == '\n')) {
-            point_array[count_vertex_array] = 1.0;
-            count_vertex_array++;
+            point_array[View->count_vertex++] = 1.0;
           } else if (isdigit(token[0]) ||
                      (token[0] == '-' && isdigit(token[1]))) {
-            point_array[count_vertex_array++] = my_atof(token);
-            // count_vertex_array++;
+            point_array[View->count_vertex++] = my_atof(token);
           }
           token = strtok(NULL, " ");
         }
-        *count_vertex += 1;
       } else if (line[0] == 'f' && line[1] == ' ') {
         char *token_f = strtok(line, " ");
         while (token_f) {
           if (isdigit(token_f[0])) {
-            if (index_sorted_array == size_sort_memory) {
-              // memory_alloc(&sorted_array, &size_sort_memory);
-              size_sort_memory *= 2;
-              sorted_array = (float *)realloc(sorted_array, size_sort_memory * sizeof(float));
+            if (View->size_sort_array == View->size_sort_memory) {
+              View->size_sort_memory *= 2;
+              sorted_array = (float *)realloc(sorted_array,
+                                              View->size_sort_memory * sizeof(float));
             }
             int vertex_number = my_atoi(token_f) - 1;
             for (int i = 0; i < 4; i++) {
-              sorted_array[index_sorted_array] =
+              sorted_array[View->size_sort_array++] =
                   point_array[vertex_number * 4 + i];
-              index_sorted_array++;
             }
           }
           token_f = strtok(NULL, " ");
         }
-        *count_side += 1;
+        View->count_side += 1;
       }
     }
   }
-  *size_sort_array = index_sorted_array;
+  View->count_vertex /= 4;
   if (point_array) {
     free(point_array);
   }
