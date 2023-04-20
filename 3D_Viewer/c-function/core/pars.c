@@ -1,24 +1,24 @@
 #include "pars.h"
 
-int main() {
-  pars_counters A = {0, 0, 0, 0, 0};
-  float *array =
-      array_sort("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
-                 "c-function/core/coub.obj",
-                 &A);
-  for (int i = 0; i < A.size_sort_array; i++) {
-    if (i % 4 == 0) {
-      printf("\n");
-    }
-    printf("%f ", array[i]);
-  }
-  printf("\ncount vertex - %d\n\ncount side - %d\n", A.count_vertex,
-         A.count_side);
-  if (array != NULL) {
-    free(array);
-  }
-  return 0;
-}
+/* int main() { */
+/*   pars_counters A = {0, 0, 0, 0, 0}; */
+/*   float *array = */
+/*       array_sort("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/" */
+/*                  "c-function/core/coub.obj", */
+/*                  &A); */
+/*   for (int i = 0; i < A.size_sort_array; i++) { */
+/*     if (i % 4 == 0) { */
+/*       printf("\n"); */
+/*     } */
+/*     printf("%f ", array[i]); */
+/*   } */
+/*   printf("\ncount vertex - %d\n\ncount side - %d\n", A.count_vertex, */
+/*          A.count_side); */
+/*   if (array != NULL) { */
+/*     free(array); */
+/*   } */
+/*   return 0; */
+/* } */
 
 float *array_sort(char *filename, pars_counters *View) {
   FILE *obj = fopen(filename, "r");

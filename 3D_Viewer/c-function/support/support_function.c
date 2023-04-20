@@ -32,7 +32,7 @@ void create_turn_matrix_z(float *matrix_turn, float theta) {
   matrix_turn[5] = cos(theta);
 }
 
-void cerate_scale_matrix(float *matrix_scale, float coef) {
+void create_scale_matrix(float *matrix_scale, float coef) {
   for (int i = 0; i < 3; i++)
     matrix_scale[i + 4 * i] = coef;
 }
