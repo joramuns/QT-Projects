@@ -2,23 +2,28 @@ CC = gcc
 CFLAGS:= -Wall -Werror -Wextra -g
 GCOV_FLAGS := -fprofile-arcs -ftest-coverage
 LDFLAGS := -fprofile-arcs --coverage
-LIN_FLAGS := -lpthread -pthread -lrt -lm -lsubunit
-LCHECK= -I/opt/homebrew/include  -L/opt/homebrew/lib -lcheck
-ifeq ($(shell uname), Linux)
-CHECK_FLAGS += $(LIN_FLAGS)
-endif
+LCHECK= $(shell pkg-config --libs check)
 PROJECT_NAME= 3D_Viewer
 PROJECT_FILE := $(addsuffix .pro,$(PROJECT_NAME))
-SOURCES:= 
-OBJECTS := $(addprefix obj/,$(SOURCES:.c=.o))
+OBJ_DIR     := ./obj
+SOURCE_DIR = ./3D_Viewer/c-function
+SOURCE := $(shell find $(SOURCE_DIR) -name '*.c')
+# SOURCE := $(wildcard $(SOURCE_DIR)/*.c)
+OBJECTS := $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o, $(SOURCE))
+# OBJECTS := $(addprefix $(OBJ_DIR)/,$(SOURCES:%.c=%.o))
+#
+# TESTS_SOURCE=$(shell find ../tests -name '*.cc')
+# OBJ=$(SOURCE:.cc=.o)
+# SRCS := $(shell find $(SRC_DIRS) -name 's21_*.c')
+# OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+#
 OBJECTS_GCOV := $(addprefix obj_gcov/,$(SOURCES:.c=.o))
 HEADER:= calculation_module.h
-OBJ_DIR     := obj
 OBJ_GCOV_DIR:= obj_gcov
 CHECKMK_FILE:= s21_view.check
 TEST_EXE		:=test_test.out
-LIB_NAME		=s21_view.a
-TEST_FILE		=test_view.c
+LIB_NAME		=view_core.a
+TEST_FILE		=test_view
 
 .PHONY: all clean rebuild style
 
@@ -51,20 +56,15 @@ dvi:
 create_dir:
 	@mkdir -p $(OBJ_DIR) $(OBJ_GCOV_DIR)
 
-$(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $(subst /,_,$@) $(CHECK_FLAGS)
-	@mv *.o $(OBJ_DIR)/
+$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< $(CHECK_FLAGS) -o $@
+
+test: $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(TEST_EXE) $(LCHECK) -lm
+	@./$(TEST_EXE)
 
 $(LIB_NAME): create_dir $(OBJECTS)
 	ar rc $@ $(OBJ_DIR)/*.o
-
-$(TEST_FILE):
-	@checkmk clean_mode=0 $(CHECKMK_FILE) > $(TEST_FILE)
-
-
-test: $(TEST_FILE) $(LIB_NAME)
-	$(CC) $(CFLAGS) $^ -o $(TEST_EXE) $(LCHECK) $(CHECK_FLAGS)
-	@./$(TEST_EXE)
 
 main:
 	gcc -Wall -Werror -Wextra -g s21_3D_Viewer.c -o $(TEST_EXE)
