@@ -1,29 +1,21 @@
-CC = gcc
-CFLAGS:= -Wall -Werror -Wextra -g
-GCOV_FLAGS := -fprofile-arcs -ftest-coverage
-LDFLAGS := -fprofile-arcs --coverage
-LCHECK= $(shell pkg-config --libs check)
-PROJECT_NAME= 3D_Viewer
-PROJECT_FILE := $(addsuffix .pro,$(PROJECT_NAME))
-OBJ_DIR     := ./obj
-SOURCE_DIR = ./3D_Viewer/c-function
-SOURCE := $(shell find $(SOURCE_DIR) -name '*.c')
-# SOURCE := $(wildcard $(SOURCE_DIR)/*.c)
-OBJECTS := $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o, $(SOURCE))
-# OBJECTS := $(addprefix $(OBJ_DIR)/,$(SOURCES:%.c=%.o))
-#
-# TESTS_SOURCE=$(shell find ../tests -name '*.cc')
-# OBJ=$(SOURCE:.cc=.o)
-# SRCS := $(shell find $(SRC_DIRS) -name 's21_*.c')
-# OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
-#
-OBJECTS_GCOV := $(addprefix obj_gcov/,$(SOURCES:.c=.o))
-HEADER:= calculation_module.h
-OBJ_GCOV_DIR:= obj_gcov
-CHECKMK_FILE:= s21_view.check
-TEST_EXE		:=test_test.out
-LIB_NAME		=view_core.a
-TEST_FILE		=test_view
+CC 						:= gcc
+CFLAGS				:= -Wall -Werror -Wextra -g
+GCOV_FLAGS		:= -fprofile-arcs -ftest-coverage
+LDFLAGS 			:= -fprofile-arcs --coverage
+LCHECK				:= $(shell pkg-config --libs check)
+
+PROJECT_NAME	:= 3D_Viewer
+PROJECT_FILE 	:= $(addsuffix .pro,$(PROJECT_NAME))
+
+OBJ_GCOV_DIR	:= ./obj_gcov
+OBJ_DIR     	:= ./obj
+SOURCE_DIR 		:= ./3D_Viewer/c-function
+SOURCE 				:= $(shell find $(SOURCE_DIR) -name '*.c')
+OBJECTS 			:= $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o, $(SOURCE))
+
+OBJECTS_GCOV 	:= $(addprefix obj_gcov/,$(SOURCES:.c=.o))
+TEST_FILE			:= test.out
+LIB_NAME			:= view_core.a
 
 .PHONY: all clean rebuild style
 
@@ -55,20 +47,18 @@ dvi:
 
 create_dir:
 	@mkdir -p $(OBJ_DIR) $(OBJ_GCOV_DIR)
+	# temp
+	@mkdir -p $(OBJ_DIR)/core $(OBJ_DIR)/support $(OBJ_DIR)/tests
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< $(CHECK_FLAGS) -o $@
 
 test: $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(TEST_EXE) $(LCHECK) -lm
-	@./$(TEST_EXE)
+	$(CC) $(OBJECTS) -o $(TEST_FILE) $(LCHECK) -lm
+	@./$(TEST_FILE)
 
 $(LIB_NAME): create_dir $(OBJECTS)
 	ar rc $@ $(OBJ_DIR)/*.o
-
-main:
-	gcc -Wall -Werror -Wextra -g s21_3D_Viewer.c -o $(TEST_EXE)
-	./$(TEST_EXE)
 
 $(OBJ_GCOV_DIR)/%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) $(GCOV_FLAGS) -c $< -o $(subst /,_,$@) $(CHECK_FLAGS)
