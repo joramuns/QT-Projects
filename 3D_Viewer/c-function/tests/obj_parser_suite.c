@@ -23,19 +23,25 @@ static int size_sort_array_expected = 6 * 2 * 3 * 4;
 
 /* ### SERVICE PROCEDURES ### */
 static float *model_array = NULL;
-static pars_counters *test_view = NULL;
+static FILE *obj_file = NULL;
+static Pars_counters *test_view = NULL;
 
 static void simple_cube_setup(void) {
-  test_view = calloc(1, sizeof(pars_counters));
-  model_array = array_sort("../data-samples/cube_simple.obj", test_view);
+  test_view = calloc(1, sizeof(Pars_counters));
+  obj_file = fopen("../data-samples/cube_simple.obj", "r");
+  model_array = array_sort(obj_file, test_view);
 }
 
 static void non_existent_setup(void) {
-  test_view = calloc(1, sizeof(pars_counters));
-  model_array = array_sort("aboba.obj", test_view);
+  test_view = calloc(1, sizeof(Pars_counters));
+  /* model_array = array_sort("aboba.obj", test_view); */
 }
 
 static void test_teardown(void) {
+  if (obj_file) {
+    fclose(obj_file);
+    obj_file = NULL;
+  }
   if (model_array) {
     free(model_array);
     model_array = NULL;
