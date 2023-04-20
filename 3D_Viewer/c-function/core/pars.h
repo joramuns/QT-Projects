@@ -15,9 +15,10 @@ typedef struct pars_counters {
 } pars_counters;
 
 float *array_sort(FILE *obj, pars_counters *View);
+void unsort_array_fill(char *line, pars_counters *View, float **point_array);
+void sort_array_fill(char *line, pars_counters *View, float **sorted_array,
+                     float *point_array);
 float my_atof(char *str);
 int my_atoi(const char *str);
 
-
 #endif // PARS_H
-

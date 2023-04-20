@@ -19,9 +19,10 @@ void Draw::initializeGL() {
   } else {
     view = {0, 0, 0, 0, 0};
     point_array = array_sort(obj, &view);
-    this->resize(800, 800);
-    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    fclose(obj);
   }
+  this->resize(800, 800);
+  this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 void Draw::resizeGL(int w, int h) {
@@ -46,7 +47,6 @@ void Draw::paintGL() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
   glDisableVertexAttribArray(0);
-  /* glEnd(); */
 }
 
 void Draw::left_move() {
