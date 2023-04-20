@@ -6,7 +6,7 @@
 /* ### EXPECTED SECTION ### */
 static int count_vertex_expected = 8;
 /* static int count_side_expected = 12; */
-/* static int size_sort_array_expected = 8 * 12 * 2; */
+static int size_sort_array_expected = 6 * 2 * 3 * 4;
 /* static int size_unsort_memory_expected; */
 /* static int size_sort_memory_expected; */
 /* static const float vertices_expected[] = { */
@@ -53,6 +53,11 @@ START_TEST(test_simple_cube_vertices_len) {
 }
 END_TEST
 
+/* ## Check length of sorted array ## */
+START_TEST(test_simple_cube_sorted_array_len) {
+  ck_assert_uint_eq(test_view->size_sort_array, size_sort_array_expected);
+}
+END_TEST
 /* START_TEST(test_simple_cube_vertices_data) { */
   /* ck_assert_float_eq_tol(data[_i * 4], sc_vertices_expected[_i * 4], TEST_EPS); */
   /* ck_assert_float_eq_tol(data[_i * 4 + 1], sc_vertices_expected[_i * 4 + 1], */
@@ -74,6 +79,7 @@ static TCase *simple_cube_tc(void) {
   TCase *tc = tcase_create("simple_cube");
   tcase_add_unchecked_fixture(tc, simple_cube_setup, test_teardown);
   tcase_add_test(tc, test_simple_cube_vertices_len);
+  tcase_add_test(tc, test_simple_cube_sorted_array_len);
   /* check amount of faces */
   /* check parsed array */
 
