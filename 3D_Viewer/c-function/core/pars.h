@@ -14,7 +14,7 @@ typedef struct pars_counters {
   int size_sort_memory;
 } pars_counters;
 
-float *array_sort(char *filename, pars_counters *View);
+float *array_sort(FILE *obj, pars_counters *View);
 float my_atof(char *str);
 int my_atoi(const char *str);
 

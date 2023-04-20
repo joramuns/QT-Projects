@@ -1,27 +1,7 @@
 #include "pars.h"
 
-/* int main() { */
-/*   pars_counters A = {0, 0, 0, 0, 0}; */
-/*   float *array = */
-/*       array_sort("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/" */
-/*                  "c-function/core/coub.obj", */
-/*                  &A); */
-/*   for (int i = 0; i < A.size_sort_array; i++) { */
-/*     if (i % 4 == 0) { */
-/*       printf("\n"); */
-/*     } */
-/*     printf("%f ", array[i]); */
-/*   } */
-/*   printf("\ncount vertex - %d\n\ncount side - %d\n", A.count_vertex, */
-/*          A.count_side); */
-/*   if (array != NULL) { */
-/*     free(array); */
-/*   } */
-/*   return 0; */
-/* } */
-
-float *array_sort(char *filename, pars_counters *View) {
-  FILE *obj = fopen(filename, "r");
+float *array_sort(FILE *obj, pars_counters *View) {
+  // FILE *obj = fopen(filename, "r");
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
@@ -32,46 +12,41 @@ float *array_sort(char *filename, pars_counters *View) {
   float *point_array = (float *)calloc(View->size_unsort_memory, sizeof(float));
   float *sorted_array = (float *)calloc(View->size_sort_memory, sizeof(float));
 
-  if (obj == NULL) {
-    free(sorted_array);
-    sorted_array = NULL;
-  } else {
-    while ((read = getline(&line, &len, obj)) != -1) {
-      if (line[0] == 'v' && line[1] == ' ') {
-        char *token = strtok(line, " ");
-        for (int i = 0; i < 5; i++) {
-          if (View->count_vertex == View->size_unsort_memory) {
-            View->size_unsort_memory *= 2;
-            point_array = (float *)realloc(point_array,
-                                           View->size_unsort_memory * sizeof(float));
-          }
-          if (i == 4 && (token == NULL || token[0] == '\n')) {
-            point_array[View->count_vertex++] = 1.0;
-          } else if (isdigit(token[0]) ||
-                     (token[0] == '-' && isdigit(token[1]))) {
-            point_array[View->count_vertex++] = my_atof(token);
-          }
-          token = strtok(NULL, " ");
+  while ((read = getline(&line, &len, obj)) != -1) {
+    if (line[0] == 'v' && line[1] == ' ') {
+      char *token = strtok(line, " ");
+      for (int i = 0; i < 5; i++) {
+        if (View->count_vertex == View->size_unsort_memory) {
+          View->size_unsort_memory *= 2;
+          point_array = (float *)realloc(point_array, View->size_unsort_memory *
+                                                          sizeof(float));
         }
-      } else if (line[0] == 'f' && line[1] == ' ') {
-        char *token_f = strtok(line, " ");
-        while (token_f) {
-          if (isdigit(token_f[0])) {
-            if (View->size_sort_array == View->size_sort_memory) {
-              View->size_sort_memory *= 2;
-              sorted_array = (float *)realloc(sorted_array,
-                                              View->size_sort_memory * sizeof(float));
-            }
-            int vertex_number = my_atoi(token_f) - 1;
-            for (int i = 0; i < 4; i++) {
-              sorted_array[View->size_sort_array++] =
-                  point_array[vertex_number * 4 + i];
-            }
-          }
-          token_f = strtok(NULL, " ");
+        if (i == 4 && (token == NULL || token[0] == '\n')) {
+          point_array[View->count_vertex++] = 1.0;
+        } else if (isdigit(token[0]) ||
+                   (token[0] == '-' && isdigit(token[1]))) {
+          point_array[View->count_vertex++] = my_atof(token);
         }
-        View->count_side += 1;
+        token = strtok(NULL, " ");
       }
+    } else if (line[0] == 'f' && line[1] == ' ') {
+      char *token_f = strtok(line, " ");
+      while (token_f) {
+        if (isdigit(token_f[0])) {
+          if (View->size_sort_array == View->size_sort_memory) {
+            View->size_sort_memory *= 2;
+            sorted_array = (float *)realloc(
+                sorted_array, View->size_sort_memory * sizeof(float));
+          }
+          int vertex_number = my_atoi(token_f) - 1;
+          for (int i = 0; i < 4; i++) {
+            sorted_array[View->size_sort_array++] =
+                point_array[vertex_number * 4 + i];
+          }
+        }
+        token_f = strtok(NULL, " ");
+      }
+      View->count_side += 1;
     }
   }
   View->count_vertex /= 4;
