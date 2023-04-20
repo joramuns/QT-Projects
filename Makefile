@@ -54,7 +54,7 @@ $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< $(CHECK_FLAGS) -o $@
 
 test: $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(TEST_FILE) $(LCHECK) -lm
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(TEST_FILE) $(LCHECK) -lm
 	@./$(TEST_FILE)
 
 $(LIB_NAME): create_dir $(OBJECTS)
@@ -91,6 +91,9 @@ leaks: clean main
 
 valgrind:
 	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all -s ./$(TEST_EXE)
+
+sanitizer:CFLAGS+=-fsanitize=address
+sanitizer: test
 
 clean:
 	@rm -rf test_test.out*
