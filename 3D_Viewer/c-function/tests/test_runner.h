@@ -4,6 +4,6 @@
 #include <check.h>
 
 Suite* obj_parser_suite();
-/* Suite* affine_suite(); */
+Suite* affine_suite();
 
 #endif /** TESTS_TEST_RUNNER_H **/
