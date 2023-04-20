@@ -10,8 +10,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    #include "c-function/core/core.h"
-    #include "c-function/core/pars.h"
+#include "c-function/core/core.h"
+#include "c-function/core/pars.h"
 #ifdef __cplusplus
 }
 #endif
@@ -21,15 +21,15 @@ class Draw : public QOpenGLWidget, protected QOpenGLFunctions {
 
 public:
   explicit Draw(QWidget *parent = nullptr);
-  
+
   void initializeGL() override;
   void paintGL() override;
   void resizeGL(int w, int h) override;
 
+  Pars_counters view;
+  char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
+                   "c-function/core/coub.obj";
   float *point_array;
-  int count_vertex;
-  int cound_side;
-  int size_sort_array;
 
 public Q_SLOTS:
   void left_move();
