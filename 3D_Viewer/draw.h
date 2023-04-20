@@ -26,7 +26,7 @@ public:
   void paintGL() override;
   void resizeGL(int w, int h) override;
 
-  pars_counters view;
+  Pars_counters view;
   char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
                    "c-function/core/coub.obj";
   float *point_array;
