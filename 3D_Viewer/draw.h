@@ -29,7 +29,6 @@ public:
   Pars_counters view;
   char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
                    "c-function/core/coub.obj";
-  float *point_array;
 
 public Q_SLOTS:
   void left_move();

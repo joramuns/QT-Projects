@@ -2,7 +2,8 @@
 
 // int main() {
 //   pars_counters A = {0, 0, 0, 0, 0};
-//   FILE *obj = fopen("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
+//   FILE *obj =
+//   fopen("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
 //                     "c-function/core/coub.obj",
 //                     "r");
 //   float *array = array_sort(obj, &A);
@@ -21,7 +22,7 @@
 //   return 0;
 // }
 
-float *array_sort(FILE *obj, Pars_counters *view) {
+void *array_sort(FILE *obj, Pars_counters *view) {
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
@@ -30,13 +31,13 @@ float *array_sort(FILE *obj, Pars_counters *view) {
   view->size_sort_memory = 4;
 
   float *point_array = (float *)calloc(view->size_unsort_memory, sizeof(float));
-  float *sorted_array = (float *)calloc(view->size_sort_memory, sizeof(float));
+  view->sorted_array = (float *)calloc(view->size_sort_memory, sizeof(float));
 
   while ((read = getline(&line, &len, obj)) != -1) {
     if (line[0] == 'v' && line[1] == ' ') {
       unsort_array_fill(line, view, &point_array);
     } else if (line[0] == 'f' && line[1] == ' ') {
-      sort_array_fill(line, view, &sorted_array, point_array);
+      sort_array_fill(line, view, point_array);
     }
   }
   view->count_vertex /= 4;
@@ -45,7 +46,6 @@ float *array_sort(FILE *obj, Pars_counters *view) {
   }
   if (line)
     free(line);
-  return sorted_array;
 }
 
 void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
@@ -65,19 +65,18 @@ void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
   }
 }
 
-void sort_array_fill(char *line, Pars_counters *view, float **sorted_array,
-                     float *point_array) {
+void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
   char *token_f = strtok(line, " ");
   while (token_f) {
     if (isdigit(token_f[0])) {
       if (view->size_sort_array == view->size_sort_memory) {
         view->size_sort_memory *= 2;
-        *sorted_array = (float *)realloc(*sorted_array, view->size_sort_memory *
+        view->sorted_array = (float *)realloc(view->sorted_array, view->size_sort_memory *
                                                             sizeof(float));
       }
       int vertex_number = my_atoi(token_f) - 1;
       for (int i = 0; i < 4; i++) {
-        (*sorted_array)[view->size_sort_array++] =
+        view->sorted_array[view->size_sort_array++] =
             point_array[vertex_number * 4 + i];
       }
     }
