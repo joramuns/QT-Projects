@@ -17,7 +17,7 @@ void Draw::initializeGL() {
   if (obj == NULL) {
     // its warning time;
   } else {
-    view = {0, 0, 0, 0, 0};
+    view = {0, 0, 0, 0, 0, 0};
     array_sort(obj, &view);
     fclose(obj);
   }

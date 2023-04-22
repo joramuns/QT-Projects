@@ -22,7 +22,7 @@
 //   return 0;
 // }
 
-void *array_sort(FILE *obj, Pars_counters *view) {
+void array_sort(FILE *obj, Pars_counters *view) {
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
@@ -68,6 +68,14 @@ void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
 void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
   // int f_count = f_counter(line);
   char *token_f = strtok(line, " ");
+
+  // ***
+  // BEBRA STARTS HERE
+  int vertex_number_first = -1;
+  int vertex_number_last = -1;
+  int counter = 0;
+  // ***
+
   while (token_f) {
     if (isdigit(token_f[0])) {
       if (view->size_sort_array == view->size_sort_memory) {
@@ -76,10 +84,49 @@ void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
                                                             sizeof(float));
       }
       int vertex_number = my_atoi(token_f) - 1;
+
+      // ***
+      // Добавляем счетчик
+      counter++;
+      // Сохраняем первый индекс
+      if (vertex_number_first < 0)
+        vertex_number_first = vertex_number;
+      // Если пошла вечеринка на более 3 индексов в строке
+      if (counter > 3) {
+        // Бахаем первый индекс
+        for (int i = 0; i < 4; i++) {
+          view->sorted_array[view->size_sort_array++] =
+              point_array[vertex_number_first * 4 + i];
+        }
+        if (view->size_sort_array == view->size_sort_memory) {
+          view->size_sort_memory *= 2;
+          view->sorted_array = (float *)realloc(view->sorted_array, view->size_sort_memory *
+                                                              sizeof(float));
+        }
+        // Пахаем последний индекс с прошлой итерации
+        for (int i = 0; i < 4; i++) {
+          view->sorted_array[view->size_sort_array++] =
+              point_array[vertex_number_last * 4 + i];
+        }
+        if (view->size_sort_array == view->size_sort_memory) {
+          view->size_sort_memory *= 2;
+          view->sorted_array = (float *)realloc(view->sorted_array, view->size_sort_memory *
+                                                              sizeof(float));
+        }
+      }
+      // ***
+
       for (int i = 0; i < 4; i++) {
         view->sorted_array[view->size_sort_array++] =
             point_array[vertex_number * 4 + i];
       }
+      
+      // ***
+      // Сохраняем последний индекс
+      if (counter > 2)
+        vertex_number_last = vertex_number;
+      // ***
+
     }
     token_f = strtok(NULL, " ");
   }

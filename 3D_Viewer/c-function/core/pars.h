@@ -15,7 +15,7 @@ typedef struct Pars_counters {
   float *sorted_array;
 } Pars_counters;
 
-void *array_sort(FILE *obj, Pars_counters *view);
+void array_sort(FILE *obj, Pars_counters *view);
 void unsort_array_fill(char *line, Pars_counters *view, float **point_array);
 void sort_array_fill(char *line, Pars_counters *view, float *point_array);
 float my_atof(char *str);
