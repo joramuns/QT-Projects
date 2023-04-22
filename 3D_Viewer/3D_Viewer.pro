@@ -1,8 +1,7 @@
-QT += core gui printsupport opengl
+QT += core gui printsupport charts opengl
 
 macx {
   LIBS += -framework OpenGL
-  QT += charts
 }
 unix:!macx {
   LIBS += -lGLU -lGL
