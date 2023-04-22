@@ -1,12 +1,12 @@
 #include "pars.h"
 
 // int main() {
-//   pars_counters A = {0, 0, 0, 0, 0};
+//   Pars_counters A = {0, 0, 0, 0, 0};
 //   FILE *obj =
 //   fopen("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
 //                     "c-function/core/coub.obj",
 //                     "r");
-//   float *array = array_sort(obj, &A);
+//   array_sort(obj, &A);
 //   for (int i = 0; i < A.size_sort_array; i++) {
 //     if (i % 4 == 0) {
 //       printf("\n");
@@ -66,6 +66,7 @@ void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
 }
 
 void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
+  // int f_count = f_counter(line);
   char *token_f = strtok(line, " ");
   while (token_f) {
     if (isdigit(token_f[0])) {
@@ -84,6 +85,8 @@ void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
   }
   view->count_side += 1;
 }
+
+// int f_counter(char *)
 
 float my_atof(char *str) {
   float value = 0.0;

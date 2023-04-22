@@ -43,7 +43,7 @@ void Draw::paintGL() {
   GLuint buffer_id;
   glGenBuffers(1, &buffer_id);
   glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-  glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(view.sorted_array), view.sorted_array, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(GL_FLOAT), view.sorted_array, GL_STATIC_DRAW);
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(0);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
