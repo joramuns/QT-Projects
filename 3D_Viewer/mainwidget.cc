@@ -58,6 +58,8 @@ MainWidget::MainWidget()
     scale_minus->setShortcut(QKeySequence(Qt::Key_Minus));
     connect(scale_minus, &QPushButton::clicked, m_paint_widget, &Draw::scale_minus);
 
+    file_select = createButton("Select File");
+    connect(file_select, &QPushButton::clicked, m_paint_widget, &Draw::select_file);
 
     m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
 

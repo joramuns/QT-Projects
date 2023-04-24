@@ -1,27 +1,5 @@
 #include "pars.h"
 
-// int main() {
-//   Pars_counters A = {0, 0, 0, 0, 0};
-//   FILE *obj =
-//   fopen("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
-//                     "c-function/core/coub.obj",
-//                     "r");
-//   array_sort(obj, &A);
-//   for (int i = 0; i < A.size_sort_array; i++) {
-//     if (i % 4 == 0) {
-//       printf("\n");
-//     }
-//     printf("%f ", array[i]);
-//   }
-//   printf("\ncount vertex - %d\n\ncount side - %d\n", A.count_vertex,
-//          A.count_side);
-//   if (array != NULL) {
-//     free(array);
-//   }
-//   fclose(obj);
-//   return 0;
-// }
-
 void array_sort(FILE *obj, Pars_counters *view) {
   char *line = NULL;
   size_t len = 0;
@@ -66,74 +44,52 @@ void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
 }
 
 void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
-  // int f_count = f_counter(line);
   char *token_f = strtok(line, " ");
 
-  // ***
-  // BEBRA STARTS HERE
   int vertex_number_first = -1;
   int vertex_number_last = -1;
   int counter = 0;
-  // ***
 
   while (token_f) {
     if (isdigit(token_f[0])) {
-      if (view->size_sort_array == view->size_sort_memory) {
-        view->size_sort_memory *= 2;
-        view->sorted_array = (float *)realloc(view->sorted_array, view->size_sort_memory *
-                                                            sizeof(float));
-      }
-      int vertex_number = my_atoi(token_f) - 1;
 
-      // ***
-      // Добавляем счетчик
+      memory_of_sort_alloc(view);
+
+      int vertex_number = my_atoi(token_f) - 1;
       counter++;
-      // Сохраняем первый индекс
+
       if (vertex_number_first < 0)
         vertex_number_first = vertex_number;
-      // Если пошла вечеринка на более 3 индексов в строке
       if (counter > 3) {
-        // Бахаем первый индекс
-        for (int i = 0; i < 4; i++) {
-          view->sorted_array[view->size_sort_array++] =
-              point_array[vertex_number_first * 4 + i];
-        }
-        if (view->size_sort_array == view->size_sort_memory) {
-          view->size_sort_memory *= 2;
-          view->sorted_array = (float *)realloc(view->sorted_array, view->size_sort_memory *
-                                                              sizeof(float));
-        }
-        // Пахаем последний индекс с прошлой итерации
-        for (int i = 0; i < 4; i++) {
-          view->sorted_array[view->size_sort_array++] =
-              point_array[vertex_number_last * 4 + i];
-        }
-        if (view->size_sort_array == view->size_sort_memory) {
-          view->size_sort_memory *= 2;
-          view->sorted_array = (float *)realloc(view->sorted_array, view->size_sort_memory *
-                                                              sizeof(float));
-        }
+        point_assignment(view, point_array, vertex_number_first);
+        memory_of_sort_alloc(view);
+        point_assignment(view, point_array, vertex_number_last);
+        memory_of_sort_alloc(view);
       }
-      // ***
-
-      for (int i = 0; i < 4; i++) {
-        view->sorted_array[view->size_sort_array++] =
-            point_array[vertex_number * 4 + i];
-      }
-      
-      // ***
-      // Сохраняем последний индекс
+      point_assignment(view, point_array, vertex_number);
       if (counter > 2)
         vertex_number_last = vertex_number;
-      // ***
-
     }
     token_f = strtok(NULL, " ");
   }
   view->count_side += 1;
 }
 
-// int f_counter(char *)
+void memory_of_sort_alloc(Pars_counters *view) {
+  if (view->size_sort_array == view->size_sort_memory) {
+    view->size_sort_memory *= 2;
+    view->sorted_array = (float *)realloc(
+        view->sorted_array, view->size_sort_memory * sizeof(float));
+  }
+}
+
+void point_assignment(Pars_counters *view, float *point_array,
+                      int index_of_point) {
+  for (int i = 0; i < 4; i++) {
+    view->sorted_array[view->size_sort_array++] =
+        point_array[index_of_point * 4 + i];
+  }
+}
 
 float my_atof(char *str) {
   float value = 0.0;
