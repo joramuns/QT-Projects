@@ -48,7 +48,19 @@ void Draw::paintGL() {
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(0);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+  glLineStipple(1, 3);
+  glEnable(GL_LINE_STIPPLE);
   glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
+  glDisable(GL_LINE_STIPPLE);
+
+  glEnable(GL_POINT_SMOOTH);
+  glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+  glPointSize(10.0f);
+
+  glDrawArrays(GL_POINTS, 0, view.size_sort_array);
+
+  glDisable(GL_POINT_SMOOTH);
   glDisableVertexAttribArray(0);
   glDeleteBuffers(1, &buffer_id);
 }
