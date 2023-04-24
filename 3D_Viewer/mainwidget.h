@@ -27,6 +27,8 @@ private:
 
     MyButton *scale_plus;
     MyButton *scale_minus;
+    
+    MyButton *file_select;
 
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;

@@ -75,6 +75,7 @@ MainWidget::MainWidget()
     m_main_layout->addWidget(z_counterclockwise,    19, 12, 1, 2);
     m_main_layout->addWidget(scale_plus,            18, 18, 2, 1);
     m_main_layout->addWidget(scale_minus,           18, 19, 2, 1);
+    m_main_layout->addWidget(file_select,           20,  1, 2, 1);
 
     //QString fileName = QFileDialog::getOpenFileName(this, tr("Выберите файл"), "/home", tr("Файлы (*)"));
 
