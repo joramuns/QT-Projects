@@ -6,6 +6,7 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QTimer>
+#include <QFileDialog>
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,8 +28,10 @@ public:
   void resizeGL(int w, int h) override;
 
   Pars_counters view;
-  char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
-                   "c-function/core/coub.obj";
+  QString fileName;
+  const char *file_name;
+  // char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
+  //                  "c-function/core/coub.obj";
 
 public Q_SLOTS:
   void left_move();
@@ -47,6 +50,8 @@ public Q_SLOTS:
 
   void scale_plus();
   void scale_minus();
+
+  void select_file();
 };
 
 #endif // DRAW_H

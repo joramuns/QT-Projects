@@ -11,10 +11,13 @@
 Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
 
 void Draw::initializeGL() {
+  if (fileName == "") {
+    select_file();
+  }
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
   view = {0, 0, 0, 0, 0, 0};
-  FILE *obj = fopen(filename, "r");
+  FILE *obj = fopen(file_name, "r");
   if (obj == NULL) {
     // its warning time;
   } else {
@@ -111,4 +114,14 @@ void Draw::scale_plus() {
 void Draw::scale_minus() {
   scaling(1 - SHIFT, view.sorted_array, view.size_sort_array);
   repaint();
+}
+
+void Draw::select_file() {
+  fileName = QFileDialog::getOpenFileName(this, tr("Выбрать файл"), "",
+                                          tr("Файлы (*.obj)"));
+  if (fileName != "") {
+    std::string strStd = fileName.toStdString();
+    file_name = strStd.c_str();
+    initializeGL();
+  }
 }
