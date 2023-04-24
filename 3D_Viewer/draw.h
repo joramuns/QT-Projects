@@ -7,6 +7,7 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 #include <QFileDialog>
+#include <QColorDialog>
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,6 +17,20 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+enum PrefMask {
+  kProjection = 1,
+  kDashed,
+  kVertex,
+  kSquareVertex
+};
+
+struct Prefs {
+  QColor bg_color;
+  QColor vertex_color;
+  QColor faces_color;
+  unsigned bit_bools;
+};
 
 class Draw : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT;
@@ -52,6 +67,21 @@ public Q_SLOTS:
   void scale_minus();
 
   void select_file();
+  void bg_select_color();
+  void vertex_select_color();
+  void faces_select_color();
+
+  void toggle_show_vertex();
+
+private:
+  Prefs preferences = {
+    .bg_color = QColor(0, 0, 0),
+    .vertex_color = QColor(255, 255, 255),
+    .faces_color = QColor(0, 255, 0),
+    .bit_bools = 0
+  };
+  void setPref(Prefs& source, PrefMask mask, bool setter);
+  bool getPref(const Prefs& source, PrefMask mask);
 };
 
 #endif // DRAW_H

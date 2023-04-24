@@ -37,12 +37,19 @@ void Draw::resizeGL(int w, int h) {
 }
 
 void Draw::paintGL() {
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glClearColor(
+      preferences.bg_color.redF(), 
+      preferences.bg_color.greenF(), 
+      preferences.bg_color.blueF(), 
+      preferences.bg_color.alphaF());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   glTranslatef(0, 0, -2);
-  glColor3f(0.0f, 1.0f, 0.0f);
+  glColor3f(
+      preferences.faces_color.redF(),
+      preferences.faces_color.greenF(),
+      preferences.faces_color.blueF());
   GLuint buffer_id;
   glGenBuffers(1, &buffer_id);
   glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
@@ -53,17 +60,26 @@ void Draw::paintGL() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
   glLineStipple(1, 3);
-  glEnable(GL_LINE_STIPPLE);
-  glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
-  glDisable(GL_LINE_STIPPLE);
+  if (getPref(preferences, kDashed)) {
+    glEnable(GL_LINE_STIPPLE);
+    glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
+    glDisable(GL_LINE_STIPPLE);
+  } else {
+    glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
+  }
 
-  glEnable(GL_POINT_SMOOTH);
-  glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-  glPointSize(10.0f);
+  if (getPref(preferences, kVertex)) {
+    glEnable(GL_POINT_SMOOTH);
+    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+    glPointSize(10.0f);
+    glColor3f(
+        preferences.vertex_color.redF(),
+        preferences.vertex_color.greenF(),
+        preferences.vertex_color.blueF());
+    glDrawArrays(GL_POINTS, 0, view.size_sort_array);
+    glDisable(GL_POINT_SMOOTH);
+  }
 
-  glDrawArrays(GL_POINTS, 0, view.size_sort_array);
-
-  glDisable(GL_POINT_SMOOTH);
   glDisableVertexAttribArray(0);
   glDeleteBuffers(1, &buffer_id);
 }
@@ -136,4 +152,39 @@ void Draw::select_file() {
     file_name = strStd.c_str();
     initializeGL();
   }
+}
+
+void Draw::bg_select_color() {
+  preferences.bg_color = QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
+}
+
+void Draw::faces_select_color() {
+  preferences.faces_color = QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
+}
+
+void Draw::vertex_select_color() {
+  preferences.vertex_color = QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
+}
+
+void Draw::toggle_show_vertex() {
+  if (getPref(preferences, kVertex)) {
+    setPref(preferences, kDashed, false);
+  } else {
+    setPref(preferences, kDashed, true);
+  }
+  update();
+}
+
+void Draw::setPref(Prefs& source, PrefMask mask, bool setter) {
+  if (setter) {
+    printf("\nvikl\n");
+    source.bit_bools |= 1U << mask;
+  } else {
+    printf("\nvikl\n");
+    source.bit_bools &= ~(1U << mask);
+  }
+}
+
+bool Draw::getPref(const Prefs& source, PrefMask mask) {
+  return source.bit_bools & (1U << mask);
 }

@@ -61,6 +61,18 @@ MainWidget::MainWidget()
     file_select = createButton("Select File");
     connect(file_select, &QPushButton::clicked, m_paint_widget, &Draw::select_file);
 
+    bg_color_select = createButton("Vibiriti bg cvet");
+    connect(bg_color_select, &QPushButton::clicked, m_paint_widget, &Draw::bg_select_color);
+
+    vertex_color_select = createButton("Vibiriti tochko cvet");
+    connect(vertex_color_select, &QPushButton::clicked, m_paint_widget, &Draw::vertex_select_color);
+
+    faces_color_select = createButton("Vibiriti bebro cvet");
+    connect(faces_color_select, &QPushButton::clicked, m_paint_widget, &Draw::faces_select_color);
+    
+    show_vertex = createButton("Risuy bebru");
+    connect(show_vertex, &QPushButton::clicked, m_paint_widget, &Draw::toggle_show_vertex);
+
     m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
 
     m_main_layout->addWidget(x_minus,               18, 0,  2, 2);
@@ -76,6 +88,10 @@ MainWidget::MainWidget()
     m_main_layout->addWidget(scale_plus,            18, 18, 2, 1);
     m_main_layout->addWidget(scale_minus,           18, 19, 2, 1);
     m_main_layout->addWidget(file_select,           20,  1, 2, 1);
+    m_main_layout->addWidget(bg_color_select,       20,  3, 2, 1);
+    m_main_layout->addWidget(vertex_color_select,   20,  5, 2, 1);
+    m_main_layout->addWidget(faces_color_select,    20,  7, 2, 1);
+    m_main_layout->addWidget(show_vertex,           20,  9, 2, 1);
 
     //QString fileName = QFileDialog::getOpenFileName(this, tr("Выберите файл"), "/home", tr("Файлы (*)"));
 

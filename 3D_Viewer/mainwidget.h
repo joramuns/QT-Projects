@@ -29,6 +29,11 @@ private:
     MyButton *scale_minus;
     
     MyButton *file_select;
+    MyButton *bg_color_select;
+    MyButton *vertex_color_select;
+    MyButton *faces_color_select;
+
+    MyButton *show_vertex;
 
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;
