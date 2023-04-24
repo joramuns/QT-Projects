@@ -11,20 +11,15 @@
 Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
 
 void Draw::initializeGL() {
-  if (fileName == "") {
-    select_file();
-  }
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
   view = {0, 0, 0, 0, 0, 0};
   FILE *obj = fopen(file_name, "r");
   if (obj == NULL) {
-    // its warning time;
   } else {
     array_sort(obj, &view);
     fclose(obj);
   }
-  this->resize(800, 800);
   this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
@@ -32,8 +27,15 @@ void Draw::resizeGL(int w, int h) {
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  // glOrtho(-1, 1, -1, 1, -1, 2);
-  gluPerspective(60, 1, 0.5, 100);
+  if (perspective) {
+    gluPerspective(60, (float)w / h, 0.5, 100);
+    glTranslatef(0, 0, -2);
+  } else {
+    glOrtho(-1, 1, -1, 1, -1, 2);
+    glLoadIdentity();
+  }
+
+  glMatrixMode(GL_MODELVIEW);
 }
 
 void Draw::paintGL() {
@@ -41,7 +43,6 @@ void Draw::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  glTranslatef(0, 0, -2);
   glColor3f(0.0f, 1.0f, 0.0f);
   GLuint buffer_id;
   glGenBuffers(1, &buffer_id);
@@ -73,6 +74,16 @@ void Draw::up_move() {
 
 void Draw::down_move() {
   coordinate_change(0.0, -SHIFT, 0.0, view.sorted_array, view.size_sort_array);
+  repaint();
+}
+
+void Draw::in_move() {
+  coordinate_change(0.0, 0.0, SHIFT, view.sorted_array, view.size_sort_array);
+  repaint();
+}
+
+void Draw::out_move() {
+  coordinate_change(0.0, 0.0, -SHIFT, view.sorted_array, view.size_sort_array);
   repaint();
 }
 
@@ -117,11 +128,21 @@ void Draw::scale_minus() {
 }
 
 void Draw::select_file() {
-  fileName = QFileDialog::getOpenFileName(this, tr("Выбрать файл"), "",
-                                          tr("Файлы (*.obj)"));
+  fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
+                                          tr("Files (*.obj)"));
   if (fileName != "") {
     std::string strStd = fileName.toStdString();
     file_name = strStd.c_str();
     initializeGL();
   }
+}
+
+void Draw::perspective_change() {
+  if (perspective) {
+    perspective--;
+  } else {
+    perspective++;
+  }
+  printf("%d\n", perspective);
+  update();
 }

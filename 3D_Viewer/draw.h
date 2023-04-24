@@ -30,14 +30,15 @@ public:
   Pars_counters view;
   QString fileName;
   const char *file_name;
-  // char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
-  //                  "c-function/core/coub.obj";
+  int perspective=1;
 
 public Q_SLOTS:
   void left_move();
   void right_move();
   void up_move();
   void down_move();
+  void in_move();
+  void out_move();
 
   void turn_x();
   void turn_counter_x();
@@ -52,6 +53,8 @@ public Q_SLOTS:
   void scale_minus();
 
   void select_file();
+
+  void perspective_change();
 };
 
 #endif // DRAW_H
