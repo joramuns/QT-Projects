@@ -79,6 +79,12 @@ MainWidget::MainWidget()
     squared_rounded_vertex = createButton("Shape of vertex");
     connect(squared_rounded_vertex, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kSquareVertex); });
 
+    vertex_size = new QSpinBox(this);
+    connect(vertex_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { m_paint_widget->setVertexSize(vertex_size->value()); });
+
+    line_size = new QSpinBox(this);
+    connect(line_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { m_paint_widget->setLineSize(line_size->value()); });
+
     m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
 
     m_main_layout->addWidget(x_minus,               18, 0,  2, 2);
@@ -100,6 +106,8 @@ MainWidget::MainWidget()
     m_main_layout->addWidget(show_vertex,           20,  9, 2, 1);
     m_main_layout->addWidget(dashed_face,           20,  11, 2, 1);
     m_main_layout->addWidget(squared_rounded_vertex,       20,  13, 2, 1);
+    m_main_layout->addWidget(vertex_size, 21, 0, 4, 1);
+    m_main_layout->addWidget(line_size, 21, 10, 4, 1);
 
     //QString fileName = QFileDialog::getOpenFileName(this, tr("Выберите файл"), "/home", tr("Файлы (*)"));
 
@@ -130,6 +138,8 @@ MainWidget::~MainWidget() {
   delete faces_color_select;
 
   delete show_vertex;
+  delete vertex_size;
+  delete line_size;
 }
 
 MyButton* MainWidget::createButton(QString text) {

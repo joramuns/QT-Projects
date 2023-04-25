@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGridLayout>
+#include <QSpinBox>
 #include "mybutton.h"
 #include "draw.h"
 
@@ -37,6 +38,9 @@ private:
     MyButton *show_vertex;
     MyButton *dashed_face;
     MyButton *squared_rounded_vertex;
+
+    QSpinBox *vertex_size;
+    QSpinBox *line_size;
 
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;

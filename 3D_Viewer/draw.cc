@@ -60,8 +60,11 @@ void Draw::paintGL() {
   glEnableVertexAttribArray(0);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-  glLineStipple(1, 3);
+  float kek = 1 + preferences.l_size;
+  printf("%f\n", kek);
+  glLineWidth(kek);
   if (getPref(preferences, kDashed)) {
+    glLineStipple(1, 3);
     glEnable(GL_LINE_STIPPLE);
     glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
     glDisable(GL_LINE_STIPPLE);
@@ -75,7 +78,7 @@ void Draw::paintGL() {
       glEnable(GL_POINT_SMOOTH);
       glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     }
-    glPointSize(10.0f);
+    glPointSize(10.0f + preferences.v_size);
     glColor3f(
         preferences.vertex_color.redF(),
         preferences.vertex_color.greenF(),
@@ -191,4 +194,14 @@ void Draw::setPref(Prefs& source, PrefMask mask, bool setter) {
 
 bool Draw::getPref(const Prefs& source, PrefMask mask) {
   return source.bit_bools & (1U << mask);
+}
+
+void Draw::setVertexSize(int size) {
+  preferences.v_size = size;
+  update();
+}
+
+void Draw::setLineSize(int size) {
+  preferences.l_size = size;
+  update();
 }
