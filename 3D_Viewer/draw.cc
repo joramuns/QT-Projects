@@ -1,3 +1,4 @@
+#define GL_SILENCE_DEPRECATION
 #include "draw.h"
 #if defined(__APPLE__)
 #include <OpenGL/glu.h>
@@ -8,7 +9,7 @@
 
 #define SHIFT 0.03
 
-Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
+Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) { file_name = nullptr; }
 
 void Draw::initializeGL() {
   if (fileName == "") {
