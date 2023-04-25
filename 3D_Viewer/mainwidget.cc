@@ -61,17 +61,23 @@ MainWidget::MainWidget()
     file_select = createButton("Select File");
     connect(file_select, &QPushButton::clicked, m_paint_widget, &Draw::select_file);
 
-    bg_color_select = createButton("Vibiriti bg cvet");
+    bg_color_select = createButton("Choose background color");
     connect(bg_color_select, &QPushButton::clicked, m_paint_widget, &Draw::bg_select_color);
 
-    vertex_color_select = createButton("Vibiriti tochko cvet");
+    vertex_color_select = createButton("Choose vertex color");
     connect(vertex_color_select, &QPushButton::clicked, m_paint_widget, &Draw::vertex_select_color);
 
-    faces_color_select = createButton("Vibiriti bebro cvet");
+    faces_color_select = createButton("Choose face color");
     connect(faces_color_select, &QPushButton::clicked, m_paint_widget, &Draw::faces_select_color);
     
-    show_vertex = createButton("Risuy bebru");
-    connect(show_vertex, &QPushButton::clicked, m_paint_widget, &Draw::toggle_show_vertex);
+    show_vertex = createButton("Show vertex");
+    connect(show_vertex, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kVertex); });
+
+    dashed_face = createButton("Dashed lines");
+    connect(dashed_face, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kDashed); });
+
+    squared_rounded_vertex = createButton("Shape of vertex");
+    connect(squared_rounded_vertex, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kSquareVertex); });
 
     m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
 
@@ -92,10 +98,38 @@ MainWidget::MainWidget()
     m_main_layout->addWidget(vertex_color_select,   20,  5, 2, 1);
     m_main_layout->addWidget(faces_color_select,    20,  7, 2, 1);
     m_main_layout->addWidget(show_vertex,           20,  9, 2, 1);
+    m_main_layout->addWidget(dashed_face,           20,  11, 2, 1);
+    m_main_layout->addWidget(squared_rounded_vertex,       20,  13, 2, 1);
 
     //QString fileName = QFileDialog::getOpenFileName(this, tr("Выберите файл"), "/home", tr("Файлы (*)"));
 
     this->setWindowTitle("3D_View");
+}
+
+MainWidget::~MainWidget() {
+  delete m_main_layout;
+  delete m_paint_widget;
+  delete x_minus;
+  delete x_plus;
+  delete y_minus;
+  delete y_plus;
+
+  delete x_clockwise;
+  delete x_counterclockwise;
+  delete y_clockwise;
+  delete y_counterclockwise;
+  delete z_clockwise;
+  delete z_counterclockwise;
+
+  delete scale_plus;
+  delete scale_minus;
+  
+  delete file_select;
+  delete bg_color_select;
+  delete vertex_color_select;
+  delete faces_color_select;
+
+  delete show_vertex;
 }
 
 MyButton* MainWidget::createButton(QString text) {

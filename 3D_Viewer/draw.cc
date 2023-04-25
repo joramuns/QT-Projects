@@ -69,15 +69,20 @@ void Draw::paintGL() {
   }
 
   if (getPref(preferences, kVertex)) {
-    glEnable(GL_POINT_SMOOTH);
-    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+    bool squared = getPref(preferences, kSquareVertex); 
+    if (squared) {
+      glEnable(GL_POINT_SMOOTH);
+      glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+    }
     glPointSize(10.0f);
     glColor3f(
         preferences.vertex_color.redF(),
         preferences.vertex_color.greenF(),
         preferences.vertex_color.blueF());
     glDrawArrays(GL_POINTS, 0, view.size_sort_array);
-    glDisable(GL_POINT_SMOOTH);
+    if (squared) {
+      glDisable(GL_POINT_SMOOTH);
+    }
   }
 
   glDisableVertexAttribArray(0);
@@ -166,21 +171,19 @@ void Draw::vertex_select_color() {
   preferences.vertex_color = QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
 }
 
-void Draw::toggle_show_vertex() {
-  if (getPref(preferences, kVertex)) {
-    setPref(preferences, kDashed, false);
+void Draw::toggle_pref(PrefMask mask) {
+  if (getPref(preferences, mask)) {
+    setPref(preferences, mask, false);
   } else {
-    setPref(preferences, kDashed, true);
+    setPref(preferences, mask, true);
   }
   update();
 }
 
 void Draw::setPref(Prefs& source, PrefMask mask, bool setter) {
   if (setter) {
-    printf("\nvikl\n");
     source.bit_bools |= 1U << mask;
   } else {
-    printf("\nvikl\n");
     source.bit_bools &= ~(1U << mask);
   }
 }

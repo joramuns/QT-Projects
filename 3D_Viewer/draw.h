@@ -71,7 +71,7 @@ public Q_SLOTS:
   void vertex_select_color();
   void faces_select_color();
 
-  void toggle_show_vertex();
+  void toggle_pref(PrefMask mask);
 
 private:
   Prefs preferences = {

@@ -11,6 +11,7 @@ class MainWidget : public QWidget
     Q_OBJECT
 public:
     MainWidget();
+    ~MainWidget();
     Draw *m_paint_widget;
 private:
     MyButton *x_minus;
@@ -34,6 +35,8 @@ private:
     MyButton *faces_color_select;
 
     MyButton *show_vertex;
+    MyButton *dashed_face;
+    MyButton *squared_rounded_vertex;
 
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;
