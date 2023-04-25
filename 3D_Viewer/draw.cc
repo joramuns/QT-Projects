@@ -13,7 +13,6 @@ Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
 void Draw::initializeGL() {
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
-  view = {0, 0, 0, 0, 0, 0};
   FILE *obj = fopen(file_name, "r");
   if (obj == NULL) {
   } else {
@@ -32,9 +31,7 @@ void Draw::resizeGL(int w, int h) {
     glTranslatef(0, 0, -2);
   } else {
     glOrtho(-1, 1, -1, 1, -1, 2);
-    glLoadIdentity();
   }
-
   glMatrixMode(GL_MODELVIEW);
 }
 
@@ -133,7 +130,7 @@ void Draw::select_file() {
   if (fileName != "") {
     std::string strStd = fileName.toStdString();
     file_name = strStd.c_str();
-    initializeGL();
+    this->initializeGL();
   }
 }
 
@@ -143,6 +140,7 @@ void Draw::perspective_change() {
   } else {
     perspective++;
   }
-  printf("%d\n", perspective);
+  this->initializeGL();
+  this->resizeGL(width(), height());
   update();
 }

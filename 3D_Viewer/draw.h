@@ -1,12 +1,12 @@
 #ifndef DRAW_H
 #define DRAW_H
 
+#include <QFileDialog>
 #include <QGridLayout>
 #include <QMouseEvent>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QTimer>
-#include <QFileDialog>
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,10 +27,10 @@ public:
   void paintGL() override;
   void resizeGL(int w, int h) override;
 
-  Pars_counters view;
+  Pars_counters view = {0, 0, 0, 0, 0, 0};
   QString fileName;
   const char *file_name;
-  int perspective=1;
+  int perspective = 1;
 
 public Q_SLOTS:
   void left_move();
