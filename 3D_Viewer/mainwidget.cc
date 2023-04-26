@@ -80,9 +80,13 @@ MainWidget::MainWidget()
     connect(squared_rounded_vertex, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kSquareVertex); });
 
     vertex_size = new QSpinBox(this);
+    vertex_size->setRange(1, 20);
+    vertex_size->setValue(m_paint_widget->getVertexSize());
     connect(vertex_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { m_paint_widget->setVertexSize(vertex_size->value()); });
 
     line_size = new QSpinBox(this);
+    line_size->setRange(1, 20);
+    line_size->setValue(m_paint_widget->getLineSize());
     connect(line_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { m_paint_widget->setLineSize(line_size->value()); });
 
     m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);

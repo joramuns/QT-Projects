@@ -74,7 +74,9 @@ public Q_SLOTS:
   void faces_select_color();
 
   void toggle_pref(PrefMask mask);
+  int getVertexSize();
   void setVertexSize(int size);
+  int getLineSize();
   void setLineSize(int size);
 
 private:
@@ -83,7 +85,7 @@ private:
     .vertex_color = QColor(255, 255, 255),
     .faces_color = QColor(0, 255, 0),
     .bit_bools = 0,
-    .v_size = 1,
+    .v_size = 3,
     .l_size = 1,
   };
   void setPref(Prefs& source, PrefMask mask, bool setter);
