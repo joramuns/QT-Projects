@@ -2,14 +2,18 @@
 #include "mainwidget.h"
 #include <QLabel>
 #include <QFileDialog>
+#include <QSettings>
+#include <QApplication>
+#include <QDir>
 
 MainWidget::MainWidget()
 {
     m_main_layout = new QGridLayout();
     m_paint_widget = new Draw();
+    readSettings();
 
-    this->setLayout(m_main_layout);
-    this->resize(1024, 1024);
+    setLayout(m_main_layout);
+    resize(1024, 1024);
 
     x_minus = createButton("Left");
     x_minus->setShortcut(QKeySequence(Qt::Key_Left));
@@ -82,13 +86,26 @@ MainWidget::MainWidget()
 
     vertex_size = new QSpinBox(this);
     vertex_size->setRange(1, 20);
-    vertex_size->setValue(m_paint_widget->getVertexSize());
-    connect(vertex_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { m_paint_widget->setVertexSize(vertex_size->value()); });
+    vertex_size->setValue(m_paint_widget->preferences.v_size);
+    vertex_size->setKeyboardTracking(false);
+    vertex_size->setFocusPolicy(Qt::NoFocus);
+    vertex_size->resize(1, 4);
+    vertex_size->setAlignment(Qt::AlignRight);
+    connect(vertex_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { 
+        m_paint_widget->preferences.v_size = vertex_size->value(); 
+        m_paint_widget->update();
+        });
 
     line_size = new QSpinBox(this);
     line_size->setRange(1, 20);
-    line_size->setValue(m_paint_widget->getLineSize());
-    connect(line_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { m_paint_widget->setLineSize(line_size->value()); });
+    line_size->setValue(m_paint_widget->preferences.l_size);
+    line_size->setFocusPolicy(Qt::NoFocus);
+    line_size->resize(1, 4);
+    line_size->setAlignment(Qt::AlignRight);
+    connect(line_size, &QSpinBox::valueChanged, m_paint_widget, [=]() {
+        m_paint_widget->preferences.l_size = line_size->value(); 
+        m_paint_widget->update();
+        });
 
     m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
 
@@ -111,12 +128,12 @@ MainWidget::MainWidget()
     m_main_layout->addWidget(show_vertex,           20,  9, 2, 1);
     m_main_layout->addWidget(dashed_face,           20,  11, 2, 1);
     m_main_layout->addWidget(squared_rounded_vertex,       20,  13, 2, 1);
-    m_main_layout->addWidget(vertex_size, 21, 0, 4, 1);
-    m_main_layout->addWidget(line_size, 21, 10, 4, 1);
+    m_main_layout->addWidget(vertex_size, 22, 0, 2, 4);
+    m_main_layout->addWidget(line_size, 22, 4, 2, 4);
 
     //QString fileName = QFileDialog::getOpenFileName(this, tr("Выберите файл"), "/home", tr("Файлы (*)"));
 
-    this->setWindowTitle("3D_View");
+    setWindowTitle("3D_View");
 }
 
 MainWidget::~MainWidget() {
@@ -149,8 +166,34 @@ MainWidget::~MainWidget() {
   delete line_size;
 }
 
+void MainWidget::closeEvent(QCloseEvent *event) {
+  saveSettings();
+  event->accept();
+}
+
 MyButton* MainWidget::createButton(QString text) {
     MyButton *button = new MyButton(text);
     return button;
 }
 
+void MainWidget::saveSettings() {
+  QString appPath = QCoreApplication::applicationDirPath();
+  QSettings settings(appPath + "/config.ini", QSettings::IniFormat);
+  settings.setValue("line size", m_paint_widget->preferences.l_size);
+  settings.setValue("vertex size", m_paint_widget->preferences.v_size);
+  settings.setValue("preferences bit", m_paint_widget->preferences.bit_bools);
+  settings.setValue("background color", m_paint_widget->preferences.bg_color);
+  settings.setValue("vertex color", m_paint_widget->preferences.vertex_color);
+  settings.setValue("faces color", m_paint_widget->preferences.faces_color);
+}
+
+void MainWidget::readSettings() {
+  QString appPath = QCoreApplication::applicationDirPath();
+  QSettings settings(appPath + "/config.ini", QSettings::IniFormat);
+  m_paint_widget->preferences.l_size = settings.value("line size", 1).toInt();
+  m_paint_widget->preferences.v_size = settings.value("vertex size", 3).toInt();
+  m_paint_widget->preferences.bit_bools = settings.value("preferences bit", 0).toUInt();
+  m_paint_widget->preferences.bg_color = settings.value("background color", QColor(0, 0, 0)).value<QColor>();
+  m_paint_widget->preferences.vertex_color = settings.value("vertex color", QColor(255, 255, 255)).value<QColor>();
+  m_paint_widget->preferences.faces_color = settings.value("faces color", QColor(0, 255, 0)).value<QColor>();
+}

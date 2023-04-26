@@ -48,6 +48,14 @@ public:
   QString fileName;
   const char *file_name;
   GLuint VBO = 0;
+  Prefs preferences = {
+    .bg_color = QColor(0, 0, 0),
+    .vertex_color = QColor(255, 255, 255),
+    .faces_color = QColor(0, 255, 0),
+    .bit_bools = 0,
+    .v_size = 3,
+    .l_size = 1,
+  };
   // char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
   //                  "c-function/core/coub.obj";
 
@@ -75,20 +83,8 @@ public Q_SLOTS:
   void faces_select_color();
 
   void toggle_pref(PrefMask mask);
-  int getVertexSize();
-  void setVertexSize(int size);
-  int getLineSize();
-  void setLineSize(int size);
 
 private:
-  Prefs preferences = {
-    .bg_color = QColor(0, 0, 0),
-    .vertex_color = QColor(255, 255, 255),
-    .faces_color = QColor(0, 255, 0),
-    .bit_bools = 0,
-    .v_size = 3,
-    .l_size = 1,
-  };
   void setPref(Prefs& source, PrefMask mask, bool setter);
   bool getPref(const Prefs& source, PrefMask mask);
 };

@@ -191,21 +191,3 @@ void Draw::setPref(Prefs& source, PrefMask mask, bool setter) {
 bool Draw::getPref(const Prefs& source, PrefMask mask) {
   return source.bit_bools & (1U << mask);
 }
-
-int Draw::getVertexSize() {
-  return preferences.v_size;
-}
-
-void Draw::setVertexSize(int size) {
-  preferences.v_size = size;
-  update();
-}
-
-int Draw::getLineSize() {
-  return preferences.l_size;
-}
-
-void Draw::setLineSize(int size) {
-  preferences.l_size = size;
-  update();
-}

@@ -14,6 +14,9 @@ public:
     MainWidget();
     ~MainWidget();
     Draw *m_paint_widget;
+    void closeEvent(QCloseEvent *event);
+    void saveSettings();
+    void readSettings();
 private:
     MyButton *x_minus;
     MyButton *x_plus;
