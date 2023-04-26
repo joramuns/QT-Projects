@@ -1,3 +1,4 @@
+#define GL_SILENCE_DEPRECATION
 #include "mainwidget.h"
 #include <QLabel>
 #include <QFileDialog>
@@ -119,6 +120,8 @@ MainWidget::MainWidget()
 }
 
 MainWidget::~MainWidget() {
+  glDisableVertexAttribArray(0);
+  glDeleteBuffers(1, &m_paint_widget->VBO);
   delete m_main_layout;
   delete m_paint_widget;
   delete x_minus;

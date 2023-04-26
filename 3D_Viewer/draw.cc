@@ -33,32 +33,33 @@ void Draw::resizeGL(int w, int h) {
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  // glOrtho(-1, 1, -1, 1, -1, 2);
+  /* glOrtho(-1, 1, -1, 1, -1, 2); */
   gluPerspective(60, 1, 0.5, 100);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glTranslatef(0, 0, -2);
+
+  glGenBuffers(1, &VBO);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(GL_FLOAT),
+               view.sorted_array, GL_DYNAMIC_DRAW);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(0);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void Draw::paintGL() {
+  glBufferSubData(GL_ARRAY_BUFFER, 0, view.size_sort_array * sizeof(GL_FLOAT), view.sorted_array);
   glClearColor(
       preferences.bg_color.redF(), 
       preferences.bg_color.greenF(), 
       preferences.bg_color.blueF(), 
       preferences.bg_color.alphaF());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  glTranslatef(0, 0, -2);
   glColor3f(
       preferences.faces_color.redF(),
       preferences.faces_color.greenF(),
       preferences.faces_color.blueF());
-  GLuint buffer_id;
-  glGenBuffers(1, &buffer_id);
-  glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-  glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(GL_FLOAT),
-               view.sorted_array, GL_STATIC_DRAW);
-  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-  glEnableVertexAttribArray(0);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
   glLineWidth(preferences.l_size);
   if (getPref(preferences, kDashed)) {
@@ -86,9 +87,6 @@ void Draw::paintGL() {
       glDisable(GL_POINT_SMOOTH);
     }
   }
-
-  glDisableVertexAttribArray(0);
-  glDeleteBuffers(1, &buffer_id);
 }
 
 void Draw::left_move() {

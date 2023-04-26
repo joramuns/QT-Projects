@@ -47,6 +47,7 @@ public:
   Pars_counters view = {0, 0, 0, 0, 0, 0};
   QString fileName;
   const char *file_name;
+  GLuint VBO = 0;
   // char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
   //                  "c-function/core/coub.obj";
 
