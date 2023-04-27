@@ -12,9 +12,6 @@
 Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) { file_name = nullptr; }
 
 void Draw::initializeGL() {
-  if (fileName == "") {
-    select_file();
-  }
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
   cleanView();
