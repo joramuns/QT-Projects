@@ -30,25 +30,28 @@ void Draw::initializeGL() {
 }
 
 void Draw::resizeGL(int w, int h) {
-  glViewport(0, 0, w, h);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  /* glOrtho(-1, 1, -1, 1, -1, 2); */
-  gluPerspective(60, 1, 0.5, 100);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  glTranslatef(0, 0, -2);
-
-  glGenBuffers(1, &VBO);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(GL_FLOAT),
-               view.sorted_array, GL_DYNAMIC_DRAW);
-  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-  glEnableVertexAttribArray(0);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  if (!VBO) {
+    glViewport(0, 0, w, h);
+    glTranslatef(0, 0, -2);
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(GL_FLOAT),
+                 view.sorted_array, GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  }
 }
 
 void Draw::paintGL() {
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  if (getPref(preferences, kProjection)) {
+    glOrtho(-1, 1, -1, 1, 0, 10);
+  } else {
+    gluPerspective(60, 1, 0.5, 100);
+  }
+  printf("%d\n", getPref(preferences, kProjection));
   glBufferSubData(GL_ARRAY_BUFFER, 0, view.size_sort_array * sizeof(GL_FLOAT), view.sorted_array);
   glClearColor(
       preferences.bg_color.redF(), 
@@ -153,6 +156,11 @@ void Draw::select_file() {
   fileName = QFileDialog::getOpenFileName(this, tr("Выбрать файл"), "",
                                           tr("Файлы (*.obj)"));
   if (fileName != "") {
+    if (VBO) {
+      glDisableVertexAttribArray(0);
+      glDeleteBuffers(1, &VBO);
+      VBO = 0;
+    }
     std::string strStd = fileName.toStdString();
     file_name = strStd.c_str();
     initializeGL();
