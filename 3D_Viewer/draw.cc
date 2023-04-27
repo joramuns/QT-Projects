@@ -26,13 +26,15 @@ void Draw::initializeGL() {
     array_sort(obj, &view);
     fclose(obj);
   }
-  this->resize(800, 800);
   this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 void Draw::resizeGL(int w, int h) {
-  if (!VBO) {
     glViewport(0, 0, w, h);
+}
+
+void Draw::paintGL() {
+  if (!VBO) {
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(GL_FLOAT),
@@ -41,9 +43,6 @@ void Draw::resizeGL(int w, int h) {
     glEnableVertexAttribArray(0);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   }
-}
-
-void Draw::paintGL() {
   if (getPref(kChangeProjection)) {
     changeProjection();
   }
