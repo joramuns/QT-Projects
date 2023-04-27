@@ -30,8 +30,8 @@ struct Prefs {
   QColor vertex_color;
   QColor faces_color;
   unsigned bit_bools;
-  GLuint v_size;
-  GLuint l_size;
+  GLdouble v_size;
+  GLdouble l_size;
 };
 
 class Draw : public QOpenGLWidget, protected QOpenGLFunctions {

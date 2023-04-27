@@ -84,25 +84,30 @@ MainWidget::MainWidget()
     squared_rounded_vertex = createButton("Shape of vertex");
     connect(squared_rounded_vertex, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kSquareVertex); });
 
-    vertex_size = new QSpinBox(this);
+    projection_toggle = createButton("Toggle Projection");
+    connect(projection_toggle, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kProjection); });
+
+    vertex_size = new QDoubleSpinBox(this);
     vertex_size->setRange(1, 20);
     vertex_size->setValue(m_paint_widget->preferences.v_size);
     vertex_size->setKeyboardTracking(false);
     vertex_size->setFocusPolicy(Qt::NoFocus);
     vertex_size->resize(1, 4);
     vertex_size->setAlignment(Qt::AlignRight);
-    connect(vertex_size, &QSpinBox::valueChanged, m_paint_widget, [=]() { 
+    vertex_size->setSingleStep(0.5);
+    connect(vertex_size, &QDoubleSpinBox::valueChanged, m_paint_widget, [=]() { 
         m_paint_widget->preferences.v_size = vertex_size->value(); 
         m_paint_widget->update();
         });
 
-    line_size = new QSpinBox(this);
+    line_size = new QDoubleSpinBox(this);
     line_size->setRange(1, 20);
     line_size->setValue(m_paint_widget->preferences.l_size);
     line_size->setFocusPolicy(Qt::NoFocus);
     line_size->resize(1, 4);
     line_size->setAlignment(Qt::AlignRight);
-    connect(line_size, &QSpinBox::valueChanged, m_paint_widget, [=]() {
+    line_size->setSingleStep(0.5);
+    connect(line_size, &QDoubleSpinBox::valueChanged, m_paint_widget, [=]() {
         m_paint_widget->preferences.l_size = line_size->value(); 
         m_paint_widget->update();
         });
@@ -128,6 +133,7 @@ MainWidget::MainWidget()
     m_main_layout->addWidget(show_vertex,           20,  9, 2, 1);
     m_main_layout->addWidget(dashed_face,           20,  11, 2, 1);
     m_main_layout->addWidget(squared_rounded_vertex,       20,  13, 2, 1);
+    m_main_layout->addWidget(projection_toggle,       20,  15, 2, 1);
     m_main_layout->addWidget(vertex_size, 22, 0, 2, 4);
     m_main_layout->addWidget(line_size, 22, 4, 2, 4);
 
@@ -160,8 +166,9 @@ MainWidget::~MainWidget() {
   delete bg_color_select;
   delete vertex_color_select;
   delete faces_color_select;
-
   delete show_vertex;
+  delete projection_toggle;
+
   delete vertex_size;
   delete line_size;
 }

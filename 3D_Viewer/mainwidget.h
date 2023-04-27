@@ -41,9 +41,10 @@ private:
     MyButton *show_vertex;
     MyButton *dashed_face;
     MyButton *squared_rounded_vertex;
+    MyButton *projection_toggle;
 
-    QSpinBox *vertex_size;
-    QSpinBox *line_size;
+    QDoubleSpinBox *vertex_size;
+    QDoubleSpinBox *line_size;
 
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;
