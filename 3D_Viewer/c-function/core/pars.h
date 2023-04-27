@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+#include "core.h"
+
+#define S21_EPS 1e-6
 
 typedef struct Pars_counters {
   int count_vertex;
@@ -23,6 +27,8 @@ int my_atoi(const char *str);
 int f_counter(char *line);
 void polygone_fill(Pars_counters *view, float *point_array, int vertex_number);
 void memory_of_sort_alloc(Pars_counters *view);
+void normalize(Pars_counters *view);
+float maxpoint(Pars_counters *view);
 void point_assignment(Pars_counters *view, float *point_array,
                       int index_of_point);
 #endif // PARS_H

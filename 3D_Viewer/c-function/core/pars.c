@@ -24,6 +24,7 @@ void array_sort(FILE *obj, Pars_counters *view) {
   }
   if (line)
     free(line);
+  normalize(view);
 }
 
 void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
@@ -90,6 +91,22 @@ void point_assignment(Pars_counters *view, float *point_array,
         point_array[index_of_point * 4 + i];
   }
 }
+
+void normalize(Pars_counters *view) {
+  float maximum = maxpoint(view);
+  scaling(1/maximum, view->sorted_array, view->size_sort_array);
+}
+
+float maxpoint(Pars_counters *view) {
+  float maximum = view->sorted_array[0];
+  for (int i = 0; i < view->size_sort_array; i++) {
+    if ((fabsf(view->sorted_array[i]) - fabsf(maximum)) > S21_EPS) {
+      maximum = view->sorted_array[i];
+    }
+  }
+  return fabsf(maximum);
+}
+
 
 float my_atof(char *str) {
   float value = 0.0;
