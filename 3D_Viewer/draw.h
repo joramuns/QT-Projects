@@ -20,9 +20,10 @@ extern "C" {
 
 enum PrefMask {
   kProjection = 1,
+  kChangeProjection,
   kDashed,
   kVertex,
-  kSquareVertex
+  kSquareVertex,
 };
 
 struct Prefs {
@@ -85,9 +86,10 @@ public Q_SLOTS:
   void toggle_pref(PrefMask mask);
 
 private:
-  void setPref(Prefs& source, PrefMask mask, bool setter);
-  bool getPref(const Prefs& source, PrefMask mask);
+  void setPref(PrefMask mask, bool setter);
+  bool getPref(PrefMask mask);
   void cleanView();
+  void changeProjection();
 };
 
 #endif // DRAW_H

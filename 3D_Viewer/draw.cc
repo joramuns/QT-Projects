@@ -18,6 +18,7 @@ void Draw::initializeGL() {
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
   cleanView();
+  changeProjection();
   FILE *obj = fopen(file_name, "r");
   if (obj == NULL) {
     // its warning time;
@@ -32,7 +33,6 @@ void Draw::initializeGL() {
 void Draw::resizeGL(int w, int h) {
   if (!VBO) {
     glViewport(0, 0, w, h);
-    glTranslatef(0, 0, -2);
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, view.size_sort_array * sizeof(GL_FLOAT),
@@ -44,12 +44,8 @@ void Draw::resizeGL(int w, int h) {
 }
 
 void Draw::paintGL() {
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  if (getPref(preferences, kProjection)) {
-    glOrtho(-1, 1, -1, 1, 0, 10);
-  } else {
-    gluPerspective(60, 1, 0.5, 100);
+  if (getPref(kChangeProjection)) {
+    changeProjection();
   }
   glBufferSubData(GL_ARRAY_BUFFER, 0, view.size_sort_array * sizeof(GL_FLOAT), view.sorted_array);
   glClearColor(
@@ -64,7 +60,7 @@ void Draw::paintGL() {
       preferences.faces_color.blueF());
 
   glLineWidth(preferences.l_size);
-  if (getPref(preferences, kDashed)) {
+  if (getPref(kDashed)) {
     glLineStipple(1, 3);
     glEnable(GL_LINE_STIPPLE);
     glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
@@ -73,8 +69,8 @@ void Draw::paintGL() {
     glDrawArrays(GL_TRIANGLES, 0, view.size_sort_array);
   }
 
-  if (getPref(preferences, kVertex)) {
-    bool squared = getPref(preferences, kSquareVertex); 
+  if (getPref(kVertex)) {
+    bool squared = getPref(kSquareVertex); 
     if (squared) {
       glEnable(GL_POINT_SMOOTH);
       glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
@@ -179,24 +175,26 @@ void Draw::vertex_select_color() {
 }
 
 void Draw::toggle_pref(PrefMask mask) {
-  if (getPref(preferences, mask)) {
-    setPref(preferences, mask, false);
+  if (getPref(mask)) {
+    setPref(mask, false);
   } else {
-    setPref(preferences, mask, true);
+    setPref(mask, true);
   }
+  if (mask == kProjection)
+    setPref(kChangeProjection, true);
   update();
 }
 
-void Draw::setPref(Prefs& source, PrefMask mask, bool setter) {
+void Draw::setPref(PrefMask mask, bool setter) {
   if (setter) {
-    source.bit_bools |= 1U << mask;
+    preferences.bit_bools |= 1U << mask;
   } else {
-    source.bit_bools &= ~(1U << mask);
+    preferences.bit_bools &= ~(1U << mask);
   }
 }
 
-bool Draw::getPref(const Prefs& source, PrefMask mask) {
-  return source.bit_bools & (1U << mask);
+bool Draw::getPref(PrefMask mask) {
+  return preferences.bit_bools & (1U << mask);
 }
 
 void Draw::cleanView() {
@@ -209,4 +207,16 @@ void Draw::cleanView() {
     view.size_sort_memory = 0;
     view.sorted_array = NULL;
   }
+}
+
+void Draw::changeProjection() {
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  if (getPref(kProjection)) {
+    glOrtho(-1, 1, -1, 1, 0, 10);
+  } else {
+    gluPerspective(60, 1, 0.5, 100);
+  }
+  glTranslatef(0, 0, -2);
+  setPref(kChangeProjection, false);
 }
