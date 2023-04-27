@@ -87,6 +87,7 @@ public Q_SLOTS:
 private:
   void setPref(Prefs& source, PrefMask mask, bool setter);
   bool getPref(const Prefs& source, PrefMask mask);
+  void cleanView();
 };
 
 #endif // DRAW_H

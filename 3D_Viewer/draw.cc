@@ -17,7 +17,7 @@ void Draw::initializeGL() {
   }
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
-  view = {0, 0, 0, 0, 0, 0};
+  cleanView();
   FILE *obj = fopen(file_name, "r");
   if (obj == NULL) {
     // its warning time;
@@ -51,7 +51,6 @@ void Draw::paintGL() {
   } else {
     gluPerspective(60, 1, 0.5, 100);
   }
-  printf("%d\n", getPref(preferences, kProjection));
   glBufferSubData(GL_ARRAY_BUFFER, 0, view.size_sort_array * sizeof(GL_FLOAT), view.sorted_array);
   glClearColor(
       preferences.bg_color.redF(), 
@@ -198,4 +197,16 @@ void Draw::setPref(Prefs& source, PrefMask mask, bool setter) {
 
 bool Draw::getPref(const Prefs& source, PrefMask mask) {
   return source.bit_bools & (1U << mask);
+}
+
+void Draw::cleanView() {
+  if (view.sorted_array) {
+    free(view.sorted_array);
+    view.count_vertex = 0;
+    view.count_side = 0;
+    view.size_sort_array = 0;
+    view.size_unsort_memory = 0;
+    view.size_sort_memory = 0;
+    view.sorted_array = NULL;
+  }
 }
