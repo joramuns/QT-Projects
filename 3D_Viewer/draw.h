@@ -82,10 +82,10 @@ public Q_SLOTS:
   void bg_select_color();
   void vertex_select_color();
   void faces_select_color();
+  void handleComboBox(const QString& input);
 
-  void toggle_pref(PrefMask mask);
+  void togglePref(PrefMask mask);
 
-private:
   void setPref(PrefMask mask, bool setter);
   bool getPref(PrefMask mask);
   void cleanView();

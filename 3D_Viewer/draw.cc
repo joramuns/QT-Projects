@@ -67,7 +67,7 @@ void Draw::paintGL() {
 
   if (getPref(kVertex)) {
     bool squared = getPref(kSquareVertex); 
-    if (squared) {
+    if (!squared) {
       glEnable(GL_POINT_SMOOTH);
       glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     }
@@ -77,7 +77,7 @@ void Draw::paintGL() {
         preferences.vertex_color.greenF(),
         preferences.vertex_color.blueF());
     glDrawArrays(GL_POINTS, 0, view.size_sort_array);
-    if (squared) {
+    if (!squared) {
       glDisable(GL_POINT_SMOOTH);
     }
   }
@@ -162,15 +162,29 @@ void Draw::bg_select_color() {
   preferences.bg_color = QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
 }
 
-void Draw::faces_select_color() {
-  preferences.faces_color = QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
-}
-
 void Draw::vertex_select_color() {
   preferences.vertex_color = QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
 }
 
-void Draw::toggle_pref(PrefMask mask) {
+void Draw::faces_select_color() {
+  preferences.faces_color = QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
+}
+
+void Draw::handleComboBox(const QString& input) {
+  if (input == "None") {
+    setPref(kVertex, false);
+  } else {
+    setPref(kVertex, true);
+    if (input == "Round") {
+      setPref(kSquareVertex, false);
+    } else {
+      setPref(kSquareVertex, true);
+    }
+  }
+  update();
+}
+
+void Draw::togglePref(PrefMask mask) {
   if (getPref(mask)) {
     setPref(mask, false);
   } else {

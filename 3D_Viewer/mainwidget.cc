@@ -10,10 +10,11 @@ MainWidget::MainWidget()
 {
     m_main_layout = new QGridLayout();
     m_paint_widget = new Draw();
-    readSettings();
 
     setLayout(m_main_layout);
     resize(1024, 1024);
+
+    readSettings();
 
     x_minus = createButton("Left");
     x_minus->setShortcut(QKeySequence(Qt::Key_Left));
@@ -75,17 +76,14 @@ MainWidget::MainWidget()
     faces_color_select = createButton("Choose face color");
     connect(faces_color_select, &QPushButton::clicked, m_paint_widget, &Draw::faces_select_color);
     
-    show_vertex = createButton("Show vertex");
-    connect(show_vertex, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kVertex); });
-
     dashed_face = createButton("Dashed lines");
-    connect(dashed_face, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kDashed); });
+    connect(dashed_face, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->togglePref(kDashed); });
 
-    squared_rounded_vertex = createButton("Shape of vertex");
-    connect(squared_rounded_vertex, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kSquareVertex); });
-
-    projection_toggle = createButton("Toggle Projection");
-    connect(projection_toggle, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->toggle_pref(kProjection); });
+    projection_type = new QCheckBox("Perspective", this);
+    projection_type->setCheckState(m_paint_widget->getPref(kProjection) ? Qt::Unchecked : Qt::Checked);
+    connect(projection_type, &QCheckBox::stateChanged, m_paint_widget, [=]() {
+        m_paint_widget->togglePref(kProjection);
+        });
 
     vertex_size = new QDoubleSpinBox(this);
     vertex_size->setRange(1, 20);
@@ -100,20 +98,33 @@ MainWidget::MainWidget()
         m_paint_widget->update();
         });
 
-    line_size = new QDoubleSpinBox(this);
+    line_size = new QSpinBox(this);
     line_size->setRange(1, 20);
     line_size->setValue(m_paint_widget->preferences.l_size);
     line_size->setFocusPolicy(Qt::NoFocus);
     line_size->resize(1, 4);
     line_size->setAlignment(Qt::AlignRight);
-    line_size->setSingleStep(0.5);
-    connect(line_size, &QDoubleSpinBox::valueChanged, m_paint_widget, [=]() {
+    connect(line_size, &QSpinBox::valueChanged, m_paint_widget, [=]() {
         m_paint_widget->preferences.l_size = line_size->value(); 
         m_paint_widget->update();
         });
 
-    m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
+    vertex_type = new QComboBox(this);
+    vertex_type->addItem("None");
+    vertex_type->addItem("Round");
+    vertex_type->addItem("Square");
+    if (!m_paint_widget->getPref(kVertex)) {
+      vertex_type->setCurrentIndex(0);
+    } else if (!m_paint_widget->getPref(kSquareVertex)) {
+      vertex_type->setCurrentIndex(1);
+    } else {
+      vertex_type->setCurrentIndex(2);
+    }
+    connect(vertex_type, &QComboBox::currentTextChanged, m_paint_widget, [=](const QString& vertex_type_text) {
+        m_paint_widget->handleComboBox(vertex_type_text);
+        });
 
+    m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
     m_main_layout->addWidget(x_minus,               18, 0,  2, 2);
     m_main_layout->addWidget(x_plus,                18, 2,  2, 2);
     m_main_layout->addWidget(y_plus,                18, 4,  2, 2);
@@ -130,12 +141,11 @@ MainWidget::MainWidget()
     m_main_layout->addWidget(bg_color_select,       20,  3, 2, 1);
     m_main_layout->addWidget(vertex_color_select,   20,  5, 2, 1);
     m_main_layout->addWidget(faces_color_select,    20,  7, 2, 1);
-    m_main_layout->addWidget(show_vertex,           20,  9, 2, 1);
     m_main_layout->addWidget(dashed_face,           20,  11, 2, 1);
-    m_main_layout->addWidget(squared_rounded_vertex,       20,  13, 2, 1);
-    m_main_layout->addWidget(projection_toggle,       20,  15, 2, 1);
+    m_main_layout->addWidget(projection_type,       24,  4, 2, 4);
     m_main_layout->addWidget(vertex_size, 22, 0, 2, 4);
     m_main_layout->addWidget(line_size, 22, 4, 2, 4);
+    m_main_layout->addWidget(vertex_type, 24, 0, 2, 4);
 
     //QString fileName = QFileDialog::getOpenFileName(this, tr("Выберите файл"), "/home", tr("Файлы (*)"));
 
@@ -163,14 +173,17 @@ MainWidget::~MainWidget() {
   delete scale_minus;
   
   delete file_select;
+
   delete bg_color_select;
   delete vertex_color_select;
   delete faces_color_select;
-  delete show_vertex;
-  delete projection_toggle;
 
+  delete dashed_face;
+
+  delete projection_type;
   delete vertex_size;
   delete line_size;
+  delete vertex_type;
 }
 
 void MainWidget::closeEvent(QCloseEvent *event) {

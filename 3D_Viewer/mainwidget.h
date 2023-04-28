@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QSpinBox>
+#include <QComboBox>
+#include <QCheckBox>
 #include "mybutton.h"
 #include "draw.h"
 
@@ -34,17 +36,17 @@ private:
     MyButton *scale_minus;
     
     MyButton *file_select;
+
     MyButton *bg_color_select;
     MyButton *vertex_color_select;
     MyButton *faces_color_select;
 
-    MyButton *show_vertex;
     MyButton *dashed_face;
-    MyButton *squared_rounded_vertex;
-    MyButton *projection_toggle;
 
+    QCheckBox *projection_type;
     QDoubleSpinBox *vertex_size;
-    QDoubleSpinBox *line_size;
+    QSpinBox *line_size;
+    QComboBox *vertex_type;
 
     MyButton *createButton(QString text);
     QGridLayout *m_main_layout;
