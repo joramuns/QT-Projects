@@ -88,75 +88,7 @@ void Draw::paintGL() {
   }
 }
 
-void Draw::left_move() {
-  coordinate_change(-SHIFT, 0.0, 0.0, view.sorted_array, view.size_sort_array);
-  repaint();
-}
 
-void Draw::right_move() {
-  coordinate_change(SHIFT, 0.0, 0.0, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::up_move() {
-  coordinate_change(0.0, SHIFT, 0.0, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::down_move() {
-  coordinate_change(0.0, -SHIFT, 0.0, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::in_move() {
-  coordinate_change(0.0, 0.0, SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::out_move() {
-  coordinate_change(0.0, 0.0, -SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::turn_x() {
-  turn_matrix_x(SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::turn_counter_x() {
-  turn_matrix_x(-SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::turn_y() {
-  turn_matrix_y(SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::turn_counter_y() {
-  turn_matrix_y(-SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::turn_z() {
-  turn_matrix_z(SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::turn_counter_z() {
-  turn_matrix_z(-SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::scale_plus() {
-  scaling(1 + SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
-
-void Draw::scale_minus() {
-  scaling(1 - SHIFT, view.sorted_array, view.size_sort_array);
-  repaint();
-}
 
 void Draw::select_file() {
   fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",

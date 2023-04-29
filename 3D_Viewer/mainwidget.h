@@ -35,8 +35,8 @@ private:
   MyButton *z_clockwise;
   MyButton *z_counterclockwise;
 
-  MyButton *scale_plus;
-  MyButton *scale_minus;
+  MyButton *scale_plus_button;
+  MyButton *scale_minus_button;
 
   MyButton *file_select;
 
@@ -66,6 +66,22 @@ private:
 
   MyButton *createButton(QString text);
   QGridLayout *m_main_layout;
+
+private Q_SLOTS:
+  void left_move();
+  void right_move();
+  void up_move();
+  void down_move();
+  void in_move();
+  void out_move();
+  void turn_x();
+  void turn_counter_x();
+  void turn_y();
+  void turn_counter_y();
+  void turn_z();
+  void turn_counter_z();
+  void scale_plus();
+  void scale_minus();
 };
 
 #endif // MAINWIDGET_H

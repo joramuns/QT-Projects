@@ -18,79 +18,79 @@ MainWidget::MainWidget() {
   x_minus->setStyleSheet("font: 20pt");
   x_minus->setShortcut(QKeySequence(Qt::Key_Left));
   x_minus->setShortcut(QKeySequence(Qt::Key_A));
-  connect(x_minus, &QPushButton::clicked, m_paint_widget, &Draw::left_move);
+  connect(x_minus, &QPushButton::clicked, this, &MainWidget::left_move);
 
   x_plus = createButton(QChar(0x00002192));
   x_plus->setStyleSheet("font: 20pt");
   x_plus->setShortcut(QKeySequence(Qt::Key_Right));
   x_plus->setShortcut(QKeySequence(Qt::Key_D));
-  connect(x_plus, &QPushButton::clicked, m_paint_widget, &Draw::right_move);
+  connect(x_plus, &QPushButton::clicked, this, &MainWidget::right_move);
 
   y_plus = createButton(QChar(0x00002191));
   y_plus->setStyleSheet("font:20pt");
   y_plus->setShortcut(QKeySequence(Qt::Key_Up));
   y_plus->setShortcut(QKeySequence(Qt::Key_W));
-  connect(y_plus, &QPushButton::clicked, m_paint_widget, &Draw::up_move);
+  connect(y_plus, &QPushButton::clicked, this, &MainWidget::up_move);
 
   y_minus = createButton(QChar(0x00002193));
   y_minus->setStyleSheet("font:20pt");
   y_minus->setShortcut(QKeySequence(Qt::Key_Down));
   y_minus->setShortcut(QKeySequence(Qt::Key_S));
-  connect(y_minus, &QPushButton::clicked, m_paint_widget, &Draw::down_move);
+  connect(y_minus, &QPushButton::clicked, this, &MainWidget::down_move);
 
   z_plus = createButton(QChar(0x00002350));
   z_plus->setStyleSheet("font:20pt");
   z_plus->setShortcut(QKeySequence(Qt::Key_E));
-  connect(z_plus, &QPushButton::clicked, m_paint_widget, &Draw::in_move);
+  connect(z_plus, &QPushButton::clicked, this, &MainWidget::in_move);
 
   z_minus = createButton(QChar(0x00002357));
   z_minus->setStyleSheet("font:20pt");
   z_minus->setShortcut(QKeySequence(Qt::Key_Q));
-  connect(z_minus, &QPushButton::clicked, m_paint_widget, &Draw::out_move);
+  connect(z_minus, &QPushButton::clicked, this, &MainWidget::out_move);
 
   x_clockwise = createButton('X' + QChar(0x000027F3));
   x_clockwise->setStyleSheet("font:20pt");
   x_clockwise->setShortcut(QKeySequence(Qt::Key_8));
-  connect(x_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_x);
+  connect(x_clockwise, &QPushButton::clicked, this, &MainWidget::turn_x);
 
   x_counterclockwise = createButton('X' + QChar(0x000027F2));
   x_counterclockwise->setStyleSheet("font:20pt");
   x_counterclockwise->setShortcut(QKeySequence(Qt::Key_7));
-  connect(x_counterclockwise, &QPushButton::clicked, m_paint_widget,
-          &Draw::turn_counter_x);
+  connect(x_counterclockwise, &QPushButton::clicked, this,
+          &MainWidget::turn_counter_x);
 
   y_clockwise = createButton('Y'+ QChar(0x000027F3));
   y_clockwise->setStyleSheet("font:20pt");
   y_clockwise->setShortcut(QKeySequence(Qt::Key_5));
-  connect(y_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_y);
+  connect(y_clockwise, &QPushButton::clicked, this, &MainWidget::turn_y);
 
   y_counterclockwise = createButton('Y'+ QChar(0x000027F2));
   y_counterclockwise->setStyleSheet("font:20pt");
   y_counterclockwise->setShortcut(QKeySequence(Qt::Key_4));
-  connect(y_counterclockwise, &QPushButton::clicked, m_paint_widget,
-          &Draw::turn_counter_y);
+  connect(y_counterclockwise, &QPushButton::clicked, this,
+          &MainWidget::turn_counter_y);
 
   z_clockwise = createButton('Z'+ QChar(0x000027F3));
   z_clockwise->setStyleSheet("font:20pt");
   z_clockwise->setShortcut(QKeySequence(Qt::Key_2));
-  connect(z_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_z);
+  connect(z_clockwise, &QPushButton::clicked, this, &MainWidget::turn_z);
 
   z_counterclockwise = createButton('Z'+ QChar(0x000027F2));
   z_counterclockwise->setStyleSheet("font:20pt");
   z_counterclockwise->setShortcut(QKeySequence(Qt::Key_1));
-  connect(z_counterclockwise, &QPushButton::clicked, m_paint_widget,
-          &Draw::turn_counter_z);
+  connect(z_counterclockwise, &QPushButton::clicked, this,
+          &MainWidget::turn_counter_z);
 
-  scale_plus = createButton(QChar(0x0000002B));
-  scale_plus->setStyleSheet("font:20pt");
-  scale_plus->setShortcut(QKeySequence(Qt::Key_Plus));
-  connect(scale_plus, &QPushButton::clicked, m_paint_widget, &Draw::scale_plus);
+  scale_plus_button = createButton(QChar(0x0000002B));
+  scale_plus_button->setStyleSheet("font:20pt");
+  scale_plus_button->setShortcut(QKeySequence(Qt::Key_Plus));
+  connect(scale_plus_button, &QPushButton::clicked, this, &MainWidget::scale_plus);
 
-  scale_minus = createButton(QChar(0x00002212));
-  scale_minus->setStyleSheet("font:20pt");
-  scale_minus->setShortcut(QKeySequence(Qt::Key_Minus));
-  connect(scale_minus, &QPushButton::clicked, m_paint_widget,
-          &Draw::scale_minus);
+  scale_minus_button = createButton(QChar(0x00002212));
+  scale_minus_button->setStyleSheet("font:20pt");
+  scale_minus_button->setShortcut(QKeySequence(Qt::Key_Minus));
+  connect(scale_minus_button, &QPushButton::clicked, this,
+          &MainWidget::scale_minus);
 
   file_select = createButton("File selection");
   file_select->setStyleSheet("font:18pt");
@@ -217,8 +217,8 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(z_counterclockwise,    21, 6, 1, 1);
   m_main_layout->addWidget(rotation_angle_name,   20, 7, 1, 1);
   m_main_layout->addWidget(rotation_angle,        21, 7, 1, 1);
-  m_main_layout->addWidget(scale_plus,            20, 8, 1, 1);
-  m_main_layout->addWidget(scale_minus,           21, 8, 1, 1);
+  m_main_layout->addWidget(scale_plus_button,     20, 8, 1, 1);
+  m_main_layout->addWidget(scale_minus_button,           21, 8, 1, 1);
   m_main_layout->addWidget(zoom_step_name,        20, 9, 1, 1);
   m_main_layout->addWidget(zoom_step,             21, 9, 1, 1);
   m_main_layout->addWidget(fakelabel_0,           22, 0, 1, 10);
@@ -234,7 +234,6 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(dashed_face,           26, 0, 1, 2);
   m_main_layout->addWidget(line_size_name,        27, 0, 1, 1);
   m_main_layout->addWidget(line_size,             27, 1, 1, 2);
-
 
   setWindowTitle("3D_View");
 }
@@ -256,8 +255,8 @@ MainWidget::~MainWidget() {
   delete z_clockwise;
   delete z_counterclockwise;
 
-  delete scale_plus;
-  delete scale_minus;
+  delete scale_plus_button;
+  delete scale_minus_button;
 
   delete file_select;
 
@@ -309,3 +308,72 @@ void MainWidget::readSettings() {
       settings.value("faces color", QColor(0, 255, 0)).value<QColor>();
 }
 
+void MainWidget::left_move() {
+  coordinate_change(-movement_step->value(), 0.0, 0.0, m_paint_widget->view.sorted_array, m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::right_move() {
+  coordinate_change(movement_step->value(), 0.0, 0.0, m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::up_move() {
+  coordinate_change(0.0, movement_step->value(), 0.0, m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::down_move() {
+  coordinate_change(0.0, -movement_step->value(), 0.0, m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::in_move() {
+  coordinate_change(0.0, 0.0, movement_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::out_move() {
+  coordinate_change(0.0, 0.0, -movement_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::turn_x() {
+  turn_matrix_x(rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::turn_counter_x() {
+  turn_matrix_x(-rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::turn_y() {
+  turn_matrix_y(rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::turn_counter_y() {
+  turn_matrix_y(-rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::turn_z() {
+  turn_matrix_z(rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::turn_counter_z() {
+  turn_matrix_z(-rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::scale_plus() {
+  scaling(1 + zoom_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}
+
+void MainWidget::scale_minus() {
+  scaling(1 - zoom_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  m_paint_widget->repaint();
+}

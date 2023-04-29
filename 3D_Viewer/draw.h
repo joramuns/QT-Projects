@@ -62,24 +62,24 @@ public:
   //                  "c-function/core/coub.obj";
 
 public Q_SLOTS:
-  void left_move();
-  void right_move();
-  void up_move();
-  void down_move();
-  void in_move();
-  void out_move();
+  // void left_move();
+  // void right_move();
+  // void up_move();
+  // void down_move();
+  // void in_move();
+  // void out_move();
 
-  void turn_x();
-  void turn_counter_x();
+  // void turn_x();
+  // void turn_counter_x();
 
-  void turn_y();
-  void turn_counter_y();
+  // void turn_y();
+  // void turn_counter_y();
 
-  void turn_z();
-  void turn_counter_z();
+  // void turn_z();
+  // void turn_counter_z();
 
-  void scale_plus();
-  void scale_minus();
+  // void scale_plus();
+  // void scale_minus();
 
   void select_file();
   void bg_select_color();
