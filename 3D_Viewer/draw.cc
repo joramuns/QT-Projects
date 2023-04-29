@@ -16,6 +16,12 @@ void Draw::initializeGL() {
   FILE *obj = fopen(file_name, "r");
   if (obj == NULL) {
   } else {
+    if(view.sorted_array) {
+      free(view.sorted_array);
+      view.count_vertex = 0;
+      view.count_side = 0;
+      view.size_sort_array = 0;
+    }
     array_sort(obj, &view);
     fclose(obj);
   }
