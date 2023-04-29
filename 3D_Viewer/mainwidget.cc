@@ -1,101 +1,218 @@
+#define GL_SILENCE_DEPRECATION
 #include "mainwidget.h"
 #include <QFileDialog>
-#include <QLabel>
+#include <QSettings>
+#include <QApplication>
+#include <QDir>
 
-MainWidget::MainWidget() {
-  m_main_layout = new QGridLayout();
-  m_paint_widget = new Draw();
+MainWidget::MainWidget()
+{
+    m_main_layout = new QGridLayout();
+    m_paint_widget = new Draw();
 
-  this->setLayout(m_main_layout);
-  this->resize(1024, 1024);
+    setLayout(m_main_layout);
+    resize(1024, 1024);
 
-  x_minus = createButton("Left");
-  x_minus->setShortcut(QKeySequence(Qt::Key_Left));
-  connect(x_minus, &QPushButton::clicked, m_paint_widget, &Draw::left_move);
+    readSettings();
 
-  x_plus = createButton("Right");
-  x_plus->setShortcut(QKeySequence(Qt::Key_Right));
-  connect(x_plus, &QPushButton::clicked, m_paint_widget, &Draw::right_move);
+    x_minus = createButton("Left");
+    x_minus->setShortcut(QKeySequence(Qt::Key_Left));
+    connect(x_minus, &QPushButton::clicked, m_paint_widget, &Draw::left_move);
 
-  y_plus = createButton("Up");
-  y_plus->setShortcut(QKeySequence(Qt::Key_Up));
-  connect(y_plus, &QPushButton::clicked, m_paint_widget, &Draw::up_move);
+    x_plus = createButton("Right");
+    x_plus->setShortcut(QKeySequence(Qt::Key_Right));
+    connect(x_plus, &QPushButton::clicked, m_paint_widget, &Draw::right_move);
 
-  y_minus = createButton("Down");
-  y_minus->setShortcut(QKeySequence(Qt::Key_Down));
-  connect(y_minus, &QPushButton::clicked, m_paint_widget, &Draw::down_move);
+    y_plus = createButton("Up");
+    y_plus->setShortcut(QKeySequence(Qt::Key_Up));
+    connect(y_plus, &QPushButton::clicked, m_paint_widget, &Draw::up_move);
 
-  z_plus = createButton("Inside");
-  connect(z_plus, &QPushButton::clicked, m_paint_widget, &Draw::in_move);
+    y_minus = createButton("Down");
+    y_minus->setShortcut(QKeySequence(Qt::Key_Down));
+    connect(y_minus, &QPushButton::clicked, m_paint_widget, &Draw::down_move);
 
-  z_minus = createButton("Outside");
-  connect(z_minus, &QPushButton::clicked, m_paint_widget, &Draw::out_move);
+    x_clockwise = createButton("Rotate x");// QKeySequence(Qt::Key_9
+    x_clockwise->setShortcut(QKeySequence(Qt::Key_7));
+    connect(x_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_x);
 
-  x_clockwise = createButton("Rotate x"); // QKeySequence(Qt::Key_9
-  x_clockwise->setShortcut(QKeySequence(Qt::Key_7));
-  connect(x_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_x);
+    x_counterclockwise = createButton("Rotate -x");
+    x_counterclockwise->setShortcut(QKeySequence(Qt::Key_8));
+    connect(x_counterclockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_counter_x);
 
-  x_counterclockwise = createButton("Rotate -x");
-  x_counterclockwise->setShortcut(QKeySequence(Qt::Key_8));
-  connect(x_counterclockwise, &QPushButton::clicked, m_paint_widget,
-          &Draw::turn_counter_x);
+    y_clockwise = createButton("Rotate y");
+    y_clockwise->setShortcut(QKeySequence(Qt::Key_4)); 
+    connect(y_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_y);
 
-  y_clockwise = createButton("Rotate y");
-  y_clockwise->setShortcut(QKeySequence(Qt::Key_4));
-  connect(y_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_y);
+    y_counterclockwise = createButton("Rotate -y");
+    y_counterclockwise->setShortcut(QKeySequence(Qt::Key_5));
+    connect(y_counterclockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_counter_y);
 
-  y_counterclockwise = createButton("Rotate -y");
-  y_counterclockwise->setShortcut(QKeySequence(Qt::Key_5));
-  connect(y_counterclockwise, &QPushButton::clicked, m_paint_widget,
-          &Draw::turn_counter_y);
+    z_clockwise = createButton("Rotate z");
+    z_clockwise->setShortcut(QKeySequence(Qt::Key_1));
+    connect(z_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_z);
 
-  z_clockwise = createButton("Rotate z");
-  z_clockwise->setShortcut(QKeySequence(Qt::Key_1));
-  connect(z_clockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_z);
+    z_counterclockwise = createButton("Rotate -z");
+    z_counterclockwise->setShortcut(QKeySequence(Qt::Key_2));
+    connect(z_counterclockwise, &QPushButton::clicked, m_paint_widget, &Draw::turn_counter_z);
 
-  z_counterclockwise = createButton("Rotate -z");
-  z_counterclockwise->setShortcut(QKeySequence(Qt::Key_2));
-  connect(z_counterclockwise, &QPushButton::clicked, m_paint_widget,
-          &Draw::turn_counter_z);
+    scale_plus = createButton("+");
+    scale_plus->setShortcut(QKeySequence(Qt::Key_Plus));
+    connect(scale_plus, &QPushButton::clicked, m_paint_widget, &Draw::scale_plus);
 
-  scale_plus = createButton("+");
-  scale_plus->setShortcut(QKeySequence(Qt::Key_Plus));
-  connect(scale_plus, &QPushButton::clicked, m_paint_widget, &Draw::scale_plus);
+    scale_minus = createButton("-");
+    scale_minus->setShortcut(QKeySequence(Qt::Key_Minus));
+    connect(scale_minus, &QPushButton::clicked, m_paint_widget, &Draw::scale_minus);
 
-  scale_minus = createButton("-");
-  scale_minus->setShortcut(QKeySequence(Qt::Key_Minus));
-  connect(scale_minus, &QPushButton::clicked, m_paint_widget,
-          &Draw::scale_minus);
+    file_select = createButton("Select File");
+    connect(file_select, &QPushButton::clicked, m_paint_widget, &Draw::select_file);
 
-  file_select = createButton("Select File");
-  connect(file_select, &QPushButton::clicked, m_paint_widget,
-          &Draw::select_file);
+    bg_color_select = createButton("Choose background color");
+    connect(bg_color_select, &QPushButton::clicked, m_paint_widget, &Draw::bg_select_color);
 
-  QCheckBox *check = new QCheckBox("Perspective on", this);
-  connect(check, &QCheckBox::stateChanged, m_paint_widget, &Draw::perspective_change);
+    vertex_color_select = createButton("Choose vertex color");
+    connect(vertex_color_select, &QPushButton::clicked, m_paint_widget, &Draw::vertex_select_color);
 
-  m_main_layout->addWidget(m_paint_widget, 0, 0, 18, 20);
-  m_main_layout->addWidget(x_minus, 18, 0, 2, 1);
-  m_main_layout->addWidget(x_plus, 18, 1, 2, 1);
-  m_main_layout->addWidget(y_plus, 18, 3, 2, 1);
-  m_main_layout->addWidget(y_minus, 18, 4, 2, 1);
-  m_main_layout->addWidget(z_plus, 18, 5, 2, 1);
-  m_main_layout->addWidget(z_minus, 18, 6, 2, 1);
-  m_main_layout->addWidget(x_clockwise, 18, 8, 1, 2);
-  m_main_layout->addWidget(x_counterclockwise, 19, 8, 1, 2);
-  m_main_layout->addWidget(y_clockwise, 18, 10, 1, 2);
-  m_main_layout->addWidget(y_counterclockwise, 19, 10, 1, 2);
-  m_main_layout->addWidget(z_clockwise, 18, 12, 1, 2);
-  m_main_layout->addWidget(z_counterclockwise, 19, 12, 1, 2);
-  m_main_layout->addWidget(scale_plus, 18, 18, 2, 1);
-  m_main_layout->addWidget(scale_minus, 18, 19, 2, 1);
-  m_main_layout->addWidget(file_select, 20, 0, 1, 1);
-  m_main_layout->addWidget(check, 20, 1, 1, 1);
+    faces_color_select = createButton("Choose face color");
+    connect(faces_color_select, &QPushButton::clicked, m_paint_widget, &Draw::faces_select_color);
+    
+    dashed_face = createButton("Dashed lines");
+    connect(dashed_face, &QPushButton::clicked, m_paint_widget, [=]() { m_paint_widget->togglePref(kDashed); });
 
-  this->setWindowTitle("3D_View");
+    projection_type = new QCheckBox("Perspective", this);
+    projection_type->setCheckState(m_paint_widget->getPref(kProjection) ? Qt::Unchecked : Qt::Checked);
+    connect(projection_type, &QCheckBox::stateChanged, m_paint_widget, [=]() {
+        m_paint_widget->togglePref(kProjection);
+        });
+
+    vertex_size = new QDoubleSpinBox(this);
+    vertex_size->setRange(1, 20);
+    vertex_size->setValue(m_paint_widget->preferences.v_size);
+    vertex_size->setKeyboardTracking(false);
+    vertex_size->setFocusPolicy(Qt::NoFocus);
+    vertex_size->resize(1, 4);
+    vertex_size->setAlignment(Qt::AlignRight);
+    vertex_size->setSingleStep(0.5);
+    connect(vertex_size, &QDoubleSpinBox::valueChanged, m_paint_widget, [=]() { 
+        m_paint_widget->preferences.v_size = vertex_size->value(); 
+        m_paint_widget->update();
+        });
+
+    line_size = new QSpinBox(this);
+    line_size->setRange(1, 20);
+    line_size->setValue(m_paint_widget->preferences.l_size);
+    line_size->setFocusPolicy(Qt::NoFocus);
+    line_size->resize(1, 4);
+    line_size->setAlignment(Qt::AlignRight);
+    connect(line_size, &QSpinBox::valueChanged, m_paint_widget, [=]() {
+        m_paint_widget->preferences.l_size = line_size->value(); 
+        m_paint_widget->update();
+        });
+
+    vertex_type = new QComboBox(this);
+    vertex_type->addItem("None");
+    vertex_type->addItem("Round");
+    vertex_type->addItem("Square");
+    if (!m_paint_widget->getPref(kVertex)) {
+      vertex_type->setCurrentIndex(0);
+    } else if (!m_paint_widget->getPref(kSquareVertex)) {
+      vertex_type->setCurrentIndex(1);
+    } else {
+      vertex_type->setCurrentIndex(2);
+    }
+    connect(vertex_type, &QComboBox::currentTextChanged, m_paint_widget, [=](const QString& vertex_type_text) {
+        m_paint_widget->handleComboBox(vertex_type_text);
+        });
+
+    m_main_layout->addWidget(m_paint_widget,        0, 0, 18, 20);
+    m_main_layout->addWidget(x_minus,               18, 0,  2, 2);
+    m_main_layout->addWidget(x_plus,                18, 2,  2, 2);
+    m_main_layout->addWidget(y_plus,                18, 4,  2, 2);
+    m_main_layout->addWidget(y_minus,               18, 6,  2, 2);
+    m_main_layout->addWidget(x_clockwise,           18, 8,  1, 2);
+    m_main_layout->addWidget(x_counterclockwise,    19, 8,  1, 2);
+    m_main_layout->addWidget(y_clockwise,           18, 10, 1, 2);
+    m_main_layout->addWidget(y_counterclockwise,    19, 10, 1, 2);
+    m_main_layout->addWidget(z_clockwise,           18, 12, 1, 2);
+    m_main_layout->addWidget(z_counterclockwise,    19, 12, 1, 2);
+    m_main_layout->addWidget(scale_plus,            18, 18, 2, 1);
+    m_main_layout->addWidget(scale_minus,           18, 19, 2, 1);
+    m_main_layout->addWidget(file_select,           20,  1, 2, 1);
+    m_main_layout->addWidget(bg_color_select,       20,  3, 2, 1);
+    m_main_layout->addWidget(vertex_color_select,   20,  5, 2, 1);
+    m_main_layout->addWidget(faces_color_select,    20,  7, 2, 1);
+    m_main_layout->addWidget(dashed_face,           20,  11, 2, 1);
+    m_main_layout->addWidget(projection_type,       24,  4, 2, 4);
+    m_main_layout->addWidget(vertex_size, 22, 0, 2, 4);
+    m_main_layout->addWidget(line_size, 22, 4, 2, 4);
+    m_main_layout->addWidget(vertex_type, 24, 0, 2, 4);
+
+    //QString fileName = QFileDialog::getOpenFileName(this, tr("Выберите файл"), "/home", tr("Файлы (*)"));
+
+    setWindowTitle("3D_View");
+}
+
+MainWidget::~MainWidget() {
+  glDisableVertexAttribArray(0);
+  glDeleteBuffers(1, &m_paint_widget->VBO);
+  delete m_main_layout;
+  delete m_paint_widget;
+  delete x_minus;
+  delete x_plus;
+  delete y_minus;
+  delete y_plus;
+
+  delete x_clockwise;
+  delete x_counterclockwise;
+  delete y_clockwise;
+  delete y_counterclockwise;
+  delete z_clockwise;
+  delete z_counterclockwise;
+
+  delete scale_plus;
+  delete scale_minus;
+  
+  delete file_select;
+
+  delete bg_color_select;
+  delete vertex_color_select;
+  delete faces_color_select;
+
+  delete dashed_face;
+
+  delete projection_type;
+  delete vertex_size;
+  delete line_size;
+  delete vertex_type;
+}
+
+void MainWidget::closeEvent(QCloseEvent *event) {
+  saveSettings();
+  event->accept();
 }
 
 MyButton *MainWidget::createButton(QString text) {
   MyButton *button = new MyButton(text);
   return button;
+}
+
+void MainWidget::saveSettings() {
+  QString appPath = QCoreApplication::applicationDirPath();
+  QSettings settings(appPath + "/config.ini", QSettings::IniFormat);
+  settings.setValue("line size", m_paint_widget->preferences.l_size);
+  settings.setValue("vertex size", m_paint_widget->preferences.v_size);
+  settings.setValue("preferences bit", m_paint_widget->preferences.bit_bools);
+  settings.setValue("background color", m_paint_widget->preferences.bg_color);
+  settings.setValue("vertex color", m_paint_widget->preferences.vertex_color);
+  settings.setValue("faces color", m_paint_widget->preferences.faces_color);
+}
+
+void MainWidget::readSettings() {
+  QString appPath = QCoreApplication::applicationDirPath();
+  QSettings settings(appPath + "/config.ini", QSettings::IniFormat);
+  m_paint_widget->preferences.l_size = settings.value("line size", 1).toInt();
+  m_paint_widget->preferences.v_size = settings.value("vertex size", 3).toInt();
+  m_paint_widget->preferences.bit_bools = settings.value("preferences bit", 0).toUInt();
+  m_paint_widget->preferences.bg_color = settings.value("background color", QColor(0, 0, 0)).value<QColor>();
+  m_paint_widget->preferences.vertex_color = settings.value("vertex color", QColor(255, 255, 255)).value<QColor>();
+  m_paint_widget->preferences.faces_color = settings.value("faces color", QColor(0, 255, 0)).value<QColor>();
 }

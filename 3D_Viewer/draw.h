@@ -7,6 +7,8 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 #include <QTimer>
+#include <QFileDialog>
+#include <QColorDialog>
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,6 +18,23 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+enum PrefMask {
+  kProjection = 1,
+  kChangeProjection,
+  kDashed,
+  kVertex,
+  kSquareVertex,
+};
+
+struct Prefs {
+  QColor bg_color;
+  QColor vertex_color;
+  QColor faces_color;
+  unsigned bit_bools;
+  GLdouble v_size;
+  GLdouble l_size;
+};
 
 class Draw : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT;
@@ -30,7 +49,17 @@ public:
   Pars_counters view = {0, 0, 0, 0, 0, 0};
   QString fileName;
   const char *file_name;
-  int perspective = 1;
+  GLuint VBO = 0;
+  Prefs preferences = {
+    .bg_color = QColor(0, 0, 0),
+    .vertex_color = QColor(255, 255, 255),
+    .faces_color = QColor(0, 255, 0),
+    .bit_bools = 0,
+    .v_size = 3,
+    .l_size = 1,
+  };
+  // char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
+  //                  "c-function/core/coub.obj";
 
 public Q_SLOTS:
   void left_move();
@@ -53,8 +82,17 @@ public Q_SLOTS:
   void scale_minus();
 
   void select_file();
+  void bg_select_color();
+  void vertex_select_color();
+  void faces_select_color();
+  void handleComboBox(const QString& input);
 
-  void perspective_change();
+  void togglePref(PrefMask mask);
+
+  void setPref(PrefMask mask, bool setter);
+  bool getPref(PrefMask mask);
+  void cleanView();
+  void changeProjection();
 };
 
 #endif // DRAW_H
