@@ -10,7 +10,7 @@ MainWidget::MainWidget() {
   m_paint_widget = new Draw();
 
   setLayout(m_main_layout);
-  resize(1024, 1024);
+  resize(1024, 1800);
 
   readSettings();
 
@@ -200,7 +200,7 @@ MainWidget::MainWidget() {
   zoom_step->setAlignment(Qt::AlignRight);
   zoom_step->setSingleStep(0.05);
 
-  m_main_layout->addWidget(m_paint_widget,        0, 0, 20, 20);
+  m_main_layout->addWidget(m_paint_widget,        0, 0, 20, 10);
   m_main_layout->addWidget(x_minus,               21, 0, 1, 1);
   m_main_layout->addWidget(x_plus,                21, 2, 1, 1);
   m_main_layout->addWidget(y_plus,                20, 1, 1, 1);
@@ -218,7 +218,7 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(rotation_angle_name,   20, 7, 1, 1);
   m_main_layout->addWidget(rotation_angle,        21, 7, 1, 1);
   m_main_layout->addWidget(scale_plus_button,     20, 8, 1, 1);
-  m_main_layout->addWidget(scale_minus_button,           21, 8, 1, 1);
+  m_main_layout->addWidget(scale_minus_button,    21, 8, 1, 1);
   m_main_layout->addWidget(zoom_step_name,        20, 9, 1, 1);
   m_main_layout->addWidget(zoom_step,             21, 9, 1, 1);
   m_main_layout->addWidget(fakelabel_0,           22, 0, 1, 10);
