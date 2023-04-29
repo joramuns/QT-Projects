@@ -44,7 +44,7 @@ private:
   MyButton *vertex_color_select;
   MyButton *faces_color_select;
 
-  MyButton *dashed_face;
+  QCheckBox *dashed_face;
 
   QCheckBox *projection_type;
   QDoubleSpinBox *vertex_size;

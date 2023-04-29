@@ -93,27 +93,32 @@ MainWidget::MainWidget() {
           &Draw::scale_minus);
 
   file_select = createButton("File selection");
-  file_select->setStyleSheet("font:20pt");
+  file_select->setStyleSheet("font:18pt");
   connect(file_select, &QPushButton::clicked, m_paint_widget,
           &Draw::select_file);
 
   bg_color_select = createButton("Choose background color");
+  bg_color_select->setStyleSheet("font:18pt");
   connect(bg_color_select, &QPushButton::clicked, m_paint_widget,
           &Draw::bg_select_color);
 
   vertex_color_select = createButton("Choose vertex color");
+  vertex_color_select->setStyleSheet("font:18pt");
   connect(vertex_color_select, &QPushButton::clicked, m_paint_widget,
           &Draw::vertex_select_color);
 
   faces_color_select = createButton("Choose face color");
+  faces_color_select->setStyleSheet("font:18pt");
   connect(faces_color_select, &QPushButton::clicked, m_paint_widget,
           &Draw::faces_select_color);
 
-  dashed_face = createButton("Dashed lines");
+  dashed_face = new QCheckBox("Dashed lines");
+  dashed_face->setStyleSheet("font:20pt");
   connect(dashed_face, &QPushButton::clicked, m_paint_widget,
           [=]() { m_paint_widget->togglePref(kDashed); });
 
   projection_type = new QCheckBox("Perspective", this);
+  projection_type->setStyleSheet("font:20pt");
   projection_type->setCheckState(
       m_paint_widget->getPref(kProjection) ? Qt::Unchecked : Qt::Checked);
   connect(projection_type, &QCheckBox::stateChanged, m_paint_widget,
@@ -162,6 +167,15 @@ MainWidget::MainWidget() {
   QLabel *fakelabel_0 = new QLabel("");
   fakelabel_0->setStyleSheet("font:22pt");
 
+  QLabel *vertex_type_name = new QLabel("Vertex type:");
+  vertex_type_name->setStyleSheet("font:20pt");
+
+  QLabel *vertex_size_name = new QLabel("Vertex size:");
+  vertex_size_name->setStyleSheet("font:20pt");
+
+  QLabel *line_size_name = new QLabel("Line size:");
+  line_size_name->setStyleSheet("font:20pt");
+
   m_main_layout->addWidget(m_paint_widget,        0, 0, 20, 20);
   m_main_layout->addWidget(x_minus,               21, 0, 1, 1);
   m_main_layout->addWidget(x_plus,                21, 2, 1, 1);
@@ -177,16 +191,20 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(z_counterclockwise,    21, 6, 1, 1);
   m_main_layout->addWidget(scale_plus,            20, 8, 1, 1);
   m_main_layout->addWidget(scale_minus,           21, 8, 1, 1);
-  m_main_layout->addWidget(fakelabel_0,           22, 0, 1, 20);
+  m_main_layout->addWidget(fakelabel_0,           22, 0, 1, 10);
   m_main_layout->addWidget(file_select,           23, 0, 1, 3);
-  m_main_layout->addWidget(bg_color_select,       23, 3, 2, 1);
-  m_main_layout->addWidget(vertex_color_select,   23, 5, 2, 1);
-  m_main_layout->addWidget(faces_color_select,    23, 7, 2, 1);
-  m_main_layout->addWidget(dashed_face,           23, 11, 2, 1);
-  m_main_layout->addWidget(projection_type,       24, 4, 2, 4);
-  m_main_layout->addWidget(vertex_size,           25, 0, 2, 4);
-  m_main_layout->addWidget(line_size,             25, 4, 2, 4);
-  m_main_layout->addWidget(vertex_type,           25, 0, 2, 4);
+  m_main_layout->addWidget(bg_color_select,       23, 4, 1, 3);
+  m_main_layout->addWidget(vertex_color_select,   24, 4, 1, 3);
+  m_main_layout->addWidget(faces_color_select,    25, 4, 1, 3);
+  m_main_layout->addWidget(vertex_type_name,      24, 0, 1, 1);
+  m_main_layout->addWidget(vertex_type,           24, 1, 1, 2);
+  m_main_layout->addWidget(vertex_size_name,      25, 0, 1, 1); 
+  m_main_layout->addWidget(vertex_size,           25, 1, 1, 2);
+  m_main_layout->addWidget(projection_type,       26, 2, 1, 1);
+  m_main_layout->addWidget(dashed_face,           26, 0, 1, 2);
+  m_main_layout->addWidget(line_size_name,        27, 0, 1, 1);
+  m_main_layout->addWidget(line_size,             27, 1, 1, 2);
+
 
   setWindowTitle("3D_View");
 }
