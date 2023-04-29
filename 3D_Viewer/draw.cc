@@ -173,13 +173,6 @@ void Draw::select_file() {
   }
 }
 
-void Draw::perspective_change() {
-  if (perspective) {
-    perspective--;
-  } else {
-    perspective++;
-  }
-}
 
 void Draw::bg_select_color() {
   preferences.bg_color = QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
