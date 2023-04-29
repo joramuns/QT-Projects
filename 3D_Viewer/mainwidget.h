@@ -51,6 +51,19 @@ private:
   QSpinBox *line_size;
   QComboBox *vertex_type;
 
+  //need delete in destruct
+  QLabel *fakelabel_0;
+  QLabel *vertex_type_name;
+  QLabel *vertex_size_name;
+  QLabel *line_size_name;
+  QLabel *movement_step_name;
+  QLabel *rotation_angle_name;
+  QLabel *zoom_step_name;
+
+  QDoubleSpinBox *movement_step;
+  QDoubleSpinBox *rotation_angle;
+  QDoubleSpinBox *zoom_step;
+
   MyButton *createButton(QString text);
   QGridLayout *m_main_layout;
 };

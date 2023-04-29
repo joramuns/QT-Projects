@@ -164,17 +164,41 @@ MainWidget::MainWidget() {
             m_paint_widget->handleComboBox(vertex_type_text);
           });
 
-  QLabel *fakelabel_0 = new QLabel("");
+  fakelabel_0 = new QLabel("");
   fakelabel_0->setStyleSheet("font:22pt");
 
-  QLabel *vertex_type_name = new QLabel("Vertex type:");
+  vertex_type_name = new QLabel("Vertex type:");
   vertex_type_name->setStyleSheet("font:20pt");
 
-  QLabel *vertex_size_name = new QLabel("Vertex size:");
+  vertex_size_name = new QLabel("Vertex size:");
   vertex_size_name->setStyleSheet("font:20pt");
 
-  QLabel *line_size_name = new QLabel("Line size:");
+  line_size_name = new QLabel("Line size:");
   line_size_name->setStyleSheet("font:20pt");
+
+  movement_step_name = new QLabel("Movement step:");
+
+  movement_step = new QDoubleSpinBox(this);
+  movement_step->setRange(0.05, 20);
+  movement_step->setValue(0.05);
+  movement_step->setAlignment(Qt::AlignRight);
+  movement_step->setSingleStep(0.05);
+
+  rotation_angle_name = new QLabel("Rotation angle:");
+  
+  rotation_angle = new QDoubleSpinBox(this);
+  rotation_angle->setRange(0, 360);
+  rotation_angle->setValue(0.5);
+  rotation_angle->setAlignment(Qt::AlignRight);
+  rotation_angle->setSingleStep(0.5);
+
+  zoom_step_name = new QLabel("Zoom step:");
+  
+  zoom_step = new QDoubleSpinBox(this);
+  zoom_step->setRange(0.05, 20);
+  zoom_step->setValue(0.05);
+  zoom_step->setAlignment(Qt::AlignRight);
+  zoom_step->setSingleStep(0.05);
 
   m_main_layout->addWidget(m_paint_widget,        0, 0, 20, 20);
   m_main_layout->addWidget(x_minus,               21, 0, 1, 1);
@@ -183,14 +207,20 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(y_minus,               21, 1, 1, 1);
   m_main_layout->addWidget(z_plus,                20, 2, 1, 1);
   m_main_layout->addWidget(z_minus,               20, 0, 1, 1);
+  m_main_layout->addWidget(movement_step_name,    20, 3, 1, 1);
+  m_main_layout->addWidget(movement_step,         21, 3, 1, 1);
   m_main_layout->addWidget(x_clockwise,           20, 4, 1, 1);
   m_main_layout->addWidget(x_counterclockwise,    21, 4, 1, 1);
   m_main_layout->addWidget(y_clockwise,           20, 5, 1, 1);
   m_main_layout->addWidget(y_counterclockwise,    21, 5, 1, 1);
   m_main_layout->addWidget(z_clockwise,           20, 6, 1, 1);
   m_main_layout->addWidget(z_counterclockwise,    21, 6, 1, 1);
+  m_main_layout->addWidget(rotation_angle_name,   20, 7, 1, 1);
+  m_main_layout->addWidget(rotation_angle,        21, 7, 1, 1);
   m_main_layout->addWidget(scale_plus,            20, 8, 1, 1);
   m_main_layout->addWidget(scale_minus,           21, 8, 1, 1);
+  m_main_layout->addWidget(zoom_step_name,        20, 9, 1, 1);
+  m_main_layout->addWidget(zoom_step,             21, 9, 1, 1);
   m_main_layout->addWidget(fakelabel_0,           22, 0, 1, 10);
   m_main_layout->addWidget(file_select,           23, 0, 1, 3);
   m_main_layout->addWidget(bg_color_select,       23, 4, 1, 3);
@@ -278,3 +308,4 @@ void MainWidget::readSettings() {
   m_paint_widget->preferences.faces_color =
       settings.value("faces color", QColor(0, 255, 0)).value<QColor>();
 }
+
