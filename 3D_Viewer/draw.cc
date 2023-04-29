@@ -88,8 +88,6 @@ void Draw::paintGL() {
   }
 }
 
-
-
 void Draw::select_file() {
   fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
                                           tr("Files (*.obj)"));
