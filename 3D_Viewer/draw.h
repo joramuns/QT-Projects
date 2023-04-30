@@ -47,8 +47,6 @@ public:
   void resizeGL(int w, int h) override;
 
   Pars_counters view = {0, 0, 0, 0, 0, 0};
-  // QString fileName;
-  // const char *file_name;
   GLuint VBO = 0;
   Prefs preferences = {
     .bg_color = QColor(0, 0, 0),
@@ -63,7 +61,6 @@ public:
 
 public Q_SLOTS:
 
-  // void select_file();
   void setPref(PrefMask mask, bool setter);
   bool getPref(PrefMask mask);
   void cleanView();

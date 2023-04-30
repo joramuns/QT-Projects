@@ -10,6 +10,8 @@
 #include <QSpinBox>
 #include <QWidget>
 
+#define S21_PI 3.141592
+
 class MainWidget : public QWidget {
   Q_OBJECT
 public:
@@ -21,9 +23,10 @@ public:
   void readSettings();
 
 private:
-  QString fileName;
+
+  // QString fileName;
   const char *file_name;
-  
+
   MyButton *x_minus;
   MyButton *x_plus;
   MyButton *y_minus;
@@ -47,6 +50,9 @@ private:
   MyButton *vertex_color_select;
   MyButton *faces_color_select;
 
+  MyButton *screenshot;
+  MyButton *screencast;
+
   QCheckBox *dashed_face;
 
   QCheckBox *projection_type;
@@ -65,6 +71,8 @@ private:
 
   QLabel *model_name;
   QLabel *size_of_array;
+  QLabel *size_of_edges;
+  QLabel *model_pre_name;
 
   QDoubleSpinBox *movement_step;
   QDoubleSpinBox *rotation_angle;
@@ -97,6 +105,7 @@ private Q_SLOTS:
   void faces_select_color();
 
   void select_file();
+  void screen_shooter();
 };
 
 #endif // MAINWIDGET_H

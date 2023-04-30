@@ -7,8 +7,6 @@
 #endif
 #include <math.h>
 
-#define SHIFT 0.03
-
 Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
 
 void Draw::initializeGL() {

@@ -112,6 +112,10 @@ MainWidget::MainWidget() {
   connect(faces_color_select, &QPushButton::clicked, this,
           &MainWidget::faces_select_color);
 
+  screenshot = createButton("Shotik");
+  screenshot->setStyleSheet("font:18pt");
+  connect(screenshot, &QPushButton::clicked, this, &MainWidget::screen_shooter);
+
   dashed_face = new QCheckBox("Dashed lines");
   dashed_face->setStyleSheet("font:20pt");
   connect(dashed_face, &QPushButton::clicked, this,
@@ -201,6 +205,9 @@ MainWidget::MainWidget() {
   zoom_step->setSingleStep(0.05);
 
   model_name = new QLabel("");
+  model_pre_name = new QLabel("Name of file:");
+  size_of_array = new QLabel("Number of vertexes: ");
+  size_of_edges = new QLabel("Size of edges: ");
 
   m_main_layout->addWidget(m_paint_widget, 0, 0, 20, 10);
   m_main_layout->addWidget(x_minus, 21, 0, 1, 1);
@@ -225,6 +232,7 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(zoom_step, 21, 9, 1, 1);
   m_main_layout->addWidget(fakelabel_0, 22, 0, 1, 10);
   m_main_layout->addWidget(file_select, 23, 0, 1, 3);
+  m_main_layout->addWidget(screenshot, 23, 7, 1, 2);
   m_main_layout->addWidget(bg_color_select, 23, 4, 1, 3);
   m_main_layout->addWidget(vertex_color_select, 24, 4, 1, 3);
   m_main_layout->addWidget(faces_color_select, 25, 4, 1, 3);
@@ -236,7 +244,10 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(dashed_face, 26, 0, 1, 2);
   m_main_layout->addWidget(line_size_name, 27, 0, 1, 1);
   m_main_layout->addWidget(line_size, 27, 1, 1, 2);
-  m_main_layout->addWidget(model_name, 28, 0, 1, 6);
+  m_main_layout->addWidget(model_pre_name, 28, 0, 1, 1);
+  m_main_layout->addWidget(model_name, 28, 1, 1, 3);
+  m_main_layout->addWidget(size_of_array, 28, 6, 1, 2);
+  m_main_layout->addWidget(size_of_edges, 28, 8, 1, 2);
 
   setWindowTitle("3D_View");
 }
@@ -354,37 +365,43 @@ void MainWidget::out_move() {
 }
 
 void MainWidget::turn_x() {
-  turn_matrix_x(rotation_angle->value(), m_paint_widget->view.sorted_array,
+  turn_matrix_x((rotation_angle->value() * S21_PI) / 180,
+                m_paint_widget->view.sorted_array,
                 m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_counter_x() {
-  turn_matrix_x(-rotation_angle->value(), m_paint_widget->view.sorted_array,
+  turn_matrix_x(-(rotation_angle->value() * S21_PI) / 180,
+                m_paint_widget->view.sorted_array,
                 m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_y() {
-  turn_matrix_y(rotation_angle->value(), m_paint_widget->view.sorted_array,
+  turn_matrix_y((rotation_angle->value() * S21_PI) / 180,
+                m_paint_widget->view.sorted_array,
                 m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_counter_y() {
-  turn_matrix_y(-rotation_angle->value(), m_paint_widget->view.sorted_array,
+  turn_matrix_y(-(rotation_angle->value() * S21_PI) / 180,
+                m_paint_widget->view.sorted_array,
                 m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_z() {
-  turn_matrix_z(rotation_angle->value(), m_paint_widget->view.sorted_array,
+  turn_matrix_z((rotation_angle->value() * S21_PI) / 180,
+                m_paint_widget->view.sorted_array,
                 m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_counter_z() {
-  turn_matrix_z(-rotation_angle->value(), m_paint_widget->view.sorted_array,
+  turn_matrix_z(-(rotation_angle->value() * S21_PI) / 180,
+                m_paint_widget->view.sorted_array,
                 m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
@@ -428,24 +445,36 @@ void MainWidget::handleComboBox(const QString &input) {
 
 void MainWidget::bg_select_color() {
   m_paint_widget->preferences.bg_color =
-      QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
+      QColorDialog::getColor(Qt::white, this, "Select color");
 }
 
 void MainWidget::vertex_select_color() {
   m_paint_widget->preferences.vertex_color =
-      QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
+      QColorDialog::getColor(Qt::white, this, "Select vertex");
 }
 
 void MainWidget::faces_select_color() {
   m_paint_widget->preferences.faces_color =
-      QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
+      QColorDialog::getColor(Qt::white, this, "Select bebra");
+}
+
+void MainWidget::screen_shooter() {
+  QImage screenshot = m_paint_widget->grabFramebuffer();
+  QString filePath = QFileDialog::getSaveFileName(
+      this, "Сохранить скриншот", "",
+      "Images (*.png *.bmp)");
+  if (!filePath.isEmpty()) { 
+    screenshot.save(filePath); 
+  }
 }
 
 void MainWidget::select_file() {
-  fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
-                                          tr("Files (*.obj)"));
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
+                                                  tr("Files (*.obj)"));
   if (fileName != "") {
-    model_name->setText(fileName);
+    QFileInfo fileInfo(fileName);
+    QString name = fileInfo.fileName();
+    model_name->setText(name);
     if (m_paint_widget->VBO) {
       m_paint_widget->disabler();
     }
@@ -458,5 +487,10 @@ void MainWidget::select_file() {
   } else {
     array_sort(obj, &m_paint_widget->view);
     fclose(obj);
+    size_of_edges->setText("Size of edges: ");
+    size_of_array->setText("Number of vertexes: ");
+    size_of_array->setText(
+        size_of_array->text() +
+        QString::number(m_paint_widget->view.size_sort_array / 4));
   }
 }
