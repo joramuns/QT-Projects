@@ -88,57 +88,10 @@ void Draw::paintGL() {
   }
 }
 
-void Draw::select_file() {
-  fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
-                                          tr("Files (*.obj)"));
-  if (fileName != "") {
-    if (VBO) {
-      glDisableVertexAttribArray(0);
-      glDeleteBuffers(1, &VBO);
-      VBO = 0;
-    }
-    std::string strStd = fileName.toStdString();
-    file_name = strStd.c_str();
-    this->initializeGL();
-  }
-}
-
-
-void Draw::bg_select_color() {
-  preferences.bg_color = QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
-}
-
-void Draw::vertex_select_color() {
-  preferences.vertex_color = QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
-}
-
-void Draw::faces_select_color() {
-  preferences.faces_color = QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
-}
-
-void Draw::handleComboBox(const QString& input) {
-  if (input == "None") {
-    setPref(kVertex, false);
-  } else {
-    setPref(kVertex, true);
-    if (input == "Round") {
-      setPref(kSquareVertex, false);
-    } else {
-      setPref(kSquareVertex, true);
-    }
-  }
-  update();
-}
-
-void Draw::togglePref(PrefMask mask) {
-  if (getPref(mask)) {
-    setPref(mask, false);
-  } else {
-    setPref(mask, true);
-  }
-  if (mask == kProjection)
-    setPref(kChangeProjection, true);
-  update();
+void Draw::disabler() {
+  glDisableVertexAttribArray(0);
+  glDeleteBuffers(1, &VBO);
+  VBO = 0;
 }
 
 void Draw::setPref(PrefMask mask, bool setter) {

@@ -58,37 +58,12 @@ public:
     .v_size = 3,
     .l_size = 1,
   };
-  // char *filename = "/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/3D_Viewer/"
-  //                  "c-function/core/coub.obj";
+
+  void disabler();  
 
 public Q_SLOTS:
-  // void left_move();
-  // void right_move();
-  // void up_move();
-  // void down_move();
-  // void in_move();
-  // void out_move();
 
-  // void turn_x();
-  // void turn_counter_x();
-
-  // void turn_y();
-  // void turn_counter_y();
-
-  // void turn_z();
-  // void turn_counter_z();
-
-  // void scale_plus();
-  // void scale_minus();
-
-  void select_file();
-  void bg_select_color();
-  void vertex_select_color();
-  void faces_select_color();
-  void handleComboBox(const QString& input);
-
-  void togglePref(PrefMask mask);
-
+  // void select_file();
   void setPref(PrefMask mask, bool setter);
   bool getPref(PrefMask mask);
   void cleanView();

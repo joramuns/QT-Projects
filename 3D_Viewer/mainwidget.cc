@@ -59,23 +59,23 @@ MainWidget::MainWidget() {
   connect(x_counterclockwise, &QPushButton::clicked, this,
           &MainWidget::turn_counter_x);
 
-  y_clockwise = createButton('Y'+ QChar(0x000027F3));
+  y_clockwise = createButton('Y' + QChar(0x000027F3));
   y_clockwise->setStyleSheet("font:20pt");
   y_clockwise->setShortcut(QKeySequence(Qt::Key_5));
   connect(y_clockwise, &QPushButton::clicked, this, &MainWidget::turn_y);
 
-  y_counterclockwise = createButton('Y'+ QChar(0x000027F2));
+  y_counterclockwise = createButton('Y' + QChar(0x000027F2));
   y_counterclockwise->setStyleSheet("font:20pt");
   y_counterclockwise->setShortcut(QKeySequence(Qt::Key_4));
   connect(y_counterclockwise, &QPushButton::clicked, this,
           &MainWidget::turn_counter_y);
 
-  z_clockwise = createButton('Z'+ QChar(0x000027F3));
+  z_clockwise = createButton('Z' + QChar(0x000027F3));
   z_clockwise->setStyleSheet("font:20pt");
   z_clockwise->setShortcut(QKeySequence(Qt::Key_2));
   connect(z_clockwise, &QPushButton::clicked, this, &MainWidget::turn_z);
 
-  z_counterclockwise = createButton('Z'+ QChar(0x000027F2));
+  z_counterclockwise = createButton('Z' + QChar(0x000027F2));
   z_counterclockwise->setStyleSheet("font:20pt");
   z_counterclockwise->setShortcut(QKeySequence(Qt::Key_1));
   connect(z_counterclockwise, &QPushButton::clicked, this,
@@ -84,7 +84,8 @@ MainWidget::MainWidget() {
   scale_plus_button = createButton(QChar(0x0000002B));
   scale_plus_button->setStyleSheet("font:20pt");
   scale_plus_button->setShortcut(QKeySequence(Qt::Key_Plus));
-  connect(scale_plus_button, &QPushButton::clicked, this, &MainWidget::scale_plus);
+  connect(scale_plus_button, &QPushButton::clicked, this,
+          &MainWidget::scale_plus);
 
   scale_minus_button = createButton(QChar(0x00002212));
   scale_minus_button->setStyleSheet("font:20pt");
@@ -94,35 +95,35 @@ MainWidget::MainWidget() {
 
   file_select = createButton("File selection");
   file_select->setStyleSheet("font:18pt");
-  connect(file_select, &QPushButton::clicked, m_paint_widget,
-          &Draw::select_file);
+  connect(file_select, &QPushButton::clicked, this,
+          &MainWidget::select_file);
 
   bg_color_select = createButton("Choose background color");
   bg_color_select->setStyleSheet("font:18pt");
-  connect(bg_color_select, &QPushButton::clicked, m_paint_widget,
-          &Draw::bg_select_color);
+  connect(bg_color_select, &QPushButton::clicked, this,
+          &MainWidget::bg_select_color);
 
   vertex_color_select = createButton("Choose vertex color");
   vertex_color_select->setStyleSheet("font:18pt");
-  connect(vertex_color_select, &QPushButton::clicked, m_paint_widget,
-          &Draw::vertex_select_color);
+  connect(vertex_color_select, &QPushButton::clicked, this,
+          &MainWidget::vertex_select_color);
 
   faces_color_select = createButton("Choose face color");
   faces_color_select->setStyleSheet("font:18pt");
-  connect(faces_color_select, &QPushButton::clicked, m_paint_widget,
-          &Draw::faces_select_color);
+  connect(faces_color_select, &QPushButton::clicked, this,
+          &MainWidget::faces_select_color);
 
   dashed_face = new QCheckBox("Dashed lines");
   dashed_face->setStyleSheet("font:20pt");
-  connect(dashed_face, &QPushButton::clicked, m_paint_widget,
-          [=]() { m_paint_widget->togglePref(kDashed); });
+  connect(dashed_face, &QPushButton::clicked, this,
+          [=]() { togglePref(kDashed); });
 
   projection_type = new QCheckBox("Perspective", this);
   projection_type->setStyleSheet("font:20pt");
   projection_type->setCheckState(
       m_paint_widget->getPref(kProjection) ? Qt::Unchecked : Qt::Checked);
-  connect(projection_type, &QCheckBox::stateChanged, m_paint_widget,
-          [=]() { m_paint_widget->togglePref(kProjection); });
+  connect(projection_type, &QCheckBox::stateChanged, this,
+          [=]() { togglePref(kProjection); });
 
   vertex_size = new QDoubleSpinBox(this);
   vertex_size->setRange(1, 20);
@@ -159,9 +160,9 @@ MainWidget::MainWidget() {
   } else {
     vertex_type->setCurrentIndex(2);
   }
-  connect(vertex_type, &QComboBox::currentTextChanged, m_paint_widget,
+  connect(vertex_type, &QComboBox::currentTextChanged, this,
           [=](const QString &vertex_type_text) {
-            m_paint_widget->handleComboBox(vertex_type_text);
+            handleComboBox(vertex_type_text);
           });
 
   fakelabel_0 = new QLabel("");
@@ -185,7 +186,7 @@ MainWidget::MainWidget() {
   movement_step->setSingleStep(0.05);
 
   rotation_angle_name = new QLabel("Rotation angle:");
-  
+
   rotation_angle = new QDoubleSpinBox(this);
   rotation_angle->setRange(0, 360);
   rotation_angle->setValue(0.5);
@@ -193,47 +194,47 @@ MainWidget::MainWidget() {
   rotation_angle->setSingleStep(0.5);
 
   zoom_step_name = new QLabel("Zoom step:");
-  
+
   zoom_step = new QDoubleSpinBox(this);
   zoom_step->setRange(0.05, 20);
   zoom_step->setValue(0.05);
   zoom_step->setAlignment(Qt::AlignRight);
   zoom_step->setSingleStep(0.05);
 
-  m_main_layout->addWidget(m_paint_widget,        0, 0, 20, 10);
-  m_main_layout->addWidget(x_minus,               21, 0, 1, 1);
-  m_main_layout->addWidget(x_plus,                21, 2, 1, 1);
-  m_main_layout->addWidget(y_plus,                20, 1, 1, 1);
-  m_main_layout->addWidget(y_minus,               21, 1, 1, 1);
-  m_main_layout->addWidget(z_plus,                20, 2, 1, 1);
-  m_main_layout->addWidget(z_minus,               20, 0, 1, 1);
-  m_main_layout->addWidget(movement_step_name,    20, 3, 1, 1);
-  m_main_layout->addWidget(movement_step,         21, 3, 1, 1);
-  m_main_layout->addWidget(x_clockwise,           20, 4, 1, 1);
-  m_main_layout->addWidget(x_counterclockwise,    21, 4, 1, 1);
-  m_main_layout->addWidget(y_clockwise,           20, 5, 1, 1);
-  m_main_layout->addWidget(y_counterclockwise,    21, 5, 1, 1);
-  m_main_layout->addWidget(z_clockwise,           20, 6, 1, 1);
-  m_main_layout->addWidget(z_counterclockwise,    21, 6, 1, 1);
-  m_main_layout->addWidget(rotation_angle_name,   20, 7, 1, 1);
-  m_main_layout->addWidget(rotation_angle,        21, 7, 1, 1);
-  m_main_layout->addWidget(scale_plus_button,     20, 8, 1, 1);
-  m_main_layout->addWidget(scale_minus_button,    21, 8, 1, 1);
-  m_main_layout->addWidget(zoom_step_name,        20, 9, 1, 1);
-  m_main_layout->addWidget(zoom_step,             21, 9, 1, 1);
-  m_main_layout->addWidget(fakelabel_0,           22, 0, 1, 10);
-  m_main_layout->addWidget(file_select,           23, 0, 1, 3);
-  m_main_layout->addWidget(bg_color_select,       23, 4, 1, 3);
-  m_main_layout->addWidget(vertex_color_select,   24, 4, 1, 3);
-  m_main_layout->addWidget(faces_color_select,    25, 4, 1, 3);
-  m_main_layout->addWidget(vertex_type_name,      24, 0, 1, 1);
-  m_main_layout->addWidget(vertex_type,           24, 1, 1, 2);
-  m_main_layout->addWidget(vertex_size_name,      25, 0, 1, 1); 
-  m_main_layout->addWidget(vertex_size,           25, 1, 1, 2);
-  m_main_layout->addWidget(projection_type,       26, 2, 1, 1);
-  m_main_layout->addWidget(dashed_face,           26, 0, 1, 2);
-  m_main_layout->addWidget(line_size_name,        27, 0, 1, 1);
-  m_main_layout->addWidget(line_size,             27, 1, 1, 2);
+  m_main_layout->addWidget(m_paint_widget,      0, 0, 20, 10);
+  m_main_layout->addWidget(x_minus,             21, 0, 1, 1);
+  m_main_layout->addWidget(x_plus,              21, 2, 1, 1);
+  m_main_layout->addWidget(y_plus,              20, 1, 1, 1);
+  m_main_layout->addWidget(y_minus,             21, 1, 1, 1);
+  m_main_layout->addWidget(z_plus,              20, 2, 1, 1);
+  m_main_layout->addWidget(z_minus,             20, 0, 1, 1);
+  m_main_layout->addWidget(movement_step_name,  20, 3, 1, 1);
+  m_main_layout->addWidget(movement_step,       21, 3, 1, 1);
+  m_main_layout->addWidget(x_clockwise,         20, 4, 1, 1);
+  m_main_layout->addWidget(x_counterclockwise,  21, 4, 1, 1);
+  m_main_layout->addWidget(y_clockwise,         20, 5, 1, 1);
+  m_main_layout->addWidget(y_counterclockwise,  21, 5, 1, 1);
+  m_main_layout->addWidget(z_clockwise,         20, 6, 1, 1);
+  m_main_layout->addWidget(z_counterclockwise,  21, 6, 1, 1);
+  m_main_layout->addWidget(rotation_angle_name, 20, 7, 1, 1);
+  m_main_layout->addWidget(rotation_angle,      21, 7, 1, 1);
+  m_main_layout->addWidget(scale_plus_button,   20, 8, 1, 1);
+  m_main_layout->addWidget(scale_minus_button,  21, 8, 1, 1);
+  m_main_layout->addWidget(zoom_step_name,      20, 9, 1, 1);
+  m_main_layout->addWidget(zoom_step,           21, 9, 1, 1);
+  m_main_layout->addWidget(fakelabel_0,         22, 0, 1, 10);
+  m_main_layout->addWidget(file_select,         23, 0, 1, 3);
+  m_main_layout->addWidget(bg_color_select,     23, 4, 1, 3);
+  m_main_layout->addWidget(vertex_color_select, 24, 4, 1, 3);
+  m_main_layout->addWidget(faces_color_select,  25, 4, 1, 3);
+  m_main_layout->addWidget(vertex_type_name,    24, 0, 1, 1);
+  m_main_layout->addWidget(vertex_type,         24, 1, 1, 2);
+  m_main_layout->addWidget(vertex_size_name,    25, 0, 1, 1);
+  m_main_layout->addWidget(vertex_size,         25, 1, 1, 2);
+  m_main_layout->addWidget(projection_type,     26, 2, 1, 1);
+  m_main_layout->addWidget(dashed_face,         26, 0, 1, 2);
+  m_main_layout->addWidget(line_size_name,      27, 0, 1, 1);
+  m_main_layout->addWidget(line_size,           27, 1, 1, 2);
 
   setWindowTitle("3D_View");
 }
@@ -309,71 +310,141 @@ void MainWidget::readSettings() {
 }
 
 void MainWidget::left_move() {
-  coordinate_change(-movement_step->value(), 0.0, 0.0, m_paint_widget->view.sorted_array, m_paint_widget->view.size_sort_array);
+  coordinate_change(-movement_step->value(), 0.0, 0.0,
+                    m_paint_widget->view.sorted_array,
+                    m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::right_move() {
-  coordinate_change(movement_step->value(), 0.0, 0.0, m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  coordinate_change(movement_step->value(), 0.0, 0.0,
+                    m_paint_widget->view.sorted_array,
+                    m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::up_move() {
-  coordinate_change(0.0, movement_step->value(), 0.0, m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  coordinate_change(0.0, movement_step->value(), 0.0,
+                    m_paint_widget->view.sorted_array,
+                    m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::down_move() {
-  coordinate_change(0.0, -movement_step->value(), 0.0, m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  coordinate_change(0.0, -movement_step->value(), 0.0,
+                    m_paint_widget->view.sorted_array,
+                    m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::in_move() {
-  coordinate_change(0.0, 0.0, movement_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  coordinate_change(0.0, 0.0, movement_step->value(),
+                    m_paint_widget->view.sorted_array,
+                    m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::out_move() {
-  coordinate_change(0.0, 0.0, -movement_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  coordinate_change(0.0, 0.0, -movement_step->value(),
+                    m_paint_widget->view.sorted_array,
+                    m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_x() {
-  turn_matrix_x(rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  turn_matrix_x(rotation_angle->value(), m_paint_widget->view.sorted_array,
+                m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_counter_x() {
-  turn_matrix_x(-rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  turn_matrix_x(-rotation_angle->value(), m_paint_widget->view.sorted_array,
+                m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_y() {
-  turn_matrix_y(rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  turn_matrix_y(rotation_angle->value(), m_paint_widget->view.sorted_array,
+                m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_counter_y() {
-  turn_matrix_y(-rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  turn_matrix_y(-rotation_angle->value(), m_paint_widget->view.sorted_array,
+                m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_z() {
-  turn_matrix_z(rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  turn_matrix_z(rotation_angle->value(), m_paint_widget->view.sorted_array,
+                m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::turn_counter_z() {
-  turn_matrix_z(-rotation_angle->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  turn_matrix_z(-rotation_angle->value(), m_paint_widget->view.sorted_array,
+                m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::scale_plus() {
-  scaling(1 + zoom_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  scaling(1 + zoom_step->value(), m_paint_widget->view.sorted_array,
+          m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
 }
 
 void MainWidget::scale_minus() {
-  scaling(1 - zoom_step->value(), m_paint_widget->view.sorted_array,  m_paint_widget->view.size_sort_array);
+  scaling(1 - zoom_step->value(), m_paint_widget->view.sorted_array,
+          m_paint_widget->view.size_sort_array);
   m_paint_widget->repaint();
+}
+
+void MainWidget::togglePref(PrefMask mask) {
+  if (m_paint_widget->getPref(mask)) {
+    m_paint_widget->setPref(mask, false);
+  } else {
+    m_paint_widget->setPref(mask, true);
+  }
+  if (mask == kProjection)
+    m_paint_widget->setPref(kChangeProjection, true);
+  m_paint_widget->update();
+}
+
+void MainWidget::handleComboBox(const QString &input) {
+  if (input == "None") {
+    m_paint_widget->setPref(kVertex, false);
+  } else {
+    m_paint_widget->setPref(kVertex, true);
+    if (input == "Round") {
+      m_paint_widget->setPref(kSquareVertex, false);
+    } else {
+      m_paint_widget->setPref(kSquareVertex, true);
+    }
+  }
+  m_paint_widget->update();
+}
+
+void MainWidget::bg_select_color() {
+  m_paint_widget->preferences.bg_color = QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
+}
+
+void MainWidget::vertex_select_color() {
+  m_paint_widget->preferences.vertex_color = QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
+}
+
+void MainWidget::faces_select_color() {
+  m_paint_widget->preferences.faces_color = QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
+}
+
+void MainWidget::select_file() {
+  m_paint_widget->fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
+                                          tr("Files (*.obj)"));
+  if (m_paint_widget->fileName != "") {
+    if (m_paint_widget->VBO) {
+      m_paint_widget->disabler();
+    }
+    std::string strStd = m_paint_widget->fileName.toStdString();
+    m_paint_widget->file_name = strStd.c_str();
+    m_paint_widget->initializeGL();
+  }
 }

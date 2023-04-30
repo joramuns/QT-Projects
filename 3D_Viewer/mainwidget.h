@@ -6,9 +6,9 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QGridLayout>
+#include <QLabel>
 #include <QSpinBox>
 #include <QWidget>
-#include <QLabel>
 
 class MainWidget : public QWidget {
   Q_OBJECT
@@ -51,7 +51,7 @@ private:
   QSpinBox *line_size;
   QComboBox *vertex_type;
 
-  //need delete in destruct
+  // need delete in destruct
   QLabel *fakelabel_0;
   QLabel *vertex_type_name;
   QLabel *vertex_size_name;
@@ -82,6 +82,15 @@ private Q_SLOTS:
   void turn_counter_z();
   void scale_plus();
   void scale_minus();
+
+  void togglePref(PrefMask mask);
+  void handleComboBox(const QString &input);
+
+  void bg_select_color();
+  void vertex_select_color();
+  void faces_select_color();
+
+  void select_file();
 };
 
 #endif // MAINWIDGET_H
