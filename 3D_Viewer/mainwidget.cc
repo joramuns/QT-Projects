@@ -462,7 +462,7 @@ void MainWidget::screen_shooter() {
   QImage screenshot = m_paint_widget->grabFramebuffer();
   QString filePath = QFileDialog::getSaveFileName(
       this, "Сохранить скриншот", "",
-      "Images (*.png *.bmp)");
+      "Images (*.png *.bmp *jpeg)");
   if (!filePath.isEmpty()) { 
     screenshot.save(filePath); 
   }
