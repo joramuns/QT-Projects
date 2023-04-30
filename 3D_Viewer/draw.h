@@ -6,7 +6,7 @@
 #include <QMouseEvent>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
-#include <QTimer>
+// #include <QTimer>
 #include <QFileDialog>
 #include <QColorDialog>
 
@@ -47,8 +47,8 @@ public:
   void resizeGL(int w, int h) override;
 
   Pars_counters view = {0, 0, 0, 0, 0, 0};
-  QString fileName;
-  const char *file_name;
+  // QString fileName;
+  // const char *file_name;
   GLuint VBO = 0;
   Prefs preferences = {
     .bg_color = QColor(0, 0, 0),

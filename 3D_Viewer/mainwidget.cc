@@ -95,8 +95,7 @@ MainWidget::MainWidget() {
 
   file_select = createButton("File selection");
   file_select->setStyleSheet("font:18pt");
-  connect(file_select, &QPushButton::clicked, this,
-          &MainWidget::select_file);
+  connect(file_select, &QPushButton::clicked, this, &MainWidget::select_file);
 
   bg_color_select = createButton("Choose background color");
   bg_color_select->setStyleSheet("font:18pt");
@@ -201,40 +200,43 @@ MainWidget::MainWidget() {
   zoom_step->setAlignment(Qt::AlignRight);
   zoom_step->setSingleStep(0.05);
 
-  m_main_layout->addWidget(m_paint_widget,      0, 0, 20, 10);
-  m_main_layout->addWidget(x_minus,             21, 0, 1, 1);
-  m_main_layout->addWidget(x_plus,              21, 2, 1, 1);
-  m_main_layout->addWidget(y_plus,              20, 1, 1, 1);
-  m_main_layout->addWidget(y_minus,             21, 1, 1, 1);
-  m_main_layout->addWidget(z_plus,              20, 2, 1, 1);
-  m_main_layout->addWidget(z_minus,             20, 0, 1, 1);
-  m_main_layout->addWidget(movement_step_name,  20, 3, 1, 1);
-  m_main_layout->addWidget(movement_step,       21, 3, 1, 1);
-  m_main_layout->addWidget(x_clockwise,         20, 4, 1, 1);
-  m_main_layout->addWidget(x_counterclockwise,  21, 4, 1, 1);
-  m_main_layout->addWidget(y_clockwise,         20, 5, 1, 1);
-  m_main_layout->addWidget(y_counterclockwise,  21, 5, 1, 1);
-  m_main_layout->addWidget(z_clockwise,         20, 6, 1, 1);
-  m_main_layout->addWidget(z_counterclockwise,  21, 6, 1, 1);
+  model_name = new QLabel("");
+
+  m_main_layout->addWidget(m_paint_widget, 0, 0, 20, 10);
+  m_main_layout->addWidget(x_minus, 21, 0, 1, 1);
+  m_main_layout->addWidget(x_plus, 21, 2, 1, 1);
+  m_main_layout->addWidget(y_plus, 20, 1, 1, 1);
+  m_main_layout->addWidget(y_minus, 21, 1, 1, 1);
+  m_main_layout->addWidget(z_plus, 20, 2, 1, 1);
+  m_main_layout->addWidget(z_minus, 20, 0, 1, 1);
+  m_main_layout->addWidget(movement_step_name, 20, 3, 1, 1);
+  m_main_layout->addWidget(movement_step, 21, 3, 1, 1);
+  m_main_layout->addWidget(x_clockwise, 20, 4, 1, 1);
+  m_main_layout->addWidget(x_counterclockwise, 21, 4, 1, 1);
+  m_main_layout->addWidget(y_clockwise, 20, 5, 1, 1);
+  m_main_layout->addWidget(y_counterclockwise, 21, 5, 1, 1);
+  m_main_layout->addWidget(z_clockwise, 20, 6, 1, 1);
+  m_main_layout->addWidget(z_counterclockwise, 21, 6, 1, 1);
   m_main_layout->addWidget(rotation_angle_name, 20, 7, 1, 1);
-  m_main_layout->addWidget(rotation_angle,      21, 7, 1, 1);
-  m_main_layout->addWidget(scale_plus_button,   20, 8, 1, 1);
-  m_main_layout->addWidget(scale_minus_button,  21, 8, 1, 1);
-  m_main_layout->addWidget(zoom_step_name,      20, 9, 1, 1);
-  m_main_layout->addWidget(zoom_step,           21, 9, 1, 1);
-  m_main_layout->addWidget(fakelabel_0,         22, 0, 1, 10);
-  m_main_layout->addWidget(file_select,         23, 0, 1, 3);
-  m_main_layout->addWidget(bg_color_select,     23, 4, 1, 3);
+  m_main_layout->addWidget(rotation_angle, 21, 7, 1, 1);
+  m_main_layout->addWidget(scale_plus_button, 20, 8, 1, 1);
+  m_main_layout->addWidget(scale_minus_button, 21, 8, 1, 1);
+  m_main_layout->addWidget(zoom_step_name, 20, 9, 1, 1);
+  m_main_layout->addWidget(zoom_step, 21, 9, 1, 1);
+  m_main_layout->addWidget(fakelabel_0, 22, 0, 1, 10);
+  m_main_layout->addWidget(file_select, 23, 0, 1, 3);
+  m_main_layout->addWidget(bg_color_select, 23, 4, 1, 3);
   m_main_layout->addWidget(vertex_color_select, 24, 4, 1, 3);
-  m_main_layout->addWidget(faces_color_select,  25, 4, 1, 3);
-  m_main_layout->addWidget(vertex_type_name,    24, 0, 1, 1);
-  m_main_layout->addWidget(vertex_type,         24, 1, 1, 2);
-  m_main_layout->addWidget(vertex_size_name,    25, 0, 1, 1);
-  m_main_layout->addWidget(vertex_size,         25, 1, 1, 2);
-  m_main_layout->addWidget(projection_type,     26, 2, 1, 1);
-  m_main_layout->addWidget(dashed_face,         26, 0, 1, 2);
-  m_main_layout->addWidget(line_size_name,      27, 0, 1, 1);
-  m_main_layout->addWidget(line_size,           27, 1, 1, 2);
+  m_main_layout->addWidget(faces_color_select, 25, 4, 1, 3);
+  m_main_layout->addWidget(vertex_type_name, 24, 0, 1, 1);
+  m_main_layout->addWidget(vertex_type, 24, 1, 1, 2);
+  m_main_layout->addWidget(vertex_size_name, 25, 0, 1, 1);
+  m_main_layout->addWidget(vertex_size, 25, 1, 1, 2);
+  m_main_layout->addWidget(projection_type, 26, 2, 1, 1);
+  m_main_layout->addWidget(dashed_face, 26, 0, 1, 2);
+  m_main_layout->addWidget(line_size_name, 27, 0, 1, 1);
+  m_main_layout->addWidget(line_size, 27, 1, 1, 2);
+  m_main_layout->addWidget(model_name, 28, 0, 1, 6);
 
   setWindowTitle("3D_View");
 }
@@ -425,26 +427,36 @@ void MainWidget::handleComboBox(const QString &input) {
 }
 
 void MainWidget::bg_select_color() {
-  m_paint_widget->preferences.bg_color = QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
+  m_paint_widget->preferences.bg_color =
+      QColorDialog::getColor(Qt::white, this, "Vibiriti cvet");
 }
 
 void MainWidget::vertex_select_color() {
-  m_paint_widget->preferences.vertex_color = QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
+  m_paint_widget->preferences.vertex_color =
+      QColorDialog::getColor(Qt::white, this, "Vibiriti tochko");
 }
 
 void MainWidget::faces_select_color() {
-  m_paint_widget->preferences.faces_color = QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
+  m_paint_widget->preferences.faces_color =
+      QColorDialog::getColor(Qt::white, this, "Vibiriti bebra");
 }
 
 void MainWidget::select_file() {
-  m_paint_widget->fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
+  fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
                                           tr("Files (*.obj)"));
-  if (m_paint_widget->fileName != "") {
+  if (fileName != "") {
+    model_name->setText(fileName);
     if (m_paint_widget->VBO) {
       m_paint_widget->disabler();
     }
-    std::string strStd = m_paint_widget->fileName.toStdString();
-    m_paint_widget->file_name = strStd.c_str();
+    std::string strStd = fileName.toStdString();
+    file_name = strStd.c_str();
     m_paint_widget->initializeGL();
+  }
+  FILE *obj = fopen(file_name, "r");
+  if (obj == NULL) {
+  } else {
+    array_sort(obj, &m_paint_widget->view);
+    fclose(obj);
   }
 }

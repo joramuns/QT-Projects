@@ -21,6 +21,9 @@ public:
   void readSettings();
 
 private:
+  QString fileName;
+  const char *file_name;
+  
   MyButton *x_minus;
   MyButton *x_plus;
   MyButton *y_minus;
@@ -59,6 +62,9 @@ private:
   QLabel *movement_step_name;
   QLabel *rotation_angle_name;
   QLabel *zoom_step_name;
+
+  QLabel *model_name;
+  QLabel *size_of_array;
 
   QDoubleSpinBox *movement_step;
   QDoubleSpinBox *rotation_angle;
