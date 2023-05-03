@@ -52,4 +52,3 @@ void matrix_mul(float *matrix_scale, float *point_array, int size_ar) {
     }
   }
 }
-

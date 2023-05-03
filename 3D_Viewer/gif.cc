@@ -596,8 +596,7 @@ void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,
 }
 
 bool GifBegin(GifWriter *writer, const char *filename, uint32_t width,
-              uint32_t height, uint32_t delay, int32_t bitDepth,
-              bool dither) {
+              uint32_t height, uint32_t delay, int32_t bitDepth, bool dither) {
   (void)bitDepth;
   (void)dither; // Mute "Unused argument" warnings
 #if defined(_MSC_VER) && (_MSC_VER >= 1400)
@@ -661,8 +660,7 @@ bool GifBegin(GifWriter *writer, const char *filename, uint32_t width,
 // AFAIK, it is legal to use different bit depths for different frames of an
 // image - this may be handy to save bits in animations that don't change much.
 bool GifWriteFrame(GifWriter *writer, const uint8_t *image, uint32_t width,
-                   uint32_t height, uint32_t delay, int bitDepth,
-                   bool dither) {
+                   uint32_t height, uint32_t delay, int bitDepth, bool dither) {
   if (!writer->f)
     return false;
 

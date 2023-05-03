@@ -1,24 +1,22 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-
 #include "draw.h"
 #include "gif.h"
 #include "mybutton.h"
+#include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QGridLayout>
-#include <QLabel>
-#include <QSpinBox>
-#include <QWidget>
-#include <QTimer>
-#include <QMouseEvent>
-#include <QApplication>
 #include <QDir>
 #include <QFileDialog>
-#include <QSettings>
+#include <QGridLayout>
+#include <QLabel>
 #include <QMessageBox>
-#include <QDir>
+#include <QMouseEvent>
+#include <QSettings>
+#include <QSpinBox>
+#include <QTimer>
+#include <QWidget>
 
 #define S21_PI 3.141592
 
@@ -33,7 +31,6 @@ public:
   void readSettings();
 
 private:
-
   const char *file_name;
 
   GifWriter writer;

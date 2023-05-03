@@ -481,7 +481,6 @@ void MainWidget::screen_caster() {
     screencast->setEnabled(0);
     connect(timer, &QTimer::timeout, this, &MainWidget::timerTick);
     timer->start(100);
-
   }
 }
 

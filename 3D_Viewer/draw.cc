@@ -102,4 +102,3 @@ void Draw::changeProjection() {
   glTranslatef(0, 0, -2);
   setPref(kChangeProjection, false);
 }
-

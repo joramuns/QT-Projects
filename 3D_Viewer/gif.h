@@ -1,10 +1,10 @@
 #ifndef gigagaga_h
 #define gigagaga_h
 
-#include <stdbool.h> 
-#include <stdint.h>  
-#include <stdio.h>   
-#include <string.h>  
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 
 #ifndef GIF_TEMP_MALLOC
 #include <stdlib.h>
@@ -80,11 +80,9 @@ void GifThresholdImage(const uint8_t *lastFrame, const uint8_t *nextFrame,
                        uint8_t *outFrame, uint32_t width, uint32_t height,
                        GifPalette *pPal);
 
-
 void GifWriteBit(GifBitStatus *stat, uint32_t bit);
 void GifWriteChunk(FILE *f, GifBitStatus *stat);
 void GifWriteCode(FILE *f, GifBitStatus *stat, uint32_t code, uint32_t length);
-
 
 void GifWritePalette(const GifPalette *pPal, FILE *f);
 void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,

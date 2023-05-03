@@ -94,7 +94,7 @@ void point_assignment(Pars_counters *view, float *point_array,
 
 void normalize(Pars_counters *view) {
   float maximum = maxpoint(view);
-  scaling(1/maximum, view->sorted_array, view->size_sort_array);
+  scaling(1 / maximum, view->sorted_array, view->size_sort_array);
 }
 
 float maxpoint(Pars_counters *view) {

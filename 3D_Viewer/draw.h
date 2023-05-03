@@ -61,16 +61,15 @@ public:
   Pars_counters view = {0, 0, 0, 0, 0, 0};
   GLuint VBO = 0;
   Prefs preferences = {
-    .bg_color = QColor(0, 0, 0),
-    .vertex_color = QColor(255, 255, 255),
-    .faces_color = QColor(0, 255, 0),
-    .bit_bools = 0,
-    .v_size = 3,
-    .l_size = 1,
+      .bg_color = QColor(0, 0, 0),
+      .vertex_color = QColor(255, 255, 255),
+      .faces_color = QColor(0, 255, 0),
+      .bit_bools = 0,
+      .v_size = 3,
+      .l_size = 1,
   };
 
-
-  void disabler();  
+  void disabler();
 
 public Q_SLOTS:
 

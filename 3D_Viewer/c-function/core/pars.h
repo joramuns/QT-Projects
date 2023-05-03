@@ -1,17 +1,18 @@
 #ifndef PARS_H
 #define PARS_H
 
+#include "core.h"
 #include <ctype.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
-#include "core.h"
 
 #define S21_EPS 1e-6
 
 /*!
-  \brief Структура, которая хранит в себе все полезные счетчики и массив точек после парчинга
+  \brief Структура, которая хранит в себе все полезные счетчики и массив точек
+  после парчинга
 */
 
 typedef struct Pars_counters {

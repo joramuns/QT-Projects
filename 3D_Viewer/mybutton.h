@@ -3,14 +3,13 @@
 
 #include <QPushButton>
 
-class MyButton : public QPushButton
-{
-    Q_OBJECT
+class MyButton : public QPushButton {
+  Q_OBJECT
 
 public:
-    explicit MyButton(QString text, QWidget *parent = nullptr);
+  explicit MyButton(QString text, QWidget *parent = nullptr);
 
-    QSize sizeHint() const override;
+  QSize sizeHint() const override;
 };
 
 #endif // MYBUTTON_H
