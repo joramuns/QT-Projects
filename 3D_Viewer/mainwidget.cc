@@ -1,9 +1,8 @@
 #define GL_SILENCE_DEPRECATION
 #include "mainwidget.h"
-#include <QApplication>
-#include <QDir>
-#include <QFileDialog>
-#include <QSettings>
+#include "gif.h"
+
+GifWriter writer;
 
 MainWidget::MainWidget() {
   m_main_layout = new QGridLayout();
@@ -115,6 +114,10 @@ MainWidget::MainWidget() {
   screenshot = createButton("Shotik");
   screenshot->setStyleSheet("font:18pt");
   connect(screenshot, &QPushButton::clicked, this, &MainWidget::screen_shooter);
+
+  screencast = createButton("Castik");
+  screencast->setStyleSheet("font:18pt");
+  connect(screencast, &QPushButton::clicked, this, &MainWidget::screen_caster);
 
   dashed_face = new QCheckBox("Dashed lines");
   dashed_face->setStyleSheet("font:20pt");
@@ -233,6 +236,7 @@ MainWidget::MainWidget() {
   m_main_layout->addWidget(fakelabel_0, 22, 0, 1, 10);
   m_main_layout->addWidget(file_select, 23, 0, 1, 3);
   m_main_layout->addWidget(screenshot, 23, 7, 1, 2);
+  m_main_layout->addWidget(screencast, 24, 7, 1, 2);
   m_main_layout->addWidget(bg_color_select, 23, 4, 1, 3);
   m_main_layout->addWidget(vertex_color_select, 24, 4, 1, 3);
   m_main_layout->addWidget(faces_color_select, 25, 4, 1, 3);
@@ -461,15 +465,51 @@ void MainWidget::faces_select_color() {
 void MainWidget::screen_shooter() {
   QImage screenshot = m_paint_widget->grabFramebuffer();
   QString filePath = QFileDialog::getSaveFileName(
-      this, "Сохранить скриншот", "",
-      "Images (*.png *.bmp *jpeg)");
-  if (!filePath.isEmpty()) { 
-    screenshot.save(filePath); 
+      this, "СКРИНШТОНУТЬ?", "", "Images (*.bmp *.png *.jpeg)");
+  if (!filePath.isEmpty()) {
+    // QImage lol =  screenshot.scaled(640, 480);
+    screenshot.save(filePath);
+  } else {
+    QMessageBox::critical(0, "Error", "File can not be create!");
+  }
+}
+
+void MainWidget::screen_caster() {
+  filePath = QFileDialog::getSaveFileName(this, "Сохранить анимацию", "",
+                                          "GIF (*.gif)");
+  if (!filePath.isEmpty()) {
+    timer = new QTimer(this);
+    tik = 0;
+    connect(timer, &QTimer::timeout, this, &MainWidget::timerTick);
+    timer->start(100);
+  }
+}
+
+void MainWidget::timerTick() {
+  if (tik == 0) {
+    writer = {};
+    QByteArray ga = filePath.toLocal8Bit();
+    GifBegin(&writer, ga.data(), 640, 480, 10, 8, false);
+  }
+  if (tik < 50) {
+    QImage screencast = m_paint_widget->grabFramebuffer();
+    // QImage img("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/bmp/" +
+    //            QString::number(i) + ".bmp");
+    QImage img = screencast.scaled(640, 480);
+    GifWriteFrame(&writer,
+                  img.convertToFormat(QImage::Format_Indexed8)
+                      .convertToFormat(QImage::Format_RGBA8888)
+                      .constBits(),
+                  640, 480, 10, 8, false);
+
+    tik++;
+  } else {
+    timer->stop();
   }
 }
 
 void MainWidget::select_file() {
-  QString fileName = QFileDialog::getOpenFileName(this, tr("Choise file"), "",
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Choose model"), "",
                                                   tr("Files (*.obj)"));
   if (fileName != "") {
     QFileInfo fileInfo(fileName);

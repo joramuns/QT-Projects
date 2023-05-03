@@ -1,11 +1,5 @@
 #define GL_SILENCE_DEPRECATION
 #include "draw.h"
-#if defined(__APPLE__)
-#include <OpenGL/glu.h>
-#elif defined(__unix__)
-#include <GL/glu.h>
-#endif
-#include <math.h>
 
 Draw::Draw(QWidget *parent) : QOpenGLWidget(parent) {}
 
@@ -17,9 +11,7 @@ void Draw::initializeGL() {
   this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
-void Draw::resizeGL(int w, int h) {
-    glViewport(0, 0, w, h);
-}
+void Draw::resizeGL(int w, int h) { glViewport(0, 0, w, h); }
 
 void Draw::paintGL() {
   if (!VBO) {
@@ -34,17 +26,13 @@ void Draw::paintGL() {
   if (getPref(kChangeProjection)) {
     changeProjection();
   }
-  glBufferSubData(GL_ARRAY_BUFFER, 0, view.size_sort_array * sizeof(GL_FLOAT), view.sorted_array);
-  glClearColor(
-      preferences.bg_color.redF(), 
-      preferences.bg_color.greenF(), 
-      preferences.bg_color.blueF(), 
-      preferences.bg_color.alphaF());
+  glBufferSubData(GL_ARRAY_BUFFER, 0, view.size_sort_array * sizeof(GL_FLOAT),
+                  view.sorted_array);
+  glClearColor(preferences.bg_color.redF(), preferences.bg_color.greenF(),
+               preferences.bg_color.blueF(), preferences.bg_color.alphaF());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glColor3f(
-      preferences.faces_color.redF(),
-      preferences.faces_color.greenF(),
-      preferences.faces_color.blueF());
+  glColor3f(preferences.faces_color.redF(), preferences.faces_color.greenF(),
+            preferences.faces_color.blueF());
 
   glLineWidth(preferences.l_size);
   if (getPref(kDashed)) {
@@ -57,16 +45,15 @@ void Draw::paintGL() {
   }
 
   if (getPref(kVertex)) {
-    bool squared = getPref(kSquareVertex); 
+    bool squared = getPref(kSquareVertex);
     if (!squared) {
       glEnable(GL_POINT_SMOOTH);
       glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     }
     glPointSize(preferences.v_size);
-    glColor3f(
-        preferences.vertex_color.redF(),
-        preferences.vertex_color.greenF(),
-        preferences.vertex_color.blueF());
+    glColor3f(preferences.vertex_color.redF(),
+              preferences.vertex_color.greenF(),
+              preferences.vertex_color.blueF());
     glDrawArrays(GL_POINTS, 0, view.size_sort_array);
     if (!squared) {
       glDisable(GL_POINT_SMOOTH);
@@ -115,3 +102,4 @@ void Draw::changeProjection() {
   glTranslatef(0, 0, -2);
   setPref(kChangeProjection, false);
 }
+

@@ -1,6 +1,7 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
+
 #include "draw.h"
 #include "mybutton.h"
 #include <QCheckBox>
@@ -9,6 +10,14 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QWidget>
+#include <QTimer>
+#include <QMouseEvent>
+#include <QApplication>
+#include <QDir>
+#include <QFileDialog>
+#include <QSettings>
+#include <QMessageBox>
+#include <QDir>
 
 #define S21_PI 3.141592
 
@@ -24,8 +33,12 @@ public:
 
 private:
 
-  // QString fileName;
   const char *file_name;
+
+
+  int tik;
+  QTimer *timer;
+  QString filePath;
 
   MyButton *x_minus;
   MyButton *x_plus;
@@ -106,6 +119,8 @@ private Q_SLOTS:
 
   void select_file();
   void screen_shooter();
+  void screen_caster();
+  void timerTick();
 };
 
 #endif // MAINWIDGET_H

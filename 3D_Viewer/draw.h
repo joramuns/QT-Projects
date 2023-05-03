@@ -1,14 +1,26 @@
 #ifndef DRAW_H
 #define DRAW_H
 
+// #include <QImageWriter>
+// #include <QOpenGLFramebufferObject>
+// #include <QPainter>
+// #include <QTimer>
+// #include <QMovie>
+// #include <QThread>
+
 #include <QFileDialog>
-#include <QGridLayout>
-#include <QMouseEvent>
+#include <math.h>
+
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 // #include <QTimer>
-#include <QFileDialog>
 #include <QColorDialog>
+
+#if defined(__APPLE__)
+#include <OpenGL/glu.h>
+#elif defined(__unix__)
+#include <GL/glu.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,6 +68,7 @@ public:
     .v_size = 3,
     .l_size = 1,
   };
+
 
   void disabler();  
 

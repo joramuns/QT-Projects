@@ -10,6 +10,10 @@
 
 #define S21_EPS 1e-6
 
+/*!
+  \brief Структура, которая хранит в себе все полезные счетчики и массив точек после парчинга
+*/
+
 typedef struct Pars_counters {
   int count_vertex;
   int count_side;
