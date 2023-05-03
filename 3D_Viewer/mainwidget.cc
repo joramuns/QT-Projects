@@ -1,8 +1,5 @@
 #define GL_SILENCE_DEPRECATION
 #include "mainwidget.h"
-#include "gif.h"
-
-GifWriter writer;
 
 MainWidget::MainWidget() {
   m_main_layout = new QGridLayout();
@@ -480,21 +477,21 @@ void MainWidget::screen_caster() {
   if (!filePath.isEmpty()) {
     timer = new QTimer(this);
     tik = 0;
+    writer = {};
+    screencast->setEnabled(0);
     connect(timer, &QTimer::timeout, this, &MainWidget::timerTick);
     timer->start(100);
+
   }
 }
 
 void MainWidget::timerTick() {
   if (tik == 0) {
-    writer = {};
     QByteArray ga = filePath.toLocal8Bit();
     GifBegin(&writer, ga.data(), 640, 480, 10, 8, false);
   }
   if (tik < 50) {
     QImage screencast = m_paint_widget->grabFramebuffer();
-    // QImage img("/Users/mammiemi/Desktop/C8_3DViewer_v1.0-2/src/bmp/" +
-    //            QString::number(i) + ".bmp");
     QImage img = screencast.scaled(640, 480);
     GifWriteFrame(&writer,
                   img.convertToFormat(QImage::Format_Indexed8)
@@ -505,6 +502,7 @@ void MainWidget::timerTick() {
     tik++;
   } else {
     timer->stop();
+    screencast->setEnabled(1);
   }
 }
 

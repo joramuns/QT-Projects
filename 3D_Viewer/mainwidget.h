@@ -3,6 +3,7 @@
 
 
 #include "draw.h"
+#include "gif.h"
 #include "mybutton.h"
 #include <QCheckBox>
 #include <QComboBox>
@@ -35,6 +36,7 @@ private:
 
   const char *file_name;
 
+  GifWriter writer;
 
   int tik;
   QTimer *timer;
