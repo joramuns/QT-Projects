@@ -43,6 +43,6 @@ int my_atoi(const char *str);
 void memory_of_sort_alloc(Pars_counters *view);
 void normalize(Pars_counters *view);
 float maxpoint(Pars_counters *view);
-void point_assignment(Pars_counters *view, float *point_array,
+void point_assignment(Pars_counters *view, const float *point_array,
                       int index_of_point);
 #endif  // PARS_H

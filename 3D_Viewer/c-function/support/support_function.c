@@ -11,7 +11,7 @@ void identity_matrix(float *matrix_scale) {
 /*!
       \brief Формирует матрицу перемещений.
 */
-void create_move_matrix(float *matrix_scale, float *coordinates) {
+void create_move_matrix(float *matrix_scale, const float *coordinates) {
   for (int i = 0; i < 3; i++) {
     matrix_scale[3 + i * 4] = coordinates[i];
   }
@@ -58,7 +58,7 @@ void create_scale_matrix(float *matrix_scale, float coef) {
       \brief Перемножает матрицу 4х4 на массив координат точек, дробя массив на
    вектора 4х1.
 */
-void matrix_mul(float *matrix_scale, float *point_array, int size_ar) {
+void matrix_mul(const float *matrix_scale, float *point_array, int size_ar) {
   for (int k = 0; k < size_ar / 4; k++) {
     float result[4] = {0};
     for (int i = 0; i < 4; i++) {

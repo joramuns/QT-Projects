@@ -121,7 +121,7 @@ void memory_of_sort_alloc(Pars_counters *view) {
   размер памяти. \param[in] point_array - указатель на массив неотсортированных
   координат точки. \param[in] index_of_point - позиция точки.
 */
-void point_assignment(Pars_counters *view, float *point_array,
+void point_assignment(Pars_counters *view, const float *point_array,
                       int index_of_point) {
   for (int i = 0; i < 4; i++) {
     view->sorted_array[view->size_sort_array++] =
