@@ -56,7 +56,7 @@ $(OBJ_GCOV_DIR)/%.o: %.c $(HEADER)
 	mv *.o *gcno $(OBJ_GCOV_DIR)/
 
 gcov_report:CC+=-coverage
-gcov_report: test 
+gcov_report: clean test 
 	./$(TEST_FILE)
 	@find $(OBJ_DIR) -name "*.gcno" -exec mv {} $(OBJ_DIR) \;
 	@find $(OBJ_DIR) -name "*.gcda" -exec mv {} $(OBJ_DIR) \;
