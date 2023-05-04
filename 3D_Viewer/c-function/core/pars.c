@@ -1,5 +1,12 @@
 #include "pars.h"
 
+/*!
+      \brief Парсит входной поток в массив координат точек в трехмерном
+  пространстве, выстраивая правильный порядок этих координат в массиве
+  \param[in] obj - поток, который необходимо распарсить.
+  \param[out] view - указатель на структуру хранящую в себе массив и
+  вспомогательные данные.
+*/
 void array_sort(FILE *obj, Pars_counters *view) {
   char *line = NULL;
   size_t len = 0;
@@ -27,6 +34,15 @@ void array_sort(FILE *obj, Pars_counters *view) {
   normalize(view);
 }
 
+/*!
+          \brief Из получаемой на вход строки вычленяет и преобразовывает все
+  координаты точек записанные в этой строке, затем записывает их в массив типа
+  float, в том порядке, в котором встречает их в строке, при необходимости
+  довыделяет память массива для хранения координат 
+  \param[in] line - указатель на массив символов, который необходимо распарсить. 
+  \param[in] view - указатель на структуру, которая хранит в себе размер выделенной памяти.
+  \param[out] point_array - указатель на указатель типа float, массив в который записываются результаты.
+*/
 void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
   char *token = strtok(line, " ");
   for (int i = 0; i < 5; i++) {
@@ -44,6 +60,12 @@ void unsort_array_fill(char *line, Pars_counters *view, float **point_array) {
   }
 }
 
+/*!
+         \brief Из получаемой на вход строки вычленяет правильный порядок координат точек и записывает в новый массив хранящийся в структуре, в правильном порядке.
+  \param[in] line - указатель на массив символов, который необходимо распарсить, который содержит в себе информацию о правильном порядке координат. 
+  \param[out] view - указатель на структуру, которая хранит в себе новый массив координат точек и необхдимые счетчики.
+  \param[in] point_array - указатель на указатель типа float, массив из которого читаются координаты точек.
+*/
 void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
   char *token_f = strtok(line, " ");
 
@@ -76,6 +98,10 @@ void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
   view->count_side += 1;
 }
 
+/*!
+        \brief  При необходимости довыделяет память под массив координат точек.
+  \param[in] view - указатель на структуру, которая хранит в себе новый массив координат точек и необхдимый размер памяти.
+*/
 void memory_of_sort_alloc(Pars_counters *view) {
   if (view->size_sort_array == view->size_sort_memory) {
     view->size_sort_memory *= 2;
@@ -84,6 +110,12 @@ void memory_of_sort_alloc(Pars_counters *view) {
   }
 }
 
+/*!
+         \brief В отсортированный массив, в определенное место записывает координаты точки из несортированного массива
+  \param[out] view - указатель на структуру, которая хранит в себе новый массив координат точек и необхдимый размер памяти.
+  \param[in] point_array - указатель на массив неотсортированных координат точки.
+  \param[in] index_of_point - позиция точки.
+*/
 void point_assignment(Pars_counters *view, float *point_array,
                       int index_of_point) {
   for (int i = 0; i < 4; i++) {
@@ -92,11 +124,17 @@ void point_assignment(Pars_counters *view, float *point_array,
   }
 }
 
+/*!
+      \brief Выполняет нормализацию массива координат точек для корректного отображения модели.
+*/
 void normalize(Pars_counters *view) {
   float maximum = maxpoint(view);
   scaling(1 / maximum, view->sorted_array, view->size_sort_array);
 }
 
+/*!
+      \brief Находит максимальное значение из массива координат точек и возвращает его.
+*/
 float maxpoint(Pars_counters *view) {
   float maximum = view->sorted_array[0];
   for (int i = 0; i < view->size_sort_array; i++) {
@@ -107,6 +145,9 @@ float maxpoint(Pars_counters *view) {
   return fabsf(maximum);
 }
 
+/*!
+      \brief Преобразовывет входную строку в число типа float и возвращает его.
+*/
 float my_atof(char *str) {
   float value = 0.0;
   int sign = 1;
@@ -139,6 +180,9 @@ float my_atof(char *str) {
   return sign * value;
 }
 
+/*!
+      \brief Преобразовывет входную строку в число типа int и возвращает его.
+*/
 int my_atoi(const char *str) {
   int result = 0;
   int sign = 1;

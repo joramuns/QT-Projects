@@ -8,20 +8,23 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*!
+  \brief Макрос используется для сравнения чисел с плавающей точкой.
+*/
 #define S21_EPS 1e-6
 
+/// Структура для хранения массива координат
 /*!
-  \brief Структура, которая хранит в себе все полезные счетчики и массив точек
-  после парчинга
+  \brief Структура, которая хранит в себе все полезные счетчики и массив координат точек
+  после отработки парсера, по координатам эих точек в последствии проводится отрисовка модели
 */
-
 typedef struct Pars_counters {
-  int count_vertex;
-  int count_side;
-  int size_sort_array;
-  int size_unsort_memory;
-  int size_sort_memory;
-  float *sorted_array;
+  int count_vertex; ///< счетчик вершин
+  int count_side; ///< счетчик сторон
+  int size_sort_array; ///< размер массива после сортировки
+  int size_unsort_memory; ///< размер массива до сортировки
+  int size_sort_memory; ///< размер выделенной памяти после сортировки
+  float *sorted_array; ///< указатель на массив координат точек в верном порядке
 } Pars_counters;
 
 void array_sort(FILE *obj, Pars_counters *view);
