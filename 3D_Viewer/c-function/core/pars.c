@@ -190,6 +190,18 @@ float my_atof(char *str) {
       i++;
     }
   }
+  if (str[i] == 'e') {
+    i++;
+    int flag = 0;
+    if (str[i] == '-') {
+      flag = -1;
+    } else if (str[i] == '+') {
+      flag = 1;
+    }
+    i++;
+    int scale = my_atoi(str + i);
+    value = value * powf(10, scale * flag);
+  }
   return sign * value;
 }
 
