@@ -37,8 +37,8 @@ uninstall:
 	rm -rf $(PROJECT_NAME)/ui_*
 	rm -rf 3D_Viewer/3D_Viewer
 
-dist:
-	tar czf dist.tar  *
+dist: install
+	tar -cvzf 3D_Viewer.tar.gz 3D_Viewer/3D_Viewer.app/Contents/MacOS/3D_Viewer
 
 dvi:
 	# @doxygen Doxyfile
@@ -94,6 +94,6 @@ clean:
 	@rm -rf 3D_Viewer/3D_Viewer.app
 	@rm -rf 3D_Viewer/3D_Viewer
 	@rm -rf 3D_Viewer/Makefile
-	@rm -rf dist*
+	@rm -rf *.gz
 
 
