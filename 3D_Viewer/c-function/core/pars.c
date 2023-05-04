@@ -8,6 +8,8 @@
   вспомогательные данные.
 */
 void array_sort(FILE *obj, Pars_counters *view) {
+  if (!obj || !view)
+    return;
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
@@ -188,6 +190,18 @@ float my_atof(char *str) {
       value = value + (str[i] - '0') * factor;
       i++;
     }
+  }
+  if (str[i] == 'e') {
+    i++;
+    int flag = 0;
+    if (str[i] == '-') {
+      flag = -1;
+    } else if (str[i] == '+') {
+      flag = 1;
+    }
+    i++;
+    int scale = my_atoi(str + i);
+    value = value * powf(10, scale * flag);
   }
   return sign * value;
 }

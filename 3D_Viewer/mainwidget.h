@@ -31,8 +31,6 @@ public:
   void readSettings();
 
 private:
-  const char *file_name;
-
   GifWriter writer;
 
   int tik;

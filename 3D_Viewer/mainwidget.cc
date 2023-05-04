@@ -508,19 +508,22 @@ void MainWidget::timerTick() {
 void MainWidget::select_file() {
   QString fileName = QFileDialog::getOpenFileName(this, tr("Choose model"), "",
                                                   tr("Files (*.obj)"));
-  if (fileName != "") {
-    QFileInfo fileInfo(fileName);
-    QString name = fileInfo.fileName();
-    model_name->setText(name);
-    if (m_paint_widget->VBO) {
-      m_paint_widget->disabler();
-    }
-    std::string strStd = fileName.toStdString();
-    file_name = strStd.c_str();
-    m_paint_widget->initializeGL();
+  if (fileName == "") {
+    return;
   }
+  QFileInfo fileInfo(fileName);
+  QString name = fileInfo.fileName();
+  model_name->setText(name);
+  if (m_paint_widget->VBO) {
+    m_paint_widget->disabler();
+  }
+  std::string strStd = fileName.toStdString();
+  const char *file_name = strStd.c_str();
+  m_paint_widget->initializeGL();
   FILE *obj = fopen(file_name, "r");
+  printf("%s\n", file_name);
   if (obj == NULL) {
+    printf("%d\n", errno);
   } else {
     array_sort(obj, &m_paint_widget->view);
     fclose(obj);
