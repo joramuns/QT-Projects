@@ -1,11 +1,11 @@
 #include "support_function.h"
 
 /*!
-      \brief На вход получает матрицу 4х4 заполненную нолями, создает из нее диагональную единичную матрицу.
+      \brief На вход получает матрицу 4х4 заполненную нолями, создает из нее
+   диагональную единичную матрицу.
 */
 void identity_matrix(float *matrix_scale) {
-  for (int i = 0; i < 4; i++)
-    matrix_scale[i + i * 4] = 1.0;
+  for (int i = 0; i < 4; i++) matrix_scale[i + i * 4] = 1.0;
 }
 
 /*!
@@ -51,12 +51,12 @@ void create_turn_matrix_z(float *matrix_turn, float theta) {
       \brief Формирует матрицу масштабирования.
 */
 void create_scale_matrix(float *matrix_scale, float coef) {
-  for (int i = 0; i < 3; i++)
-    matrix_scale[i + 4 * i] = coef;
+  for (int i = 0; i < 3; i++) matrix_scale[i + 4 * i] = coef;
 }
 
 /*!
-      \brief Перемножает матрицу 4х4 на массив координат точек, дробя массив на вектора 4х1.
+      \brief Перемножает матрицу 4х4 на массив координат точек, дробя массив на
+   вектора 4х1.
 */
 void matrix_mul(float *matrix_scale, float *point_array, int size_ar) {
   for (int k = 0; k < size_ar / 4; k++) {

@@ -8,8 +8,7 @@
   вспомогательные данные.
 */
 void array_sort(FILE *obj, Pars_counters *view) {
-  if (!obj || !view)
-    return;
+  if (!obj || !view) return;
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
@@ -31,8 +30,7 @@ void array_sort(FILE *obj, Pars_counters *view) {
   if (point_array) {
     free(point_array);
   }
-  if (line)
-    free(line);
+  if (line) free(line);
   normalize(view);
 }
 
@@ -82,14 +80,12 @@ void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
 
   while (token_f) {
     if (isdigit(token_f[0])) {
-
       memory_of_sort_alloc(view);
 
       int vertex_number = my_atoi(token_f) - 1;
       counter++;
 
-      if (vertex_number_first < 0)
-        vertex_number_first = vertex_number;
+      if (vertex_number_first < 0) vertex_number_first = vertex_number;
       if (counter > 3) {
         point_assignment(view, point_array, vertex_number_first);
         memory_of_sort_alloc(view);
@@ -99,8 +95,7 @@ void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
       }
       point_assignment(view, point_array, vertex_number);
       view->count_edges += 1;
-      if (counter > 2)
-        vertex_number_last = vertex_number;
+      if (counter > 2) vertex_number_last = vertex_number;
     }
     token_f = strtok(NULL, " ");
   }
