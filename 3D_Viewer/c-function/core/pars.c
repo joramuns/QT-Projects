@@ -193,13 +193,13 @@ float my_atof(char *str) {
   }
   if (str[i] == 'e') {
     i++;
-    int flag = 0;
+    int flag = 1;
     if (str[i] == '-') {
       flag = -1;
+      i++;
     } else if (str[i] == '+') {
-      flag = 1;
+      i++;
     }
-    i++;
     int scale = my_atoi(str + i);
     value = value * powf(10, scale * flag);
   }
