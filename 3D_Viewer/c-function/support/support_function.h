@@ -1,8 +1,9 @@
 #ifndef SUPPROT_FUNCTION
 #define SUPPROT_FUNCTION
 
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
+
 
 float *sort_array(float *point_array);
 void identity_matrix(float *matrix_scale);
