@@ -5,8 +5,7 @@ void GifGetClosestPaletteColor(GifPalette *pPal, int r, int g, int b,
   // base case, reached the bottom of the tree
   if (treeRoot > (1 << pPal->bitDepth) - 1) {
     int ind = treeRoot - (1 << pPal->bitDepth);
-    if (ind == kGifTransIndex)
-      return;
+    if (ind == kGifTransIndex) return;
 
     // check whether this color is better than the current winner
     int r_err = r - ((int32_t)pPal->r[ind]);
@@ -116,8 +115,7 @@ void GifPartitionByMedian(uint8_t *image, int left, int right, int com,
 void GifSplitPalette(uint8_t *image, int numPixels, int firstElt, int lastElt,
                      int splitElt, int splitDist, int treeNode,
                      bool buildForDither, GifPalette *pal) {
-  if (lastElt <= firstElt || numPixels == 0)
-    return;
+  if (lastElt <= firstElt || numPixels == 0) return;
 
   // base case, bottom of the tree
   if (lastElt == firstElt + 1) {
@@ -166,7 +164,7 @@ void GifSplitPalette(uint8_t *image, int numPixels, int firstElt, int lastElt,
       b += image[ii * 4 + 2];
     }
 
-    r += (uint64_t)numPixels / 2; // round to nearest
+    r += (uint64_t)numPixels / 2;  // round to nearest
     g += (uint64_t)numPixels / 2;
     b += (uint64_t)numPixels / 2;
 
@@ -190,20 +188,14 @@ void GifSplitPalette(uint8_t *image, int numPixels, int firstElt, int lastElt,
     int g = image[ii * 4 + 1];
     int b = image[ii * 4 + 2];
 
-    if (r > maxR)
-      maxR = r;
-    if (r < minR)
-      minR = r;
+    if (r > maxR) maxR = r;
+    if (r < minR) minR = r;
 
-    if (g > maxG)
-      maxG = g;
-    if (g < minG)
-      minG = g;
+    if (g > maxG) maxG = g;
+    if (g < minG) minG = g;
 
-    if (b > maxB)
-      maxB = b;
-    if (b < minB)
-      minB = b;
+    if (b > maxB) maxB = b;
+    if (b < minB) minB = b;
   }
 
   int rRange = maxR - minR;
@@ -213,10 +205,8 @@ void GifSplitPalette(uint8_t *image, int numPixels, int firstElt, int lastElt,
   // and split along that axis. (incidentally, this means this isn't a "proper"
   // k-d tree but I don't know what else to call it)
   int splitCom = 1;
-  if (bRange > gRange)
-    splitCom = 2;
-  if (rRange > bRange && rRange > gRange)
-    splitCom = 0;
+  if (bRange > gRange) splitCom = 2;
+  if (rRange > bRange && rRange > gRange) splitCom = 0;
 
   int subPixelsA = numPixels * (splitElt - firstElt) / (lastElt - firstElt);
   int subPixelsB = numPixels - subPixelsA;
@@ -421,8 +411,7 @@ void GifThresholdImage(const uint8_t *lastFrame, const uint8_t *nextFrame,
       outFrame[3] = (uint8_t)bestInd;
     }
 
-    if (lastFrame)
-      lastFrame += 4;
+    if (lastFrame) lastFrame += 4;
     outFrame += 4;
     nextFrame += 4;
   }
@@ -464,7 +453,7 @@ void GifWriteCode(FILE *f, GifBitStatus *stat, uint32_t code, uint32_t length) {
 }
 
 void GifWritePalette(const GifPalette *pPal, FILE *f) {
-  fputc(0, f); // first color: transparency
+  fputc(0, f);  // first color: transparency
   fputc(0, f);
   fputc(0, f);
 
@@ -486,20 +475,20 @@ void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,
   fputc(0x21, f);
   fputc(0xf9, f);
   fputc(0x04, f);
-  fputc(0x05, f); // leave prev frame in place, this frame has transparency
+  fputc(0x05, f);  // leave prev frame in place, this frame has transparency
   fputc(delay & 0xff, f);
   fputc((delay >> 8) & 0xff, f);
-  fputc(kGifTransIndex, f); // transparent color index
+  fputc(kGifTransIndex, f);  // transparent color index
   fputc(0, f);
 
-  fputc(0x2c, f); // image descriptor block
+  fputc(0x2c, f);  // image descriptor block
 
-  fputc(left & 0xff, f); // corner of image in canvas space
+  fputc(left & 0xff, f);  // corner of image in canvas space
   fputc((left >> 8) & 0xff, f);
   fputc(top & 0xff, f);
   fputc((top >> 8) & 0xff, f);
 
-  fputc(width & 0xff, f); // width and height of image
+  fputc(width & 0xff, f);  // width and height of image
   fputc((width >> 8) & 0xff, f);
   fputc(height & 0xff, f);
   fputc((height >> 8) & 0xff, f);
@@ -508,13 +497,13 @@ void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,
   // fputc(0x80, f); // no local color table, but transparency
 
   fputc(0x80 + pPal->bitDepth - 1,
-        f); // local color table present, 2 ^ bitDepth entries
+        f);  // local color table present, 2 ^ bitDepth entries
   GifWritePalette(pPal, f);
 
   const int minCodeSize = pPal->bitDepth;
   const uint32_t clearCode = 1 << pPal->bitDepth;
 
-  fputc(minCodeSize, f); // min code size 8 bits
+  fputc(minCodeSize, f);  // min code size 8 bits
 
   GifLzwNode *codetree =
       (GifLzwNode *)GIF_TEMP_MALLOC(sizeof(GifLzwNode) * 4096);
@@ -530,7 +519,7 @@ void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,
   stat.chunkIndex = 0;
 
   GifWriteCode(f, &stat, clearCode,
-               codeSize); // start with a fresh LZW dictionary
+               codeSize);  // start with a fresh LZW dictionary
 
   for (uint32_t yy = 0; yy < height; ++yy) {
     for (uint32_t xx = 0; xx < width; ++xx) {
@@ -567,7 +556,7 @@ void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,
         }
         if (maxCode == 4095) {
           // the dictionary is full, clear it out and begin anew
-          GifWriteCode(f, &stat, clearCode, codeSize); // clear tree
+          GifWriteCode(f, &stat, clearCode, codeSize);  // clear tree
 
           memset(codetree, 0, sizeof(GifLzwNode) * 4096);
           codeSize = (uint32_t)(minCodeSize + 1);
@@ -585,12 +574,10 @@ void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,
   GifWriteCode(f, &stat, clearCode + 1, (uint32_t)minCodeSize + 1);
 
   // write out the last partial chunk
-  while (stat.bitIndex)
-    GifWriteBit(&stat, 0);
-  if (stat.chunkIndex)
-    GifWriteChunk(f, &stat);
+  while (stat.bitIndex) GifWriteBit(&stat, 0);
+  if (stat.chunkIndex) GifWriteChunk(f, &stat);
 
-  fputc(0, f); // image block terminator
+  fputc(0, f);  // image block terminator
 
   GIF_TEMP_FREE(codetree);
 }
@@ -598,15 +585,14 @@ void GifWriteLzwImage(FILE *f, uint8_t *image, uint32_t left, uint32_t top,
 bool GifBegin(GifWriter *writer, const char *filename, uint32_t width,
               uint32_t height, uint32_t delay, int32_t bitDepth, bool dither) {
   (void)bitDepth;
-  (void)dither; // Mute "Unused argument" warnings
+  (void)dither;  // Mute "Unused argument" warnings
 #if defined(_MSC_VER) && (_MSC_VER >= 1400)
   writer->f = 0;
   fopen_s(&writer->f, filename, "wb");
 #else
   writer->f = fopen(filename, "wb");
 #endif
-  if (!writer->f)
-    return false;
+  if (!writer->f) return false;
 
   writer->firstFrame = true;
 
@@ -622,10 +608,10 @@ bool GifBegin(GifWriter *writer, const char *filename, uint32_t width,
   fputc((height >> 8) & 0xff, writer->f);
 
   fputc(0xf0,
-        writer->f);    // there is an unsorted global color table of 2 entries
-  fputc(0, writer->f); // background color
-  fputc(0, writer->f); // pixels are square (we need to specify this because
-                       // it's 1989)
+        writer->f);     // there is an unsorted global color table of 2 entries
+  fputc(0, writer->f);  // background color
+  fputc(0, writer->f);  // pixels are square (we need to specify this because
+                        // it's 1989)
 
   // now the "global" palette (really just a dummy palette)
   // color 0: black
@@ -639,17 +625,17 @@ bool GifBegin(GifWriter *writer, const char *filename, uint32_t width,
 
   if (delay != 0) {
     // animation header
-    fputc(0x21, writer->f);          // extension
-    fputc(0xff, writer->f);          // application specific
-    fputc(11, writer->f);            // length 11
-    fputs("NETSCAPE2.0", writer->f); // yes, really
-    fputc(3, writer->f);             // 3 bytes of NETSCAPE2.0 data
+    fputc(0x21, writer->f);           // extension
+    fputc(0xff, writer->f);           // application specific
+    fputc(11, writer->f);             // length 11
+    fputs("NETSCAPE2.0", writer->f);  // yes, really
+    fputc(3, writer->f);              // 3 bytes of NETSCAPE2.0 data
 
-    fputc(1, writer->f); // JUST BECAUSE
-    fputc(0, writer->f); // loop infinitely (byte 0)
-    fputc(0, writer->f); // loop infinitely (byte 1)
+    fputc(1, writer->f);  // JUST BECAUSE
+    fputc(0, writer->f);  // loop infinitely (byte 0)
+    fputc(0, writer->f);  // loop infinitely (byte 1)
 
-    fputc(0, writer->f); // block terminator
+    fputc(0, writer->f);  // block terminator
   }
 
   return true;
@@ -661,8 +647,7 @@ bool GifBegin(GifWriter *writer, const char *filename, uint32_t width,
 // image - this may be handy to save bits in animations that don't change much.
 bool GifWriteFrame(GifWriter *writer, const uint8_t *image, uint32_t width,
                    uint32_t height, uint32_t delay, int bitDepth, bool dither) {
-  if (!writer->f)
-    return false;
+  if (!writer->f) return false;
 
   const uint8_t *oldImage = writer->firstFrame ? NULL : writer->oldImage;
   writer->firstFrame = false;
@@ -686,10 +671,9 @@ bool GifWriteFrame(GifWriter *writer, const uint8_t *image, uint32_t width,
 // GIF. Many if not most viewers will still display a GIF properly if the EOF
 // code is missing, but it's still a good idea to write it out.
 bool GifEnd(GifWriter *writer) {
-  if (!writer->f)
-    return false;
+  if (!writer->f) return false;
 
-  fputc(0x3b, writer->f); // end of file
+  fputc(0x3b, writer->f);  // end of file
   fclose(writer->f);
   GIF_FREE(writer->oldImage);
 

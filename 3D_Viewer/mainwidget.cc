@@ -118,8 +118,8 @@ MainWidget::MainWidget() {
 
   dashed_face = new QCheckBox("Dashed lines");
   dashed_face->setStyleSheet("font:20pt");
-  dashed_face->setCheckState(
-      m_paint_widget->getPref(kDashed) ? Qt::Checked : Qt::Unchecked);
+  dashed_face->setCheckState(m_paint_widget->getPref(kDashed) ? Qt::Checked
+                                                              : Qt::Unchecked);
   connect(dashed_face, &QPushButton::clicked, this,
           [=]() { togglePref(kDashed); });
 
@@ -449,8 +449,7 @@ void MainWidget::togglePref(PrefMask mask) {
   } else {
     m_paint_widget->setPref(mask, true);
   }
-  if (mask == kProjection)
-    m_paint_widget->setPref(kChangeProjection, true);
+  if (mask == kProjection) m_paint_widget->setPref(kChangeProjection, true);
   m_paint_widget->update();
 }
 
@@ -552,10 +551,10 @@ void MainWidget::select_file() {
     array_sort(obj, &m_paint_widget->view);
     fclose(obj);
     size_of_edges->setText("Size of edges: ");
-    size_of_edges->setText(size_of_edges->text() + QString::number(m_paint_widget->view.count_edges));
+    size_of_edges->setText(size_of_edges->text() +
+                           QString::number(m_paint_widget->view.count_edges));
     size_of_array->setText("Number of vertexes: ");
-    size_of_array->setText(
-        size_of_array->text() +
-        QString::number(m_paint_widget->view.count_vertex));
+    size_of_array->setText(size_of_array->text() +
+                           QString::number(m_paint_widget->view.count_vertex));
   }
 }

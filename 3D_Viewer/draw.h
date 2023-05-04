@@ -8,9 +8,9 @@
 // #include <QMovie>
 // #include <QThread>
 
-#include <QFileDialog>
 #include <math.h>
 
+#include <QFileDialog>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 // #include <QTimer>
@@ -51,7 +51,7 @@ struct Prefs {
 class Draw : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT;
 
-public:
+ public:
   explicit Draw(QWidget *parent = nullptr);
 
   void initializeGL() override;
@@ -71,7 +71,7 @@ public:
 
   void disabler();
 
-public Q_SLOTS:
+ public Q_SLOTS:
 
   void setPref(PrefMask mask, bool setter);
   bool getPref(PrefMask mask);
@@ -79,4 +79,4 @@ public Q_SLOTS:
   void changeProjection();
 };
 
-#endif // DRAW_H
+#endif  // DRAW_H

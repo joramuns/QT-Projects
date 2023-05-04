@@ -6,10 +6,10 @@
 class MyButton : public QPushButton {
   Q_OBJECT
 
-public:
+ public:
   explicit MyButton(QString text, QWidget *parent = nullptr);
 
   QSize sizeHint() const override;
 };
 
-#endif // MYBUTTON_H
+#endif  // MYBUTTON_H

@@ -1,9 +1,6 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include "draw.h"
-#include "gif.h"
-#include "mybutton.h"
 #include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
@@ -18,11 +15,15 @@
 #include <QTimer>
 #include <QWidget>
 
+#include "draw.h"
+#include "gif.h"
+#include "mybutton.h"
+
 #define S21_PI 3.141592
 
 class MainWidget : public QWidget {
   Q_OBJECT
-public:
+ public:
   MainWidget();
   ~MainWidget();
   Draw *m_paint_widget;
@@ -30,7 +31,7 @@ public:
   void saveSettings();
   void readSettings();
 
-private:
+ private:
   GifWriter writer;
 
   int tik;
@@ -91,7 +92,7 @@ private:
   MyButton *createButton(QString text);
   QGridLayout *m_main_layout;
 
-private Q_SLOTS:
+ private Q_SLOTS:
   void left_move();
   void right_move();
   void up_move();
@@ -120,4 +121,4 @@ private Q_SLOTS:
   void timerTick();
 };
 
-#endif // MAINWIDGET_H
+#endif  // MAINWIDGET_H
