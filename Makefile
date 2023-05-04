@@ -15,7 +15,6 @@ OBJECTS 			:= $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o, $(SOURCE))
 
 OBJECTS_GCOV 	:= $(addprefix obj_gcov/,$(SOURCES:.c=.o))
 TEST_FILE			:= test.out
-LIB_NAME			:= view_core.a
 
 .PHONY: all clean rebuild style
 
@@ -42,13 +41,8 @@ dist:
 	tar czf dist.tar  *
 
 dvi:
-	# @doxygen calc_config
+	# @doxygen Doxyfile
 	@open html/index.html
-
-create_dir:
-	@mkdir -p $(OBJ_DIR) $(OBJ_GCOV_DIR)
-	# temp
-	@mkdir -p $(OBJ_DIR)/core $(OBJ_DIR)/support $(OBJ_DIR)/tests
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< $(CHECK_FLAGS) -o $@
@@ -57,17 +51,11 @@ test: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(TEST_FILE) $(LCHECK) -lm
 	@./$(TEST_FILE)
 
-$(LIB_NAME): create_dir $(OBJECTS)
-	ar rc $@ $(OBJ_DIR)/*.o
-
 $(OBJ_GCOV_DIR)/%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) $(GCOV_FLAGS) -c $< -o $(subst /,_,$@) $(CHECK_FLAGS)
 	mv *.o *gcno $(OBJ_GCOV_DIR)/
 
-libgcov.a: create_dir $(OBJECTS_GCOV)
-	ar rcs libgcov.a $(OBJ_GCOV_DIR)/*.o
-
-gcov_report: $(TEST_FILE) $(HEADER) libgcov.a
+gcov_report: $(TEST_FILE) $(HEADER) 
 	$(CC) $(CFLAGS) $^ -o $(TEST_EXE) $(LCHECK) $(LDFLAGS) $(GCOV_FLAGS) $(CHECK_FLAGS)
 	./$(TEST_EXE)
 	@mv *.gcda *.gcno $(OBJ_GCOV_DIR)
@@ -98,7 +86,7 @@ sanitizer: test
 clean:
 	@rm -rf test_test.out*
 	@rm -rf *.a *.gcda *.gcno *.o *.out
-	@rm -rf $(OBJ_DIR) $(OBJ_GCOV_DIR) out
+	@find . -name "*.o" -delete
 	@rm -rf $(TEST_FILE)
 	@rm -rf 3D_Viewer/*.o
 	@rm -rf 3D_Viewer/moc_*
