@@ -264,6 +264,8 @@ MainWidget::~MainWidget() {
   delete x_plus;
   delete y_minus;
   delete y_plus;
+  delete z_minus;
+  delete z_plus;
 
   delete x_clockwise;
   delete x_counterclockwise;
@@ -281,12 +283,32 @@ MainWidget::~MainWidget() {
   delete vertex_color_select;
   delete faces_color_select;
 
+  delete screenshot;
+  delete screencast;
+
   delete dashed_face;
 
   delete projection_type;
   delete vertex_size;
   delete line_size;
   delete vertex_type;
+
+  delete fakelabel_0;
+  delete vertex_type_name;
+  delete vertex_size_name;
+  delete line_size_name;
+  delete movement_step_name;
+  delete rotation_angle_name;
+  delete zoom_step_name;
+
+  delete model_name;
+  delete size_of_array;
+  delete size_of_edges;
+  delete model_pre_name;
+
+  delete movement_step;
+  delete rotation_angle;
+  delete zoom_step;
 }
 
 void MainWidget::closeEvent(QCloseEvent *event) {
@@ -502,7 +524,9 @@ void MainWidget::timerTick() {
 
     tik++;
   } else {
+    GifEnd(&writer);
     timer->stop();
+    delete timer;
     screencast->setEnabled(1);
   }
 }
