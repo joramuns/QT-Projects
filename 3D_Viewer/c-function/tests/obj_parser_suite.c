@@ -1,24 +1,12 @@
 #include <check.h>
+
 #include "../core/pars.h"
 
 #define TEST_EPS 1e-6
 
 /* ### EXPECTED SECTION ### */
 static int count_vertex_expected = 9;
-/* static int count_side_expected = 12; */
 static int size_sort_array_expected = 6 * 2 * 3 * 4;
-/* static int size_unsort_memory_expected; */
-/* static int size_sort_memory_expected; */
-/* static const float vertices_expected[] = { */
-/*     -1.480759, 1.795634, 1.982020,  1.0, -1.097703, -2.336702, -0.361380, 1.0, */
-/*     -4.594137, 3.352988, -1.273126, 1.0, -4.211081, -0.779347, -3.616526, 1.0, */
-/*     2.107359,  3.588090, -0.592267, 1.0, 2.490416,  -0.544245, -2.935667, 1.0, */
-/*     -1.006018, 5.145445, -3.847413, 1.0, -0.622962, 1.013109,  -6.190813, 1.0, */
-/* }; */
-/* static const int faces_expected[] = { */
-/*     0, 4, 6, 0, 6, 2, 3, 2, 6, 3, 6, 7, 7, 6, 4, 7, 4, 5, */
-/*     5, 1, 3, 5, 3, 7, 1, 0, 2, 1, 2, 3, 5, 4, 0, 5, 0, 1, */
-/* }; */
 /* ### END OF EXPECTED FUNCTION ### */
 
 /* ### SERVICE PROCEDURES ### */
@@ -77,8 +65,6 @@ static TCase *simple_cube_tc(void) {
   tcase_add_unchecked_fixture(tc, simple_cube_setup, test_teardown);
   tcase_add_test(tc, test_simple_cube_vertices_len);
   tcase_add_test(tc, test_simple_cube_sorted_array_len);
-  /* check amount of faces */
-  /* check parsed array */
 
   return tc;
 }
