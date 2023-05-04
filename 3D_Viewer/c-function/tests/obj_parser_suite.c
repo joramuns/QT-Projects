@@ -4,7 +4,7 @@
 #define TEST_EPS 1e-6
 
 /* ### EXPECTED SECTION ### */
-static int count_vertex_expected = 8;
+static int count_vertex_expected = 9;
 /* static int count_side_expected = 12; */
 static int size_sort_array_expected = 6 * 2 * 3 * 4;
 /* static int size_unsort_memory_expected; */

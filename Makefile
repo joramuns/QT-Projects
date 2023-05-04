@@ -55,13 +55,13 @@ $(OBJ_GCOV_DIR)/%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) $(GCOV_FLAGS) -c $< -o $(subst /,_,$@) $(CHECK_FLAGS)
 	mv *.o *gcno $(OBJ_GCOV_DIR)/
 
-gcov_report: $(TEST_FILE) $(HEADER) 
-	$(CC) $(CFLAGS) $^ -o $(TEST_EXE) $(LCHECK) $(LDFLAGS) $(GCOV_FLAGS) $(CHECK_FLAGS)
-	./$(TEST_EXE)
-	@mv *.gcda *.gcno $(OBJ_GCOV_DIR)
-	@rm -f $(OBJ_GCOV_DIR)/*tests*
-	@lcov/bin/./lcov -c -d $(OBJ_GCOV_DIR)/. -o $(OBJ_GCOV_DIR)/coverage.info
-	@lcov/bin/./genhtml $(OBJ_GCOV_DIR)/coverage.info --output-directory out
+gcov_report:CC+=-coverage
+gcov_report: test 
+	./$(TEST_FILE)
+	@find $(OBJ_DIR) -name "*.gcno" -exec mv {} $(OBJ_DIR) \;
+	@find $(OBJ_DIR) -name "*.gcda" -exec mv {} $(OBJ_DIR) \;
+	@lcov/bin/./lcov -c -d $(OBJ_DIR)/. -o $(OBJ_DIR)/coverage.info
+	@lcov/bin/./genhtml $(OBJ_DIR)/coverage.info --output-directory out
 	open out/index.html
 
 style:
@@ -84,16 +84,14 @@ sanitizer:CFLAGS+=-fsanitize=address
 sanitizer: test
 
 clean:
-	@rm -rf test_test.out*
-	@rm -rf *.a *.gcda *.gcno *.o *.out
 	@find . -name "*.o" -delete
+	@find . -name "*.gcno" -delete
+	@find . -name "*.gcda" -delete
 	@rm -rf $(TEST_FILE)
-	@rm -rf 3D_Viewer/*.o
 	@rm -rf 3D_Viewer/moc_*
 	@rm -rf 3D_Viewer/3D_Viewer.app
 	@rm -rf 3D_Viewer/3D_Viewer
 	@rm -rf 3D_Viewer/Makefile
-	@rm -rf html latex
 	@rm -rf dist*
 
 
