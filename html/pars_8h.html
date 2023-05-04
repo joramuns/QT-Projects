@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>3D_Viewer: Файл 3D_Viewer/c-function/core/pars.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">3D_Viewer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_cd91eaaf34df6e3f4ef06eb35797390e.html">3D_Viewer</a></li><li class="navelem"><a class="el" href="dir_a0e67e83c73bc57bba83a2b34575503a.html">c-function</a></li><li class="navelem"><a class="el" href="dir_3b8fc007e53b12704904b3ae2bdfec26.html">core</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Классы</a> &#124;
+<a href="#define-members">Макросы</a> &#124;
+<a href="#typedef-members">Определения типов</a> &#124;
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle"><div class="title">Файл pars.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p> Заголовочный файл с описанием структуры и функций используемых для при парсинге obj файла  
+<a href="#details">Подробнее...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="core_8h_source.html">core.h</a>&quot;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+</div>
+<p><a href="pars_8h_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Классы</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_pars__counters.html">Pars_counters</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Структура для хранения массива координат  <a href="struct_pars__counters.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Макросы</h2></td></tr>
+<tr class="memitem:a58d1c47e6c51ff35afaac4404acef44c"><td class="memItemLeft" align="right" valign="top"><a id="a58d1c47e6c51ff35afaac4404acef44c" name="a58d1c47e6c51ff35afaac4404acef44c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>S21_EPS</b>&#160;&#160;&#160;1e-6</td></tr>
+<tr class="memdesc:a58d1c47e6c51ff35afaac4404acef44c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Макрос используется для сравнения чисел с плавающей точкой. <br /></td></tr>
+<tr class="separator:a58d1c47e6c51ff35afaac4404acef44c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Определения типов</h2></td></tr>
+<tr class="memitem:ae07104880957c2c9f3fe156965cd2b55"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct_pars__counters.html">Pars_counters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#ae07104880957c2c9f3fe156965cd2b55">Pars_counters</a></td></tr>
+<tr class="memdesc:ae07104880957c2c9f3fe156965cd2b55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Структура для хранения массива координат  <br /></td></tr>
+<tr class="separator:ae07104880957c2c9f3fe156965cd2b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:ae42c452e48981bccbf6645bd7ef23535"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#ae42c452e48981bccbf6645bd7ef23535">array_sort</a> (FILE *obj, <a class="el" href="struct_pars__counters.html">Pars_counters</a> *view)</td></tr>
+<tr class="memdesc:ae42c452e48981bccbf6645bd7ef23535"><td class="mdescLeft">&#160;</td><td class="mdescRight"> Парсит входной поток в массив координат точек в трехмерном пространстве, выстраивая правильный порядок этих координат в массиве  <br /></td></tr>
+<tr class="separator:ae42c452e48981bccbf6645bd7ef23535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9154d984741c90a7734516665328ac29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#a9154d984741c90a7734516665328ac29">unsort_array_fill</a> (char *line, <a class="el" href="struct_pars__counters.html">Pars_counters</a> *view, float **point_array)</td></tr>
+<tr class="memdesc:a9154d984741c90a7734516665328ac29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Из получаемой на вход строки вычленяет и преобразовывает все координаты точек записанные в этой строке, затем записывает их в массив типа float, в том порядке, в котором встречает их в строке, при необходимости довыделяет память массива для хранения координат  <br /></td></tr>
+<tr class="separator:a9154d984741c90a7734516665328ac29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3ce7ebbec8790f2579264368176202e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#ad3ce7ebbec8790f2579264368176202e">sort_array_fill</a> (char *line, <a class="el" href="struct_pars__counters.html">Pars_counters</a> *view, float *point_array)</td></tr>
+<tr class="memdesc:ad3ce7ebbec8790f2579264368176202e"><td class="mdescLeft">&#160;</td><td class="mdescRight"> Из получаемой на вход строки вычленяет правильный порядок координат точек и записывает в новый массив хранящийся в структуре, в правильном порядке.  <br /></td></tr>
+<tr class="separator:ad3ce7ebbec8790f2579264368176202e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d193e051163407e624cffbf91c82ece"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#a9d193e051163407e624cffbf91c82ece">my_atof</a> (char *str)</td></tr>
+<tr class="memdesc:a9d193e051163407e624cffbf91c82ece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Преобразовывет входную строку в число типа float и возвращает его.  <br /></td></tr>
+<tr class="separator:a9d193e051163407e624cffbf91c82ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a122391cf5ffec82660391de1985ca799"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#a122391cf5ffec82660391de1985ca799">my_atoi</a> (const char *str)</td></tr>
+<tr class="memdesc:a122391cf5ffec82660391de1985ca799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Преобразовывет входную строку в число типа int и возвращает его.  <br /></td></tr>
+<tr class="separator:a122391cf5ffec82660391de1985ca799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e9aa1505ff566366c68970b872bbfae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#a4e9aa1505ff566366c68970b872bbfae">memory_of_sort_alloc</a> (<a class="el" href="struct_pars__counters.html">Pars_counters</a> *view)</td></tr>
+<tr class="memdesc:a4e9aa1505ff566366c68970b872bbfae"><td class="mdescLeft">&#160;</td><td class="mdescRight">  При необходимости довыделяет память под массив координат точек.  <br /></td></tr>
+<tr class="separator:a4e9aa1505ff566366c68970b872bbfae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a489be460ecbd2df56c901af192a800ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#a489be460ecbd2df56c901af192a800ce">normalize</a> (<a class="el" href="struct_pars__counters.html">Pars_counters</a> *view)</td></tr>
+<tr class="memdesc:a489be460ecbd2df56c901af192a800ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выполняет нормализацию массива координат точек для корректного отображения модели.  <br /></td></tr>
+<tr class="separator:a489be460ecbd2df56c901af192a800ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac66fa34ed5e31954f39bb8ff0aae0732"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#ac66fa34ed5e31954f39bb8ff0aae0732">maxpoint</a> (<a class="el" href="struct_pars__counters.html">Pars_counters</a> *view)</td></tr>
+<tr class="memdesc:ac66fa34ed5e31954f39bb8ff0aae0732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Находит максимальное значение из массива координат точек и возвращает его.  <br /></td></tr>
+<tr class="separator:ac66fa34ed5e31954f39bb8ff0aae0732"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcc9a6635e26b5fe00f41991b9d4f9d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pars_8h.html#afcc9a6635e26b5fe00f41991b9d4f9d2">point_assignment</a> (<a class="el" href="struct_pars__counters.html">Pars_counters</a> *view, float *point_array, int index_of_point)</td></tr>
+<tr class="memdesc:afcc9a6635e26b5fe00f41991b9d4f9d2"><td class="mdescLeft">&#160;</td><td class="mdescRight"> В отсортированный массив, в определенное место записывает координаты точки из несортированного массива  <br /></td></tr>
+<tr class="separator:afcc9a6635e26b5fe00f41991b9d4f9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p> Заголовочный файл с описанием структуры и функций используемых для при парсинге obj файла </p>
+</div><h2 class="groupheader">Типы</h2>
+<a id="ae07104880957c2c9f3fe156965cd2b55" name="ae07104880957c2c9f3fe156965cd2b55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae07104880957c2c9f3fe156965cd2b55">&#9670;&#160;</a></span>Pars_counters</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="struct_pars__counters.html">Pars_counters</a> <a class="el" href="struct_pars__counters.html">Pars_counters</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Структура для хранения массива координат </p>
+<p>Структура, которая хранит в себе все полезные счетчики и массив координат точек после отработки парсера, по координатам этих точек в последствии проводится отрисовка модели </p>
+
+</div>
+</div>
+<h2 class="groupheader">Функции</h2>
+<a id="ae42c452e48981bccbf6645bd7ef23535" name="ae42c452e48981bccbf6645bd7ef23535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae42c452e48981bccbf6645bd7ef23535">&#9670;&#160;</a></span>array_sort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void array_sort </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>obj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_pars__counters.html">Pars_counters</a> *&#160;</td>
+          <td class="paramname"><em>view</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p> Парсит входной поток в массив координат точек в трехмерном пространстве, выстраивая правильный порядок этих координат в массиве </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">obj</td><td>- поток, который необходимо распарсить. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">view</td><td>- указатель на структуру хранящую в себе массив и вспомогательные данные. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac66fa34ed5e31954f39bb8ff0aae0732" name="ac66fa34ed5e31954f39bb8ff0aae0732"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac66fa34ed5e31954f39bb8ff0aae0732">&#9670;&#160;</a></span>maxpoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float maxpoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_pars__counters.html">Pars_counters</a> *&#160;</td>
+          <td class="paramname"><em>view</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Находит максимальное значение из массива координат точек и возвращает его. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Максимальное значение в массиве. </dd></dl>
+
+</div>
+</div>
+<a id="a4e9aa1505ff566366c68970b872bbfae" name="a4e9aa1505ff566366c68970b872bbfae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e9aa1505ff566366c68970b872bbfae">&#9670;&#160;</a></span>memory_of_sort_alloc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void memory_of_sort_alloc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_pars__counters.html">Pars_counters</a> *&#160;</td>
+          <td class="paramname"><em>view</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>  При необходимости довыделяет память под массив координат точек. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">view</td><td>- указатель на структуру, которая хранит в себе новый массив координат точек и необхдимый размер памяти. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9d193e051163407e624cffbf91c82ece" name="a9d193e051163407e624cffbf91c82ece"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d193e051163407e624cffbf91c82ece">&#9670;&#160;</a></span>my_atof()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float my_atof </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Преобразовывет входную строку в число типа float и возвращает его. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Преобразованное число. </dd></dl>
+
+</div>
+</div>
+<a id="a122391cf5ffec82660391de1985ca799" name="a122391cf5ffec82660391de1985ca799"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a122391cf5ffec82660391de1985ca799">&#9670;&#160;</a></span>my_atoi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int my_atoi </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Преобразовывет входную строку в число типа int и возвращает его. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Преобразованное число. </dd></dl>
+
+</div>
+</div>
+<a id="a489be460ecbd2df56c901af192a800ce" name="a489be460ecbd2df56c901af192a800ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a489be460ecbd2df56c901af192a800ce">&#9670;&#160;</a></span>normalize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void normalize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_pars__counters.html">Pars_counters</a> *&#160;</td>
+          <td class="paramname"><em>view</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Выполняет нормализацию массива координат точек для корректного отображения модели. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">view</td><td>- указатель на структуру в которой хранится массив. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afcc9a6635e26b5fe00f41991b9d4f9d2" name="afcc9a6635e26b5fe00f41991b9d4f9d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcc9a6635e26b5fe00f41991b9d4f9d2">&#9670;&#160;</a></span>point_assignment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void point_assignment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_pars__counters.html">Pars_counters</a> *&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>point_array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index_of_point</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p> В отсортированный массив, в определенное место записывает координаты точки из несортированного массива </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">view</td><td>- указатель на структуру, которая хранит в себе новый массив координат точек и необхдимый размер памяти.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">point_array</td><td>- указатель на массив неотсортированных координат точки.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index_of_point</td><td>- позиция точки. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad3ce7ebbec8790f2579264368176202e" name="ad3ce7ebbec8790f2579264368176202e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3ce7ebbec8790f2579264368176202e">&#9670;&#160;</a></span>sort_array_fill()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sort_array_fill </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_pars__counters.html">Pars_counters</a> *&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>point_array</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p> Из получаемой на вход строки вычленяет правильный порядок координат точек и записывает в новый массив хранящийся в структуре, в правильном порядке. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">line</td><td>- указатель на массив символов, который необходимо распарсить, который содержит в себе информацию о правильном порядке координат.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">view</td><td>- указатель на структуру, которая хранит в себе новый массив координат точек и необхдимые счетчики.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">point_array</td><td>- указатель на указатель типа float, массив из которого читаются координаты точек. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9154d984741c90a7734516665328ac29" name="a9154d984741c90a7734516665328ac29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9154d984741c90a7734516665328ac29">&#9670;&#160;</a></span>unsort_array_fill()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void unsort_array_fill </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_pars__counters.html">Pars_counters</a> *&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float **&#160;</td>
+          <td class="paramname"><em>point_array</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Из получаемой на вход строки вычленяет и преобразовывает все координаты точек записанные в этой строке, затем записывает их в массив типа float, в том порядке, в котором встречает их в строке, при необходимости довыделяет память массива для хранения координат </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">line</td><td>- указатель на массив символов, который необходимо распарсить. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">view</td><td>- указатель на структуру, которая хранит в себе размер выделенной памяти.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">point_array</td><td>- указатель на указатель типа float, массив в который записываются результаты. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
+</small></address>
+</body>
+</html>

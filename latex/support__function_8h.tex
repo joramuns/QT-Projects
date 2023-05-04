@@ -1,0 +1,41 @@
+\hypertarget{support__function_8h}{}\doxysection{Файл 3D\+\_\+\+Viewer/c-\/function/support/support\+\_\+function.h}
+\label{support__function_8h}\index{3D\_Viewer/c-\/function/support/support\_function.h@{3D\_Viewer/c-\/function/support/support\_function.h}}
+
+
+ Заголовочный файл с описанием вспомогательных функций используемых при афинных преобразованиях  
+
+
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+\doxysubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{support__function_8h_a8653425f5137a87cf3a9d730aac71192}\label{support__function_8h_a8653425f5137a87cf3a9d730aac71192}} 
+float $\ast$ {\bfseries sort\+\_\+array} (float $\ast$point\+\_\+array)
+\item 
+\mbox{\Hypertarget{support__function_8h_a057585c48c08a2a3659fd3adb936113f}\label{support__function_8h_a057585c48c08a2a3659fd3adb936113f}} 
+void {\bfseries identity\+\_\+matrix} (float $\ast$matrix\+\_\+scale)
+\begin{DoxyCompactList}\small\item\em На вход получает матрицу 4х4 заполненную нолями, создает из нее диагональную единичную матрицу. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{support__function_8h_adccb9d1af51d6313fc215394ed95c769}\label{support__function_8h_adccb9d1af51d6313fc215394ed95c769}} 
+void {\bfseries create\+\_\+move\+\_\+matrix} (float $\ast$matrix\+\_\+scale, float $\ast$coordinates)
+\begin{DoxyCompactList}\small\item\em Формирует матрицу перемещений. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{support__function_8h_a8830891ad0f5a2a08a3d2ab91e3f7661}\label{support__function_8h_a8830891ad0f5a2a08a3d2ab91e3f7661}} 
+void {\bfseries create\+\_\+turn\+\_\+matrix\+\_\+x} (float $\ast$matrix\+\_\+turn, float theta)
+\begin{DoxyCompactList}\small\item\em Формирует матрицу поворота вокруг оси X. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{support__function_8h_afbcc71f25f47520e237d799be39f3181}\label{support__function_8h_afbcc71f25f47520e237d799be39f3181}} 
+void {\bfseries create\+\_\+turn\+\_\+matrix\+\_\+y} (float $\ast$matrix\+\_\+turn, float theta)
+\begin{DoxyCompactList}\small\item\em Формирует матрицу поворота вокруг оси Y. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{support__function_8h_adb93a5480fe8cbd33fe4fd887c663e9a}\label{support__function_8h_adb93a5480fe8cbd33fe4fd887c663e9a}} 
+void {\bfseries create\+\_\+turn\+\_\+matrix\+\_\+z} (float $\ast$matrix\+\_\+turn, float theta)
+\begin{DoxyCompactList}\small\item\em Формирует матрицу поворота вокруг оси Z. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{support__function_8h_add26b51010a2ef5d2c896a8fc8f1daa9}\label{support__function_8h_add26b51010a2ef5d2c896a8fc8f1daa9}} 
+void {\bfseries create\+\_\+scale\+\_\+matrix} (float $\ast$matrix\+\_\+scale, float coef)
+\begin{DoxyCompactList}\small\item\em Формирует матрицу масштабирования. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{support__function_8h_a49a4ea23800869f994095b6974551eb5}\label{support__function_8h_a49a4ea23800869f994095b6974551eb5}} 
+void {\bfseries matrix\+\_\+mul} (float $\ast$matrix\+\_\+scale, float $\ast$point\+\_\+array, int size\+\_\+ar)
+\begin{DoxyCompactList}\small\item\em Перемножает матрицу 4х4 на массив координат точек, дробя массив на вектора 4х1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+ Заголовочный файл с описанием вспомогательных функций используемых при афинных преобразованиях 
+

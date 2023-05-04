@@ -1,0 +1,214 @@
+\hypertarget{pars_8h}{}\doxysection{Файл 3D\+\_\+\+Viewer/c-\/function/core/pars.h}
+\label{pars_8h}\index{3D\_Viewer/c-\/function/core/pars.h@{3D\_Viewer/c-\/function/core/pars.h}}
+
+
+ Заголовочный файл с описанием структуры и функций используемых для при парсинге obj файла  
+
+
+{\ttfamily \#include \char`\"{}core.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsection*{Классы}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}}
+\begin{DoxyCompactList}\small\item\em Структура для хранения массива координат \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Макросы}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pars_8h_a58d1c47e6c51ff35afaac4404acef44c}\label{pars_8h_a58d1c47e6c51ff35afaac4404acef44c}} 
+\#define {\bfseries S21\+\_\+\+EPS}~1e-\/6
+\begin{DoxyCompactList}\small\item\em Макрос используется для сравнения чисел с плавающей точкой. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Определения типов}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} \mbox{\hyperlink{pars_8h_ae07104880957c2c9f3fe156965cd2b55}{Pars\+\_\+counters}}
+\begin{DoxyCompactList}\small\item\em Структура для хранения массива координат \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{pars_8h_ae42c452e48981bccbf6645bd7ef23535}{array\+\_\+sort}} (FILE $\ast$obj, \mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$view)
+\begin{DoxyCompactList}\small\item\em  Парсит входной поток в массив координат точек в трехмерном пространстве, выстраивая правильный порядок этих координат в массиве \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pars_8h_a9154d984741c90a7734516665328ac29}{unsort\+\_\+array\+\_\+fill}} (char $\ast$line, \mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$view, float $\ast$$\ast$point\+\_\+array)
+\begin{DoxyCompactList}\small\item\em Из получаемой на вход строки вычленяет и преобразовывает все координаты точек записанные в этой строке, затем записывает их в массив типа float, в том порядке, в котором встречает их в строке, при необходимости довыделяет память массива для хранения координат \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pars_8h_ad3ce7ebbec8790f2579264368176202e}{sort\+\_\+array\+\_\+fill}} (char $\ast$line, \mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$view, float $\ast$point\+\_\+array)
+\begin{DoxyCompactList}\small\item\em  Из получаемой на вход строки вычленяет правильный порядок координат точек и записывает в новый массив хранящийся в структуре, в правильном порядке. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{pars_8h_a9d193e051163407e624cffbf91c82ece}{my\+\_\+atof}} (char $\ast$str)
+\begin{DoxyCompactList}\small\item\em Преобразовывет входную строку в число типа float и возвращает его. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{pars_8h_a122391cf5ffec82660391de1985ca799}{my\+\_\+atoi}} (const char $\ast$str)
+\begin{DoxyCompactList}\small\item\em Преобразовывет входную строку в число типа int и возвращает его. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pars_8h_a4e9aa1505ff566366c68970b872bbfae}{memory\+\_\+of\+\_\+sort\+\_\+alloc}} (\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$view)
+\begin{DoxyCompactList}\small\item\em   При необходимости довыделяет память под массив координат точек. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pars_8h_a489be460ecbd2df56c901af192a800ce}{normalize}} (\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$view)
+\begin{DoxyCompactList}\small\item\em Выполняет нормализацию массива координат точек для корректного отображения модели. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{pars_8h_ac66fa34ed5e31954f39bb8ff0aae0732}{maxpoint}} (\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$view)
+\begin{DoxyCompactList}\small\item\em Находит максимальное значение из массива координат точек и возвращает его. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pars_8h_afcc9a6635e26b5fe00f41991b9d4f9d2}{point\+\_\+assignment}} (\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$view, float $\ast$point\+\_\+array, int index\+\_\+of\+\_\+point)
+\begin{DoxyCompactList}\small\item\em  В отсортированный массив, в определенное место записывает координаты точки из несортированного массива \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+ Заголовочный файл с описанием структуры и функций используемых для при парсинге obj файла 
+
+
+
+\doxysubsection{Типы}
+\mbox{\Hypertarget{pars_8h_ae07104880957c2c9f3fe156965cd2b55}\label{pars_8h_ae07104880957c2c9f3fe156965cd2b55}} 
+\index{pars.h@{pars.h}!Pars\_counters@{Pars\_counters}}
+\index{Pars\_counters@{Pars\_counters}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{Pars\_counters}{Pars\_counters}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} \mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}}}
+
+
+
+Структура для хранения массива координат 
+
+Структура, которая хранит в себе все полезные счетчики и массив координат точек после отработки парсера, по координатам этих точек в последствии проводится отрисовка модели 
+
+\doxysubsection{Функции}
+\mbox{\Hypertarget{pars_8h_ae42c452e48981bccbf6645bd7ef23535}\label{pars_8h_ae42c452e48981bccbf6645bd7ef23535}} 
+\index{pars.h@{pars.h}!array\_sort@{array\_sort}}
+\index{array\_sort@{array\_sort}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{array\_sort()}{array\_sort()}}
+{\footnotesize\ttfamily void array\+\_\+sort (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{obj,  }\item[{\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$}]{view }\end{DoxyParamCaption})}
+
+
+
+ Парсит входной поток в массив координат точек в трехмерном пространстве, выстраивая правильный порядок этих координат в массиве 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em obj} & -\/ поток, который необходимо распарсить. \\
+\hline
+\mbox{\texttt{ out}}  & {\em view} & -\/ указатель на структуру хранящую в себе массив и вспомогательные данные. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{pars_8h_ac66fa34ed5e31954f39bb8ff0aae0732}\label{pars_8h_ac66fa34ed5e31954f39bb8ff0aae0732}} 
+\index{pars.h@{pars.h}!maxpoint@{maxpoint}}
+\index{maxpoint@{maxpoint}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{maxpoint()}{maxpoint()}}
+{\footnotesize\ttfamily float maxpoint (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$}]{view }\end{DoxyParamCaption})}
+
+
+
+Находит максимальное значение из массива координат точек и возвращает его. 
+
+\begin{DoxyReturn}{Возвращает}
+Максимальное значение в массиве. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{pars_8h_a4e9aa1505ff566366c68970b872bbfae}\label{pars_8h_a4e9aa1505ff566366c68970b872bbfae}} 
+\index{pars.h@{pars.h}!memory\_of\_sort\_alloc@{memory\_of\_sort\_alloc}}
+\index{memory\_of\_sort\_alloc@{memory\_of\_sort\_alloc}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{memory\_of\_sort\_alloc()}{memory\_of\_sort\_alloc()}}
+{\footnotesize\ttfamily void memory\+\_\+of\+\_\+sort\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$}]{view }\end{DoxyParamCaption})}
+
+
+
+  При необходимости довыделяет память под массив координат точек. 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em view} & -\/ указатель на структуру, которая хранит в себе новый массив координат точек и необхдимый размер памяти. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{pars_8h_a9d193e051163407e624cffbf91c82ece}\label{pars_8h_a9d193e051163407e624cffbf91c82ece}} 
+\index{pars.h@{pars.h}!my\_atof@{my\_atof}}
+\index{my\_atof@{my\_atof}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{my\_atof()}{my\_atof()}}
+{\footnotesize\ttfamily float my\+\_\+atof (\begin{DoxyParamCaption}\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+Преобразовывет входную строку в число типа float и возвращает его. 
+
+\begin{DoxyReturn}{Возвращает}
+Преобразованное число. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{pars_8h_a122391cf5ffec82660391de1985ca799}\label{pars_8h_a122391cf5ffec82660391de1985ca799}} 
+\index{pars.h@{pars.h}!my\_atoi@{my\_atoi}}
+\index{my\_atoi@{my\_atoi}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{my\_atoi()}{my\_atoi()}}
+{\footnotesize\ttfamily int my\+\_\+atoi (\begin{DoxyParamCaption}\item[{const char $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+Преобразовывет входную строку в число типа int и возвращает его. 
+
+\begin{DoxyReturn}{Возвращает}
+Преобразованное число. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{pars_8h_a489be460ecbd2df56c901af192a800ce}\label{pars_8h_a489be460ecbd2df56c901af192a800ce}} 
+\index{pars.h@{pars.h}!normalize@{normalize}}
+\index{normalize@{normalize}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{normalize()}{normalize()}}
+{\footnotesize\ttfamily void normalize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$}]{view }\end{DoxyParamCaption})}
+
+
+
+Выполняет нормализацию массива координат точек для корректного отображения модели. 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ out}}  & {\em view} & -\/ указатель на структуру в которой хранится массив. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{pars_8h_afcc9a6635e26b5fe00f41991b9d4f9d2}\label{pars_8h_afcc9a6635e26b5fe00f41991b9d4f9d2}} 
+\index{pars.h@{pars.h}!point\_assignment@{point\_assignment}}
+\index{point\_assignment@{point\_assignment}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{point\_assignment()}{point\_assignment()}}
+{\footnotesize\ttfamily void point\+\_\+assignment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$}]{view,  }\item[{float $\ast$}]{point\+\_\+array,  }\item[{int}]{index\+\_\+of\+\_\+point }\end{DoxyParamCaption})}
+
+
+
+ В отсортированный массив, в определенное место записывает координаты точки из несортированного массива 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ out}}  & {\em view} & -\/ указатель на структуру, которая хранит в себе новый массив координат точек и необхдимый размер памяти.\\
+\hline
+\mbox{\texttt{ in}}  & {\em point\+\_\+array} & -\/ указатель на массив неотсортированных координат точки.\\
+\hline
+\mbox{\texttt{ in}}  & {\em index\+\_\+of\+\_\+point} & -\/ позиция точки. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{pars_8h_ad3ce7ebbec8790f2579264368176202e}\label{pars_8h_ad3ce7ebbec8790f2579264368176202e}} 
+\index{pars.h@{pars.h}!sort\_array\_fill@{sort\_array\_fill}}
+\index{sort\_array\_fill@{sort\_array\_fill}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{sort\_array\_fill()}{sort\_array\_fill()}}
+{\footnotesize\ttfamily void sort\+\_\+array\+\_\+fill (\begin{DoxyParamCaption}\item[{char $\ast$}]{line,  }\item[{\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$}]{view,  }\item[{float $\ast$}]{point\+\_\+array }\end{DoxyParamCaption})}
+
+
+
+ Из получаемой на вход строки вычленяет правильный порядок координат точек и записывает в новый массив хранящийся в структуре, в правильном порядке. 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em line} & -\/ указатель на массив символов, который необходимо распарсить, который содержит в себе информацию о правильном порядке координат.\\
+\hline
+\mbox{\texttt{ out}}  & {\em view} & -\/ указатель на структуру, которая хранит в себе новый массив координат точек и необхдимые счетчики.\\
+\hline
+\mbox{\texttt{ in}}  & {\em point\+\_\+array} & -\/ указатель на указатель типа float, массив из которого читаются координаты точек. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{pars_8h_a9154d984741c90a7734516665328ac29}\label{pars_8h_a9154d984741c90a7734516665328ac29}} 
+\index{pars.h@{pars.h}!unsort\_array\_fill@{unsort\_array\_fill}}
+\index{unsort\_array\_fill@{unsort\_array\_fill}!pars.h@{pars.h}}
+\doxysubsubsection{\texorpdfstring{unsort\_array\_fill()}{unsort\_array\_fill()}}
+{\footnotesize\ttfamily void unsort\+\_\+array\+\_\+fill (\begin{DoxyParamCaption}\item[{char $\ast$}]{line,  }\item[{\mbox{\hyperlink{struct_pars__counters}{Pars\+\_\+counters}} $\ast$}]{view,  }\item[{float $\ast$$\ast$}]{point\+\_\+array }\end{DoxyParamCaption})}
+
+
+
+Из получаемой на вход строки вычленяет и преобразовывает все координаты точек записанные в этой строке, затем записывает их в массив типа float, в том порядке, в котором встречает их в строке, при необходимости довыделяет память массива для хранения координат 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em line} & -\/ указатель на массив символов, который необходимо распарсить. \\
+\hline
+\mbox{\texttt{ in}}  & {\em view} & -\/ указатель на структуру, которая хранит в себе размер выделенной памяти.\\
+\hline
+\mbox{\texttt{ out}}  & {\em point\+\_\+array} & -\/ указатель на указатель типа float, массив в который записываются результаты. \\
+\hline
+\end{DoxyParams}

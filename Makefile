@@ -45,7 +45,7 @@ dist:
 	tar czf dist.tar  *
 
 dvi:
-	@doxygen calc_config
+	# @doxygen calc_config
 	@open html/index.html
 
 create_dir:

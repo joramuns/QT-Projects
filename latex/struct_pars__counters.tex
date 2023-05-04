@@ -1,0 +1,42 @@
+\hypertarget{struct_pars__counters}{}\doxysection{Структура Pars\+\_\+counters}
+\label{struct_pars__counters}\index{Pars\_counters@{Pars\_counters}}
+
+
+Структура для хранения массива координат  
+
+
+
+
+{\ttfamily \#include $<$pars.\+h$>$}
+
+\doxysubsection*{Открытые атрибуты}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_pars__counters_a66db93064e4477a63e2a0f50e023c607}\label{struct_pars__counters_a66db93064e4477a63e2a0f50e023c607}} 
+int {\bfseries count\+\_\+vertex}
+\begin{DoxyCompactList}\small\item\em счетчик вершин \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_pars__counters_ae764fc6f890038f888a5a41a78e033c0}\label{struct_pars__counters_ae764fc6f890038f888a5a41a78e033c0}} 
+int {\bfseries count\+\_\+side}
+\begin{DoxyCompactList}\small\item\em счетчик сторон \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_pars__counters_a40018a0c470e99bd390de49cd86dc7ef}\label{struct_pars__counters_a40018a0c470e99bd390de49cd86dc7ef}} 
+int {\bfseries size\+\_\+sort\+\_\+array}
+\begin{DoxyCompactList}\small\item\em размер массива после сортировки \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_pars__counters_a8d926e79c49cd18dcdf8e84600e36742}\label{struct_pars__counters_a8d926e79c49cd18dcdf8e84600e36742}} 
+int {\bfseries size\+\_\+unsort\+\_\+memory}
+\begin{DoxyCompactList}\small\item\em размер массива до сортировки \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_pars__counters_abe4a73797a91d8a7ea57d704207e6e24}\label{struct_pars__counters_abe4a73797a91d8a7ea57d704207e6e24}} 
+int {\bfseries size\+\_\+sort\+\_\+memory}
+\begin{DoxyCompactList}\small\item\em размер выделенной памяти после сортировки \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_pars__counters_ad74e227255bfe42235b77c0117e5e5f0}\label{struct_pars__counters_ad74e227255bfe42235b77c0117e5e5f0}} 
+float $\ast$ {\bfseries sorted\+\_\+array}
+\begin{DoxyCompactList}\small\item\em указатель на массив координат точек в верном порядке \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Структура для хранения массива координат 
+
+Структура, которая хранит в себе все полезные счетчики и массив координат точек после отработки парсера, по координатам этих точек в последствии проводится отрисовка модели 
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+3\+D\+\_\+\+Viewer/c-\/function/core/\mbox{\hyperlink{pars_8h}{pars.\+h}}\end{DoxyCompactItemize}

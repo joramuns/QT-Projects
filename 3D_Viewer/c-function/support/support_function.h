@@ -1,3 +1,7 @@
+/*!
+\file
+\brief Заголовочный файл с описанием вспомогательных функций используемых при афинных преобразованиях
+*/
 #ifndef SUPPROT_FUNCTION
 #define SUPPROT_FUNCTION
 
