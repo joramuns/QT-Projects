@@ -22,19 +22,19 @@ static int size_sort_array_expected = 6 * 2 * 3 * 4;
 /* ### END OF EXPECTED FUNCTION ### */
 
 /* ### SERVICE PROCEDURES ### */
-static float *model_array = NULL;
 static FILE *obj_file = NULL;
 static Pars_counters *test_view = NULL;
 
 static void simple_cube_setup(void) {
   test_view = calloc(1, sizeof(Pars_counters));
-  obj_file = fopen("../data-samples/cube_simple.obj", "r");
-  model_array = array_sort(obj_file, test_view);
+  obj_file = fopen("3D_Viewer/c-function/tests/cube_simple.obj", "r");
+  array_sort(obj_file, test_view);
 }
 
 static void non_existent_setup(void) {
   test_view = calloc(1, sizeof(Pars_counters));
-  /* model_array = array_sort("aboba.obj", test_view); */
+  obj_file = fopen("aboba.obj", "r");
+  array_sort(obj_file, test_view);
 }
 
 static void test_teardown(void) {
@@ -42,9 +42,9 @@ static void test_teardown(void) {
     fclose(obj_file);
     obj_file = NULL;
   }
-  if (model_array) {
-    free(model_array);
-    model_array = NULL;
+  if (test_view->sorted_array) {
+    free(test_view->sorted_array);
+    test_view->sorted_array = NULL;
   }
   if (test_view) {
     free(test_view);
@@ -64,19 +64,10 @@ START_TEST(test_simple_cube_sorted_array_len) {
   ck_assert_uint_eq(test_view->size_sort_array, size_sort_array_expected);
 }
 END_TEST
-/* START_TEST(test_simple_cube_vertices_data) { */
-  /* ck_assert_float_eq_tol(data[_i * 4], sc_vertices_expected[_i * 4], TEST_EPS); */
-  /* ck_assert_float_eq_tol(data[_i * 4 + 1], sc_vertices_expected[_i * 4 + 1], */
-  /*                        TEST_EPS); */
-  /* ck_assert_float_eq_tol(data[_i * 4 + 2], sc_vertices_expected[_i * 4 + 2], */
-  /*                        TEST_EPS); */
-  /* ck_assert_float_eq_tol(data[_i * 4 + 3], 1.0, TEST_EPS); */
-/* } */
-/* END_TEST */
 
 /* ## Check wrong file handler ## */
 START_TEST(test_open_nonexistent_file) {
-  ck_assert_ptr_null(model_array);
+  ck_assert_ptr_null(test_view->sorted_array);
 }
 END_TEST
 
