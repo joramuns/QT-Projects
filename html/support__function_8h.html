@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>3D_Viewer: Файл 3D_Viewer/c-function/support/support_function.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">3D_Viewer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_cd91eaaf34df6e3f4ef06eb35797390e.html">3D_Viewer</a></li><li class="navelem"><a class="el" href="dir_a0e67e83c73bc57bba83a2b34575503a.html">c-function</a></li><li class="navelem"><a class="el" href="dir_df6853964858ce12bb5d5bec6ecf7b86.html">support</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle"><div class="title">Файл support_function.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p> Заголовочный файл с описанием вспомогательных функций используемых при афинных преобразованиях  
+<a href="#details">Подробнее...</a></p>
+<div class="textblock"><code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+</div>
+<p><a href="support__function_8h_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:a8653425f5137a87cf3a9d730aac71192"><td class="memItemLeft" align="right" valign="top"><a id="a8653425f5137a87cf3a9d730aac71192" name="a8653425f5137a87cf3a9d730aac71192"></a>
+float *&#160;</td><td class="memItemRight" valign="bottom"><b>sort_array</b> (float *point_array)</td></tr>
+<tr class="separator:a8653425f5137a87cf3a9d730aac71192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a057585c48c08a2a3659fd3adb936113f"><td class="memItemLeft" align="right" valign="top"><a id="a057585c48c08a2a3659fd3adb936113f" name="a057585c48c08a2a3659fd3adb936113f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>identity_matrix</b> (float *matrix_scale)</td></tr>
+<tr class="memdesc:a057585c48c08a2a3659fd3adb936113f"><td class="mdescLeft">&#160;</td><td class="mdescRight">На вход получает матрицу 4х4 заполненную нолями, создает из нее диагональную единичную матрицу. <br /></td></tr>
+<tr class="separator:a057585c48c08a2a3659fd3adb936113f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adccb9d1af51d6313fc215394ed95c769"><td class="memItemLeft" align="right" valign="top"><a id="adccb9d1af51d6313fc215394ed95c769" name="adccb9d1af51d6313fc215394ed95c769"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_move_matrix</b> (float *matrix_scale, float *coordinates)</td></tr>
+<tr class="memdesc:adccb9d1af51d6313fc215394ed95c769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует матрицу перемещений. <br /></td></tr>
+<tr class="separator:adccb9d1af51d6313fc215394ed95c769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8830891ad0f5a2a08a3d2ab91e3f7661"><td class="memItemLeft" align="right" valign="top"><a id="a8830891ad0f5a2a08a3d2ab91e3f7661" name="a8830891ad0f5a2a08a3d2ab91e3f7661"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_turn_matrix_x</b> (float *matrix_turn, float theta)</td></tr>
+<tr class="memdesc:a8830891ad0f5a2a08a3d2ab91e3f7661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует матрицу поворота вокруг оси X. <br /></td></tr>
+<tr class="separator:a8830891ad0f5a2a08a3d2ab91e3f7661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbcc71f25f47520e237d799be39f3181"><td class="memItemLeft" align="right" valign="top"><a id="afbcc71f25f47520e237d799be39f3181" name="afbcc71f25f47520e237d799be39f3181"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_turn_matrix_y</b> (float *matrix_turn, float theta)</td></tr>
+<tr class="memdesc:afbcc71f25f47520e237d799be39f3181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует матрицу поворота вокруг оси Y. <br /></td></tr>
+<tr class="separator:afbcc71f25f47520e237d799be39f3181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb93a5480fe8cbd33fe4fd887c663e9a"><td class="memItemLeft" align="right" valign="top"><a id="adb93a5480fe8cbd33fe4fd887c663e9a" name="adb93a5480fe8cbd33fe4fd887c663e9a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_turn_matrix_z</b> (float *matrix_turn, float theta)</td></tr>
+<tr class="memdesc:adb93a5480fe8cbd33fe4fd887c663e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует матрицу поворота вокруг оси Z. <br /></td></tr>
+<tr class="separator:adb93a5480fe8cbd33fe4fd887c663e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add26b51010a2ef5d2c896a8fc8f1daa9"><td class="memItemLeft" align="right" valign="top"><a id="add26b51010a2ef5d2c896a8fc8f1daa9" name="add26b51010a2ef5d2c896a8fc8f1daa9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>create_scale_matrix</b> (float *matrix_scale, float coef)</td></tr>
+<tr class="memdesc:add26b51010a2ef5d2c896a8fc8f1daa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует матрицу масштабирования. <br /></td></tr>
+<tr class="separator:add26b51010a2ef5d2c896a8fc8f1daa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49a4ea23800869f994095b6974551eb5"><td class="memItemLeft" align="right" valign="top"><a id="a49a4ea23800869f994095b6974551eb5" name="a49a4ea23800869f994095b6974551eb5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>matrix_mul</b> (float *matrix_scale, float *point_array, int size_ar)</td></tr>
+<tr class="memdesc:a49a4ea23800869f994095b6974551eb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перемножает матрицу 4х4 на массив координат точек, дробя массив на вектора 4х1. <br /></td></tr>
+<tr class="separator:a49a4ea23800869f994095b6974551eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p> Заголовочный файл с описанием вспомогательных функций используемых при афинных преобразованиях </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
+</small></address>
+</body>
+</html>
