@@ -118,6 +118,8 @@ MainWidget::MainWidget() {
 
   dashed_face = new QCheckBox("Dashed lines");
   dashed_face->setStyleSheet("font:20pt");
+  dashed_face->setCheckState(
+      m_paint_widget->getPref(kDashed) ? Qt::Checked : Qt::Unchecked);
   connect(dashed_face, &QPushButton::clicked, this,
           [=]() { togglePref(kDashed); });
 
@@ -521,9 +523,7 @@ void MainWidget::select_file() {
   const char *file_name = strStd.c_str();
   m_paint_widget->initializeGL();
   FILE *obj = fopen(file_name, "r");
-  printf("%s\n", file_name);
   if (obj == NULL) {
-    printf("%d\n", errno);
   } else {
     array_sort(obj, &m_paint_widget->view);
     fclose(obj);
