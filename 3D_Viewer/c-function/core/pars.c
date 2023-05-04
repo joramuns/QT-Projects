@@ -8,6 +8,8 @@
   вспомогательные данные.
 */
 void array_sort(FILE *obj, Pars_counters *view) {
+  if (!obj || !view)
+    return;
   char *line = NULL;
   size_t len = 0;
   ssize_t read;
