@@ -87,6 +87,8 @@ clean:
 	@find . -name "*.o" -delete
 	@find . -name "*.gcno" -delete
 	@find . -name "*.gcda" -delete
+	@find . -name "*.info" -delete
+	@rm -rf out
 	@rm -rf $(TEST_FILE)
 	@rm -rf 3D_Viewer/moc_*
 	@rm -rf 3D_Viewer/3D_Viewer.app
