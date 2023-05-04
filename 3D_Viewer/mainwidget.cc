@@ -525,9 +525,10 @@ void MainWidget::select_file() {
     array_sort(obj, &m_paint_widget->view);
     fclose(obj);
     size_of_edges->setText("Size of edges: ");
+    size_of_edges->setText(size_of_edges->text() + QString::number(m_paint_widget->view.count_edges));
     size_of_array->setText("Number of vertexes: ");
     size_of_array->setText(
         size_of_array->text() +
-        QString::number(m_paint_widget->view.size_sort_array / 4));
+        QString::number(m_paint_widget->view.count_vertex));
   }
 }

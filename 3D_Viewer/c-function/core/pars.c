@@ -93,14 +93,15 @@ void sort_array_fill(char *line, Pars_counters *view, float *point_array) {
         memory_of_sort_alloc(view);
         point_assignment(view, point_array, vertex_number_last);
         memory_of_sort_alloc(view);
+        view->count_edges += 1;
       }
       point_assignment(view, point_array, vertex_number);
+      view->count_edges += 1;
       if (counter > 2)
         vertex_number_last = vertex_number;
     }
     token_f = strtok(NULL, " ");
   }
-  view->count_side += 1;
 }
 
 /*!
@@ -142,8 +143,8 @@ void normalize(Pars_counters *view) {
 }
 
 /*!
-  \brief Находит максимальное значение из массива координат точек и возвращает его.
-  \return Максимальное значение в массиве.
+  \brief Находит максимальное значение из массива координат точек и возвращает
+  его. \return Максимальное значение в массиве.
 */
 float maxpoint(Pars_counters *view) {
   float maximum = view->sorted_array[0];

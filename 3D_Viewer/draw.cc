@@ -83,7 +83,7 @@ void Draw::cleanView() {
   if (view.sorted_array) {
     free(view.sorted_array);
     view.count_vertex = 0;
-    view.count_side = 0;
+    view.count_edges = 0;
     view.size_sort_array = 0;
     view.size_unsort_memory = 0;
     view.size_sort_memory = 0;

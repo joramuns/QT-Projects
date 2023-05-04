@@ -26,7 +26,7 @@
 */
 typedef struct Pars_counters {
   int count_vertex; ///< счетчик вершин
-  int count_side;   ///< счетчик сторон
+  int count_edges;   ///< счетчик сторон
   int size_sort_array; ///< размер массива после сортировки
   int size_unsort_memory; ///< размер массива до сортировки
   int size_sort_memory; ///< размер выделенной памяти после сортировки
