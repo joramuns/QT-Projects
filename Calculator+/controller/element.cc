@@ -25,4 +25,16 @@ bool Element::AppendNumber(double input) noexcept {
     return true;
   }
 }
+
+bool Element::AppendNumber(double input, int power) noexcept {
+  if (GetType()) {
+    return false;
+  } else {
+    while (power--) {
+      input /= 10;
+    }
+    value_ += input;
+    return true;
+  }
+}
 }  // namespace s21

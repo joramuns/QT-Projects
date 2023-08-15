@@ -23,6 +23,7 @@ class Element final {
 
   /* Modifiers */
   bool AppendNumber(double input) noexcept;
+  bool AppendNumber(double input, int power) noexcept;
 
  public:
   /* Priority is shown by rang of 10 power */
