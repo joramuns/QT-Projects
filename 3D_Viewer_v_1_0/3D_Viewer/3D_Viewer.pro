@@ -1,15 +1,17 @@
-QT += core gui printsupport charts opengl
+QT += core gui printsupport opengl
 
 macx {
   LIBS += -framework OpenGL
+  QT += charts
 }
 unix:!macx {
   LIBS += -lGLU -lGL
+  QT += openglwidgets 
 }
 
 CONFIG += c++17
 
-greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 6): QT += widgets
 
 SOURCES += \
         main.cc \
