@@ -40,7 +40,46 @@ bool Element::AppendNumber(double input, int power) noexcept {
 }  // namespace s21
 
 std::ostream &operator<<(std::ostream &os, const s21::Element &output) {
-  os << output.GetValue();
+  double value = output.GetValue();
+  if (output.GetType()) {
+    if (value == s21::Element::kAddition) {
+      os << "+";
+    } else if (value == s21::Element::kSubtraction) {
+      os << "-";
+    } else if (value == s21::Element::kModulus) {
+      os << "mod";
+    } else if (value == s21::Element::kMultiplication) {
+      os << "*";
+    } else if (value == s21::Element::kDivision) {
+      os << "/";
+    } else if (value == s21::Element::kSin) {
+      os << "sin";
+    } else if (value == s21::Element::kCos) {
+      os << "cos";
+    } else if (value == s21::Element::kTan) {
+      os << "tan";
+    } else if (value == s21::Element::kAsin) {
+      os << "asin";
+    } else if (value == s21::Element::kAcos) {
+      os << "acos";
+    } else if (value == s21::Element::kAtan) {
+      os << "atan";
+    } else if (value == s21::Element::kSqrt) {
+      os << "sqrt";
+    } else if (value == s21::Element::kLn) {
+      os << "ln";
+    } else if (value == s21::Element::kLog) {
+      os << "log";
+    } else if (value == s21::Element::kPower) {
+      os << "^";
+    } else if (value == s21::Element::kBracketOpen) {
+      os << "(";
+    } else if (value == s21::Element::kBracketClose) {
+      os << ")";
+    }
+  } else {
+    os << value;
+  }
 
   return os;
 }

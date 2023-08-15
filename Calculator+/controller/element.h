@@ -44,7 +44,8 @@ class Element final {
     kLn,
     kLog,
     kPower = 1000,
-    kBracket = 10000
+    kBracketOpen = 10000,
+    kBracketClose 
   };
 
  private:
