@@ -1,13 +1,13 @@
 #ifndef CONTROLLER_RPN_H_
 #define CONTROLLER_RPN_H_
 
-#include <queue>
-#include <stack>
+#include <deque>
+#include <iostream>
 
 #include "element.h"
 
 namespace s21 {
-class Converter {
+class Converter final {
  public:
   /* RFive */
   Converter() = default;
@@ -17,14 +17,24 @@ class Converter {
   Converter &operator=(Converter &&other) = delete;
   ~Converter() = default;
 
-  /* methods */
+  /* Modifiers */
   void AddOperand(Element number);
   void AddOperator(Element operand);
 
+  /* Getters */
+  bool IsBroken() const noexcept;
+
+  /* Debug getters */
+  std::deque<Element> GetStack() const noexcept;
+  std::deque<Element> GetQueue() const noexcept;
+
  private:
-  /* fields */
-  std::queue<Element> stack_out_;
-  std::queue<Element> queue_stack_;
+  /* Fields */
+  std::deque<Element> stack_out_;
+  std::deque<Element> queue_stack_;
+  bool is_broken_;
 };
 }  // namespace s21
+
+std::ostream &operator<<(std::ostream &stream, const s21::Converter &output);
 #endif  // CONTROLLER_RPN_H_
