@@ -2,6 +2,7 @@
 #define CONTROLLER_ELEMENT_H_
 
 #include <cmath>
+#include <iostream>
 
 namespace s21 {
 class Element final {
@@ -10,7 +11,7 @@ class Element final {
   Element() = delete;
   explicit Element(int input) noexcept;
   explicit Element(double input) noexcept;
-  Element(const Element &other) = delete;
+  Element(const Element &other) = default;
   Element(Element &&other) = delete;
   Element &operator=(const Element &other) = delete;
   Element &operator=(Element &&other) = delete;
@@ -51,4 +52,7 @@ class Element final {
   double value_;
 };
 }  // namespace s21
+
+std::ostream &operator<<(std::ostream &os, const s21::Element &output);
+
 #endif  // CONTROLLER_ELEMENT_H_

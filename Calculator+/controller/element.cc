@@ -38,3 +38,9 @@ bool Element::AppendNumber(double input, int power) noexcept {
   }
 }
 }  // namespace s21
+
+std::ostream &operator<<(std::ostream &os, const s21::Element &output) {
+  os << output.GetValue();
+
+  return os;
+}
