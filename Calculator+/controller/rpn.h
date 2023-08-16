@@ -21,8 +21,6 @@ class Converter final {
   void AddOperand(Element number);
   void AddOperator(Element operation);
   void Finalize();
-  void FinalizeBrackets();
-  void Pour();
 
   /* Getters */
   bool IsBroken() const noexcept;
@@ -36,6 +34,10 @@ class Converter final {
   std::deque<Element> stack_out_;
   std::deque<Element> queue_stack_;
   bool is_broken_ = false;
+
+ private:
+  void FinalizeBrackets();
+  void Pour();
 };
 }  // namespace s21
 

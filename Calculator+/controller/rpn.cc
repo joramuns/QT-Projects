@@ -41,6 +41,17 @@ void Converter::Finalize() {
   }
 }
 
+/* Getters */
+bool Converter::IsBroken() const noexcept { return is_broken_; }
+
+/* Debug getters */
+std::deque<Element> Converter::GetStack() const noexcept { return stack_out_; }
+
+std::deque<Element> Converter::GetQueue() const noexcept {
+  return queue_stack_;
+}
+
+/* Private functions */
 void Converter::FinalizeBrackets() {
   while (!queue_stack_.empty() &&
          queue_stack_.back().GetValue() != s21::Element::kBracketOpen) {
@@ -51,16 +62,6 @@ void Converter::FinalizeBrackets() {
 void Converter::Pour() {
   stack_out_.push_back(queue_stack_.back());
   queue_stack_.pop_back();
-}
-
-/* Getters */
-bool Converter::IsBroken() const noexcept { return is_broken_; }
-
-/* Debug getters */
-std::deque<Element> Converter::GetStack() const noexcept { return stack_out_; }
-
-std::deque<Element> Converter::GetQueue() const noexcept {
-  return queue_stack_;
 }
 }  // namespace s21
 
