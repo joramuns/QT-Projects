@@ -19,7 +19,10 @@ class Converter final {
 
   /* Modifiers */
   void AddOperand(Element number);
-  void AddOperator(Element operand);
+  void AddOperator(Element operation);
+  void Finalize();
+  void FinalizeBrackets();
+  void Pour();
 
   /* Getters */
   bool IsBroken() const noexcept;
@@ -32,7 +35,7 @@ class Converter final {
   /* Fields */
   std::deque<Element> stack_out_;
   std::deque<Element> queue_stack_;
-  bool is_broken_;
+  bool is_broken_ = false;
 };
 }  // namespace s21
 
