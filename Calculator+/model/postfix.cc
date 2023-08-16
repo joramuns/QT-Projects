@@ -1,10 +1,10 @@
-#include "rpn.h"
+#include "postfix.h"
 
 namespace s21 {
 /* Modifiers */
-void Converter::AddOperand(Element number) { stack_out_.push_back(number); }
+void PostfixExpr::AddOperand(Element number) { stack_out_.push_back(number); }
 
-void Converter::AddOperator(Element operation) {
+void PostfixExpr::AddOperator(Element operation) {
   if (queue_stack_.empty()) {
     queue_stack_.push_back(operation);
   } else {
@@ -35,37 +35,37 @@ void Converter::AddOperator(Element operation) {
   }
 }
 
-void Converter::Finalize() {
+void PostfixExpr::Finalize() {
   while (!queue_stack_.empty()) {
     Pour();
   }
 }
 
 /* Getters */
-bool Converter::IsBroken() const noexcept { return is_broken_; }
+bool PostfixExpr::IsBroken() const noexcept { return is_broken_; }
 
 /* Debug getters */
-std::deque<Element> Converter::GetStack() const noexcept { return stack_out_; }
+std::deque<Element> PostfixExpr::GetStack() const noexcept { return stack_out_; }
 
-std::deque<Element> Converter::GetQueue() const noexcept {
+std::deque<Element> PostfixExpr::GetQueue() const noexcept {
   return queue_stack_;
 }
 
 /* Private functions */
-void Converter::FinalizeBrackets() {
+void PostfixExpr::FinalizeBrackets() {
   while (!queue_stack_.empty() &&
          queue_stack_.back().GetValue() != s21::Element::kBracketOpen) {
     Pour();
   }
 }
 
-void Converter::Pour() {
+void PostfixExpr::Pour() {
   stack_out_.push_back(queue_stack_.back());
   queue_stack_.pop_back();
 }
 }  // namespace s21
 
-std::ostream &operator<<(std::ostream &os, const s21::Converter &output) {
+std::ostream &operator<<(std::ostream &os, const s21::PostfixExpr &output) {
   os << "Ready stack: ";
   for (const auto &item : output.GetStack()) {
     os << item << " ";

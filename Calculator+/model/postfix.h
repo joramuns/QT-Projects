@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_RPN_H_
-#define CONTROLLER_RPN_H_
+#ifndef MODEL_POSTFIX_H_
+#define MODEL_POSTFIX_H_
 
 #include <deque>
 #include <iostream>
@@ -7,15 +7,15 @@
 #include "element.h"
 
 namespace s21 {
-class Converter final {
+class PostfixExpr final {
  public:
   /* RFive */
-  Converter() = default;
-  Converter(const Converter &other) = delete;
-  Converter(Converter &&other) = delete;
-  Converter &operator=(const Converter &other) = delete;
-  Converter &operator=(Converter &&other) = delete;
-  ~Converter() = default;
+  PostfixExpr() = default;
+  PostfixExpr(const PostfixExpr &other) = delete;
+  PostfixExpr(PostfixExpr &&other) = delete;
+  PostfixExpr &operator=(const PostfixExpr &other) = delete;
+  PostfixExpr &operator=(PostfixExpr &&other) = delete;
+  ~PostfixExpr() = default;
 
   /* Modifiers */
   void AddOperand(Element number);
@@ -41,5 +41,5 @@ class Converter final {
 };
 }  // namespace s21
 
-std::ostream &operator<<(std::ostream &stream, const s21::Converter &output);
-#endif  // CONTROLLER_RPN_H_
+std::ostream &operator<<(std::ostream &stream, const s21::PostfixExpr &output);
+#endif  // MODEL_POSTFIX_H_

@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_ELEMENT_H_
-#define CONTROLLER_ELEMENT_H_
+#ifndef MODEL_ELEMENT_H_
+#define MODEL_ELEMENT_H_
 
 #include <cmath>
 #include <iostream>
@@ -56,4 +56,4 @@ class Element final {
 
 std::ostream &operator<<(std::ostream &os, const s21::Element &output);
 
-#endif  // CONTROLLER_ELEMENT_H_
+#endif  // MODEL_ELEMENT_H_
