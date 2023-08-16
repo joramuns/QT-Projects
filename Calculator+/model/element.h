@@ -18,7 +18,7 @@ class Element final {
   ~Element() = default;
 
   /* Getters */
-  bool GetType() const noexcept;
+  bool IsOperator() const noexcept;
   double GetValue() const noexcept;
   int GetPriority() const noexcept;
 
@@ -49,7 +49,7 @@ class Element final {
   };
 
  private:
-  bool is_operand_;
+  bool is_operator_;
   double value_;
 };
 }  // namespace s21

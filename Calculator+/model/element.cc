@@ -2,22 +2,22 @@
 
 namespace s21 {
 Element::Element(int input) noexcept
-    : is_operand_(true), value_((double)input) {}
+    : is_operator_(true), value_((double)input) {}
 
-Element::Element(double input) noexcept : is_operand_(false), value_(input) {}
+Element::Element(double input) noexcept : is_operator_(false), value_(input) {}
 
 /* Getters */
-bool Element::GetType() const noexcept { return is_operand_; }
+bool Element::IsOperator() const noexcept { return is_operator_; }
 
 double Element::GetValue() const noexcept { return value_; }
 
 int Element::GetPriority() const noexcept {
-  return is_operand_ ? (int)log10(value_) : -1;
+  return is_operator_ ? (int)log10(value_) : -1;
 }
 
 /* Modifiers */
 bool Element::AppendNumber(double input) noexcept {
-  if (GetType()) {
+  if (IsOperator()) {
     return false;
   } else {
     value_ *= 10;
@@ -27,7 +27,7 @@ bool Element::AppendNumber(double input) noexcept {
 }
 
 bool Element::AppendNumber(double input, int power) noexcept {
-  if (GetType()) {
+  if (IsOperator()) {
     return false;
   } else {
     while (power--) {
@@ -41,7 +41,7 @@ bool Element::AppendNumber(double input, int power) noexcept {
 
 std::ostream &operator<<(std::ostream &os, const s21::Element &output) {
   double value = output.GetValue();
-  if (output.GetType()) {
+  if (output.IsOperator()) {
     if (value == s21::Element::kAddition) {
       os << "+";
     } else if (value == s21::Element::kSubtraction) {
