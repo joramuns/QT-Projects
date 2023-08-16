@@ -7,7 +7,7 @@
 #include "element.h"
 
 namespace s21 {
-class PostfixExpr final {
+class PostfixExpr {
  public:
   /* RFive */
   PostfixExpr() = default;
@@ -15,12 +15,7 @@ class PostfixExpr final {
   PostfixExpr(PostfixExpr &&other) = delete;
   PostfixExpr &operator=(const PostfixExpr &other) = delete;
   PostfixExpr &operator=(PostfixExpr &&other) = delete;
-  ~PostfixExpr() = default;
-
-  /* Modifiers */
-  void AddOperand(Element number);
-  void AddOperator(Element operation);
-  void Finalize();
+  virtual ~PostfixExpr() = default;
 
   /* Getters */
   bool IsBroken() const noexcept;
@@ -28,6 +23,12 @@ class PostfixExpr final {
   /* Debug getters */
   std::deque<Element> GetStack() const noexcept;
   std::deque<Element> GetQueue() const noexcept;
+
+ protected:
+  /* Modifiers */
+  void AddOperand(Element number) noexcept;
+  void AddOperator(Element operation) noexcept;
+  void Finalize() noexcept;
 
  private:
   /* Fields */
@@ -41,5 +42,4 @@ class PostfixExpr final {
 };
 }  // namespace s21
 
-std::ostream &operator<<(std::ostream &stream, const s21::PostfixExpr &output);
 #endif  // MODEL_POSTFIX_H_

@@ -2,9 +2,11 @@
 
 namespace s21 {
 /* Modifiers */
-void PostfixExpr::AddOperand(Element number) { stack_out_.push_back(number); }
+void PostfixExpr::AddOperand(Element number) noexcept {
+  stack_out_.push_back(number);
+}
 
-void PostfixExpr::AddOperator(Element operation) {
+void PostfixExpr::AddOperator(Element operation) noexcept {
   if (queue_stack_.empty()) {
     queue_stack_.push_back(operation);
   } else {
@@ -35,7 +37,7 @@ void PostfixExpr::AddOperator(Element operation) {
   }
 }
 
-void PostfixExpr::Finalize() {
+void PostfixExpr::Finalize() noexcept {
   while (!queue_stack_.empty()) {
     Pour();
   }
@@ -45,7 +47,9 @@ void PostfixExpr::Finalize() {
 bool PostfixExpr::IsBroken() const noexcept { return is_broken_; }
 
 /* Debug getters */
-std::deque<Element> PostfixExpr::GetStack() const noexcept { return stack_out_; }
+std::deque<Element> PostfixExpr::GetStack() const noexcept {
+  return stack_out_;
+}
 
 std::deque<Element> PostfixExpr::GetQueue() const noexcept {
   return queue_stack_;
@@ -64,16 +68,3 @@ void PostfixExpr::Pour() {
   queue_stack_.pop_back();
 }
 }  // namespace s21
-
-std::ostream &operator<<(std::ostream &os, const s21::PostfixExpr &output) {
-  os << "Ready stack: ";
-  for (const auto &item : output.GetStack()) {
-    os << item << " ";
-  }
-  os << std::endl << "Queue stack: ";
-  for (const auto &item : output.GetQueue()) {
-    os << item << " ";
-  }
-  if (output.IsBroken()) os << std::endl << "Stack is broken!";
-  return os;
-}
