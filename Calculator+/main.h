@@ -3,6 +3,6 @@
 
 #include <iostream>
 
-#include "controller/rpn.h"
+#include "model/model.h"
 
 #endif  // MAIN_H_
