@@ -1,6 +1,8 @@
 #ifndef MODEL_MODEL_H_
 #define MODEL_MODEL_H_
 
+#include <stack>
+
 #include "infix.h"
 #include "postfix.h"
 
@@ -16,10 +18,17 @@ class Model final : public InfixExpr, public PostfixExpr {
   /* Modifiers */
   void Convert();
 
+  /* Calculators */
+  double Evaluate();
+
   /* Debug output */
   void OutputModel();
 
  private:
+  using OpType = s21::Element::OperatorType;
+  Element Calculate(const Element &a, const Element &b, OpType math_operator) const noexcept;
+  /* Overload for unary operators */
+  Element Calculate(const Element &a, OpType math_operator) const noexcept;
 };
 }  // namespace s21
 #endif  // MODEL_MODEL_H_
