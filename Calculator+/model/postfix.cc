@@ -52,7 +52,7 @@ void PostfixExpr::ClearPostfix() noexcept { stack_out_.clear(); }
 bool PostfixExpr::IsBroken() const noexcept { return is_broken_; }
 
 /* Debug getters */
-std::deque<Element> PostfixExpr::GetStack() const noexcept {
+std::deque<Element> PostfixExpr::GetPostfixExpr() const noexcept {
   return stack_out_;
 }
 

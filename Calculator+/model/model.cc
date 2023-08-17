@@ -20,7 +20,7 @@ void Model::OutputModel() {
     std::cout << item << " ";
   }
   std::cout << std::endl << "Polish notation: ";
-  for (const auto &item : GetStack()) {
+  for (const auto &item : GetPostfixExpr()) {
     std::cout << item << " ";
   }
   if (GetQueue().size()) {

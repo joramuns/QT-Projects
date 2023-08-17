@@ -21,7 +21,7 @@ class PostfixExpr {
   bool IsBroken() const noexcept;
 
   /* Debug getters */
-  std::deque<Element> GetStack() const noexcept;
+  std::deque<Element> GetPostfixExpr() const noexcept;
   std::deque<Element> GetQueue() const noexcept;
 
  protected:
