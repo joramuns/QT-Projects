@@ -21,22 +21,26 @@ double Model::Evaluate() {
   for (const auto &item : GetPostfixExpr()) {
     if (item.IsOperator()) {
       OpType math_operator = static_cast<OpType>(item.GetValue());
-      Element a = eval_stack.top();
+      Element b = eval_stack.top();
       eval_stack.pop();
-      if (item.GetPriority() < 2) {
-        Element b = eval_stack.top();
+      int operator_priority = item.GetPriority();
+      if (operator_priority < 2) {
+        Element a = eval_stack.top();
+        eval_stack.pop();
+        result = Calculate(a, b, math_operator);
+      } else if (operator_priority == 3) {
+        Element a = eval_stack.top();
         eval_stack.pop();
         result = Calculate(a, b, math_operator);
       } else {
-        result = Calculate(a, math_operator);
+        result = Calculate(b, math_operator);
       }
-      Element result_elem(result);
-      eval_stack.push(result_elem);
+      eval_stack.push(result);
     } else {
       eval_stack.push(item);
     }
   }
-  return 1.0;
+  return eval_stack.top().GetValue();
 }
 
 /* Debug output */
@@ -70,6 +74,8 @@ Element Model::Calculate(const Element &a, const Element &b,
     result = a * b;
   } else if (math_operator == OpType::kDivision) {
     result = a / b;
+  } else if (math_operator == OpType::kPower) {
+    result = a ^ b;
   }
 
   return result;
@@ -80,6 +86,22 @@ Element Model::Calculate(const Element &a,
   Element result;
   if (math_operator == OpType::kSin) {
     result = a.sin();
+  } else if (math_operator == OpType::kCos) {
+    result = a.cos();
+  } else if (math_operator == OpType::kTan) {
+    result = a.tan();
+  } else if (math_operator == OpType::kAsin) {
+    result = a.asin();
+  } else if (math_operator == OpType::kAcos) {
+    result = a.acos();
+  } else if (math_operator == OpType::kAtan) {
+    result = a.atan();
+  } else if (math_operator == OpType::kSqrt) {
+    result = a.sqrt();
+  } else if (math_operator == OpType::kLn) {
+    result = a.ln();
+  } else if (math_operator == OpType::kLog) {
+    result = a.log();
   }
 
   return result;
