@@ -7,5 +7,10 @@ void InfixExpr::AddElement(const Element &token) noexcept {
 
 void InfixExpr::DelElement() noexcept { data_.pop_back(); }
 
+int InfixExpr::ValidateExpr() const noexcept {
+  int result = 0;
+  return result;
+}
+
 std::deque<Element> InfixExpr::GetInfixData() const noexcept { return data_; }
 }  // namespace s21

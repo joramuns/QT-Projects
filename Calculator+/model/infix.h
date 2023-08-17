@@ -19,6 +19,7 @@ class InfixExpr {
   /* Modifiers */
   void AddElement(const Element &token) noexcept;
   void DelElement() noexcept;
+  int ValidateExpr() const noexcept;
 
   /* Getters */
   std::deque<Element> GetInfixData() const noexcept;
