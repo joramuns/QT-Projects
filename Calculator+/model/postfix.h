@@ -29,6 +29,7 @@ class PostfixExpr {
   void AddOperand(Element number) noexcept;
   void AddOperator(Element operation) noexcept;
   void Finalize() noexcept;
+  void ClearPostfix() noexcept;
 
  private:
   /* Fields */

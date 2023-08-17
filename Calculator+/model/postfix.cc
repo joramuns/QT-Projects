@@ -19,6 +19,9 @@ void PostfixExpr::AddOperator(Element operation) noexcept {
       FinalizeBrackets();
       if (!queue_stack_.empty()) {
         queue_stack_.pop_back();
+        if (!queue_stack_.empty() && queue_stack_.back().GetPriority() == 2) {
+          Pour();
+        }
       }
     } else if (operation_priority > out_priority ||
                (operation_type == s21::Element::kPower &&
@@ -42,6 +45,8 @@ void PostfixExpr::Finalize() noexcept {
     Pour();
   }
 }
+
+void PostfixExpr::ClearPostfix() noexcept { stack_out_.clear(); }
 
 /* Getters */
 bool PostfixExpr::IsBroken() const noexcept { return is_broken_; }
