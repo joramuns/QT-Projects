@@ -58,18 +58,16 @@ Element Element::operator/(const Element &other) const noexcept {
   return Element(GetValue() / other.GetValue());
 }
 
+Element Element::operator^(const Element &other) const noexcept {
+  return Element(std::pow(GetValue(), other.GetValue()));
+}
+
 /* Unary operation methods */
-Element Element::sin() const noexcept {
-  return Element(std::sin(GetValue()));
-}
+Element Element::sin() const noexcept { return Element(std::sin(GetValue())); }
 
-Element Element::cos() const noexcept {
-  return Element(std::cos(GetValue()));
-}
+Element Element::cos() const noexcept { return Element(std::cos(GetValue())); }
 
-Element Element::tan() const noexcept {
-  return Element(std::tan(GetValue()));
-}
+Element Element::tan() const noexcept { return Element(std::tan(GetValue())); }
 
 Element Element::asin() const noexcept {
   return Element(std::asin(GetValue()));
@@ -87,9 +85,7 @@ Element Element::sqrt() const noexcept {
   return Element(std::sqrt(GetValue()));
 }
 
-Element Element::ln() const noexcept {
-  return Element(std::log(GetValue()));
-}
+Element Element::ln() const noexcept { return Element(std::log(GetValue())); }
 
 Element Element::log() const noexcept {
   return Element(std::log10(GetValue()));

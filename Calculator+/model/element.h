@@ -32,6 +32,7 @@ class Element final {
   Element operator%(const Element &other) const noexcept;
   Element operator*(const Element &other) const noexcept;
   Element operator/(const Element &other) const noexcept;
+  Element operator^(const Element &other) const noexcept;
 
   /* Unary operation methods */
   Element sin() const noexcept;
@@ -63,7 +64,7 @@ class Element final {
     kLog,
     kPower = 1000,
     kBracketOpen = 10000,
-    kBracketClose 
+    kBracketClose
   };
 
  private:
