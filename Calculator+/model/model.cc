@@ -2,6 +2,7 @@
 
 namespace s21 {
 void Model::Convert() {
+  ClearPostfix();
   for (const auto &item : GetInfixData()) {
     if (item.IsOperator()) {
       AddOperator(item);
