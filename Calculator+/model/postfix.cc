@@ -32,16 +32,15 @@ void PostfixExpr::AddOperator(Element operation) noexcept {
       queue_stack_.pop_back();
       queue_stack_.push_back(operation);
     } else {
-      if ((int)queue_stack_.back().GetValue() != s21::Element::kBracketOpen) {
-        Finalize();
-      }
+      Finalize();
       queue_stack_.push_back(operation);
     }
   }
 }
 
 void PostfixExpr::Finalize() noexcept {
-  while (!queue_stack_.empty()) {
+  while (!queue_stack_.empty() &&
+         (int)queue_stack_.back().GetValue() != s21::Element::kBracketOpen) {
     Pour();
   }
 }
