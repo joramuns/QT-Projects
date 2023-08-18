@@ -46,7 +46,7 @@ void PostfixExpr::Finalize() noexcept {
   }
 }
 
-void PostfixExpr::ClearPostfix() noexcept { stack_out_.clear(); }
+void PostfixExpr::ClearPostfixExpr() noexcept { stack_out_.clear(); }
 
 /* Getters */
 bool PostfixExpr::IsBroken() const noexcept { return is_broken_; }

@@ -14,6 +14,11 @@ void Model::Convert() {
   Finalize();
 }
 
+void Model::ClearModel() noexcept {
+  ClearInfixExpr();
+  ClearPostfixExpr();
+}
+
 /* Calculators */
 double Model::Evaluate() {
   Element result;
