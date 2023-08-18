@@ -2,8 +2,8 @@
 
 namespace s21 {
 /* Modifiers */
-void Model::Convert() {
-  ClearPostfix();
+void Model::Convert() noexcept {
+  ClearPostfixExpr();
   for (const auto &item : GetInfixData()) {
     if (item.IsOperator()) {
       AddOperator(item);
@@ -20,7 +20,7 @@ void Model::ClearModel() noexcept {
 }
 
 /* Calculators */
-double Model::Evaluate() {
+double Model::Evaluate() noexcept {
   Element result;
   std::stack<Element> eval_stack;
   for (const auto &item : GetPostfixExpr()) {
@@ -49,7 +49,7 @@ double Model::Evaluate() {
 }
 
 /* Debug output */
-void Model::OutputModel() {
+void Model::OutputModel() noexcept {
   std::cout << "Infix notation: ";
   for (const auto &item : GetInfixData()) {
     std::cout << item << " ";

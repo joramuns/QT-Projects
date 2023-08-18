@@ -16,17 +16,19 @@ class Model final : public InfixExpr, public PostfixExpr {
   Model &operator=(Model &&other) = delete;
 
   /* Modifiers */
-  void Convert();
+  void Convert() noexcept;
+  void ClearModel() noexcept;
 
   /* Calculators */
-  double Evaluate();
+  double Evaluate() noexcept;
 
   /* Debug output */
-  void OutputModel();
+  void OutputModel() noexcept;
 
  private:
   using OpType = s21::Element::OperatorType;
-  Element Calculate(const Element &a, const Element &b, OpType math_operator) const noexcept;
+  Element Calculate(const Element &a, const Element &b,
+                    OpType math_operator) const noexcept;
   /* Overload for unary operators */
   Element Calculate(const Element &a, OpType math_operator) const noexcept;
 };
