@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "../model/model.h"
+
+#include <gtest/gtest.h>
 
 class ModelTest : public ::testing::Test {
   using OpType = s21::Element::OperatorType;
@@ -36,12 +36,14 @@ class ModelTest : public ::testing::Test {
   s21::Element e_7{7.0};
   s21::Element e_8{8.0};
   s21::Element e_9{9.0};
+  s21::Element e_9_3{9.3};
+  s21::Element e_56_2{56.2};
 
   s21::Model test_model;
 };
 
+/* 4 + 4 * 2 / ( 1 - 5 ) = 2*/
 TEST_F(ModelTest, n_1) {
-  /* 4 + 4 * 2 / ( 1 - 5 ) = 2*/
   test_model.AddElement(e_4);
   test_model.AddElement(e_plus);
   test_model.AddElement(e_4);
@@ -54,14 +56,14 @@ TEST_F(ModelTest, n_1) {
   test_model.AddElement(e_5);
   test_model.AddElement(e_close_bracket);
 
-  test_model.Convert();
   double result = test_model.Evaluate();
-  ASSERT_DOUBLE_EQ(result, 2.0);
+  double expect = 4.0 + 4.0 * 2.0 / (1.0 - 5.0);
+  ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
 
+/* 4 + 4 * 2 / 1 - 5 = 7 */
 TEST_F(ModelTest, n_2) {
-   /* 4 + 4 * 2 / 1 - 5 = 7 */
   test_model.AddElement(e_4);
   test_model.AddElement(e_plus);
   test_model.AddElement(e_4);
@@ -72,14 +74,14 @@ TEST_F(ModelTest, n_2) {
   test_model.AddElement(e_minus);
   test_model.AddElement(e_5);
 
-  test_model.Convert();
   double result = test_model.Evaluate();
-  ASSERT_DOUBLE_EQ(result, 7.0);
+  double expect = 4.0 + 4.0 * 2.0 / 1.0 - 5.0;
+  ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
 
+/* 4 + 4 * ( 2 / 1 - 5 ) = -8 */
 TEST_F(ModelTest, n_3) {
-  /* 4 + 4 * ( 2 / 1 - 5 ) = -8 */
   test_model.AddElement(e_4);
   test_model.AddElement(e_plus);
   test_model.AddElement(e_4);
@@ -92,12 +94,211 @@ TEST_F(ModelTest, n_3) {
   test_model.AddElement(e_5);
   test_model.AddElement(e_close_bracket);
 
-  test_model.Convert();
   double result = test_model.Evaluate();
-  ASSERT_DOUBLE_EQ(result, -8.0);
+  double expect = 4.0 + 4.0 * (2.0 / 1.0 - 5.0);
+  ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
 
+/* 4 + ( 4 * 2 / 1 - 5 ) = 7 */
+TEST_F(ModelTest, n_4) {
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_5);
+  test_model.AddElement(e_close_bracket);
+
+  double result = test_model.Evaluate();
+  double expect = 4.0 + (4.0 * 2.0 / 1.0 - 5.0);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 4 + 4 * ( 2 /  1 ) - 5 = 7 */
+TEST_F(ModelTest, n_5) {
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_5);
+
+  double result = test_model.Evaluate();
+  double expect = 4.0 + 4.0 * (2.0 / 1.0) - 5.0;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 4 + ( 4 * 2 / 1 ) - 5 = 7 */
+TEST_F(ModelTest, n_6) {
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_5);
+
+  double result = test_model.Evaluate();
+  double expect = 4.0 + (4.0 * 2.0 / 1.0) - 5.0;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* ( 4 + 4 * 2 / 1 ) - 5 = 7 */
+TEST_F(ModelTest, n_7) {
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_5);
+
+  double result = test_model.Evaluate();
+  double expect = (4.0 + 4.0 * 2.0 / 1.0) - 5.0;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 4 + ( 4 * 2 ) / 1 - 5 = 7 */
+TEST_F(ModelTest, n_8) {
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_5);
+
+  double result = test_model.Evaluate();
+  double expect = 4.0 + (4.0 * 2.0) / 1.0 - 5.0;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* ( 4 + 4 * 2 ) / 1 - 5 = 7 */
+TEST_F(ModelTest, n_9) {
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_5);
+
+  double result = test_model.Evaluate();
+  double expect = (4.0 + 4.0 * 2.0) / 1.0 - 5.0;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 8 * (7 + 6 * 4) + 3 = 251 */
+TEST_F(ModelTest, n_10) {
+  test_model.AddElement(e_8);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_7);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_6);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_3);
+
+  double result = test_model.Evaluate();
+  double expect = 8.0 * (7.0 + 6.0 * 4.0) + 3.0;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 2 / (3 + 2) * 5 = 2 */
+TEST_F(ModelTest, n_11) {
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_3);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_5);
+
+  double result = test_model.Evaluate();
+  double expect = 2.0 / (3.0 + 2.0) * 5.0 ;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 2+9.3-8^3/4+56.2 = -60.5 */
+TEST_F(ModelTest, n_12) {
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_9_3);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_8);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_3);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_56_2);
+
+  double result = test_model.Evaluate();
+  double expect = 2.0 + 9.3 - pow(8.0, 3.0) / 4.0 + 56.2;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 2+9.3-8^3/(4+56.2) = 2.795017 */
+TEST_F(ModelTest, n_13) {
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_9_3);
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_8);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_3);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_56_2);
+  test_model.AddElement(e_close_bracket);
+
+  double result = test_model.Evaluate();
+  double expect = 2.0 + 9.3 - pow(8.0, 3.0) / (4.0 + 56.2);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
 /*   double num1 = 1; */
 /*   double num2 = 2; */
 /*   double num3 = 3; */
