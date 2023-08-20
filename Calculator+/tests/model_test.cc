@@ -429,6 +429,68 @@ TEST_F(ModelTest, n_20) {
   ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
+
+/* sqrt(cos(sin(2+9*6^1.2-tan(1)))) */
+TEST_F(ModelTest, n_21) {
+  test_model.AddElement(e_sqrt);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_cos);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_sin);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_9);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_6);
+  test_model.AddElement(e_power);
+  test_model.AddElement(s21::Element{1.2});
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_tan);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+
+  double result = test_model.Evaluate();
+  double expect = sqrt(cos(sin(2.0 + 9.0 * pow(6.0, 1.2) - tan(1.0))));
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* sqrt(cos(sin(2+9*6^1.2-tan(1))))mod0.1 */
+TEST_F(ModelTest, n_22) {
+  test_model.AddElement(e_sqrt);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_cos);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_sin);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_9);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_6);
+  test_model.AddElement(e_power);
+  test_model.AddElement(s21::Element{1.2});
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_tan);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_mod);
+  test_model.AddElement(s21::Element{0.1});
+
+  double result = test_model.Evaluate();
+  double expect = fmod(sqrt(cos(sin(2.0 + 9.0 * pow(6.0, 1.2) - tan(1.0)))), 0.1);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
 /*   double num1 = 1; */
 /*   double num2 = 2; */
 /*   double num3 = 3; */
