@@ -30,11 +30,7 @@ double Model::Evaluate() noexcept {
       Element b = eval_stack.top();
       eval_stack.pop();
       int operator_priority = item.GetPriority();
-      if (operator_priority < 2) {
-        Element a = eval_stack.top();
-        eval_stack.pop();
-        result = Calculate(a, b, math_operator);
-      } else if (operator_priority == 2) {
+      if (operator_priority <= 1) {
         Element a = eval_stack.top();
         eval_stack.pop();
         result = Calculate(a, b, math_operator);

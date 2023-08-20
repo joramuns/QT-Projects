@@ -18,29 +18,27 @@ class PostfixExpr {
   virtual ~PostfixExpr() = default;
 
   /* Getters */
-  bool IsBroken() const noexcept;
+
+ protected:
+  using OpType = s21::Element::OperatorType;
+  /* Modifiers */
+  void AddOperand(const Element &number) noexcept;
+  void AddOperator(const Element &operation) noexcept;
+  void ClearPostfixExpr() noexcept;
+  void PourAll() noexcept;
 
   /* Debug getters */
   std::deque<Element> GetPostfixExpr() const noexcept;
   std::deque<Element> GetQueue() const noexcept;
 
- protected:
-  using OpType = s21::Element::OperatorType;
-  /* Modifiers */
-  void AddOperand(Element number) noexcept;
-  void AddOperator(Element operation) noexcept;
-  void ClearPostfixExpr() noexcept;
-  void PourAll() noexcept;
-
  private:
   /* Fields */
   std::deque<Element> stack_out_;
   std::deque<Element> queue_stack_;
-  bool is_broken_ = false;
 
  private:
   void Pour() noexcept;
-  bool IsPower() const noexcept;
+  bool TopOpenBracket() const noexcept;
 };
 }  // namespace s21
 

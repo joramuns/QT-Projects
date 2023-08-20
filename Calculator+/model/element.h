@@ -53,7 +53,7 @@ class Element final {
     kModulus,
     kMultiplication = 10,
     kDivision,
-    kPower = 100,
+    kPower,
     kSin = 1000,
     kCos,
     kTan,

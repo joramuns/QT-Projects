@@ -12,9 +12,7 @@ int InfixExpr::ValidateExpr() const noexcept {
   return result;
 }
 
-void InfixExpr::ClearInfixExpr() noexcept {
-  data_.clear();
-}
+void InfixExpr::ClearInfixExpr() noexcept { data_.clear(); }
 
 std::deque<Element> InfixExpr::GetInfixData() const noexcept { return data_; }
 }  // namespace s21
