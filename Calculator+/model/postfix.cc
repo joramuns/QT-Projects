@@ -16,8 +16,8 @@ void PostfixExpr::AddOperator(Element operation) noexcept {
     /* Handle open bracket - push to queue */
     if (operation_type == s21::Element::kBracketOpen) {
       queue_stack_.push_back(operation);
-      /* Handle close bracket - pop out from queue until open bracket, then
-       * discard brackets */
+      /* Handle close bracket - pop everything out from queue until open
+       * bracket, then discard brackets */
     } else if (operation_type == s21::Element::kBracketClose) {
       FinalizeBrackets();
       if (!queue_stack_.empty()) {
@@ -33,7 +33,7 @@ void PostfixExpr::AddOperator(Element operation) noexcept {
                (operation_priority == out_priority && out_priority == 3)) {
       queue_stack_.push_back(operation);
       /* In case of equality of current and last queue operators - pop from
-       * queue and push last to output, push current to queue */
+       * queue and push it to output, push current to queue */
     } else if (operation_priority == out_priority) {
       stack_out_.push_back(queue_stack_.back());
       queue_stack_.pop_back();
