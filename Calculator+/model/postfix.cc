@@ -23,22 +23,24 @@ void PostfixExpr::AddOperator(Element operation) noexcept {
           Pour();
         }
       }
-    } else if (operation_priority > out_priority ||
-               (operation_type == s21::Element::kPower &&
-                operation_priority == out_priority)) {
+    } else if (operation_priority > out_priority) {
       queue_stack_.push_back(operation);
     } else if (operation_priority == out_priority) {
       stack_out_.push_back(queue_stack_.back());
       queue_stack_.pop_back();
       queue_stack_.push_back(operation);
     } else {
-      Finalize();
+      if (!queue_stack_.empty() && queue_stack_.back().GetPriority() == 3) {
+        Pour();
+      } else {
+        PourAll();
+      }
       queue_stack_.push_back(operation);
     }
   }
 }
 
-void PostfixExpr::Finalize() noexcept {
+void PostfixExpr::PourAll() noexcept {
   while (!queue_stack_.empty() &&
          (int)queue_stack_.back().GetValue() != s21::Element::kBracketOpen) {
     Pour();
