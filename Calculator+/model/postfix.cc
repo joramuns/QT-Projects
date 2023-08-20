@@ -9,27 +9,25 @@ void PostfixExpr::AddOperand(const Element &number) noexcept {
 }
 
 void PostfixExpr::AddOperator(const Element &operation) noexcept {
+  int operation_type = (int)operation.GetValue();
   if (queue_stack_.empty()) {
     queue_stack_.push_back(operation);
-  } else {
-    int operation_priority = operation.GetPriority();
-    int operation_type = (int)operation.GetValue();
-    int queue_priority = queue_stack_.back().GetPriority();
-    if (operation_type == OpType::kBracketClose) {
-      PourAll();
-      queue_stack_.pop_back();
-      if (!queue_stack_.empty() && queue_stack_.back().GetPriority() == 3) {
-        Pour();
-      }
-    } else {
-      if (operation_priority == queue_priority &&
-          operation_type != OpType::kPower) {
-        Pour();
-      } else if (operation_priority < queue_priority) {
-        PourAll();
-      }
-      queue_stack_.push_back(operation);
+  } else if (operation_type == OpType::kBracketClose) {
+    PourAll();
+    queue_stack_.pop_back();
+    if (!queue_stack_.empty() && queue_stack_.back().GetPriority() == 3) {
+      Pour();
     }
+  } else {
+    int queue_priority = queue_stack_.back().GetPriority();
+    int operation_priority = operation.GetPriority();
+    if (operation_priority == queue_priority &&
+        operation_type != OpType::kPower) {
+      Pour();
+    } else if (operation_priority < queue_priority) {
+      PourAll();
+    }
+    queue_stack_.push_back(operation);
   }
 }
 
