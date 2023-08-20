@@ -38,6 +38,7 @@ class ModelTest : public ::testing::Test {
   s21::Element e_9{9.0};
   s21::Element e_9_3{9.3};
   s21::Element e_56_2{56.2};
+  s21::Element e_431_2{431.2};
 
   s21::Model test_model;
 };
@@ -253,7 +254,7 @@ TEST_F(ModelTest, n_11) {
   test_model.AddElement(e_5);
 
   double result = test_model.Evaluate();
-  double expect = 2.0 / (3.0 + 2.0) * 5.0 ;
+  double expect = 2.0 / (3.0 + 2.0) * 5.0;
   ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
@@ -296,6 +297,135 @@ TEST_F(ModelTest, n_13) {
 
   double result = test_model.Evaluate();
   double expect = 2.0 + 9.3 - pow(8.0, 3.0) / (4.0 + 56.2);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 2^3^2 = 512 */
+TEST_F(ModelTest, n_14) {
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_3);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_2);
+
+  double result = test_model.Evaluate();
+  double expect = pow(2.0, pow(3.0, 2.0));
+  ASSERT_DOUBLE_EQ(result, expect);
+  ASSERT_DOUBLE_EQ(result, 512.0);
+  test_model.ClearModel();
+}
+
+/* 2^(3^2) = 512 */
+TEST_F(ModelTest, n_15) {
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_3);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_close_bracket);
+
+  double result = test_model.Evaluate();
+  double expect = pow(2.0, pow(3.0, 2.0));
+  ASSERT_DOUBLE_EQ(result, expect);
+  ASSERT_DOUBLE_EQ(result, 512.0);
+  test_model.ClearModel();
+}
+
+/* (2^3)^2 = 64 */
+TEST_F(ModelTest, n_16) {
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_3);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_2);
+
+  double result = test_model.Evaluate();
+  double expect = pow(pow(2.0, 3.0), 2.0);
+  ASSERT_DOUBLE_EQ(result, expect);
+  ASSERT_DOUBLE_EQ(result, 64.0);
+  test_model.ClearModel();
+}
+
+/* cos(431.2*2^2/8) = -0.390250 */
+TEST_F(ModelTest, n_17) {
+  test_model.AddElement(e_cos);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_431_2);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_8);
+  test_model.AddElement(e_close_bracket);
+
+  double result = test_model.Evaluate();
+  double expect = cos(431.2 * pow(2.0, 2.0) / 8.0);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 3*sin(4+5) = 1.236355 */
+TEST_F(ModelTest, n_18) {
+  test_model.AddElement(e_3);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_sin);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_4);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_5);
+  test_model.AddElement(e_close_bracket);
+
+  double result = test_model.Evaluate();
+  double expect = 3.0 * sin(4.0 + 5.0);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 431.2*2^2/8 = 215.6 */
+TEST_F(ModelTest, n_19) {
+  test_model.AddElement(e_431_2);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_power);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_divide);
+  test_model.AddElement(e_8);
+
+  double result = test_model.Evaluate();
+  double expect = 431.2 * pow(2.0, 2.0) / 8.0;
+  ASSERT_DOUBLE_EQ(result, expect);
+  ASSERT_DOUBLE_EQ(result, 215.6);
+  test_model.ClearModel();
+}
+
+/* cos(sin(2+9*6^1.2-tan(1))) = 0.742186 */
+TEST_F(ModelTest, n_20) {
+  test_model.AddElement(e_cos);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_sin);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_2);
+  test_model.AddElement(e_plus);
+  test_model.AddElement(e_9);
+  test_model.AddElement(e_multiply);
+  test_model.AddElement(e_6);
+  test_model.AddElement(e_power);
+  test_model.AddElement(s21::Element{1.2});
+  test_model.AddElement(e_minus);
+  test_model.AddElement(e_tan);
+  test_model.AddElement(e_open_bracket);
+  test_model.AddElement(e_1);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+  test_model.AddElement(e_close_bracket);
+
+  double result = test_model.Evaluate();
+  double expect = cos(sin(2.0 + 9.0 * pow(6.0, 1.2) - tan(1.0)));
   ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
