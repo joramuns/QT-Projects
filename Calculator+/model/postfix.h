@@ -25,11 +25,12 @@ class PostfixExpr {
   std::deque<Element> GetQueue() const noexcept;
 
  protected:
+  using OpType = s21::Element::OperatorType;
   /* Modifiers */
   void AddOperand(Element number) noexcept;
   void AddOperator(Element operation) noexcept;
-  void PourAll() noexcept;
   void ClearPostfixExpr() noexcept;
+  void PourAll() noexcept;
 
  private:
   /* Fields */
@@ -38,8 +39,8 @@ class PostfixExpr {
   bool is_broken_ = false;
 
  private:
-  void FinalizeBrackets();
-  void Pour();
+  void Pour() noexcept;
+  bool IsPower() const noexcept;
 };
 }  // namespace s21
 
