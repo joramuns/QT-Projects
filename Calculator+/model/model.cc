@@ -11,7 +11,7 @@ void Model::Convert() noexcept {
       AddOperand(item);
     }
   }
-  Finalize();
+  PourAll();
 }
 
 void Model::ClearModel() noexcept {
@@ -21,6 +21,7 @@ void Model::ClearModel() noexcept {
 
 /* Calculators */
 double Model::Evaluate() noexcept {
+  Convert();
   Element result;
   std::stack<Element> eval_stack;
   for (const auto &item : GetPostfixExpr()) {

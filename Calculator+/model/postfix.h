@@ -28,7 +28,7 @@ class PostfixExpr {
   /* Modifiers */
   void AddOperand(Element number) noexcept;
   void AddOperator(Element operation) noexcept;
-  void Finalize() noexcept;
+  void PourAll() noexcept;
   void ClearPostfixExpr() noexcept;
 
  private:
