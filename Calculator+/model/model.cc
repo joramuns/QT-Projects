@@ -34,7 +34,7 @@ double Model::Evaluate() noexcept {
         Element a = eval_stack.top();
         eval_stack.pop();
         result = Calculate(a, b, math_operator);
-      } else if (operator_priority == 3) {
+      } else if (operator_priority == 2) {
         Element a = eval_stack.top();
         eval_stack.pop();
         result = Calculate(a, b, math_operator);

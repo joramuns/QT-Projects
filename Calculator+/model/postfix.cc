@@ -12,53 +12,50 @@ void PostfixExpr::AddOperator(Element operation) noexcept {
   } else {
     int operation_priority = operation.GetPriority();
     int operation_type = (int)operation.GetValue();
-    int out_priority = queue_stack_.back().GetPriority();
+    int queue_priority = queue_stack_.back().GetPriority();
+    int queue_type = (int)queue_stack_.back().GetValue();
     /* Handle open bracket - push to queue */
-    if (operation_type == s21::Element::kBracketOpen) {
+    if (operation_type == OpType::kBracketOpen) {
       queue_stack_.push_back(operation);
       /* Handle close bracket - pop everything out from queue until open
        * bracket, then discard brackets */
-    } else if (operation_type == s21::Element::kBracketClose) {
-      FinalizeBrackets();
-      if (!queue_stack_.empty()) {
-        queue_stack_.pop_back();
-        /* Pour unary operation */
-        if (!queue_stack_.empty() && out_priority == 2) {
-          Pour();
-        }
+    } else if (operation_type == OpType::kBracketClose) {
+      PourAll();
+      queue_stack_.pop_back();
+      /* Pour unary operation */
+      if (queue_priority == 3) {
+        Pour();
       }
       /* Handle greater priority operator - push it, or if there is a power
-       * operator in queue and current operator is power - do the same */
-    } else if (operation_priority > out_priority ||
-               (operation_priority == out_priority && out_priority == 3)) {
+       * operator in queue and current operator is power - do the same due to
+       * right associativity */
+    } else if (operation_priority > queue_priority ||
+               (operation_priority == queue_priority && queue_type == OpType::kPower)) {
       queue_stack_.push_back(operation);
-      /* In case of equality of current and last queue operators - pop from
-       * queue and push it to output, push current to queue */
-    } else if (operation_priority == out_priority) {
-      stack_out_.push_back(queue_stack_.back());
-      queue_stack_.pop_back();
+      /* In case of equality of current and last queue operators or there is a
+       * power operator on top and current is multiply or division (priority 1)
+       * - pop from queue and push it to output, push current to queue. */
+    } else if (operation_priority == queue_priority ||
+               (operation_priority == 1 && queue_type == OpType::kPower)) {
+      Pour();
       queue_stack_.push_back(operation);
-      /* Case when current operator priority is lesser than operator in queue.
-       * If there is power operation in queue - pop it, otherwise - pop all */
+      /* Case when current operator priority is lesser than operator in queue -
+       * pour all from queue. */
     } else {
-      if (!queue_stack_.empty() && out_priority == 3) {
-        Pour();
-      } else {
-        PourAll();
-      }
+      PourAll();
       queue_stack_.push_back(operation);
     }
   }
 }
 
+void PostfixExpr::ClearPostfixExpr() noexcept { stack_out_.clear(); }
+
 void PostfixExpr::PourAll() noexcept {
   while (!queue_stack_.empty() &&
-         (int)queue_stack_.back().GetValue() != s21::Element::kBracketOpen) {
+         (int)queue_stack_.back().GetValue() != OpType::kBracketOpen) {
     Pour();
   }
 }
-
-void PostfixExpr::ClearPostfixExpr() noexcept { stack_out_.clear(); }
 
 /* Getters */
 bool PostfixExpr::IsBroken() const noexcept { return is_broken_; }
@@ -73,15 +70,12 @@ std::deque<Element> PostfixExpr::GetQueue() const noexcept {
 }
 
 /* Private functions */
-void PostfixExpr::FinalizeBrackets() {
-  while (!queue_stack_.empty() &&
-         queue_stack_.back().GetValue() != s21::Element::kBracketOpen) {
-    Pour();
-  }
-}
-
-void PostfixExpr::Pour() {
+void PostfixExpr::Pour() noexcept {
   stack_out_.push_back(queue_stack_.back());
   queue_stack_.pop_back();
+}
+
+bool PostfixExpr::IsPower() const noexcept {
+  return (int)queue_stack_.back().GetValue() == OpType::kPower;
 }
 }  // namespace s21

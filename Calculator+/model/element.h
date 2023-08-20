@@ -53,7 +53,8 @@ class Element final {
     kModulus,
     kMultiplication = 10,
     kDivision,
-    kSin = 100,
+    kPower = 100,
+    kSin = 1000,
     kCos,
     kTan,
     kAsin,
@@ -62,7 +63,6 @@ class Element final {
     kSqrt,
     kLn,
     kLog,
-    kPower = 1000,
     kBracketOpen = 10000,
     kBracketClose
   };

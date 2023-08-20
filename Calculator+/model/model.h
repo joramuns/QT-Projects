@@ -26,7 +26,6 @@ class Model final : public InfixExpr, public PostfixExpr {
   void OutputModel() noexcept;
 
  private:
-  using OpType = s21::Element::OperatorType;
   Element Calculate(const Element &a, const Element &b,
                     OpType math_operator) const noexcept;
   /* Overload for unary operators */
