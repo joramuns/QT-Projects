@@ -11,7 +11,7 @@ void Model::Convert() noexcept {
       AddOperand(item);
     }
   }
-  PourAll();
+  PopAndPushAll();
 }
 
 void Model::ClearModel() noexcept {

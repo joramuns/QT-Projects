@@ -13,19 +13,19 @@ void PostfixExpr::AddOperator(const Element &operation) noexcept {
   if (queue_stack_.empty()) {
     queue_stack_.push_back(operation);
   } else if (operation_type == OpType::kBracketClose) {
-    PourAll();
+    PopAndPushAll();
     queue_stack_.pop_back();
     if (!queue_stack_.empty() && queue_stack_.back().GetPriority() == 3) {
-      Pour();
+      PopAndPush();
     }
   } else {
     int queue_priority = queue_stack_.back().GetPriority();
     int operation_priority = operation.GetPriority();
     if (operation_priority == queue_priority &&
         operation_type != OpType::kPower) {
-      Pour();
+      PopAndPush();
     } else if (operation_priority < queue_priority) {
-      PourAll();
+      PopAndPushAll();
     }
     queue_stack_.push_back(operation);
   }
@@ -33,9 +33,9 @@ void PostfixExpr::AddOperator(const Element &operation) noexcept {
 
 void PostfixExpr::ClearPostfixExpr() noexcept { stack_out_.clear(); }
 
-void PostfixExpr::PourAll() noexcept {
+void PostfixExpr::PopAndPushAll() noexcept {
   while (!queue_stack_.empty() && !TopOpenBracket()) {
-    Pour();
+    PopAndPush();
   }
 }
 
@@ -49,7 +49,7 @@ std::deque<Element> PostfixExpr::GetQueue() const noexcept {
 }
 
 /* Private functions */
-void PostfixExpr::Pour() noexcept {
+void PostfixExpr::PopAndPush() noexcept {
   stack_out_.push_back(queue_stack_.back());
   queue_stack_.pop_back();
 }

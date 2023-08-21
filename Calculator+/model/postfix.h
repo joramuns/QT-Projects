@@ -25,7 +25,7 @@ class PostfixExpr {
   void AddOperand(const Element &number) noexcept;
   void AddOperator(const Element &operation) noexcept;
   void ClearPostfixExpr() noexcept;
-  void PourAll() noexcept;
+  void PopAndPushAll() noexcept;
 
   /* Debug getters */
   std::deque<Element> GetPostfixExpr() const noexcept;
@@ -37,7 +37,7 @@ class PostfixExpr {
   std::deque<Element> queue_stack_;
 
  private:
-  void Pour() noexcept;
+  void PopAndPush() noexcept;
   bool TopOpenBracket() const noexcept;
 };
 }  // namespace s21
