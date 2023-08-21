@@ -50,9 +50,9 @@ class Element final {
   enum OperatorType {
     kAddition = 1,
     kSubtraction,
-    kModulus,
     kMultiplication = 10,
     kDivision,
+    kModulus,
     kPower,
     kSin = 1000,
     kCos,
