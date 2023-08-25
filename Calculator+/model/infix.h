@@ -17,11 +17,12 @@ class InfixExpr {
   virtual ~InfixExpr() = default;
 
   /* Modifiers */
+  void AddElement(const char number) noexcept;
   void AddElement(const Element &token) noexcept;
   void DelElement() noexcept;
   int ValidateExpr() const noexcept;
   void ClearInfixExpr() noexcept;
-  void AppendNumber(const double number) noexcept;
+  void AppendNumber(const char number) noexcept;
 
   /* Getters */
   std::deque<Element> GetInfixData() const noexcept;

@@ -1,6 +1,15 @@
 #include "infix.h"
 
 namespace s21 {
+void InfixExpr::AddElement(const char number) noexcept {
+  if (LastIsOperator()) {
+    s21::Element e_number{number};
+    AddElement(e_number);
+  } else {
+    AppendNumber(number);
+  }
+}
+
 void InfixExpr::AddElement(const Element &token) noexcept {
   infix_data_.push_back(token);
 };
@@ -14,9 +23,13 @@ int InfixExpr::ValidateExpr() const noexcept {
 
 void InfixExpr::ClearInfixExpr() noexcept { infix_data_.clear(); }
 
-void InfixExpr::AppendNumber(const double number) noexcept { infix_data_.back().AppendNumber(number); }
+void InfixExpr::AppendNumber(const char number) noexcept {
+  infix_data_.back().AppendNumber(number);
+}
 
-std::deque<Element> InfixExpr::GetInfixData() const noexcept { return infix_data_; }
+std::deque<Element> InfixExpr::GetInfixData() const noexcept {
+  return infix_data_;
+}
 
 std::string InfixExpr::GetInfixString() const noexcept {
   std::string result{};
