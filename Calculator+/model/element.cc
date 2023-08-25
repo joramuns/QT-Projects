@@ -62,6 +62,56 @@ Element Element::operator^(const Element &other) const noexcept {
   return Element(std::pow(GetValue(), other.GetValue()));
 }
 
+std::string Element::operator*() const noexcept {
+  double value = GetValue();
+  std::string result{};
+  if (IsOperator()) {
+    if (value == s21::Element::kAddition) {
+      result = "+";
+    } else if (value == s21::Element::kSubtraction) {
+      result = "-";
+    } else if (value == s21::Element::kModulus) {
+      result = "mod";
+    } else if (value == s21::Element::kMultiplication) {
+      result = "*";
+    } else if (value == s21::Element::kDivision) {
+      result = "/";
+    } else if (value == s21::Element::kSin) {
+      result = "sin";
+    } else if (value == s21::Element::kCos) {
+      result = "cos";
+    } else if (value == s21::Element::kTan) {
+      result = "tan";
+    } else if (value == s21::Element::kAsin) {
+      result = "asin";
+    } else if (value == s21::Element::kAcos) {
+      result = "acos";
+    } else if (value == s21::Element::kAtan) {
+      result = "atan";
+    } else if (value == s21::Element::kSqrt) {
+      result = "sqrt";
+    } else if (value == s21::Element::kLn) {
+      result = "ln";
+    } else if (value == s21::Element::kLog) {
+      result = "log";
+    } else if (value == s21::Element::kPower) {
+      result = "^";
+    } else if (value == s21::Element::kBracketOpen) {
+      result = "(";
+    } else if (value == s21::Element::kBracketClose) {
+      result = ")";
+    }
+  } else {
+    /* std::setlocale(LC_ALL, "C"); */
+    std::ostringstream num_to_string;
+    /* num_to_string << std::fixed; */
+    num_to_string << value;
+    result = num_to_string.str();
+  }
+
+  return result;
+}
+
 /* Unary operation methods */
 Element Element::sin() const noexcept { return Element(std::sin(GetValue())); }
 
@@ -94,46 +144,5 @@ Element Element::log() const noexcept {
 }  // namespace s21
 
 std::ostream &operator<<(std::ostream &os, const s21::Element &output) {
-  double value = output.GetValue();
-  if (output.IsOperator()) {
-    if (value == s21::Element::kAddition) {
-      os << "+";
-    } else if (value == s21::Element::kSubtraction) {
-      os << "-";
-    } else if (value == s21::Element::kModulus) {
-      os << "mod";
-    } else if (value == s21::Element::kMultiplication) {
-      os << "*";
-    } else if (value == s21::Element::kDivision) {
-      os << "/";
-    } else if (value == s21::Element::kSin) {
-      os << "sin";
-    } else if (value == s21::Element::kCos) {
-      os << "cos";
-    } else if (value == s21::Element::kTan) {
-      os << "tan";
-    } else if (value == s21::Element::kAsin) {
-      os << "asin";
-    } else if (value == s21::Element::kAcos) {
-      os << "acos";
-    } else if (value == s21::Element::kAtan) {
-      os << "atan";
-    } else if (value == s21::Element::kSqrt) {
-      os << "sqrt";
-    } else if (value == s21::Element::kLn) {
-      os << "ln";
-    } else if (value == s21::Element::kLog) {
-      os << "log";
-    } else if (value == s21::Element::kPower) {
-      os << "^";
-    } else if (value == s21::Element::kBracketOpen) {
-      os << "(";
-    } else if (value == s21::Element::kBracketClose) {
-      os << ")";
-    }
-  } else {
-    os << value;
-  }
-
-  return os;
+  return os << *output;
 }

@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <sstream>
 
 namespace s21 {
 class Element final {
@@ -33,6 +34,7 @@ class Element final {
   Element operator*(const Element &other) const noexcept;
   Element operator/(const Element &other) const noexcept;
   Element operator^(const Element &other) const noexcept;
+  std::string operator*() const noexcept;
 
   /* Unary operation methods */
   Element sin() const noexcept;
