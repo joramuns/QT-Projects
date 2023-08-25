@@ -12,6 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 qt_add_executable(Calculator
   main.cc
   view/calcwindow.cc
+  view/operatorbutton.cc
   controller/controller.cc
   model/model.cc
   model/element.cc
