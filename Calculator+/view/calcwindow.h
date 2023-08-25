@@ -4,25 +4,28 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QPushButton>
-#include "../controller/controller.h"
+
+#include "../model/model.h"
 
 namespace s21 {
 class CalcWindow : public QMainWindow {
   Q_OBJECT
 
  public:
-  explicit CalcWindow(QWidget *parent = nullptr);
+  explicit CalcWindow(Model *cmodel);
   ~CalcWindow();
+
  private slots:
   void HandleNumButton(int a);
   void ClearSlot();
 
- private:
+ public:
   std::array<QPushButton *, 10> num_buttons_;
   std::array<QPushButton *, 5> operator_buttons_;
   QPushButton *clear_;
   QLabel *display_;
-  Controller controller_;
+  /* MVC */
+  s21::Model *model_;
 };
 }  // namespace s21
 #endif  // MAINWINDOW_H

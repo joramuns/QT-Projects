@@ -1,7 +1,8 @@
 #include "calcwindow.h"
 
 namespace s21 {
-CalcWindow::CalcWindow(QWidget *parent) : QMainWindow(parent) {
+CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
+  resize(500, 320);
   int button_size = 50;
   QSize q_button_size{button_size, button_size};
   QPoint button_pos{0, 0};
@@ -12,7 +13,6 @@ CalcWindow::CalcWindow(QWidget *parent) : QMainWindow(parent) {
   /* Top level buttons */
   clear_ = new QPushButton("\u232B", this);
   clear_->setGeometry(QRect(button_pos, q_button_size));
-  connect(clear_, &QPushButton::released, &controller_, &Controller::ClearSlot2);
 
   /* Num Buttons */
   for (int i = 9; i >= 0; --i) {
@@ -22,8 +22,8 @@ CalcWindow::CalcWindow(QWidget *parent) : QMainWindow(parent) {
     QPushButton *new_button =
         new QPushButton(QString::number(i < 9 ? (i + 1) : 0), this);
     new_button->setGeometry(QRect(button_pos, q_button_size));
-    connect(new_button, &QPushButton::released, this,
-            [=]() { HandleNumButton(i); });
+    /* connect(new_button, &QPushButton::released, &controller_, */
+    /*         [=]() { controller_.NumButton(i); }); */
     num_buttons_[i] = new_button;
   }
 
@@ -67,4 +67,5 @@ void CalcWindow::HandleNumButton(int a) {
 }
 
 void CalcWindow::ClearSlot() { display_->setText(""); }
+
 }  // namespace s21
