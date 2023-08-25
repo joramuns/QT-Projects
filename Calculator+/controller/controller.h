@@ -20,7 +20,9 @@ class Controller : public QObject {
   Controller &operator=(Controller &&other) = delete;
 
  public slots:
-  void NumButton(const double i);
+  void ClearButton() noexcept;
+  void NumButton() noexcept;
+  void OperButton() noexcept;
 
  private:
   void Render() const noexcept;
