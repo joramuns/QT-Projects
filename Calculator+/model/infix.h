@@ -21,12 +21,15 @@ class InfixExpr {
   void DelElement() noexcept;
   int ValidateExpr() const noexcept;
   void ClearInfixExpr() noexcept;
+  void AppendNumber(const double number) noexcept;
 
   /* Getters */
   std::deque<Element> GetInfixData() const noexcept;
+  std::string GetInfixString() const noexcept;
+  bool LastIsOperator() const noexcept;
 
  private:
-  std::deque<Element> data_;
+  std::deque<Element> infix_data_;
 };
 }  // namespace s21
 

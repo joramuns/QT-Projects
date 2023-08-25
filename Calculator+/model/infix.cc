@@ -14,6 +14,20 @@ int InfixExpr::ValidateExpr() const noexcept {
 
 void InfixExpr::ClearInfixExpr() noexcept { infix_data_.clear(); }
 
+void InfixExpr::AppendNumber(const double number) noexcept { infix_data_.back().AppendNumber(number); }
 
 std::deque<Element> InfixExpr::GetInfixData() const noexcept { return infix_data_; }
+
+std::string InfixExpr::GetInfixString() const noexcept {
+  std::string result{};
+  for (const auto &item : infix_data_) {
+    result += *item + " ";
+  }
+  return result;
+}
+
+bool InfixExpr::LastIsOperator() const noexcept {
+  /* return true; */
+  return infix_data_.empty() ? true : infix_data_.back().IsOperator();
+}
 }  // namespace s21
