@@ -2,17 +2,18 @@
 
 namespace s21 {
 void InfixExpr::AddElement(const Element &token) noexcept {
-  data_.push_back(token);
+  infix_data_.push_back(token);
 };
 
-void InfixExpr::DelElement() noexcept { data_.pop_back(); }
+void InfixExpr::DelElement() noexcept { infix_data_.pop_back(); }
 
 int InfixExpr::ValidateExpr() const noexcept {
   int result = 0;
   return result;
 }
 
-void InfixExpr::ClearInfixExpr() noexcept { data_.clear(); }
+void InfixExpr::ClearInfixExpr() noexcept { infix_data_.clear(); }
 
-std::deque<Element> InfixExpr::GetInfixData() const noexcept { return data_; }
+
+std::deque<Element> InfixExpr::GetInfixData() const noexcept { return infix_data_; }
 }  // namespace s21

@@ -108,4 +108,5 @@ Element Model::Calculate(const Element &a,
 
   return result;
 }
+
 }  // namespace s21

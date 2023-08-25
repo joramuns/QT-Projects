@@ -9,8 +9,8 @@ class Element final {
  public:
   /* RFive */
   Element() = default;
-  explicit Element(int input) noexcept;
-  explicit Element(double input) noexcept;
+  explicit Element(const int input) noexcept;
+  explicit Element(const double input) noexcept;
   Element(const Element &other) = default;
   Element(Element &&other) = default;
   Element &operator=(const Element &other) = delete;

@@ -1,10 +1,10 @@
 #include "element.h"
 
 namespace s21 {
-Element::Element(int input) noexcept
+Element::Element(const int input) noexcept
     : is_operator_(true), value_((double)input) {}
 
-Element::Element(double input) noexcept : is_operator_(false), value_(input) {}
+Element::Element(const double input) noexcept : is_operator_(false), value_(input) {}
 
 /* Getters */
 bool Element::IsOperator() const noexcept { return is_operator_; }

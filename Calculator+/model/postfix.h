@@ -11,9 +11,9 @@ class PostfixExpr {
  public:
   /* RFive */
   PostfixExpr() = default;
-  PostfixExpr(const PostfixExpr &other) = delete;
+  PostfixExpr(const PostfixExpr &other) = default;
   PostfixExpr(PostfixExpr &&other) = delete;
-  PostfixExpr &operator=(const PostfixExpr &other) = delete;
+  PostfixExpr &operator=(const PostfixExpr &other) = default;
   PostfixExpr &operator=(PostfixExpr &&other) = delete;
   virtual ~PostfixExpr() = default;
 

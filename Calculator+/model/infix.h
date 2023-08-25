@@ -10,10 +10,10 @@ class InfixExpr {
  public:
   /* RFive */
   InfixExpr() = default;
-  InfixExpr(const InfixExpr &other) = delete;
+  InfixExpr(const InfixExpr &other) = default;
   InfixExpr(InfixExpr &&other) = delete;
-  InfixExpr &operator=(const InfixExpr &other) = delete;
-  InfixExpr &operator=(InfixExpr &other) = delete;
+  InfixExpr &operator=(const InfixExpr &other) = default;
+  InfixExpr &operator=(InfixExpr &&other) = delete;
   virtual ~InfixExpr() = default;
 
   /* Modifiers */

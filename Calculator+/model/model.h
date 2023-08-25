@@ -14,6 +14,7 @@ class Model final : public InfixExpr, public PostfixExpr {
   Model(Model &&other) = delete;
   Model &operator=(const Model &other) = delete;
   Model &operator=(Model &&other) = delete;
+  ~Model() = default;
 
   /* Modifiers */
   void Convert() noexcept;
