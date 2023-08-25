@@ -9,9 +9,10 @@ namespace s21 {
 class Element final {
  public:
   /* RFive */
-  Element() = default;
+  Element() noexcept;
   explicit Element(const int input) noexcept;
   explicit Element(const double input) noexcept;
+  explicit Element(const char input) noexcept;
   Element(const Element &other) = default;
   Element(Element &&other) = default;
   Element &operator=(const Element &other) = delete;
@@ -24,8 +25,7 @@ class Element final {
   int GetPriority() const noexcept;
 
   /* Modifiers */
-  bool AppendNumber(double input) noexcept;
-  bool AppendNumber(double input, int power) noexcept;
+  bool AppendNumber(const char input) noexcept;
 
   /* Overload operator methods */
   Element operator+(const Element &other) const noexcept;
@@ -72,6 +72,7 @@ class Element final {
  private:
   bool is_operator_;
   double value_;
+  std::string string_value_{};
 };
 }  // namespace s21
 

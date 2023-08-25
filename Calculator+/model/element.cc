@@ -1,10 +1,17 @@
 #include "element.h"
 
 namespace s21 {
+Element::Element() noexcept : is_operator_(false), value_(0){};
+
 Element::Element(const int input) noexcept
     : is_operator_(true), value_((double)input) {}
 
-Element::Element(const double input) noexcept : is_operator_(false), value_(input) {}
+Element::Element(const double input) noexcept
+    : is_operator_(false), value_(input) {}
+
+Element::Element(const char input) noexcept : is_operator_(false), value_(0) {
+  string_value_ += input;
+}
 
 /* Getters */
 bool Element::IsOperator() const noexcept { return is_operator_; }
@@ -16,27 +23,15 @@ int Element::GetPriority() const noexcept {
 }
 
 /* Modifiers */
-bool Element::AppendNumber(double input) noexcept {
+bool Element::AppendNumber(const char input) noexcept {
   if (IsOperator()) {
     return false;
   } else {
-    value_ *= 10;
-    value_ += input;
+    string_value_ += input;
     return true;
   }
 }
 
-bool Element::AppendNumber(double input, int power) noexcept {
-  if (IsOperator()) {
-    return false;
-  } else {
-    while (power--) {
-      input /= 10;
-    }
-    value_ += input;
-    return true;
-  }
-}
 /* Overload operator methods */
 Element Element::operator+(const Element &other) const noexcept {
   return Element(GetValue() + other.GetValue());
@@ -67,15 +62,15 @@ std::string Element::operator*() const noexcept {
   std::string result{};
   if (IsOperator()) {
     if (value == s21::Element::kAddition) {
-      result = "+";
+      result = "\u002B";
     } else if (value == s21::Element::kSubtraction) {
-      result = "-";
+      result = "\u2212";
     } else if (value == s21::Element::kModulus) {
       result = "mod";
     } else if (value == s21::Element::kMultiplication) {
-      result = "*";
+      result = "\u00D7";
     } else if (value == s21::Element::kDivision) {
-      result = "/";
+      result = "\u00F7";
     } else if (value == s21::Element::kSin) {
       result = "sin";
     } else if (value == s21::Element::kCos) {
@@ -102,11 +97,7 @@ std::string Element::operator*() const noexcept {
       result = ")";
     }
   } else {
-    /* std::setlocale(LC_ALL, "C"); */
-    std::ostringstream num_to_string;
-    /* num_to_string << std::fixed; */
-    num_to_string << value;
-    result = num_to_string.str();
+    result = string_value_;
   }
 
   return result;
