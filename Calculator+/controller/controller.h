@@ -23,6 +23,7 @@ class Controller : public QObject {
   void ClearButton() noexcept;
   void NumButton() noexcept;
   void OperButton() noexcept;
+  void EvalButton() noexcept;
 
  private:
   void Render() const noexcept;

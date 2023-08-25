@@ -7,7 +7,7 @@ namespace s21 {
 Controller::Controller(CalcWindow *cview, Model *cmodel)
     : view_(cview), model_(cmodel) {
   /* Clear button signal */
-  connect(cview->clear_, &QPushButton::released, this,
+  connect(view_->clear_, &QPushButton::released, this,
           &Controller::ClearButton);
 
   /* Num buttons signals */
@@ -19,6 +19,9 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
   for (const auto &item : view_->operator_buttons_) {
     connect(item, &QPushButton::released, this, &Controller::OperButton);
   }
+
+  /* Evaluate button signal */
+  connect(view_->eval_, &QPushButton::released, this, &Controller::EvalButton);
 }
 
 void Controller::ClearButton() noexcept {
@@ -39,6 +42,16 @@ void Controller::OperButton() noexcept {
   s21::Element e_operator{operator_type};
   model_->AddElement(e_operator);
   Render();
+}
+
+void Controller::EvalButton() noexcept {
+  double result = model_->Evaluate();
+  model_->OutputModel();
+  std::cout << "eval but " << result << std::endl;
+  QString expression = view_->display_->text();
+  expression += " = ";
+  expression += QString::number(result);
+  view_->display_->setText(expression);
 }
 
 void Controller::Render() const noexcept {
