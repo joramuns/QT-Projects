@@ -11,6 +11,7 @@ Element::Element(const double input) noexcept
 
 Element::Element(const char input) noexcept : is_operator_(false), value_(0) {
   string_value_ += input;
+  value_ = std::stod(string_value_);
 }
 
 /* Getters */
