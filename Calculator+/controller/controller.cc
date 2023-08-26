@@ -45,10 +45,8 @@ void Controller::OperButton() noexcept {
 }
 
 void Controller::EvalButton() noexcept {
-  double result = model_->Evaluate();
-  QString expression = view_->display_->text();
-  expression += " = " + QString::number(result);
-  view_->display_->setText(expression);
+  std::string result = model_->GetResult();
+  view_->display_->setText(QString::fromStdString(result));
 }
 
 void Controller::Render() const noexcept {
