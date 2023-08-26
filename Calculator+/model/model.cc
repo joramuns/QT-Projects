@@ -109,4 +109,18 @@ Element Model::Calculate(const Element &a,
   return result;
 }
 
+std::string Model::GetResult() noexcept {
+  std::string result{};
+  if (ValidateExpr()) {
+    result = "Malformed expression";
+  } else {
+    double value = Evaluate();
+    std::stringstream ss;
+    ss << value;
+    result = GetInfixString() + " = " + ss.str();
+  }
+
+  return result;
+}
+
 }  // namespace s21

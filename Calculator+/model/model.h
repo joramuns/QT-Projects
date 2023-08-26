@@ -22,6 +22,7 @@ class Model final : public InfixExpr, public PostfixExpr {
 
   /* Calculators */
   double Evaluate() noexcept;
+  std::string GetResult() noexcept;
 
   /* Debug output */
   void OutputModel() noexcept;
