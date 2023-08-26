@@ -29,8 +29,16 @@ bool Element::AppendNumber(const char input) noexcept {
     return false;
   } else {
     string_value_ += input;
+    value_ = std::stod(string_value_);
     return true;
   }
+}
+
+void Element::ChangeSign() noexcept {
+  value_ *= -1.0;
+  std::ostringstream ss;
+  ss << value_;
+  string_value_ = ss.str();
 }
 
 /* Overload operator methods */

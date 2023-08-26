@@ -26,6 +26,7 @@ class Element final {
 
   /* Modifiers */
   bool AppendNumber(const char input) noexcept;
+  void ChangeSign() noexcept;
 
   /* Overload operator methods */
   Element operator+(const Element &other) const noexcept;
