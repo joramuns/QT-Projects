@@ -12,6 +12,9 @@ void InfixExpr::AddElement(const char number) noexcept {
 
 void InfixExpr::AddElement(const Element &token) noexcept {
   infix_data_.push_back(token);
+  if (token.GetPriority() == 3) {
+    infix_data_.push_back(Element{Element::OperatorType::kBracketOpen});
+  }
 };
 
 void InfixExpr::DelElement() noexcept { infix_data_.pop_back(); }
