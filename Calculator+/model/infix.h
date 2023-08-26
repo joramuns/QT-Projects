@@ -20,7 +20,7 @@ class InfixExpr {
   void AddElement(const char number) noexcept;
   void AddElement(const Element &token) noexcept;
   void DelElement() noexcept;
-  int ValidateExpr() const noexcept;
+  int ValidateExpr() noexcept;
   void ClearInfixExpr() noexcept;
   void AppendNumber(const char number) noexcept;
 
