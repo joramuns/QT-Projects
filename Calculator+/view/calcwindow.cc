@@ -135,16 +135,20 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   eval_->setGeometry(QRect(button_pos, q_button_size));
   eval_->setStyleSheet("background-color: #893101; font: white;");
 
-  /* Display */
+  /* Displays */
   display_ = new QLabel(this);
   display_->setGeometry(QRect(QPoint(0, 250), QSize(350, 50)));
+  results_display_ = new QListWidget(this);
+  results_display_->setGeometry(QRect(QPoint(0, 300), QSize(350, 100)));
 }
 
 CalcWindow::~CalcWindow() {
   for (const auto &item : num_buttons_) delete item;
   for (const auto &item : operator_buttons_) delete item;
   delete clear_;
+  delete eval_;
   delete display_;
+  delete results_display_;
 }
 
 void CalcWindow::HandleNumButton(int a) {

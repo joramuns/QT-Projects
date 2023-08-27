@@ -46,7 +46,7 @@ void Controller::OperButton() noexcept {
 
 void Controller::EvalButton() noexcept {
   std::string result = model_->GetResult();
-  view_->display_->setText(QString::fromStdString(result));
+  view_->results_display_->addItem(QString::fromStdString(result));
 }
 
 void Controller::Render() const noexcept {

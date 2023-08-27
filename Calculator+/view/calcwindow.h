@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QListWidget>
 
 #include "../model/model.h"
 #include "operatorbutton.h"
@@ -26,6 +27,7 @@ class CalcWindow : public QMainWindow {
   QPushButton *clear_;
   QPushButton *eval_;
   QLabel *display_;
+  QListWidget *results_display_;
   /* MVC */
   s21::Model *model_;
 
