@@ -1,5 +1,7 @@
 #include "infix.h"
 
+#include <QDebug>
+
 namespace s21 {
 void InfixExpr::AddElement(const char number) noexcept {
   if (LastIsOperator()) {
@@ -29,15 +31,20 @@ int InfixExpr::ValidateExpr() noexcept {
   if (iter_begin->IsOperator()) {
     int start_op_priority = iter_begin->GetPriority();
     int start_op_type = (int)iter_begin->GetValue();
-    if (start_op_priority == 2 ||
-        start_op_type == Element::OperatorType::kBracketClose) {
+    if (iter_next == iter_end) {
+      result = 3;
+    } else if (start_op_priority == Element::PriorityType::kMulDivModPow ||
+               start_op_type == Element::OperatorType::kBracketClose) {
+      /* Not unary, not open bracket first - error */
       result = 2;
-    } else if (start_op_type == Element::OperatorType::kSubtraction &&
-               !iter_next->IsOperator()) {
-      iter_next->ChangeSign();
-      infix_data_.pop_front();
-      ++iter_begin;
-      ++iter_next;
+    } else if (start_op_priority == Element::PriorityType::kSubAdd) {
+        qDebug("infix start_op_priority == %d, start_op_type == %d, next_op_priority == %d",
+               start_op_priority, start_op_type, iter_next->GetPriority());
+      if (!iter_next->IsOperator() ||
+          (iter_next->IsOperator() &&
+           iter_next->GetPriority() == Element::PriorityType::kTrigonometry)) {
+        iter_begin->SetUnary();
+      }
     }
   }
   /* Check duplicate operators + count brackets */
@@ -49,6 +56,7 @@ int InfixExpr::ValidateExpr() noexcept {
       } else if (type_begin == Element::OperatorType::kBracketClose) {
         --bracket_counter;
       }
+      /* Brackets error */
       if (bracket_counter < 0) {
         result = 1;
       }
@@ -56,6 +64,7 @@ int InfixExpr::ValidateExpr() noexcept {
       }
     }
   }
+  /* Brackets error */
   if (bracket_counter) {
     result = 1;
   }
