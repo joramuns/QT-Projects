@@ -139,7 +139,7 @@ int InfixExpr::MiddleValid(elem_iterator iter_begin) {
 
 int InfixExpr::DoubleOperator(const int type_first, const int type_second) {
   int result = 0;
-  if (type_first == type_second) {
+  if (type_first == type_second && type_first != Element::OperatorType::kBracketOpen && type_first != Element::OperatorType::kBracketClose) {
     /* Two identical operators error */
     result = 6;
   } else if (type_first == Element::OperatorType::kBracketOpen && type_second == Element::OperatorType::kBracketClose) {
