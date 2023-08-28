@@ -34,11 +34,12 @@ bool Element::AppendNumber(const char input) noexcept {
   }
 }
 
-void Element::ChangeSign() noexcept {
-  value_ *= -1.0;
-  std::ostringstream ss;
-  ss << value_;
-  string_value_ = ss.str();
+void Element::SetUnary() noexcept {
+  if (value_ == Element::OperatorType::kAddition) {
+    value_ = Element::OperatorType::kUnaryAddition;
+  } else if (value_ == Element::OperatorType::kSubtraction) {
+    value_ = Element::OperatorType::kUnarySubtraction;
+  }
 }
 
 /* Overload operator methods */
@@ -70,9 +71,11 @@ std::string Element::operator*() const noexcept {
   double value = GetValue();
   std::string result{};
   if (IsOperator()) {
-    if (value == s21::Element::kAddition) {
+    if (value == s21::Element::kAddition ||
+        value == s21::Element::kUnaryAddition) {
       result = "\u002B";
-    } else if (value == s21::Element::kSubtraction) {
+    } else if (value == s21::Element::kSubtraction ||
+               value == s21::Element::kUnarySubtraction) {
       result = "\u2212";
     } else if (value == s21::Element::kModulus) {
       result = "mod";

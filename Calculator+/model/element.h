@@ -26,7 +26,7 @@ class Element final {
 
   /* Modifiers */
   bool AppendNumber(const char input) noexcept;
-  void ChangeSign() noexcept;
+  void SetUnary() noexcept;
 
   /* Overload operator methods */
   Element operator+(const Element &other) const noexcept;
@@ -53,6 +53,8 @@ class Element final {
   enum OperatorType {
     kAddition = 1,
     kSubtraction,
+    kUnaryAddition,
+    kUnarySubtraction,
     kMultiplication = 10,
     kDivision,
     kModulus,
@@ -68,6 +70,13 @@ class Element final {
     kLog,
     kBracketOpen = 10000,
     kBracketClose
+  };
+
+  enum PriorityType {
+    kSubAdd = 0,
+    kMulDivModPow,
+    kTrigonometry = 3,
+    kBrackets
   };
 
  private:
