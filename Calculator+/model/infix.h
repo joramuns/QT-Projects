@@ -7,6 +7,8 @@
 
 namespace s21 {
 class InfixExpr {
+  using elem_iterator = std::deque<Element>::iterator;
+
  public:
   /* RFive */
   InfixExpr() = default;
@@ -28,6 +30,13 @@ class InfixExpr {
   std::deque<Element> GetInfixData() const noexcept;
   std::string GetInfixString() const noexcept;
   bool LastIsOperator() const noexcept;
+
+ private:
+  int SizeValid(const elem_iterator iter_begin);
+  int BeginValid(const elem_iterator iter_begin);
+  int EndValid();
+  int MiddleValid(elem_iterator iter_begin);
+  int DoubleOperator(const int type_first, const int type_second);
 
  private:
   std::deque<Element> infix_data_;
