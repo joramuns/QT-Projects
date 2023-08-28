@@ -26,7 +26,8 @@ void PostfixExpr::AddOperator(const Element &operation) noexcept {
     int queue_priority = queue_stack_.back().GetPriority();
     int operation_priority = operation.GetPriority();
     if (operation_priority == queue_priority &&
-        operation_type != OpType::kPower) {
+        operation_type != OpType::kPower &&
+        operation_type != OpType::kBracketOpen) {
       PopAndPush();
     } else if (operation_priority < queue_priority) {
       PopAndPushAll();
