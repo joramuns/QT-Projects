@@ -10,11 +10,11 @@ void PostfixExpr::AddOperand(const Element &number) noexcept {
 
 void PostfixExpr::AddOperator(const Element &operation) noexcept {
   int operation_type = (int)operation.GetValue();
+  if (operation_type == OpType::kUnaryAddition ||
+      operation_type == OpType::kUnarySubtraction) {
+    stack_out_.push_back(Element{'0'});
+  }
   if (queue_stack_.empty()) {
-    if (operation_type == OpType::kUnaryAddition ||
-        operation_type == OpType::kUnarySubtraction) {
-      stack_out_.push_back(Element{0.0});
-    }
     queue_stack_.push_back(operation);
   } else if (operation_type == OpType::kBracketClose) {
     PopAndPushAll();
