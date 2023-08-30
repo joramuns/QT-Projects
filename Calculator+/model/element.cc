@@ -11,11 +11,18 @@ Element::Element(const double input) noexcept
 
 Element::Element(const char input) noexcept : is_operator_(false), value_(0) {
   string_value_ += input;
-  value_ = std::stod(string_value_);
+  if (input != 'x') {
+    if (string_value_ == ".") {
+      string_value_ = "0" + string_value_;
+    }
+    value_ = std::stod(string_value_);
+  }
 }
 
 /* Getters */
 bool Element::IsOperator() const noexcept { return is_operator_; }
+
+bool Element::IsVariable() const noexcept { return string_value_ == "x"; }
 
 double Element::GetValue() const noexcept { return value_; }
 
@@ -28,8 +35,10 @@ bool Element::AppendNumber(const char input) noexcept {
   if (IsOperator()) {
     return false;
   } else {
-    string_value_ += input;
-    value_ = std::stod(string_value_);
+    if (input != '.' || string_value_.find('.') == std::string::npos) {
+      string_value_ += input;
+      value_ = std::stod(string_value_);
+    }
     return true;
   }
 }
@@ -41,6 +50,8 @@ void Element::SetUnary() noexcept {
     value_ = Element::OperatorType::kUnarySubtraction;
   }
 }
+
+void Element::SetValue(const double number) noexcept { value_ = number; }
 
 /* Overload operator methods */
 Element Element::operator+(const Element &other) const noexcept {

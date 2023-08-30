@@ -21,12 +21,14 @@ class Element final {
 
   /* Getters */
   bool IsOperator() const noexcept;
+  bool IsVariable() const noexcept;
   double GetValue() const noexcept;
   int GetPriority() const noexcept;
 
   /* Modifiers */
   bool AppendNumber(const char input) noexcept;
   void SetUnary() noexcept;
+  void SetValue(const double number) noexcept;
 
   /* Overload operator methods */
   Element operator+(const Element &other) const noexcept;
