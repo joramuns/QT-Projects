@@ -36,7 +36,8 @@ class InfixExpr {
   int BeginValid(const elem_iterator iter_begin);
   int EndValid();
   int MiddleValid(elem_iterator iter_begin);
-  int DoubleOperator(const int type_first, const int type_second);
+  int DoubleOperator(const elem_iterator type_first,
+                     const elem_iterator type_second);
 
  private:
   std::deque<Element> infix_data_;
