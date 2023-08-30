@@ -4,7 +4,7 @@
 
 namespace s21 {
 void InfixExpr::AddElement(const char number) noexcept {
-  if (LastIsOperator()) {
+  if (number == 'x' || LastIsOperator() || LastIsVariable()) {
     s21::Element e_number{number};
     AddElement(e_number);
   } else {
@@ -14,7 +14,11 @@ void InfixExpr::AddElement(const char number) noexcept {
 
 void InfixExpr::AddElement(const Element &token) noexcept {
   infix_data_.push_back(token);
-  if (token.GetPriority() == Element::PriorityType::kTrigonometry) {
+  if (token.IsVariable()) {
+    /* Interesting fact: insertions in deque invalidate iterators, but not
+     * references to elements */
+    var_array_.push_back(&infix_data_.back());
+  } else if (token.GetPriority() == Element::PriorityType::kTrigonometry) {
     infix_data_.push_back(Element{Element::OperatorType::kBracketOpen});
   }
 };
@@ -33,10 +37,20 @@ int InfixExpr::ValidateExpr() noexcept {
   return ex_code;
 }
 
-void InfixExpr::ClearInfixExpr() noexcept { infix_data_.clear(); }
+void InfixExpr::ClearInfixExpr() noexcept {
+  infix_data_.clear();
+  var_array_.clear();
+}
 
 void InfixExpr::AppendNumber(const char number) noexcept {
   infix_data_.back().AppendNumber(number);
+}
+
+void InfixExpr::SetVariables(const std::string &str_number) noexcept {
+  double number = std::stod(str_number);
+  for (auto &item : var_array_) {
+    item->SetValue(number);
+  }
 }
 
 std::deque<Element> InfixExpr::GetInfixData() const noexcept {
@@ -53,6 +67,10 @@ std::string InfixExpr::GetInfixString() const noexcept {
 
 bool InfixExpr::LastIsOperator() const noexcept {
   return infix_data_.empty() ? true : infix_data_.back().IsOperator();
+}
+
+bool InfixExpr::LastIsVariable() const noexcept {
+  return infix_data_.empty() ? false : infix_data_.back().IsVariable();
 }
 
 int InfixExpr::SizeValid(const elem_iterator iter_begin) {

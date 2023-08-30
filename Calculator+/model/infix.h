@@ -2,6 +2,7 @@
 #define MODEL_INFIX_H_
 
 #include <deque>
+#include <vector>
 
 #include "element.h"
 
@@ -25,11 +26,13 @@ class InfixExpr {
   int ValidateExpr() noexcept;
   void ClearInfixExpr() noexcept;
   void AppendNumber(const char number) noexcept;
+  void SetVariables(const std::string &number) noexcept;
 
   /* Getters */
   std::deque<Element> GetInfixData() const noexcept;
   std::string GetInfixString() const noexcept;
   bool LastIsOperator() const noexcept;
+  bool LastIsVariable() const noexcept;
 
  private:
   int SizeValid(const elem_iterator iter_begin);
@@ -41,6 +44,7 @@ class InfixExpr {
 
  private:
   std::deque<Element> infix_data_;
+  std::vector<Element *> var_array_;
 };
 }  // namespace s21
 
