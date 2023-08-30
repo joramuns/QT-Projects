@@ -165,7 +165,8 @@ int InfixExpr::DoubleOperator(const elem_iterator op_first,
   } else if (priority_first == Element::PriorityType::kSubAdd ||
              priority_first == Element::PriorityType::kMulDivModPow) {
     if (priority_second == Element::PriorityType::kMulDivModPow ||
-        priority_second == Element::PriorityType::kSubAdd) {
+        priority_second == Element::PriorityType::kSubAdd ||
+        type_second == Element::OperatorType::kBracketClose) {
       /* Double operator error */
       ex_code = 9;
     }
