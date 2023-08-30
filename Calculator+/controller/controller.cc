@@ -20,6 +20,10 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
     connect(item, &QPushButton::released, this, &Controller::OperButton);
   }
 
+  /* Input lines signals */
+  connect(view_->input_lines_[0], &QLineEdit::textEdited, this,
+          &Controller::VariableSet);
+
   /* Evaluate button signal */
   connect(view_->eval_, &QPushButton::released, this, &Controller::EvalButton);
 }
@@ -50,6 +54,13 @@ void Controller::EvalButton() noexcept {
   view_->results_display_->scrollToBottom();
 }
 
+void Controller::VariableSet() noexcept {
+  QString input_value = static_cast<QLineEdit *>(sender())->text();
+  if (!input_value.isEmpty()) {
+    std::string std_input_value = input_value.toStdString();
+    model_->SetVariables(std_input_value);
+  }
+}
 void Controller::Render() const noexcept {
   std::string infix_line = model_->GetInfixString();
   view_->display_->setText(QString::fromStdString(infix_line));

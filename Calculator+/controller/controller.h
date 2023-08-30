@@ -24,6 +24,7 @@ class Controller : public QObject {
   void NumButton() noexcept;
   void OperButton() noexcept;
   void EvalButton() noexcept;
+  void VariableSet() noexcept;
 
  private:
   void Render() const noexcept;
