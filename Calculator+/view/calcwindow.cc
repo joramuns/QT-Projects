@@ -2,7 +2,7 @@
 
 namespace s21 {
 CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
-  resize(500, 320);
+  resize(500, 500);
   int button_size = 50;
   QSize q_button_size{button_size, button_size};
   QPoint button_pos{0, 0};
@@ -137,9 +137,9 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
 
   /* Displays */
   display_ = new QLabel(this);
-  display_->setGeometry(QRect(QPoint(0, 250), QSize(350, 50)));
+  display_->setGeometry(QRect(QPoint(0, 250), QSize(500, 50)));
   results_display_ = new QListWidget(this);
-  results_display_->setGeometry(QRect(QPoint(0, 300), QSize(350, 100)));
+  results_display_->setGeometry(QRect(QPoint(0, 300), QSize(500, 100)));
 }
 
 CalcWindow::~CalcWindow() {
