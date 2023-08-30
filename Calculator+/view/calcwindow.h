@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QLabel>
+#include <QLineEdit>
+#include <QListWidget>
 #include <QMainWindow>
 #include <QPushButton>
-#include <QListWidget>
+#include <QRegularExpressionValidator>
 
 #include "../model/model.h"
 #include "operatorbutton.h"
@@ -22,8 +24,9 @@ class CalcWindow : public QMainWindow {
   void ClearSlot();
 
  public:
-  std::array<QPushButton *, 12> num_buttons_;
+  std::array<QPushButton *, 13> num_buttons_;
   std::array<OperatorButton *, 17> operator_buttons_;
+  std::array<QLineEdit *, 1> input_lines_;
   QPushButton *clear_;
   QPushButton *eval_;
   QLabel *display_;

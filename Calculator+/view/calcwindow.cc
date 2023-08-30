@@ -34,6 +34,11 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
     num_buttons_[i] = new_button;
   }
 
+  num_buttons_[12] = new QPushButton("x", this);
+  button_pos.setX(300);
+  button_pos.setY(100);
+  num_buttons_[12]->setGeometry(QRect(button_pos, q_button_size));
+
   /* Operators Buttons */
   operator_buttons_[0] =
       new OperatorButton(OperatorType::kModulus, "mod", this);
@@ -127,10 +132,22 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   button_pos.setY(50);
   operator_buttons_[16]->setGeometry(QRect(button_pos, q_button_size));
 
+  /* Input lines */
+  input_lines_[0] = new QLineEdit("0", this);
+  q_button_size.setWidth(150);
+  button_pos.setX(350);
+  button_pos.setY(0);
+  input_lines_[0]->setGeometry(QRect(button_pos, q_button_size));
+  std::locale loc("en_US.utf8");
+  std::locale::global(loc);
+  input_lines_[0]->setValidator(new QRegularExpressionValidator(
+      QRegularExpression("[0][.][0-9]*|[1-9][0-9]*[.][0-9]*"), input_lines_[0]));
+
   /* Evaluate button */
   eval_ = new QPushButton("=", this);
   button_pos.setX(250);
   button_pos.setY(150);
+  q_button_size.setWidth(50);
   q_button_size.setHeight(100);
   eval_->setGeometry(QRect(button_pos, q_button_size));
   eval_->setStyleSheet("background-color: #893101; font: white;");
@@ -145,6 +162,7 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
 CalcWindow::~CalcWindow() {
   for (const auto &item : num_buttons_) delete item;
   for (const auto &item : operator_buttons_) delete item;
+  for (const auto &item : input_lines_) delete item;
   delete clear_;
   delete eval_;
   delete display_;
