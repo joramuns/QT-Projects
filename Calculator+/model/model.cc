@@ -67,9 +67,11 @@ void Model::OutputModel() noexcept {
 Element Model::Calculate(const Element &a, const Element &b,
                          OpType math_operator) const noexcept {
   Element result;
-  if (math_operator == OpType::kAddition || math_operator == OpType::kUnaryAddition) {
+  if (math_operator == OpType::kAddition ||
+      math_operator == OpType::kUnaryAddition) {
     result = a + b;
-  } else if (math_operator == OpType::kSubtraction || math_operator == OpType::kUnarySubtraction) {
+  } else if (math_operator == OpType::kSubtraction ||
+             math_operator == OpType::kUnarySubtraction) {
     result = a - b;
   } else if (math_operator == OpType::kModulus) {
     result = a % b;
