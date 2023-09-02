@@ -1,25 +1,32 @@
 #include "infix.h"
 
-#include <QDebug>
-
 namespace s21 {
-void InfixExpr::AddElement(const char number) noexcept {
+
+void InfixExpr::AddElement(const int type) {
+  auto e_operator = std::make_unique<Element>(type);
+  AddElement(std::move(e_operator));
+}
+
+void InfixExpr::AddElement(const char number) {
   if (number == 'x' || LastIsOperator() || LastIsVariable()) {
-    s21::Element e_number{number};
-    AddElement(e_number);
+    auto e_number = std::make_unique<Element>(number);
+    AddElement(std::move(e_number));
   } else {
     AppendNumber(number);
   }
 }
 
-void InfixExpr::AddElement(const Element &token) noexcept {
-  infix_data_.push_back(token);
-  if (token.IsVariable()) {
+void InfixExpr::AddElement(std::unique_ptr<Element> token) noexcept {
+  Element *temp = token.get();
+  infix_data_.push_back(std::move(token));
+  if (temp->IsVariable()) {
     /* Interesting fact: insertions in deque invalidate iterators, but not
      * references to elements */
-    var_array_.push_back(&infix_data_.back());
-  } else if (token.GetPriority() == Element::PriorityType::kTrigonometry) {
-    infix_data_.push_back(Element{Element::OperatorType::kBracketOpen});
+    var_array_.push_back(temp);
+  } else if (temp->GetPriority() == Element::PriorityType::kTrigonometry) {
+    auto e_operator =
+        std::make_unique<Element>(Element::OperatorType::kBracketOpen);
+    infix_data_.push_back(std::move(e_operator));
   }
 };
 
@@ -43,7 +50,7 @@ void InfixExpr::ClearInfixExpr() noexcept {
 }
 
 void InfixExpr::AppendNumber(const char number) noexcept {
-  infix_data_.back().AppendNumber(number);
+  infix_data_.back()->AppendNumber(number);
 }
 
 void InfixExpr::SetVariables(const std::string &str_number) noexcept {
@@ -53,30 +60,32 @@ void InfixExpr::SetVariables(const std::string &str_number) noexcept {
   }
 }
 
-std::deque<Element> InfixExpr::GetInfixData() const noexcept {
+const std::deque<std::unique_ptr<Element>> &InfixExpr::GetInfixData()
+    const noexcept {
   return infix_data_;
 }
 
 std::string InfixExpr::GetInfixString() const noexcept {
   std::string result{};
   for (const auto &item : infix_data_) {
-    result += *item + " ";
+    result += *(*item) + " ";
   }
   return result;
 }
 
 bool InfixExpr::LastIsOperator() const noexcept {
-  return infix_data_.empty() ? true : infix_data_.back().IsOperator();
+  return infix_data_.empty() ? true : infix_data_.back()->IsOperator();
 }
 
 bool InfixExpr::LastIsVariable() const noexcept {
-  return infix_data_.empty() ? false : infix_data_.back().IsVariable();
+  return infix_data_.empty() ? false : infix_data_.back()->IsVariable();
 }
 
 int InfixExpr::SizeValid(const elem_iterator iter_begin) {
   int ex_code = 0;
   int expression_size = infix_data_.size();
-  if (!expression_size || (expression_size == 1 && iter_begin->IsOperator())) {
+  if (!expression_size ||
+      (expression_size == 1 && (*iter_begin)->IsOperator())) {
     /* Only operator in expression */
     ex_code = 3;
   }
@@ -86,13 +95,13 @@ int InfixExpr::SizeValid(const elem_iterator iter_begin) {
 int InfixExpr::BeginValid(const elem_iterator iter_begin) {
   int ex_code = 0;
   /* Check operator going first */
-  if (iter_begin->IsOperator()) {
-    int start_op_priority = iter_begin->GetPriority();
+  if ((*iter_begin)->IsOperator()) {
+    int start_op_priority = (*iter_begin)->GetPriority();
     if (start_op_priority == Element::PriorityType::kMulDivModPow) {
       /* Not unary, not open bracket first - error */
       ex_code = 2;
     } else if (start_op_priority == Element::PriorityType::kSubAdd) {
-      iter_begin->SetUnary();
+      (*iter_begin)->SetUnary();
     }
   }
   return ex_code;
@@ -101,8 +110,8 @@ int InfixExpr::BeginValid(const elem_iterator iter_begin) {
 int InfixExpr::EndValid() {
   /* Check end expression */
   int ex_code = 0;
-  if (infix_data_.back().IsOperator() &&
-      (int)infix_data_.back().GetValue() !=
+  if (infix_data_.back()->IsOperator() &&
+      static_cast<int>(infix_data_.back()->GetValue()) !=
           Element::OperatorType::kBracketClose) {
     /* Bad end expression */
     ex_code = 4;
@@ -117,8 +126,8 @@ int InfixExpr::MiddleValid(elem_iterator iter_begin) {
   const auto iter_end = infix_data_.end();
   auto iter_next = std::next(iter_begin);
   for (; iter_begin != iter_end && !ex_code; ++iter_begin, ++iter_next) {
-    if (iter_begin->IsOperator()) {
-      int type_begin = (int)iter_begin->GetValue();
+    if ((*iter_begin)->IsOperator()) {
+      int type_begin = static_cast<int>((*iter_begin)->GetValue());
       if (type_begin == Element::OperatorType::kBracketOpen) {
         ++bracket_counter;
       } else if (type_begin == Element::OperatorType::kBracketClose) {
@@ -128,7 +137,7 @@ int InfixExpr::MiddleValid(elem_iterator iter_begin) {
         /* Brackets error */
         ex_code = 1;
       }
-      if (iter_next != iter_end && iter_next->IsOperator()) {
+      if (iter_next != iter_end && (*iter_next)->IsOperator()) {
         ex_code = DoubleOperator(iter_begin, iter_next);
       } else if (iter_next != iter_end &&
                  type_begin == Element::OperatorType::kBracketClose) {
@@ -136,9 +145,10 @@ int InfixExpr::MiddleValid(elem_iterator iter_begin) {
         ex_code = 5;
       }
       /*** NUM - OPERATOR case ***/
-    } else if (iter_next != iter_end && iter_next->IsOperator()) {
-      if (iter_next->GetPriority() == Element::PriorityType::kTrigonometry ||
-          (int)iter_next->GetValue() == Element::OperatorType::kBracketOpen) {
+    } else if (iter_next != iter_end && (*iter_next)->IsOperator()) {
+      if ((*iter_next)->GetPriority() == Element::PriorityType::kTrigonometry ||
+          static_cast<int>((*iter_next)->GetValue()) ==
+              Element::OperatorType::kBracketOpen) {
         /* No operator between bracket and num */
         ex_code = 5;
       }
@@ -158,10 +168,10 @@ int InfixExpr::MiddleValid(elem_iterator iter_begin) {
 int InfixExpr::DoubleOperator(const elem_iterator op_first,
                               const elem_iterator op_second) {
   int ex_code = 0;
-  int type_first = (int)op_first->GetValue();
-  int type_second = (int)op_second->GetValue();
-  int priority_first = op_first->GetPriority();
-  int priority_second = op_second->GetPriority();
+  int type_first = static_cast<int>((*op_first)->GetValue());
+  int type_second = static_cast<int>((*op_second)->GetValue());
+  int priority_first = (*op_first)->GetPriority();
+  int priority_second = (*op_second)->GetPriority();
   if (type_first == Element::OperatorType::kBracketOpen) {
     if (priority_second == Element::PriorityType::kMulDivModPow) {
       /* Open bracket and muldivmodpow */
@@ -170,7 +180,7 @@ int InfixExpr::DoubleOperator(const elem_iterator op_first,
       /* Brackets error - empty brackets */
       ex_code = 1;
     } else if (priority_second == Element::PriorityType::kSubAdd) {
-      op_second->SetUnary();
+      (*op_second)->SetUnary();
     }
   } else if (type_first == Element::OperatorType::kBracketClose) {
     if (priority_second == Element::PriorityType::kTrigonometry) {

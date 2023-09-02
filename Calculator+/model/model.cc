@@ -5,10 +5,10 @@ namespace s21 {
 void Model::Convert() noexcept {
   ClearPostfixExpr();
   for (const auto &item : GetInfixData()) {
-    if (item.IsOperator()) {
-      AddOperator(item);
+    if (item->IsOperator()) {
+      AddOperator(*item);
     } else {
-      AddOperand(item);
+      AddOperand(*item);
     }
   }
   PopAndPushAll();
@@ -49,7 +49,7 @@ double Model::Evaluate() noexcept {
 void Model::OutputModel() noexcept {
   std::cout << "Infix notation: ";
   for (const auto &item : GetInfixData()) {
-    std::cout << item << " ";
+    std::cout << *item << " ";
   }
   std::cout << std::endl << "Polish notation: ";
   for (const auto &item : GetPostfixExpr()) {

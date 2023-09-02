@@ -2,13 +2,14 @@
 #define MODEL_INFIX_H_
 
 #include <deque>
+#include <memory>
 #include <vector>
 
 #include "element.h"
 
 namespace s21 {
 class InfixExpr {
-  using elem_iterator = std::deque<Element>::iterator;
+  using elem_iterator = std::deque<std::unique_ptr<Element>>::iterator;
 
  public:
   /* RFive */
@@ -20,8 +21,9 @@ class InfixExpr {
   virtual ~InfixExpr() = default;
 
   /* Modifiers */
-  void AddElement(const char number) noexcept;
-  void AddElement(const Element &token) noexcept;
+  void AddElement(const int type);
+  void AddElement(const char number);
+  void AddElement(std::unique_ptr<Element> token) noexcept;
   void DelElement() noexcept;
   int ValidateExpr() noexcept;
   void ClearInfixExpr() noexcept;
@@ -29,7 +31,7 @@ class InfixExpr {
   void SetVariables(const std::string &number) noexcept;
 
   /* Getters */
-  std::deque<Element> GetInfixData() const noexcept;
+  const std::deque<std::unique_ptr<Element>> &GetInfixData() const noexcept;
   std::string GetInfixString() const noexcept;
   bool LastIsOperator() const noexcept;
   bool LastIsVariable() const noexcept;
@@ -43,7 +45,7 @@ class InfixExpr {
                      const elem_iterator type_second);
 
  private:
-  std::deque<Element> infix_data_;
+  std::deque<std::unique_ptr<Element>> infix_data_;
   std::vector<Element *> var_array_;
 };
 }  // namespace s21
