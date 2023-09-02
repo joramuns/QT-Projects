@@ -43,8 +43,7 @@ void Controller::NumButton() noexcept {
 void Controller::OperButton() noexcept {
   OperatorButton *button = static_cast<OperatorButton *>(sender());
   int operator_type = button->GetType();
-  s21::Element e_operator{operator_type};
-  model_->AddElement(e_operator);
+  model_->AddElement(operator_type);
   Render();
 }
 
