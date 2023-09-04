@@ -23,6 +23,7 @@ class Model final : public InfixExpr, public PostfixExpr {
   /* Calculators */
   double Evaluate() noexcept;
   std::string GetResult() noexcept;
+  std::pair<std::vector<double>, std::vector<double>> GetCoordinates(const std::vector<double> &value_borders);
 
   /* Debug output */
   void OutputModel() noexcept;

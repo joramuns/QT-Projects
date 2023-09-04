@@ -126,4 +126,24 @@ std::string Model::GetResult() noexcept {
   return result;
 }
 
+std::pair<std::vector<double>, std::vector<double>> Model::GetCoordinates(
+    const std::vector<double> &value_borders) {
+  std::vector<double> x{};
+  std::vector<double> y{};
+
+  if (ValidateExpr()) {
+  } else {
+    double x_min = value_borders[0];
+    double x_max = value_borders[1];
+    double step = (x_max - x_min) / 200.0;
+    for (double i = x_min; i < x_max; i += step) {
+      SetVariables(i);
+      x.push_back(i);
+      y.push_back(Evaluate());
+    }
+  }
+
+  return std::make_pair(x, y);
+}
+
 }  // namespace s21
