@@ -2,7 +2,7 @@
 
 namespace s21 {
 CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
-  resize(500, 500);
+  resize(850, 500);
   int button_size = 50;
   QSize q_button_size{button_size, button_size};
   QPoint button_pos{0, 0};
@@ -133,6 +133,9 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   operator_buttons_[16]->setGeometry(QRect(button_pos, q_button_size));
 
   /* Input lines */
+  regex_validator_ = new QRegularExpressionValidator(
+      QRegularExpression("[0][.][0-9]*|[1-9][0-9]*[.][0-9]*"));
+
   input_lines_[0] = new QLineEdit("0", this);
   q_button_size.setWidth(150);
   button_pos.setX(350);
@@ -140,8 +143,21 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   input_lines_[0]->setGeometry(QRect(button_pos, q_button_size));
   std::locale loc("en_US.utf8");
   std::locale::global(loc);
-  input_lines_[0]->setValidator(new QRegularExpressionValidator(
-      QRegularExpression("[0][.][0-9]*|[1-9][0-9]*[.][0-9]*"), input_lines_[0]));
+  input_lines_[0]->setValidator(regex_validator_);
+
+  for (int i = 1; i < 5; ++i) {
+    input_lines_[i] = new QLineEdit("0", this);
+    button_pos.setX(350);
+    button_pos.setY(i * 50);
+    input_lines_[i]->setGeometry(QRect(button_pos, q_button_size));
+    std::locale loc("en_US.utf8");
+    std::locale::global(loc);
+    input_lines_[i]->setValidator(regex_validator_);
+  }
+  input_lines_[1]->setText("-10");
+  input_lines_[2]->setText("10");
+  input_lines_[3]->setText("-10");
+  input_lines_[4]->setText("10");
 
   /* Evaluate button */
   eval_ = new QPushButton("=", this);
@@ -152,21 +168,42 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   eval_->setGeometry(QRect(button_pos, q_button_size));
   eval_->setStyleSheet("background-color: #893101; font: white;");
 
+  make_plot_ = new QPushButton("Graph", this);
+  button_pos.setX(300);
+  button_pos.setY(150);
+  q_button_size.setWidth(50);
+  q_button_size.setHeight(100);
+  make_plot_->setGeometry(QRect(button_pos, q_button_size));
+  make_plot_->setStyleSheet("background-color: #893101; font: white;");
+
   /* Displays */
   display_ = new QLabel(this);
   display_->setGeometry(QRect(QPoint(0, 250), QSize(500, 50)));
   results_display_ = new QListWidget(this);
   results_display_->setGeometry(QRect(QPoint(0, 300), QSize(500, 100)));
+
+  plot_ = new QCustomPlot(this);
+  plot_->setGeometry(QRect(QPoint(500, 0), QSize(300, 300)));
+  plot_->addGraph();
+  plot_->graph(0)->setLineStyle(QCPGraph::lsNone);
+  QCPScatterStyle scatter_style =
+      QCPScatterStyle(QCPScatterStyle::ssDisc, Qt::red, 3.0);
+  plot_->graph(0)->setScatterStyle(scatter_style);
+  plot_->xAxis->setLabel("x");
+  plot_->yAxis->setLabel("y");
 }
 
 CalcWindow::~CalcWindow() {
   for (const auto &item : num_buttons_) delete item;
   for (const auto &item : operator_buttons_) delete item;
   for (const auto &item : input_lines_) delete item;
+  delete regex_validator_;
   delete clear_;
   delete eval_;
+  delete make_plot_;
   delete display_;
   delete results_display_;
+  delete plot_;
 }
 
 void CalcWindow::HandleNumButton(int a) {

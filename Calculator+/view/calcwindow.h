@@ -7,6 +7,8 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QRegularExpressionValidator>
+#define QCUSTOMPLOT_USE_LIBRARY
+#include "../qcustomplot/qcustomplot.h"
 
 #include "../model/model.h"
 #include "operatorbutton.h"
@@ -26,10 +28,13 @@ class CalcWindow : public QMainWindow {
  public:
   std::array<QPushButton *, 13> num_buttons_;
   std::array<OperatorButton *, 17> operator_buttons_;
-  std::array<QLineEdit *, 1> input_lines_;
+  std::array<QLineEdit *, 5> input_lines_;
+  QRegularExpressionValidator *regex_validator_;
   QPushButton *clear_;
   QPushButton *eval_;
+  QPushButton *make_plot_;
   QLabel *display_;
+  QCustomPlot *plot_;
   QListWidget *results_display_;
   /* MVC */
   s21::Model *model_;
