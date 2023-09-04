@@ -2,15 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QLabel>
+#include <QLayout>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QRegularExpressionValidator>
 #define QCUSTOMPLOT_USE_LIBRARY
-#include "../qcustomplot/qcustomplot.h"
-
 #include "../model/model.h"
+#include "../qcustomplot/qcustomplot.h"
 #include "operatorbutton.h"
 
 namespace s21 {
@@ -20,10 +20,6 @@ class CalcWindow : public QMainWindow {
  public:
   explicit CalcWindow(Model *cmodel);
   ~CalcWindow();
-
- private slots:
-  void HandleNumButton(int a);
-  void ClearSlot();
 
  public:
   std::array<QPushButton *, 13> num_buttons_;
