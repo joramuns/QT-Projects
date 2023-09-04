@@ -55,6 +55,10 @@ void InfixExpr::AppendNumber(const char number) noexcept {
 
 void InfixExpr::SetVariables(const std::string &str_number) noexcept {
   double number = std::stod(str_number);
+  SetVariables(number);
+}
+
+void InfixExpr::SetVariables(const double number) noexcept {
   for (auto &item : var_array_) {
     item->SetValue(number);
   }

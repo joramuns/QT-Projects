@@ -29,6 +29,7 @@ class InfixExpr {
   void ClearInfixExpr() noexcept;
   void AppendNumber(const char number) noexcept;
   void SetVariables(const std::string &number) noexcept;
+  void SetVariables(const double number) noexcept;
 
   /* Getters */
   const std::deque<std::unique_ptr<Element>> &GetInfixData() const noexcept;
