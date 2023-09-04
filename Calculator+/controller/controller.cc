@@ -24,8 +24,11 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
   connect(view_->input_lines_[0], &QLineEdit::textEdited, this,
           &Controller::VariableSet);
 
-  /* Evaluate button signal */
+  /* Evaluate and graph button signal */
   connect(view_->eval_, &QPushButton::released, this, &Controller::EvalButton);
+
+  connect(view_->make_plot_, &QPushButton::released, this,
+          &Controller::MakePlot);
 }
 
 void Controller::ClearButton() noexcept {
@@ -51,6 +54,20 @@ void Controller::EvalButton() noexcept {
   std::string result = model_->GetResult();
   view_->results_display_->addItem(QString::fromStdString(result));
   view_->results_display_->scrollToBottom();
+}
+
+void Controller::MakePlot() {
+  std::vector<double> value_borders(4);
+  for (int i = 0; i != 4; ++i) {
+    value_borders[i] = std::stod(view_->input_lines_[i + 1]->text().toStdString());
+  }
+  auto coords = model_->GetCoordinates(value_borders);
+  QVector<double> x_qvector(coords.first.begin(), coords.first.end());
+  QVector<double> y_qvector(coords.second.begin(), coords.second.end());
+  view_->plot_->xAxis->setRange(value_borders[0], value_borders[1]);
+  view_->plot_->yAxis->setRange(value_borders[2], value_borders[3]);
+  view_->plot_->graph(0)->setData(x_qvector, y_qvector);
+  view_->plot_->replot();
 }
 
 void Controller::VariableSet() noexcept {
