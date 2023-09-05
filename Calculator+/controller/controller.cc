@@ -59,7 +59,12 @@ void Controller::EvalButton() noexcept {
 void Controller::MakePlot() {
   std::vector<double> value_borders(4);
   for (int i = 0; i != 4; ++i) {
-    value_borders[i] = std::stod(view_->input_lines_[i + 1]->text().toStdString());
+    auto input_string = view_->input_lines_[i + 1]->text().toStdString();
+    if (input_string.empty()) {
+      value_borders[i] = i % 2 == 0 ? 1.0 : -1.0;
+    } else {
+      value_borders[i] = std::stod(input_string);
+    }
   }
   auto coords = model_->GetCoordinates(value_borders);
   QVector<double> x_qvector(coords.first.begin(), coords.first.end());

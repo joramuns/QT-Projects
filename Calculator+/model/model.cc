@@ -130,13 +130,18 @@ std::pair<std::vector<double>, std::vector<double>> Model::GetCoordinates(
     const std::vector<double> &value_borders) {
   std::vector<double> x{};
   std::vector<double> y{};
+  double x_min = value_borders[0];
+  double x_max = value_borders[1];
+  double y_min = value_borders[2];
+  double y_max = value_borders[3];
 
   if (ValidateExpr()) {
-  } else {
-    double x_min = value_borders[0];
-    double x_max = value_borders[1];
-    double step = (x_max - x_min) / 200.0;
-    for (double i = x_min; i < x_max; i += step) {
+  } else if (x_min < x_max && y_min < y_max) {
+    double step_number = 200.0;
+    double step = (x_max - x_min) / step_number;
+    x.reserve(static_cast<int>(step_number) + 1);
+    y.reserve(static_cast<int>(step_number) + 1);
+    for (double i = x_min; i <= x_max; i += step) {
       SetVariables(i);
       x.push_back(i);
       y.push_back(Evaluate());

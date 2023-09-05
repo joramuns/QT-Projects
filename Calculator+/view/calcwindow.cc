@@ -125,7 +125,7 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
 
   /* Input lines */
   regex_validator_ = new QRegularExpressionValidator(
-      QRegularExpression("[0][.][0-9]*|[1-9][0-9]*[.][0-9]*"));
+      QRegularExpression("[-]?[0]+[.][0-9]+|[-]?[1-9]+[0-9]*[.][0-9]*"));
 
   q_button_size.setWidth(150);
   for (int i = 0; i < 5; ++i) {
