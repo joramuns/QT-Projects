@@ -13,6 +13,7 @@ set(COMMON_SOURCES
   main.cc
   view/calcwindow.cc
   view/operatorbutton.cc
+  view/creditwindow.cc
   controller/controller.cc
   model/model.cc
   model/element.cc
