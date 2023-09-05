@@ -3,6 +3,8 @@
 namespace s21 {
 CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   resize(950, 400);
+  CreditWindow *widget = new CreditWindow();
+  widget->show();
 
   /* Num Buttons */
   InitNumButtons();
@@ -180,15 +182,18 @@ void CalcWindow::InitInputLines() {
       QRegularExpression("[-]?[0]+[.][0-9]+|[-]?[1-9]+[0-9]*[.][0-9]*"));
   QVector<QString> labels{"X", "X min", "X max", "Y min", "Y max"};
 
-  q_button_size.setWidth(150);
   for (int i = 0; i < 5; ++i) {
     input_labels_[i] = new QLabel(labels[i], this);
     button_pos.setX(350);
     button_pos.setY(i * 50 + 150);
+    q_button_size.setWidth(50);
     input_labels_[i]->setGeometry(QRect(button_pos, q_button_size));
+    input_labels_[i]->setAlignment(Qt::AlignCenter);
+
     input_lines_[i] = new QLineEdit(i % 2 == 0 ? "5" : "-5", this);
     button_pos.setX(400);
     button_pos.setY(i * 50 + 150);
+    q_button_size.setWidth(150);
     input_lines_[i]->setGeometry(QRect(button_pos, q_button_size));
     std::locale loc("en_US.utf8");
     std::locale::global(loc);

@@ -12,6 +12,7 @@
 #include "../model/model.h"
 #include "../qcustomplot/qcustomplot.h"
 #include "operatorbutton.h"
+#include "creditwindow.h"
 
 namespace s21 {
 class CalcWindow : public QMainWindow {
