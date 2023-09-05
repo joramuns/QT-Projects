@@ -20,11 +20,14 @@ class CalcWindow : public QMainWindow {
  public:
   explicit CalcWindow(Model *cmodel);
   ~CalcWindow();
+  void DrawPlot(const QVector<double> &x, const QVector<double> &y,
+                const std::vector<double> &borders);
 
  public:
   std::array<QPushButton *, 13> num_buttons_;
   std::array<OperatorButton *, 17> operator_buttons_;
   std::array<QLineEdit *, 5> input_lines_;
+  std::array<QLabel *, 5> input_labels_;
   QRegularExpressionValidator *regex_validator_;
   QPushButton *clear_;
   QPushButton *eval_;
@@ -55,6 +58,13 @@ class CalcWindow : public QMainWindow {
     kBracketOpen = 10000,
     kBracketClose
   };
+
+ private:
+  void InitNumButtons();
+  void InitOperButtons();
+  void InitInputLines();
+  void InitEvalButtons();
+  void InitOutput();
 };
 }  // namespace s21
 #endif  // MAINWINDOW_H

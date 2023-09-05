@@ -2,19 +2,58 @@
 
 namespace s21 {
 CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
-  resize(900, 400);
+  resize(950, 400);
+
+  /* Num Buttons */
+  InitNumButtons();
+
+  /* Operators Buttons */
+  InitOperButtons();
+
+  /* Input lines */
+  InitInputLines();
+
+  /* Evaluate button */
+  InitEvalButtons();
+
+  /* Displays */
+  InitOutput();
+}
+
+CalcWindow::~CalcWindow() {
+  /* for (const auto &item : num_buttons_) delete item; */
+  /* for (const auto &item : operator_buttons_) delete item; */
+  /* for (const auto &item : input_lines_) delete item; */
+  /* for (const auto &item : input_labels_) delete item; */
+  delete regex_validator_;
+  /* delete clear_; */
+  /* delete eval_; */
+  /* delete make_plot_; */
+  /* delete display_; */
+  /* delete results_display_; */
+  /* delete plot_; */
+}
+
+void CalcWindow::DrawPlot(const QVector<double> &x, const QVector<double> &y,
+                          const std::vector<double> &borders) {
+  if (x.empty() && y.empty()) {
+    plot_->legend->setVisible(true);
+  } else {
+    plot_->legend->setVisible(false);
+  }
+  plot_->xAxis->setRange(borders[0], borders[1]);
+  plot_->yAxis->setRange(borders[2], borders[3]);
+  plot_->graph(0)->setData(x, y);
+  plot_->replot();
+}
+
+void CalcWindow::InitNumButtons() {
   int button_size = 50;
   QSize q_button_size{button_size, button_size};
   QPoint button_pos{0, 150};
-
   int offset_x = 0;
   int offset_y = 200;
 
-  /* Top level buttons */
-  clear_ = new QPushButton("\u232B", this);
-  clear_->setGeometry(QRect(button_pos, q_button_size));
-
-  /* Num Buttons */
   QVector<QString> num_buttons_labels = {"1", "2", "3", "4", "5", "6", "7",
                                          "8", "9", "0", ".", "e", "x"};
   for (int i = 12; i >= 0; --i) {
@@ -29,8 +68,16 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
     num_buttons_[i] = new QPushButton(num_buttons_labels[i], this);
     num_buttons_[i]->setGeometry(QRect(button_pos, q_button_size));
   }
+}
 
-  /* Operators Buttons */
+void CalcWindow::InitOperButtons() {
+  QPoint button_pos{0, 150};
+  int button_size = 50;
+  QSize q_button_size{button_size, button_size};
+
+  clear_ = new QPushButton("\u232B", this);
+  clear_->setGeometry(QRect(button_pos, q_button_size));
+
   operator_buttons_[0] =
       new OperatorButton(OperatorType::kModulus, "mod", this);
   button_pos.setX(150);
@@ -122,23 +169,37 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   button_pos.setX(300);
   button_pos.setY(200);
   operator_buttons_[16]->setGeometry(QRect(button_pos, q_button_size));
+}
 
-  /* Input lines */
+void CalcWindow::InitInputLines() {
+  int button_size = 50;
+  QSize q_button_size{button_size, button_size};
+  QPoint button_pos{0, 150};
+
   regex_validator_ = new QRegularExpressionValidator(
       QRegularExpression("[-]?[0]+[.][0-9]+|[-]?[1-9]+[0-9]*[.][0-9]*"));
+  QVector<QString> labels{"X", "X min", "X max", "Y min", "Y max"};
 
   q_button_size.setWidth(150);
   for (int i = 0; i < 5; ++i) {
-    input_lines_[i] = new QLineEdit(i % 2 == 0 ? "5" : "-5", this);
+    input_labels_[i] = new QLabel(labels[i], this);
     button_pos.setX(350);
+    button_pos.setY(i * 50 + 150);
+    input_labels_[i]->setGeometry(QRect(button_pos, q_button_size));
+    input_lines_[i] = new QLineEdit(i % 2 == 0 ? "5" : "-5", this);
+    button_pos.setX(400);
     button_pos.setY(i * 50 + 150);
     input_lines_[i]->setGeometry(QRect(button_pos, q_button_size));
     std::locale loc("en_US.utf8");
     std::locale::global(loc);
     input_lines_[i]->setValidator(regex_validator_);
   }
+}
 
-  /* Evaluate button */
+void CalcWindow::InitEvalButtons() {
+  int button_size = 50;
+  QSize q_button_size{button_size, button_size};
+  QPoint button_pos{0, 150};
   eval_ = new QPushButton("=", this);
   button_pos.setX(250);
   button_pos.setY(300);
@@ -154,35 +215,39 @@ CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
   q_button_size.setHeight(100);
   make_plot_->setGeometry(QRect(button_pos, q_button_size));
   make_plot_->setStyleSheet("background-color: #893101; font: white;");
+}
 
-  /* Displays */
+void CalcWindow::InitOutput() {
   display_ = new QLabel(this);
-  display_->setGeometry(QRect(QPoint(0, 100), QSize(500, 50)));
+  display_->setGeometry(QRect(QPoint(0, 100), QSize(550, 50)));
   results_display_ = new QListWidget(this);
-  results_display_->setGeometry(QRect(QPoint(0, 0), QSize(500, 100)));
+  results_display_->setGeometry(QRect(QPoint(0, 0), QSize(550, 100)));
 
   plot_ = new QCustomPlot(this);
-  plot_->setGeometry(QRect(QPoint(500, 0), QSize(400, 400)));
+  plot_->setBackground(QBrush(QColor("#333333")));
+  plot_->setGeometry(QRect(QPoint(550, 0), QSize(400, 400)));
   plot_->addGraph();
   plot_->graph(0)->setLineStyle(QCPGraph::lsNone);
   QCPScatterStyle scatter_style =
       QCPScatterStyle(QCPScatterStyle::ssDisc, Qt::red, 3.0);
   plot_->graph(0)->setScatterStyle(scatter_style);
-  plot_->xAxis->setLabel("x");
-  plot_->yAxis->setLabel("y");
-}
+  plot_->graph(0)->setName("malfunction");
 
-CalcWindow::~CalcWindow() {
-  for (const auto &item : num_buttons_) delete item;
-  for (const auto &item : operator_buttons_) delete item;
-  for (const auto &item : input_lines_) delete item;
-  delete regex_validator_;
-  delete clear_;
-  delete eval_;
-  delete make_plot_;
-  delete display_;
-  delete results_display_;
-  delete plot_;
+  QColor dot_lines_color("#787878");
+  QColor solid_lines_color("#999999");
+  plot_->xAxis->setLabel("x");
+  plot_->xAxis->setTickLabelColor(solid_lines_color);
+  plot_->xAxis->setLabelColor(solid_lines_color);
+  plot_->xAxis->grid()->setPen(QPen(dot_lines_color, 1, Qt::DotLine));
+  plot_->xAxis->grid()->setZeroLinePen(
+      QPen(solid_lines_color, 1, Qt::SolidLine));
+
+  plot_->yAxis->setLabel("y");
+  plot_->yAxis->setTickLabelColor(solid_lines_color);
+  plot_->yAxis->setLabelColor(solid_lines_color);
+  plot_->yAxis->grid()->setPen(QPen(dot_lines_color, 1, Qt::DotLine));
+  plot_->yAxis->grid()->setZeroLinePen(
+      QPen(solid_lines_color, 1, Qt::SolidLine));
 }
 
 }  // namespace s21
