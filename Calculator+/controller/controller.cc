@@ -66,10 +66,7 @@ void Controller::MakePlot() {
   auto coords = model_->GetCoordinates(value_borders);
   QVector<double> x_qvector(coords.first.begin(), coords.first.end());
   QVector<double> y_qvector(coords.second.begin(), coords.second.end());
-  view_->plot_->xAxis->setRange(value_borders[0], value_borders[1]);
-  view_->plot_->yAxis->setRange(value_borders[2], value_borders[3]);
-  view_->plot_->graph(0)->setData(x_qvector, y_qvector);
-  view_->plot_->replot();
+  view_->DrawPlot(x_qvector, y_qvector, value_borders);
 }
 
 void Controller::VariableSet() noexcept {
