@@ -20,10 +20,6 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
     connect(item, &QPushButton::released, this, &Controller::OperButton);
   }
 
-  /* Input lines signals */
-  connect(view_->input_lines_[0], &QLineEdit::textEdited, this,
-          &Controller::VariableSet);
-
   /* Evaluate and graph button signal */
   connect(view_->eval_, &QPushButton::released, this, &Controller::EvalButton);
 
@@ -51,6 +47,7 @@ void Controller::OperButton() noexcept {
 }
 
 void Controller::EvalButton() noexcept {
+  VariableSet();
   std::string result = model_->GetResult();
   view_->results_display_->addItem(QString::fromStdString(result));
   view_->results_display_->scrollToBottom();
@@ -76,7 +73,7 @@ void Controller::MakePlot() {
 }
 
 void Controller::VariableSet() noexcept {
-  QString input_value = static_cast<QLineEdit *>(sender())->text();
+  QString input_value = view_->input_lines_[0]->text();
   if (!input_value.isEmpty()) {
     std::string std_input_value = input_value.toStdString();
     model_->SetVariables(std_input_value);
