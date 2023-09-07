@@ -11,8 +11,8 @@
 #define QCUSTOMPLOT_USE_LIBRARY
 #include "../model/model.h"
 #include "../qcustomplot/qcustomplot.h"
-#include "operatorbutton.h"
 #include "creditwindow.h"
+#include "operatorbutton.h"
 
 namespace s21 {
 class CalcWindow : public QMainWindow {
@@ -37,7 +37,9 @@ class CalcWindow : public QMainWindow {
   QCustomPlot *plot_;
   QListWidget *results_display_;
   /* MVC */
-  s21::Model *model_;
+  /* s21::Model *model_; */
+  /* Bonus part */
+  CreditWindow *credit_window_;
 
  private:
   enum OperatorType {

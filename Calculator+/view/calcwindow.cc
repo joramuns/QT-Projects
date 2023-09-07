@@ -1,10 +1,10 @@
 #include "calcwindow.h"
 
 namespace s21 {
-CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), model_(cmodel) {
+CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), credit_window_(new CreditWindow()) {
   resize(950, 400);
-  CreditWindow *widget = new CreditWindow();
-  widget->show();
+  credit_window_->setAttribute(Qt::WA_DeleteOnClose, true);
+  credit_window_->show();
 
   /* Num Buttons */
   InitNumButtons();
