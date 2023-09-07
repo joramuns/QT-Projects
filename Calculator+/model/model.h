@@ -5,16 +5,17 @@
 
 #include "infix.h"
 #include "postfix.h"
+#include "credit.h"
 
 namespace s21 {
 class Model final : public InfixExpr, public PostfixExpr {
  public:
-  Model() = default;
-  Model(const Model &other) = delete;
-  Model(Model &&other) = delete;
-  Model &operator=(const Model &other) = delete;
-  Model &operator=(Model &&other) = delete;
-  ~Model() = default;
+  /* Model() = default; */
+  /* Model(const Model &other) = delete; */
+  /* Model(Model &&other) = delete; */
+  /* Model &operator=(const Model &other) = delete; */
+  /* Model &operator=(Model &&other) = delete; */
+  /* ~Model() = default; */
 
   /* Modifiers */
   void Convert() noexcept;
@@ -27,6 +28,9 @@ class Model final : public InfixExpr, public PostfixExpr {
 
   /* Debug output */
   void OutputModel() noexcept;
+
+public:
+  CreditCalc credit_model_;
 
  private:
   Element Calculate(const Element &a, const Element &b,
