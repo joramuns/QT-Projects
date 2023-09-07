@@ -26,7 +26,7 @@ QGroupBox *CreditWindow::AddInputGroupBox() {
   QGroupBox *input_group_box_ = new QGroupBox(tr("Input data"));
 
   credit_amount_ = new QLineEdit;
-  credit_term_ = new QSpinBox;
+  credit_term_ = new QDoubleSpinBox;
   credit_interest_ = new QLineEdit;
   credit_type_ = new QComboBox;
 
