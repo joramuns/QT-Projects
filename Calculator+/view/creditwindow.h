@@ -22,9 +22,9 @@ class CreditWindow : public QDialog {
 
  public:
   /* Input block */
-  QLineEdit *credit_amount_;
+  QDoubleSpinBox *credit_amount_;
   QDoubleSpinBox *credit_term_;
-  QLineEdit *credit_interest_;
+  QDoubleSpinBox *credit_interest_;
   QComboBox *credit_type_;
   /* Output block */
   QListWidget *payment_monthly_;

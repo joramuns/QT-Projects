@@ -25,9 +25,13 @@ CreditWindow::~CreditWindow() {}
 QGroupBox *CreditWindow::AddInputGroupBox() {
   QGroupBox *input_group_box_ = new QGroupBox(tr("Input data"));
 
-  credit_amount_ = new QLineEdit;
+  credit_amount_ = new QDoubleSpinBox;
+  credit_amount_->setMaximum(std::numeric_limits<double>::max());
   credit_term_ = new QDoubleSpinBox;
-  credit_interest_ = new QLineEdit;
+  credit_term_->setMaximum(std::numeric_limits<double>::max());
+  credit_term_->setDecimals(0);
+  credit_interest_ = new QDoubleSpinBox;
+  credit_interest_->setMaximum(std::numeric_limits<double>::max());
   credit_type_ = new QComboBox;
 
   credit_type_->addItem("annuity");
