@@ -21,6 +21,7 @@ set(COMMON_SOURCES
   model/infix.cc
   model/postfix.cc
   model/credit.cc
+  model/deposit.cc
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport)
