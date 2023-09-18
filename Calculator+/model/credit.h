@@ -1,20 +1,24 @@
 #ifndef MODEL_CREDIT_H_
 #define MODEL_CREDIT_H_
 
-#include <vector>
 #include <cmath>
+#include <vector>
 
 namespace s21 {
 class CreditCalc final {
  public:
-  CreditCalc() noexcept = default;
+  CreditCalc();
 
   /* Modifiers */
+  void Calculate();
   void CalculateAnnuity();
-  void CalculatePayment();
+  void CalculateDifferentiated();
+  void AnnuityPayment();
+  void DifferentiatedPayment();
 
   /* Mutators */
-  void SetData(double amount, double term, double interest_rate, bool credit_type);
+  void SetData(double amount, double term, double interest_rate,
+               int credit_type);
 
   /* Getters */
   std::vector<double> GetPayments();
@@ -22,19 +26,16 @@ class CreditCalc final {
   double GetTotalPayment();
 
  private:
-  /* struct InputData { */
+  /* Input data */
   double amount_;
   double term_;
   double interest_rate_;
-  bool credit_type_;
-  /* }; */
-  /* struct OutputData { */
+  int credit_type_;
+
+  /* Output data */
   std::vector<double> payments_;
   double overpayment_;
   double total_payment_;
-  /* }; */
-  /* InputData input_; */
-  /* OutputData output_; */
 };
 }  // namespace s21
 #endif  // MODEL_CREDIT_H_
