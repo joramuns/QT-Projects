@@ -22,7 +22,8 @@ CreditWindow::CreditWindow() {
 
 CreditWindow::~CreditWindow() {}
 
-void CreditWindow::OutputData(double over_payment, double total_payment, std::vector<double> monthly_payments) {
+void CreditWindow::OutputData(double over_payment, double total_payment,
+                              std::vector<double> monthly_payments) {
   QString string_over_payment = QString::number(over_payment, 'd', 3);
   string_over_payment.chop(1);
   payment_over_->setText(string_over_payment);

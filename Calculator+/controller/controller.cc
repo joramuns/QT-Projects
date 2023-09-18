@@ -96,7 +96,8 @@ void Controller::CreditEvalButton() noexcept {
   double get_total_payment = model_->credit_model_.GetTotalPayment();
   auto get_monthly_payments = model_->credit_model_.GetPayments();
 
-  credit_window->OutputData(get_overpayment, get_total_payment, get_monthly_payments);
+  credit_window->OutputData(get_overpayment, get_total_payment,
+                            get_monthly_payments);
 }
 
 void Controller::Render() const noexcept {

@@ -1,7 +1,8 @@
 #include "calcwindow.h"
 
 namespace s21 {
-CalcWindow::CalcWindow(Model *cmodel) : QMainWindow(nullptr), credit_window_(new CreditWindow()) {
+CalcWindow::CalcWindow(Model *cmodel)
+    : QMainWindow(nullptr), credit_window_(new CreditWindow()) {
   resize(950, 400);
   credit_window_->setAttribute(Qt::WA_DeleteOnClose, true);
   credit_window_->show();
@@ -195,8 +196,8 @@ void CalcWindow::InitInputLines() {
     button_pos.setY(i * 50 + 150);
     q_button_size.setWidth(150);
     input_lines_[i]->setGeometry(QRect(button_pos, q_button_size));
-    std::locale loc("en_US.utf8");
-    std::locale::global(loc);
+    /* std::locale loc("en_US.utf8"); */
+    /* std::locale::global(loc); */
     input_lines_[i]->setValidator(regex_validator_);
   }
 }
