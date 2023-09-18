@@ -119,8 +119,10 @@ std::string Model::GetResult() noexcept {
   } else {
     double value = Evaluate();
     std::stringstream ss;
-    ss << value;
+    ss << std::fixed << value;
     result = GetInfixString() + " = " + ss.str();
+    result.erase(result.find_last_not_of('0') + 1, std::string::npos);
+    result.erase(result.find_last_not_of('.') + 1, std::string::npos);
   }
 
   return result;
