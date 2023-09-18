@@ -12,6 +12,7 @@
 #include "../model/model.h"
 #include "../qcustomplot/qcustomplot.h"
 #include "creditwindow.h"
+#include "depositwindow.h"
 #include "operatorbutton.h"
 
 namespace s21 {
@@ -40,6 +41,7 @@ class CalcWindow : public QMainWindow {
   /* s21::Model *model_; */
   /* Bonus part */
   CreditWindow *credit_window_;
+  DepositWindow *deposit_window_;
 
  private:
   enum OperatorType {

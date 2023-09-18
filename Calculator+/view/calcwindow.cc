@@ -2,10 +2,10 @@
 
 namespace s21 {
 CalcWindow::CalcWindow(Model *cmodel)
-    : QMainWindow(nullptr), credit_window_(new CreditWindow()) {
+    : QMainWindow(nullptr), credit_window_(new CreditWindow()), deposit_window_(new DepositWindow()) {
   resize(950, 400);
-  credit_window_->setAttribute(Qt::WA_DeleteOnClose, true);
   credit_window_->show();
+  deposit_window_->show();
 
   /* Num Buttons */
   InitNumButtons();
