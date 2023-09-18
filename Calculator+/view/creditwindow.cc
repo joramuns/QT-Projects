@@ -22,12 +22,31 @@ CreditWindow::CreditWindow() {
 
 CreditWindow::~CreditWindow() {}
 
+void CreditWindow::OutputData(double over_payment, double total_payment, std::vector<double> monthly_payments) {
+  QString string_over_payment = QString::number(over_payment, 'd', 3);
+  string_over_payment.chop(1);
+  payment_over_->setText(string_over_payment);
+
+  QString string_total_payment = QString::number(total_payment, 'd', 3);
+  string_total_payment.chop(1);
+  payment_total_->setText(string_total_payment);
+
+  for (const auto &item : monthly_payments) {
+    QString string_payment = QString::number(item, 'd', 3);
+    string_payment.chop(1);
+    payment_monthly_->addItem(string_payment);
+  }
+
+  payment_monthly_->scrollToBottom();
+}
+
 QGroupBox *CreditWindow::AddInputGroupBox() {
   QGroupBox *input_group_box_ = new QGroupBox(tr("Input data"));
 
   credit_amount_ = new QDoubleSpinBox;
   credit_amount_->setMaximum(std::numeric_limits<double>::max());
   credit_term_ = new QDoubleSpinBox;
+  credit_term_->setMinimum(1);
   credit_term_->setMaximum(std::numeric_limits<double>::max());
   credit_term_->setDecimals(0);
   credit_interest_ = new QDoubleSpinBox;

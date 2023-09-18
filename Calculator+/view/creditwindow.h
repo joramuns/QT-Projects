@@ -20,6 +20,9 @@ class CreditWindow : public QDialog {
   CreditWindow();
   ~CreditWindow();
 
+  void OutputData(double over_payment, double total_payment,
+                  std::vector<double> monthly_payments);
+
  public:
   /* Input block */
   QDoubleSpinBox *credit_amount_;
