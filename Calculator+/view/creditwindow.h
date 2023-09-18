@@ -23,6 +23,10 @@ class CreditWindow : public QDialog {
   void OutputData(double over_payment, double total_payment,
                   std::vector<double> monthly_payments);
 
+ private:
+  QGroupBox *AddInputGroupBox();
+  QGroupBox *AddOutputGroupBox();
+
  public:
   /* Input block */
   QDoubleSpinBox *credit_amount_;
@@ -35,10 +39,6 @@ class CreditWindow : public QDialog {
   QLineEdit *payment_total_;
   /* Buttons block */
   QPushButton *eval_credit_;
-
- private:
-  QGroupBox *AddInputGroupBox();
-  QGroupBox *AddOutputGroupBox();
 };
 }  // namespace s21
 #endif  // VIEW_CREDITWINDOW_H_

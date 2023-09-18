@@ -5,7 +5,7 @@
 namespace s21 {
 CreditWindow::CreditWindow() {
   setAttribute(Qt::WA_DeleteOnClose, true);
-  setAttribute(Qt::WA_QuitOnClose, false );
+  setAttribute(Qt::WA_QuitOnClose, false);
   resize(400, 400);
   setWindowTitle("Credit calculator");
 
@@ -46,12 +46,14 @@ QGroupBox *CreditWindow::AddInputGroupBox() {
   QGroupBox *input_group_box = new QGroupBox(tr("Input data"));
 
   credit_amount_ = new QDoubleSpinBox;
+  credit_amount_->setMinimum(0.01);
   credit_amount_->setMaximum(std::numeric_limits<double>::max());
   credit_term_ = new QDoubleSpinBox;
   credit_term_->setMinimum(1);
   credit_term_->setMaximum(std::numeric_limits<double>::max());
   credit_term_->setDecimals(0);
   credit_interest_ = new QDoubleSpinBox;
+  credit_interest_->setMinimum(0);
   credit_interest_->setMaximum(std::numeric_limits<double>::max());
 
   credit_type_ = new QComboBox;
