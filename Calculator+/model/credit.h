@@ -11,10 +11,6 @@ class CreditCalc final {
 
   /* Modifiers */
   void Calculate();
-  void CalculateAnnuity();
-  void CalculateDifferentiated();
-  void AnnuityPayment();
-  void DifferentiatedPayment();
 
   /* Mutators */
   void SetData(double amount, double term, double interest_rate,
@@ -24,6 +20,12 @@ class CreditCalc final {
   std::vector<double> GetPayments();
   double GetOverpayment();
   double GetTotalPayment();
+
+ private:
+  void CalculateAnnuity();
+  void CalculateDifferentiated();
+  void AnnuityPayment();
+  void DifferentiatedPayment();
 
  private:
   /* Input data */
