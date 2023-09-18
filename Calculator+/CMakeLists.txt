@@ -14,6 +14,7 @@ set(COMMON_SOURCES
   view/calcwindow.cc
   view/operatorbutton.cc
   view/creditwindow.cc
+  view/depositwindow.cc
   controller/controller.cc
   model/model.cc
   model/element.cc
