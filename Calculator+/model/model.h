@@ -3,9 +3,10 @@
 
 #include <stack>
 
+#include "credit.h"
+#include "deposit.h"
 #include "infix.h"
 #include "postfix.h"
-#include "credit.h"
 
 namespace s21 {
 class Model final : public InfixExpr, public PostfixExpr {
@@ -24,13 +25,15 @@ class Model final : public InfixExpr, public PostfixExpr {
   /* Calculators */
   double Evaluate() noexcept;
   std::string GetResult() noexcept;
-  std::pair<std::vector<double>, std::vector<double>> GetCoordinates(const std::vector<double> &value_borders);
+  std::pair<std::vector<double>, std::vector<double>> GetCoordinates(
+      const std::vector<double> &value_borders);
 
   /* Debug output */
   void OutputModel() noexcept;
 
-public:
+ public:
   CreditCalc credit_model_;
+  DepositCalc deposit_model_;
 
  private:
   Element Calculate(const Element &a, const Element &b,
