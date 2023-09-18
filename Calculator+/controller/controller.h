@@ -26,10 +26,19 @@ class Controller : public QObject {
   void EvalButton() noexcept;
   void MakePlot();
   void VariableSet() noexcept;
+  /* Credit calc */
   void CreditEvalButton() noexcept;
+  /* Deposit calc */
+  void DepositAddReplenishment() noexcept;
+  void DepositRemoveReplenishment() noexcept;
+  void DepositAddWithdrawal() noexcept;
+  void DepositRemoveWithdrawal() noexcept;
+  void DepositEvalButton() noexcept;
 
  private:
   void Render() const noexcept;
+  void RenderReplenishment() const noexcept;
+  void RenderWithdrawal() const noexcept;
   /* MVC */
   CalcWindow *view_;
   Model *model_;

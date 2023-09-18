@@ -30,6 +30,13 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
   /* Credit calculator button */
   connect(view_->credit_window_->eval_credit_, &QPushButton::released, this,
           &Controller::CreditEvalButton);
+
+  /* Deposit calculator buttons */
+  connect(view_->deposit_window_->add_replenishment_, &QPushButton::released,
+          this, &Controller::DepositAddReplenishment);
+
+  connect(view_->deposit_window_->add_withdrawal_, &QPushButton::released, this,
+          &Controller::DepositAddWithdrawal);
 }
 
 void Controller::ClearButton() noexcept {
@@ -82,6 +89,8 @@ void Controller::VariableSet() noexcept {
   }
 }
 
+/* Credit calc */
+
 void Controller::CreditEvalButton() noexcept {
   CreditWindow *credit_window = view_->credit_window_;
   credit_window->payment_monthly_->clear();
@@ -100,9 +109,57 @@ void Controller::CreditEvalButton() noexcept {
                             get_monthly_payments);
 }
 
+/* Deposit calc */
+
+void Controller::DepositAddReplenishment() noexcept {
+  DepositWindow *deposit_window = view_->deposit_window_;
+  double day = deposit_window->GetReplenishmentDay();
+  double amount = deposit_window->GetReplenishmentAmount();
+  model_->deposit_model_.AddReplenishment(day, amount);
+  RenderReplenishment();
+}
+
+void Controller::DepositRemoveReplenishment() noexcept {}
+
+void Controller::DepositAddWithdrawal() noexcept {
+  DepositWindow *deposit_window = view_->deposit_window_;
+  double day = deposit_window->GetWithdrawalDay();
+  double amount = deposit_window->GetWithdrawalAmount();
+  model_->deposit_model_.AddWithdrawal(day, amount);
+  RenderWithdrawal();
+}
+
+void Controller::DepositRemoveWithdrawal() noexcept {}
+
+void Controller::DepositEvalButton() noexcept {}
+
+/* Private main calc function */
 void Controller::Render() const noexcept {
   std::string infix_line = model_->GetInfixString();
   view_->display_->setText(QString::fromStdString(infix_line));
+}
+
+/* Private deposit calc function */
+void Controller::RenderReplenishment() const noexcept {
+  view_->deposit_window_->ClearReplenishment();
+  QString replenishment_line;
+  auto replenishment_list = model_->deposit_model_.GetReplenishmentList();
+  for (const auto &item : replenishment_list) {
+    replenishment_line = "[" + QString::number(item.first) +
+                         "] Added: " + QString::number(item.second);
+    view_->deposit_window_->AddReplenishment(replenishment_line);
+  }
+}
+
+void Controller::RenderWithdrawal() const noexcept {
+  view_->deposit_window_->ClearWithdrawal();
+  QString withdrawal_line;
+  auto withdrawal_list = model_->deposit_model_.GetWithdrawalList();
+  for (const auto &item : withdrawal_list) {
+    withdrawal_line = "[" + QString::number(item.first) +
+                      "] Withdrawn: " + QString::number(item.second);
+    view_->deposit_window_->AddWithdrawal(withdrawal_line);
+  }
 }
 
 }  // namespace s21
