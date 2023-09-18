@@ -1,6 +1,7 @@
 #include "controller.h"
 
 #include <QDebug>
+#include <QLocale>
 #include <QPushButton>
 
 namespace s21 {
@@ -25,6 +26,10 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
 
   connect(view_->make_plot_, &QPushButton::released, this,
           &Controller::MakePlot);
+
+  /* Credit calculator button */
+  connect(view_->credit_window_->eval_credit_, &QPushButton::released, this,
+          &Controller::CreditEvalButton);
 }
 
 void Controller::ClearButton() noexcept {
@@ -76,6 +81,24 @@ void Controller::VariableSet() noexcept {
     model_->SetVariables(std_input_value);
   }
 }
+
+void Controller::CreditEvalButton() noexcept {
+  CreditWindow *credit_window = view_->credit_window_;
+  credit_window->payment_monthly_->clear();
+  double set_amount = credit_window->credit_amount_->value();
+  double set_term = credit_window->credit_term_->value();
+  double set_rate = credit_window->credit_interest_->value();
+  int set_type = credit_window->credit_type_->currentIndex();
+  model_->credit_model_.SetData(set_amount, set_term, set_rate, set_type);
+  model_->credit_model_.Calculate();
+
+  double get_overpayment = model_->credit_model_.GetOverpayment();
+  double get_total_payment = model_->credit_model_.GetTotalPayment();
+  auto get_monthly_payments = model_->credit_model_.GetPayments();
+
+  credit_window->OutputData(get_overpayment, get_total_payment, get_monthly_payments);
+}
+
 void Controller::Render() const noexcept {
   std::string infix_line = model_->GetInfixString();
   view_->display_->setText(QString::fromStdString(infix_line));

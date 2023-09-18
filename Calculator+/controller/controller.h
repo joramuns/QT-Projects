@@ -26,6 +26,7 @@ class Controller : public QObject {
   void EvalButton() noexcept;
   void MakePlot();
   void VariableSet() noexcept;
+  void CreditEvalButton() noexcept;
 
  private:
   void Render() const noexcept;
