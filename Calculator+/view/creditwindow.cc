@@ -5,6 +5,7 @@
 namespace s21 {
 CreditWindow::CreditWindow() {
   setAttribute(Qt::WA_DeleteOnClose, true);
+  setAttribute(Qt::WA_QuitOnClose, false );
   resize(400, 400);
   setWindowTitle("Credit calculator");
 
@@ -42,7 +43,7 @@ void CreditWindow::OutputData(double over_payment, double total_payment,
 }
 
 QGroupBox *CreditWindow::AddInputGroupBox() {
-  QGroupBox *input_group_box_ = new QGroupBox(tr("Input data"));
+  QGroupBox *input_group_box = new QGroupBox(tr("Input data"));
 
   credit_amount_ = new QDoubleSpinBox;
   credit_amount_->setMaximum(std::numeric_limits<double>::max());
@@ -52,8 +53,8 @@ QGroupBox *CreditWindow::AddInputGroupBox() {
   credit_term_->setDecimals(0);
   credit_interest_ = new QDoubleSpinBox;
   credit_interest_->setMaximum(std::numeric_limits<double>::max());
-  credit_type_ = new QComboBox;
 
+  credit_type_ = new QComboBox;
   credit_type_->addItem("annuity");
   credit_type_->addItem("differentiated");
 
@@ -62,13 +63,13 @@ QGroupBox *CreditWindow::AddInputGroupBox() {
   layout->addRow(new QLabel(tr("Term:")), credit_term_);
   layout->addRow(new QLabel(tr("Interest rate:")), credit_interest_);
   layout->addRow(new QLabel(tr("Type of credit:")), credit_type_);
-  input_group_box_->setLayout(layout);
+  input_group_box->setLayout(layout);
 
-  return input_group_box_;
+  return input_group_box;
 }
 
 QGroupBox *CreditWindow::AddOutputGroupBox() {
-  QGroupBox *output_group_box_ = new QGroupBox(tr("Output data"));
+  QGroupBox *output_group_box = new QGroupBox(tr("Output data"));
 
   payment_monthly_ = new QListWidget;
   payment_over_ = new QLineEdit;
@@ -78,8 +79,8 @@ QGroupBox *CreditWindow::AddOutputGroupBox() {
   layout->addRow(new QLabel(tr("Monthly payments:")), payment_monthly_);
   layout->addRow(new QLabel(tr("Overpayment:")), payment_over_);
   layout->addRow(new QLabel(tr("Total payment:")), payment_total_);
-  output_group_box_->setLayout(layout);
+  output_group_box->setLayout(layout);
 
-  return output_group_box_;
+  return output_group_box;
 }
 }  // namespace s21
