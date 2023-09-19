@@ -10,10 +10,12 @@ DepositWindow::DepositWindow() {
   QVBoxLayout *main_layout = new QVBoxLayout;
 
   QGroupBox *input_group_box = AddInputGroupBox();
+  QGroupBox *input_extra_box = AddExtraGroupBox();
   QGroupBox *output_group_box = AddOutputGroupBox();
   eval_deposit_ = new QPushButton("Deposit me!", this);
 
   main_layout->addWidget(input_group_box);
+  main_layout->addWidget(input_extra_box);
   main_layout->addWidget(output_group_box);
   main_layout->addWidget(eval_deposit_);
   setLayout(main_layout);
@@ -21,19 +23,32 @@ DepositWindow::DepositWindow() {
 
 DepositWindow::~DepositWindow(){};
 
-double DepositWindow::GetReplenishmentDay() {
+double DepositWindow::GetDepositAmount() const noexcept {
+  return deposit_amount_->value();
+}
+double DepositWindow::GetDepositTerm() const noexcept {
+  return deposit_term_->value();
+}
+double DepositWindow::GetDepositRate() const noexcept {
+  return deposit_interest_->value();
+}
+
+/* QComboBox *deposit_periodicity_; */
+/* QCheckBox *capitalization_; */
+
+double DepositWindow::GetReplenishmentDay() const noexcept {
   return replenishment_day_->value();
 }
 
-double DepositWindow::GetReplenishmentAmount() {
+double DepositWindow::GetReplenishmentAmount() const noexcept {
   return replenishment_amount_->value();
 }
 
-double DepositWindow::GetWithdrawalDay() {
+double DepositWindow::GetWithdrawalDay() const noexcept {
   return withdrawal_day_->value();
 }
 
-double DepositWindow::GetWithdrawalAmount() {
+double DepositWindow::GetWithdrawalAmount() const noexcept {
   return withdrawal_amount_->value();
 }
 
@@ -41,17 +56,13 @@ void DepositWindow::AddReplenishment(const QString &replenishment) {
   replenishments_list_->addItem(replenishment);
 }
 
-void DepositWindow::ClearReplenishment() {
-  replenishments_list_->clear();
-}
+void DepositWindow::ClearReplenishment() { replenishments_list_->clear(); }
 
 void DepositWindow::AddWithdrawal(const QString &withdrawal) {
   withdrawals_list_->addItem(withdrawal);
 }
 
-void DepositWindow::ClearWithdrawal() {
-  withdrawals_list_->clear();
-}
+void DepositWindow::ClearWithdrawal() { withdrawals_list_->clear(); }
 
 QGroupBox *DepositWindow::AddInputGroupBox() {
   QGroupBox *input_group_box = new QGroupBox(tr("Input data"));
@@ -75,6 +86,22 @@ QGroupBox *DepositWindow::AddInputGroupBox() {
   deposit_periodicity_->addItem("annualy");
 
   capitalization_ = new QCheckBox;
+
+  QFormLayout *layout = new QFormLayout;
+  layout->addRow(new QLabel(tr("Amount:")), deposit_amount_);
+  layout->addRow(new QLabel(tr("Term:")), deposit_term_);
+  layout->addRow(new QLabel(tr("Interest rate:")), deposit_interest_);
+  layout->addRow(new QLabel(tr("Periodicity of payments:")),
+                 deposit_periodicity_);
+  layout->addRow(new QLabel(tr("Capitalization of interest:")),
+                 capitalization_);
+  input_group_box->setLayout(layout);
+
+  return input_group_box;
+}
+
+QGroupBox *DepositWindow::AddExtraGroupBox() {
+  QGroupBox *input_extra_box = new QGroupBox(tr("Account movement"));
 
   replenishments_list_ = new QListWidget;
 
@@ -105,13 +132,6 @@ QGroupBox *DepositWindow::AddInputGroupBox() {
   remove_withdrawal_ = new QPushButton("-");
 
   QFormLayout *layout = new QFormLayout;
-  layout->addRow(new QLabel(tr("Amount:")), deposit_amount_);
-  layout->addRow(new QLabel(tr("Term:")), deposit_term_);
-  layout->addRow(new QLabel(tr("Interest rate:")), deposit_interest_);
-  layout->addRow(new QLabel(tr("Periodicity of payments:")),
-                 deposit_periodicity_);
-  layout->addRow(new QLabel(tr("Capitalization of interest:")),
-                 capitalization_);
   layout->addRow(new QLabel(tr("Replenishments:")), replenishments_list_);
   layout->addRow(new QLabel(tr("Day:")), replenishment_day_);
   layout->addRow(new QLabel(tr("Amount:")), replenishment_amount_);
@@ -120,9 +140,9 @@ QGroupBox *DepositWindow::AddInputGroupBox() {
   layout->addRow(new QLabel(tr("Day:")), withdrawal_day_);
   layout->addRow(new QLabel(tr("Amount:")), withdrawal_amount_);
   layout->addRow(add_withdrawal_, remove_withdrawal_);
-  input_group_box->setLayout(layout);
+  input_extra_box->setLayout(layout);
 
-  return input_group_box;
+  return input_extra_box;
 }
 
 QGroupBox *DepositWindow::AddOutputGroupBox() {

@@ -22,10 +22,15 @@ class DepositWindow : public QWidget {
   ~DepositWindow();
 
   /* Getters */
-  double GetReplenishmentDay();
-  double GetReplenishmentAmount();
-  double GetWithdrawalDay();
-  double GetWithdrawalAmount();
+  double GetDepositAmount() const noexcept;
+  double GetDepositTerm() const noexcept;
+  double GetDepositRate() const noexcept;
+  /* QComboBox *deposit_periodicity_; */
+  /* QCheckBox *capitalization_; */
+  double GetReplenishmentDay() const noexcept;
+  double GetReplenishmentAmount() const noexcept;
+  double GetWithdrawalDay() const noexcept;
+  double GetWithdrawalAmount() const noexcept;
 
   /* Mutators */
   void AddReplenishment(const QString &replenishment);
@@ -44,6 +49,7 @@ class DepositWindow : public QWidget {
 
  private:
   QGroupBox *AddInputGroupBox();
+  QGroupBox *AddExtraGroupBox();
   QGroupBox *AddOutputGroupBox();
 
  private:
