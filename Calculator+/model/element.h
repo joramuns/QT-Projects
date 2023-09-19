@@ -26,7 +26,7 @@ class Element final {
   int GetPriority() const noexcept;
 
   /* Modifiers */
-  bool AppendNumber(const char input) noexcept;
+  void AppendNumber(const char input) noexcept;
   void SetUnary() noexcept;
   void SetValue(const double number) noexcept;
 
@@ -80,6 +80,11 @@ class Element final {
     kTrigonometry = 3,
     kBrackets
   };
+
+ private:
+  bool CheckE(const char last_char) noexcept;
+  bool CheckDot() noexcept;
+  bool CheckDigit() noexcept;
 
  private:
   bool is_operator_;

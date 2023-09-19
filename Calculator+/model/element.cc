@@ -12,7 +12,7 @@ Element::Element(const double input) noexcept
 Element::Element(const char input) noexcept : is_operator_(false), value_(0) {
   string_value_ += input;
   if (input != 'x') {
-    if (string_value_ == ".") {
+    if (string_value_ == "." || string_value_ == "e") {
       string_value_ = "0" + string_value_;
     }
     value_ = std::stod(string_value_);
@@ -31,15 +31,20 @@ int Element::GetPriority() const noexcept {
 }
 
 /* Modifiers */
-bool Element::AppendNumber(const char input) noexcept {
-  if (IsOperator()) {
-    return false;
+void Element::AppendNumber(const char input) noexcept {
+  bool allowed = true;
+  char last_char = string_value_.back();
+
+  if (input == 'e') {
+    allowed = CheckE(last_char);
+  } else if (input == '.') {
+    allowed = CheckDot();
   } else {
-    if (input != '.' || string_value_.find('.') == std::string::npos) {
-      string_value_ += input;
-      value_ = std::stod(string_value_);
-    }
-    return true;
+    allowed = CheckDigit();
+  }
+  if (allowed) {
+    string_value_ += input;
+    value_ = std::stod(string_value_);
   }
 }
 
@@ -153,6 +158,53 @@ Element Element::ln() const noexcept { return Element(std::log(GetValue())); }
 
 Element Element::log() const noexcept {
   return Element(std::log10(GetValue()));
+}
+
+/* Private element functions */
+bool Element::CheckE(const char last_char) noexcept {
+  bool allowed = true;
+
+  if (string_value_.find('e') != std::string::npos) {
+    allowed = false;
+    if (last_char == 'e') {
+      string_value_ += '+';
+    } else if (last_char == '+' || last_char == '-') {
+      string_value_.back() = last_char == '+' ? '-' : '+';
+    }
+  } else if (last_char == '.') {
+    string_value_ += '0';
+  }
+
+  return allowed;
+}
+
+bool Element::CheckDot() noexcept {
+  bool allowed = true;
+
+  if (string_value_.find('e') != std::string::npos ||
+      string_value_.find('.') != std::string::npos) {
+    allowed = false;
+  }
+
+  return allowed;
+}
+
+bool Element::CheckDigit() noexcept {
+  bool allowed = true;
+  auto e_place = string_value_.find('e');
+
+  if (string_value_.find('+') != std::string::npos ||
+      string_value_.find('-') != std::string::npos) {
+    ++e_place;
+  }
+  if (e_place != std::string::npos) {
+    auto count_chars_after_e = string_value_.size() - e_place;
+    if (count_chars_after_e > 2) {
+      allowed = false;
+    }
+  }
+
+  return allowed;
 }
 
 }  // namespace s21
