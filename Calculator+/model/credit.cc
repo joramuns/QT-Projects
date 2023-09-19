@@ -50,8 +50,10 @@ void CreditCalc::DifferentiatedPayment() {
   double pay_off = amount_ / term_;
 
   for (int i = 0; i != term_; ++i) {
-    payments_.push_back(amount * interest_rate_ + pay_off);
-    total_payment_ += payments_.back();
+    double payment = amount * interest_rate_ + pay_off;
+    payment = std::round(payment * 100) / 100;
+    payments_.push_back(payment);
+    total_payment_ += payment;
     amount -= pay_off;
   }
 }
