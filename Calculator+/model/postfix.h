@@ -32,13 +32,13 @@ class PostfixExpr {
   std::deque<Element> GetQueue() const noexcept;
 
  private:
+  void PopAndPush() noexcept;
+  bool TopOpenBracket() const noexcept;
+
+ private:
   /* Fields */
   std::deque<Element> stack_out_;
   std::deque<Element> queue_stack_;
-
- private:
-  void PopAndPush() noexcept;
-  bool TopOpenBracket() const noexcept;
 };
 }  // namespace s21
 
