@@ -9,15 +9,16 @@ class DepositCalc final {
   DepositCalc();
 
   /* Mutators */
-  void AddReplenishment(double day, double amount);
-  void AddWithdrawal(double day, double amount);
+  void AddReplenishment(double day, double amount) noexcept;
+  void RemoveReplenishment(int number) noexcept;
+  void AddWithdrawal(double day, double amount) noexcept;
+  void RemoveWithdrawal(int number) noexcept;
 
   /* Getters */
   const std::map<double, double> &GetReplenishmentList() const noexcept;
   const std::map<double, double> &GetWithdrawalList() const noexcept;
 
  private:
-
  private:
   /* Input data */
   double amount_;
