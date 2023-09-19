@@ -2,8 +2,10 @@
 
 namespace s21 {
 CalcWindow::CalcWindow(Model *cmodel)
-    : QMainWindow(nullptr), credit_window_(new CreditWindow()), deposit_window_(new DepositWindow()) {
-  resize(950, 400);
+    : QMainWindow(nullptr),
+      credit_window_(new CreditWindow()),
+      deposit_window_(new DepositWindow()) {
+  setFixedSize(950, 400);
   credit_window_->show();
   deposit_window_->show();
 

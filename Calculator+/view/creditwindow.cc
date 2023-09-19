@@ -6,7 +6,7 @@ namespace s21 {
 CreditWindow::CreditWindow() {
   setAttribute(Qt::WA_DeleteOnClose, true);
   setAttribute(Qt::WA_QuitOnClose, false);
-  resize(400, 400);
+  setFixedSize(400, 400);
   setWindowTitle("Credit calculator");
 
   QVBoxLayout *main_layout = new QVBoxLayout;

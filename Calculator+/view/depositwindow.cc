@@ -4,7 +4,7 @@ namespace s21 {
 DepositWindow::DepositWindow() {
   setAttribute(Qt::WA_DeleteOnClose, true);
   setAttribute(Qt::WA_QuitOnClose, false);
-  resize(400, 400);
+  setFixedSize(400, 900);
   setWindowTitle("Deposit calculator");
 
   QVBoxLayout *main_layout = new QVBoxLayout;
