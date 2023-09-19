@@ -37,6 +37,8 @@ class Controller : public QObject {
 
  private:
   void Render() const noexcept;
+  void SetCreditData() noexcept;
+  void RenderCredit() noexcept;
   void RenderReplenishment() const noexcept;
   void RenderWithdrawal() const noexcept;
   /* MVC */

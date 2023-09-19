@@ -98,21 +98,9 @@ void Controller::VariableSet() noexcept {
 /* Credit calc */
 
 void Controller::CreditEvalButton() noexcept {
-  CreditWindow *credit_window = view_->credit_window_;
-  credit_window->payment_monthly_->clear();
-  double set_amount = credit_window->credit_amount_->value();
-  double set_term = credit_window->credit_term_->value();
-  double set_rate = credit_window->credit_interest_->value();
-  int set_type = credit_window->credit_type_->currentIndex();
-  model_->credit_model_.SetData(set_amount, set_term, set_rate, set_type);
+  SetCreditData();
   model_->credit_model_.Calculate();
-
-  double get_overpayment = model_->credit_model_.GetOverpayment();
-  double get_total_payment = model_->credit_model_.GetTotalPayment();
-  auto get_monthly_payments = model_->credit_model_.GetPayments();
-
-  credit_window->OutputData(get_overpayment, get_total_payment,
-                            get_monthly_payments);
+  RenderCredit();
 }
 
 /* Deposit calc */
@@ -161,6 +149,26 @@ void Controller::DepositEvalButton() noexcept {}
 void Controller::Render() const noexcept {
   std::string infix_line = model_->GetInfixString();
   view_->display_->setText(QString::fromStdString(infix_line));
+}
+
+/* Private credit calc functions */
+void Controller::SetCreditData() noexcept {
+  CreditWindow *credit_window = view_->credit_window_;
+  credit_window->payment_monthly_->clear();
+  double set_amount = credit_window->credit_amount_->value();
+  double set_term = credit_window->credit_term_->value();
+  double set_rate = credit_window->credit_interest_->value();
+  int set_type = credit_window->credit_type_->currentIndex();
+  model_->credit_model_.SetData(set_amount, set_term, set_rate, set_type);
+}
+
+void Controller::RenderCredit() noexcept {
+  double get_overpayment = model_->credit_model_.GetOverpayment();
+  double get_total_payment = model_->credit_model_.GetTotalPayment();
+  auto get_monthly_payments = model_->credit_model_.GetPayments();
+
+  view_->credit_window_->OutputData(get_overpayment, get_total_payment,
+                                    get_monthly_payments);
 }
 
 /* Private deposit calc function */
