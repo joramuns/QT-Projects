@@ -35,8 +35,14 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
   connect(view_->deposit_window_->add_replenishment_, &QPushButton::released,
           this, &Controller::DepositAddReplenishment);
 
+  connect(view_->deposit_window_->remove_replenishment_, &QPushButton::released,
+          this, &Controller::DepositRemoveReplenishment);
+
   connect(view_->deposit_window_->add_withdrawal_, &QPushButton::released, this,
           &Controller::DepositAddWithdrawal);
+
+  connect(view_->deposit_window_->remove_withdrawal_, &QPushButton::released,
+          this, &Controller::DepositRemoveWithdrawal);
 }
 
 void Controller::ClearButton() noexcept {
@@ -122,7 +128,13 @@ void Controller::DepositAddReplenishment() noexcept {
   }
 }
 
-void Controller::DepositRemoveReplenishment() noexcept {}
+void Controller::DepositRemoveReplenishment() noexcept {
+  int rep_row = view_->deposit_window_->GetCurrentReplenishment();
+  if (rep_row >= 0) {
+    model_->deposit_model_.RemoveReplenishment(rep_row);
+    RenderReplenishment();
+  }
+}
 
 void Controller::DepositAddWithdrawal() noexcept {
   DepositWindow *deposit_window = view_->deposit_window_;
@@ -135,7 +147,13 @@ void Controller::DepositAddWithdrawal() noexcept {
   }
 }
 
-void Controller::DepositRemoveWithdrawal() noexcept {}
+void Controller::DepositRemoveWithdrawal() noexcept {
+  int rep_row = view_->deposit_window_->GetCurrentWithdrawal();
+  if (rep_row >= 0) {
+    model_->deposit_model_.RemoveWithdrawal(rep_row);
+    RenderWithdrawal();
+  }
+}
 
 void Controller::DepositEvalButton() noexcept {}
 
@@ -154,6 +172,7 @@ void Controller::RenderReplenishment() const noexcept {
     replenishment_line = "[" + QString::number(item.first) +
                          "] Added: " + QString::number(item.second);
     view_->deposit_window_->AddReplenishment(replenishment_line);
+    view_->deposit_window_->ScrollLists();
   }
 }
 
@@ -165,6 +184,7 @@ void Controller::RenderWithdrawal() const noexcept {
     withdrawal_line = "[" + QString::number(item.first) +
                       "] Withdrawn: " + QString::number(item.second);
     view_->deposit_window_->AddWithdrawal(withdrawal_line);
+    view_->deposit_window_->ScrollLists();
   }
 }
 
