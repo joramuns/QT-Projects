@@ -26,17 +26,7 @@ CalcWindow::CalcWindow(Model *cmodel)
 }
 
 CalcWindow::~CalcWindow() {
-  /* for (const auto &item : num_buttons_) delete item; */
-  /* for (const auto &item : operator_buttons_) delete item; */
-  /* for (const auto &item : input_lines_) delete item; */
-  /* for (const auto &item : input_labels_) delete item; */
   delete regex_validator_;
-  /* delete clear_; */
-  /* delete eval_; */
-  /* delete make_plot_; */
-  /* delete display_; */
-  /* delete results_display_; */
-  /* delete plot_; */
 }
 
 void CalcWindow::DrawPlot(const QVector<double> &x, const QVector<double> &y,
