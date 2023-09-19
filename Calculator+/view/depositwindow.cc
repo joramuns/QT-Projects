@@ -26,8 +26,8 @@ DepositWindow::~DepositWindow(){};
 double DepositWindow::GetDepositAmount() const noexcept {
   return deposit_amount_->value();
 }
-double DepositWindow::GetDepositTerm() const noexcept {
-  return deposit_term_->value();
+int DepositWindow::GetDepositTerm() const noexcept {
+  return static_cast<int>(deposit_term_->value());
 }
 double DepositWindow::GetDepositRate() const noexcept {
   return deposit_interest_->value();
@@ -37,8 +37,24 @@ double DepositWindow::GetDepositTaxRate() const noexcept {
   return deposit_tax_rate_->value();
 }
 
-/* QComboBox *deposit_periodicity_; */
-/* QCheckBox *capitalization_; */
+int DepositWindow::GetPeriodicity() const noexcept {
+  int periodicity = 0;
+  int selection_number = deposit_periodicity_->currentIndex();
+
+  if (selection_number == 0) {
+    periodicity = kMonth;
+  } else if (selection_number == 1) {
+    periodicity = kQuarter;
+  } else if (selection_number == 2) {
+    periodicity = kYear;
+  }
+
+  return periodicity;
+}
+
+bool DepositWindow::GetCapitalization() const noexcept {
+  return capitalization_->isChecked();
+}
 
 double DepositWindow::GetReplenishmentDay() const noexcept {
   return replenishment_day_->value();
@@ -80,6 +96,12 @@ void DepositWindow::ScrollLists() noexcept {
   replenishments_list_->scrollToBottom();
   withdrawals_list_->scrollToBottom();
 }
+
+void DepositWindow::AddPayoff(const QString &payoff) {
+  payoffs_list_->addItem(payoff);
+}
+
+void DepositWindow::ClearPayoff() noexcept { payoffs_list_->clear(); }
 
 QGroupBox *DepositWindow::AddInputGroupBox() {
   QGroupBox *input_group_box = new QGroupBox(tr("Input data"));
@@ -170,10 +192,16 @@ QGroupBox *DepositWindow::AddExtraGroupBox() {
 QGroupBox *DepositWindow::AddOutputGroupBox() {
   QGroupBox *output_group_box = new QGroupBox(tr("Output data"));
 
+  payoffs_list_ = new QListWidget;
+
+  tax_amount_ = new QLineEdit;
+
+  deposit_end_amount_ = new QLineEdit;
+
   QFormLayout *layout = new QFormLayout;
-  layout->addRow(new QLabel(tr("Accrued interest:")), new QLineEdit);
-  layout->addRow(new QLabel(tr("Tax amount:")), new QLineEdit);
-  layout->addRow(new QLabel(tr("Deposit amount:")), new QLineEdit);
+  layout->addRow(new QLabel(tr("Accrued interest:")), payoffs_list_);
+  layout->addRow(new QLabel(tr("Tax amount:")), tax_amount_);
+  layout->addRow(new QLabel(tr("Deposit amount:")), deposit_end_amount_);
   output_group_box->setLayout(layout);
 
   return output_group_box;

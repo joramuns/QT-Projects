@@ -23,11 +23,11 @@ class DepositWindow : public QWidget {
 
   /* Getters */
   double GetDepositAmount() const noexcept;
-  double GetDepositTerm() const noexcept;
+  int GetDepositTerm() const noexcept;
   double GetDepositRate() const noexcept;
   double GetDepositTaxRate() const noexcept;
-  /* QComboBox *deposit_periodicity_; */
-  /* QCheckBox *capitalization_; */
+  int GetPeriodicity() const noexcept;
+  bool GetCapitalization() const noexcept;
   double GetReplenishmentDay() const noexcept;
   double GetReplenishmentAmount() const noexcept;
   int GetCurrentReplenishment() const noexcept;
@@ -41,6 +41,8 @@ class DepositWindow : public QWidget {
   void AddWithdrawal(const QString &withdrawal);
   void ClearWithdrawal();
   void ScrollLists() noexcept;
+  void AddPayoff(const QString &payoff);
+  void ClearPayoff() noexcept;
 
  public:
   QPushButton *add_replenishment_;
@@ -57,6 +59,7 @@ class DepositWindow : public QWidget {
   QGroupBox *AddOutputGroupBox();
 
  private:
+  enum Periodicity { kDay = 1, kMonth = 30, kQuarter = 90, kYear = 365 };
   /* Input block */
   QDoubleSpinBox *deposit_amount_;
   QDoubleSpinBox *deposit_term_;
@@ -72,6 +75,11 @@ class DepositWindow : public QWidget {
   QListWidget *withdrawals_list_;
   QDoubleSpinBox *withdrawal_day_;
   QDoubleSpinBox *withdrawal_amount_;
+
+  /* Output block */
+  QListWidget *payoffs_list_;
+  QLineEdit *tax_amount_;
+  QLineEdit *deposit_end_amount_;
 };
 }  // namespace s21
 #endif  // VIEW_DEPOSITWINDOW_H_
