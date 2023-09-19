@@ -41,6 +41,8 @@ class Controller : public QObject {
   void RenderCredit() noexcept;
   void RenderReplenishment() const noexcept;
   void RenderWithdrawal() const noexcept;
+  void SetDepositData() noexcept;
+  void RenderDeposit() const noexcept;
   /* MVC */
   CalcWindow *view_;
   Model *model_;

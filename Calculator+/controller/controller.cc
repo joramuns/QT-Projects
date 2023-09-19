@@ -43,6 +43,9 @@ Controller::Controller(CalcWindow *cview, Model *cmodel)
 
   connect(view_->deposit_window_->remove_withdrawal_, &QPushButton::released,
           this, &Controller::DepositRemoveWithdrawal);
+
+  connect(view_->deposit_window_->eval_deposit_, &QPushButton::released, this,
+          &Controller::DepositEvalButton);
 }
 
 void Controller::ClearButton() noexcept {
@@ -143,7 +146,11 @@ void Controller::DepositRemoveWithdrawal() noexcept {
   }
 }
 
-void Controller::DepositEvalButton() noexcept {}
+void Controller::DepositEvalButton() noexcept {
+  SetDepositData();
+  model_->deposit_model_.EvaluateDeposit();
+  RenderDeposit();
+}
 
 /* Private main calc function */
 void Controller::Render() const noexcept {
@@ -193,6 +200,27 @@ void Controller::RenderWithdrawal() const noexcept {
                       "] Withdrawn: " + QString::number(item.second);
     view_->deposit_window_->AddWithdrawal(withdrawal_line);
     view_->deposit_window_->ScrollLists();
+  }
+}
+
+void Controller::SetDepositData() noexcept {
+  DepositWindow *deposit_window = view_->deposit_window_;
+  double set_amount = deposit_window->GetDepositAmount();
+  double set_term = deposit_window->GetDepositTerm();
+  double set_rate = deposit_window->GetDepositRate();
+  model_->deposit_model_.SetDepositData(set_amount, set_term, set_rate);
+  double set_periodicity = deposit_window->GetPeriodicity();
+  bool set_capitalization = deposit_window->GetCapitalization();
+  model_->deposit_model_.SetDepositType(set_periodicity, set_capitalization);
+}
+
+void Controller::RenderDeposit() const noexcept {
+  view_->deposit_window_->ClearPayoff();
+  QString payoff_line;
+  auto payoffs_list = model_->deposit_model_.GetPayoffsList();
+  for (const auto &item : payoffs_list) {
+    payoff_line = QString::number(item);
+    view_->deposit_window_->AddPayoff(payoff_line);
   }
 }
 
