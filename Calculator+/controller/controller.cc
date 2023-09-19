@@ -113,20 +113,26 @@ void Controller::CreditEvalButton() noexcept {
 
 void Controller::DepositAddReplenishment() noexcept {
   DepositWindow *deposit_window = view_->deposit_window_;
+  double max_day = deposit_window->GetDepositTerm();
   double day = deposit_window->GetReplenishmentDay();
-  double amount = deposit_window->GetReplenishmentAmount();
-  model_->deposit_model_.AddReplenishment(day, amount);
-  RenderReplenishment();
+  if (day <= max_day) {
+    double amount = deposit_window->GetReplenishmentAmount();
+    model_->deposit_model_.AddReplenishment(day, amount);
+    RenderReplenishment();
+  }
 }
 
 void Controller::DepositRemoveReplenishment() noexcept {}
 
 void Controller::DepositAddWithdrawal() noexcept {
   DepositWindow *deposit_window = view_->deposit_window_;
+  double max_day = deposit_window->GetDepositTerm();
   double day = deposit_window->GetWithdrawalDay();
-  double amount = deposit_window->GetWithdrawalAmount();
-  model_->deposit_model_.AddWithdrawal(day, amount);
-  RenderWithdrawal();
+  if (day <= max_day) {
+    double amount = deposit_window->GetWithdrawalAmount();
+    model_->deposit_model_.AddWithdrawal(day, amount);
+    RenderWithdrawal();
+  }
 }
 
 void Controller::DepositRemoveWithdrawal() noexcept {}
