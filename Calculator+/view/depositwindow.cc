@@ -33,6 +33,10 @@ double DepositWindow::GetDepositRate() const noexcept {
   return deposit_interest_->value();
 }
 
+double DepositWindow::GetDepositTaxRate() const noexcept {
+  return deposit_tax_rate_->value();
+}
+
 /* QComboBox *deposit_periodicity_; */
 /* QCheckBox *capitalization_; */
 
@@ -44,12 +48,20 @@ double DepositWindow::GetReplenishmentAmount() const noexcept {
   return replenishment_amount_->value();
 }
 
+int DepositWindow::GetCurrentReplenishment() const noexcept {
+  return replenishments_list_->currentRow();
+}
+
 double DepositWindow::GetWithdrawalDay() const noexcept {
   return withdrawal_day_->value();
 }
 
 double DepositWindow::GetWithdrawalAmount() const noexcept {
   return withdrawal_amount_->value();
+}
+
+int DepositWindow::GetCurrentWithdrawal() const noexcept {
+  return withdrawals_list_->currentRow();
 }
 
 void DepositWindow::AddReplenishment(const QString &replenishment) {
@@ -64,6 +76,11 @@ void DepositWindow::AddWithdrawal(const QString &withdrawal) {
 
 void DepositWindow::ClearWithdrawal() { withdrawals_list_->clear(); }
 
+void DepositWindow::ScrollLists() noexcept {
+  replenishments_list_->scrollToBottom();
+  withdrawals_list_->scrollToBottom();
+}
+
 QGroupBox *DepositWindow::AddInputGroupBox() {
   QGroupBox *input_group_box = new QGroupBox(tr("Input data"));
 
@@ -72,13 +89,17 @@ QGroupBox *DepositWindow::AddInputGroupBox() {
   deposit_amount_->setMaximum(std::numeric_limits<double>::max());
 
   deposit_term_ = new QDoubleSpinBox;
-  deposit_term_->setMinimum(1);
+  deposit_term_->setMinimum(1.0);
   deposit_term_->setMaximum(std::numeric_limits<double>::max());
-  deposit_term_->setDecimals(0);
+  deposit_term_->setDecimals(0.0);
 
   deposit_interest_ = new QDoubleSpinBox;
-  deposit_interest_->setMinimum(0);
+  deposit_interest_->setMinimum(0.0);
   deposit_interest_->setMaximum(std::numeric_limits<double>::max());
+
+  deposit_tax_rate_ = new QDoubleSpinBox;
+  deposit_tax_rate_->setMinimum(0.0);
+  deposit_tax_rate_->setMaximum(100.0);
 
   deposit_periodicity_ = new QComboBox;
   deposit_periodicity_->addItem("monthly");
@@ -91,6 +112,7 @@ QGroupBox *DepositWindow::AddInputGroupBox() {
   layout->addRow(new QLabel(tr("Amount:")), deposit_amount_);
   layout->addRow(new QLabel(tr("Term:")), deposit_term_);
   layout->addRow(new QLabel(tr("Interest rate:")), deposit_interest_);
+  layout->addRow(new QLabel(tr("Tax rate:")), deposit_tax_rate_);
   layout->addRow(new QLabel(tr("Periodicity of payments:")),
                  deposit_periodicity_);
   layout->addRow(new QLabel(tr("Capitalization of interest:")),
@@ -106,8 +128,8 @@ QGroupBox *DepositWindow::AddExtraGroupBox() {
   replenishments_list_ = new QListWidget;
 
   replenishment_day_ = new QDoubleSpinBox;
-  replenishment_day_->setDecimals(0);
-  replenishment_day_->setMinimum(1);
+  replenishment_day_->setDecimals(0.0);
+  replenishment_day_->setMinimum(1.0);
   replenishment_day_->setMaximum(std::numeric_limits<double>::max());
 
   replenishment_amount_ = new QDoubleSpinBox;
@@ -120,8 +142,8 @@ QGroupBox *DepositWindow::AddExtraGroupBox() {
   withdrawals_list_ = new QListWidget;
 
   withdrawal_day_ = new QDoubleSpinBox;
-  withdrawal_day_->setDecimals(0);
-  withdrawal_day_->setMinimum(1);
+  withdrawal_day_->setDecimals(0.0);
+  withdrawal_day_->setMinimum(1.0);
   withdrawal_day_->setMaximum(std::numeric_limits<double>::max());
 
   withdrawal_amount_ = new QDoubleSpinBox;

@@ -25,18 +25,22 @@ class DepositWindow : public QWidget {
   double GetDepositAmount() const noexcept;
   double GetDepositTerm() const noexcept;
   double GetDepositRate() const noexcept;
+  double GetDepositTaxRate() const noexcept;
   /* QComboBox *deposit_periodicity_; */
   /* QCheckBox *capitalization_; */
   double GetReplenishmentDay() const noexcept;
   double GetReplenishmentAmount() const noexcept;
+  int GetCurrentReplenishment() const noexcept;
   double GetWithdrawalDay() const noexcept;
   double GetWithdrawalAmount() const noexcept;
+  int GetCurrentWithdrawal() const noexcept;
 
   /* Mutators */
   void AddReplenishment(const QString &replenishment);
   void ClearReplenishment();
   void AddWithdrawal(const QString &withdrawal);
   void ClearWithdrawal();
+  void ScrollLists() noexcept;
 
  public:
   QPushButton *add_replenishment_;
@@ -57,6 +61,7 @@ class DepositWindow : public QWidget {
   QDoubleSpinBox *deposit_amount_;
   QDoubleSpinBox *deposit_term_;
   QDoubleSpinBox *deposit_interest_;
+  QDoubleSpinBox *deposit_tax_rate_;
   QComboBox *deposit_periodicity_;
   QCheckBox *capitalization_;
 
