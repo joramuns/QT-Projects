@@ -21,28 +21,31 @@ class DepositWindow : public QWidget {
   DepositWindow();
   ~DepositWindow();
 
-  /* Getters */
-  double GetDepositAmount() const noexcept;
-  int GetDepositTerm() const noexcept;
-  double GetDepositRate() const noexcept;
-  double GetDepositTaxRate() const noexcept;
-  int GetPeriodicity() const noexcept;
-  bool GetCapitalization() const noexcept;
-  double GetReplenishmentDay() const noexcept;
-  double GetReplenishmentAmount() const noexcept;
-  int GetCurrentReplenishment() const noexcept;
-  double GetWithdrawalDay() const noexcept;
-  double GetWithdrawalAmount() const noexcept;
-  int GetCurrentWithdrawal() const noexcept;
+  /* Accessors */
+  const double GetDepositAmount() const noexcept;
+  const int GetDepositTerm() const noexcept;
+  const double GetDepositRate() const noexcept;
+  const double GetDepositTaxRate() const noexcept;
+  const int GetPeriodicity() const noexcept;
+  const bool GetCapitalization() const noexcept;
+  const double GetReplenishmentDay() const noexcept;
+  const double GetReplenishmentAmount() const noexcept;
+  const int GetCurrentReplenishment() const noexcept;
+  const double GetWithdrawalDay() const noexcept;
+  const double GetWithdrawalAmount() const noexcept;
+  const int GetCurrentWithdrawal() const noexcept;
 
   /* Mutators */
-  void AddReplenishment(const QString &replenishment);
+  void AddReplenishment(const std::pair<double, double> &item);
   void ClearReplenishment();
-  void AddWithdrawal(const QString &withdrawal);
+  void AddWithdrawal(const std::pair<double, double> &item);
   void ClearWithdrawal();
   void ScrollLists() noexcept;
-  void AddPayoff(const QString &payoff);
+  void AddPayoff(const double payoff);
   void ClearPayoff() noexcept;
+  void SetTotalProfit(const double profit) noexcept;
+  void SetTaxAmount(const double tax) noexcept;
+  void SetEndAmount(const double amount) noexcept;
 
  public:
   QPushButton *add_replenishment_;
@@ -78,6 +81,7 @@ class DepositWindow : public QWidget {
 
   /* Output block */
   QListWidget *payoffs_list_;
+  QLineEdit *total_profit_;
   QLineEdit *tax_amount_;
   QLineEdit *deposit_end_amount_;
 };

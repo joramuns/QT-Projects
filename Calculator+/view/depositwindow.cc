@@ -23,21 +23,22 @@ DepositWindow::DepositWindow() {
 
 DepositWindow::~DepositWindow(){};
 
-double DepositWindow::GetDepositAmount() const noexcept {
+/* Accessors */
+const double DepositWindow::GetDepositAmount() const noexcept {
   return deposit_amount_->value();
 }
-int DepositWindow::GetDepositTerm() const noexcept {
+const int DepositWindow::GetDepositTerm() const noexcept {
   return static_cast<int>(deposit_term_->value());
 }
-double DepositWindow::GetDepositRate() const noexcept {
+const double DepositWindow::GetDepositRate() const noexcept {
   return deposit_interest_->value();
 }
 
-double DepositWindow::GetDepositTaxRate() const noexcept {
-  return deposit_tax_rate_->value();
+const double DepositWindow::GetDepositTaxRate() const noexcept {
+  return deposit_tax_rate_->value() / 100.0;
 }
 
-int DepositWindow::GetPeriodicity() const noexcept {
+const int DepositWindow::GetPeriodicity() const noexcept {
   int periodicity = 0;
   int selection_number = deposit_periodicity_->currentIndex();
 
@@ -52,42 +53,47 @@ int DepositWindow::GetPeriodicity() const noexcept {
   return periodicity;
 }
 
-bool DepositWindow::GetCapitalization() const noexcept {
+const bool DepositWindow::GetCapitalization() const noexcept {
   return capitalization_->isChecked();
 }
 
-double DepositWindow::GetReplenishmentDay() const noexcept {
+const double DepositWindow::GetReplenishmentDay() const noexcept {
   return replenishment_day_->value();
 }
 
-double DepositWindow::GetReplenishmentAmount() const noexcept {
+const double DepositWindow::GetReplenishmentAmount() const noexcept {
   return replenishment_amount_->value();
 }
 
-int DepositWindow::GetCurrentReplenishment() const noexcept {
+const int DepositWindow::GetCurrentReplenishment() const noexcept {
   return replenishments_list_->currentRow();
 }
 
-double DepositWindow::GetWithdrawalDay() const noexcept {
+const double DepositWindow::GetWithdrawalDay() const noexcept {
   return withdrawal_day_->value();
 }
 
-double DepositWindow::GetWithdrawalAmount() const noexcept {
+const double DepositWindow::GetWithdrawalAmount() const noexcept {
   return withdrawal_amount_->value();
 }
 
-int DepositWindow::GetCurrentWithdrawal() const noexcept {
+const int DepositWindow::GetCurrentWithdrawal() const noexcept {
   return withdrawals_list_->currentRow();
 }
 
-void DepositWindow::AddReplenishment(const QString &replenishment) {
-  replenishments_list_->addItem(replenishment);
+/* Mutators */
+void DepositWindow::AddReplenishment(const std::pair<double, double> &item) {
+  QString replenishment_line = "[" + QString::number(item.first) +
+                               "] Added: " + QString::number(item.second);
+  replenishments_list_->addItem(replenishment_line);
 }
 
 void DepositWindow::ClearReplenishment() { replenishments_list_->clear(); }
 
-void DepositWindow::AddWithdrawal(const QString &withdrawal) {
-  withdrawals_list_->addItem(withdrawal);
+void DepositWindow::AddWithdrawal(const std::pair<double, double> &item) {
+  QString withdrawal_line = "[" + QString::number(item.first) +
+                            "] Withdrawn: " + QString::number(item.second);
+  withdrawals_list_->addItem(withdrawal_line);
 }
 
 void DepositWindow::ClearWithdrawal() { withdrawals_list_->clear(); }
@@ -97,12 +103,25 @@ void DepositWindow::ScrollLists() noexcept {
   withdrawals_list_->scrollToBottom();
 }
 
-void DepositWindow::AddPayoff(const QString &payoff) {
-  payoffs_list_->addItem(payoff);
+void DepositWindow::AddPayoff(const double payoff) {
+  payoffs_list_->addItem(QString::number(payoff, 'd', 2));
 }
 
 void DepositWindow::ClearPayoff() noexcept { payoffs_list_->clear(); }
 
+void DepositWindow::SetTotalProfit(const double profit) noexcept {
+  total_profit_->setText(QString::number(profit, 'd', 2));
+}
+
+void DepositWindow::SetTaxAmount(const double tax) noexcept {
+  tax_amount_->setText(QString::number(tax, 'd', 2));
+}
+
+void DepositWindow::SetEndAmount(const double amount) noexcept {
+  deposit_end_amount_->setText(QString::number(amount, 'd', 2));
+}
+
+/* Private deposit window functions */
 QGroupBox *DepositWindow::AddInputGroupBox() {
   QGroupBox *input_group_box = new QGroupBox(tr("Input data"));
 
@@ -194,12 +213,15 @@ QGroupBox *DepositWindow::AddOutputGroupBox() {
 
   payoffs_list_ = new QListWidget;
 
+  total_profit_ = new QLineEdit;
+
   tax_amount_ = new QLineEdit;
 
   deposit_end_amount_ = new QLineEdit;
 
   QFormLayout *layout = new QFormLayout;
   layout->addRow(new QLabel(tr("Accrued interest:")), payoffs_list_);
+  layout->addRow(new QLabel(tr("Total interest:")), total_profit_);
   layout->addRow(new QLabel(tr("Tax amount:")), tax_amount_);
   layout->addRow(new QLabel(tr("Deposit amount:")), deposit_end_amount_);
   output_group_box->setLayout(layout);
