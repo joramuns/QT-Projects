@@ -9,17 +9,15 @@ class CreditCalc final {
  public:
   CreditCalc();
 
-  /* Modifiers */
-  void Calculate();
+  /* Accessors */
+  const std::vector<double> GetPayments() const noexcept;
+  const double GetOverpayment() const noexcept;
+  const double GetTotalPayment() const noexcept;
 
   /* Mutators */
+  void Calculate() noexcept;
   void SetData(double amount, double term, double interest_rate,
-               int credit_type);
-
-  /* Getters */
-  std::vector<double> GetPayments();
-  double GetOverpayment();
-  double GetTotalPayment();
+               int credit_type) noexcept;
 
  private:
   void CalculateAnnuity();

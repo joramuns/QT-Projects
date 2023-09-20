@@ -23,6 +23,26 @@ CreditWindow::CreditWindow() {
 
 CreditWindow::~CreditWindow() {}
 
+/* Accessors */
+const double CreditWindow::GetCreditAmount() const noexcept {
+  return credit_amount_->value();
+}
+
+const double CreditWindow::GetCreditTerm() const noexcept {
+  return credit_term_->value();
+}
+
+const double CreditWindow::GetCreditRate() const noexcept {
+  return credit_interest_->value();
+}
+
+const int CreditWindow::GetCreditType() const noexcept {
+  return credit_type_->currentIndex();
+}
+
+/* Mutators */
+void CreditWindow::ClearPayments() noexcept { payment_monthly_->clear(); }
+
 void CreditWindow::OutputData(double over_payment, double total_payment,
                               std::vector<double> monthly_payments) {
   QString string_over_payment = QString::number(over_payment, 'd', 2);

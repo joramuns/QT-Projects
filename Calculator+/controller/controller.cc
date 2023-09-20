@@ -161,11 +161,11 @@ void Controller::Render() const noexcept {
 /* Private credit calc functions */
 void Controller::SetCreditData() noexcept {
   CreditWindow *credit_window = view_->credit_window_;
-  credit_window->payment_monthly_->clear();
-  double set_amount = credit_window->credit_amount_->value();
-  double set_term = credit_window->credit_term_->value();
-  double set_rate = credit_window->credit_interest_->value();
-  int set_type = credit_window->credit_type_->currentIndex();
+  credit_window->ClearPayments();
+  double set_amount = credit_window->GetCreditAmount();
+  double set_term = credit_window->GetCreditTerm();
+  double set_rate = credit_window->GetCreditRate();
+  int set_type = credit_window->GetCreditType();
   model_->credit_model_.SetData(set_amount, set_term, set_rate, set_type);
 }
 
@@ -190,7 +190,6 @@ void Controller::RenderReplenishment() const noexcept {
 
 void Controller::RenderWithdrawal() const noexcept {
   view_->deposit_window_->ClearWithdrawal();
-  QString withdrawal_line;
   auto withdrawal_list = model_->deposit_model_.GetWithdrawalList();
   for (const auto &item : withdrawal_list) {
     view_->deposit_window_->AddWithdrawal(item);

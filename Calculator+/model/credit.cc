@@ -3,14 +3,28 @@
 namespace s21 {
 
 CreditCalc::CreditCalc()
-    : amount_(0),
-      term_(0),
-      interest_rate_(0),
+    : amount_(0.0),
+      term_(0.0),
+      interest_rate_(0.0),
       credit_type_(0),
-      overpayment_(0),
-      total_payment_(0){};
+      overpayment_(0.0),
+      total_payment_(0.0){};
 
-void CreditCalc::Calculate() {
+/* Accessors */
+const std::vector<double> CreditCalc::GetPayments() const noexcept {
+  return payments_;
+}
+
+const double CreditCalc::GetOverpayment() const noexcept {
+  return overpayment_;
+}
+
+const double CreditCalc::GetTotalPayment() const noexcept {
+  return total_payment_;
+}
+
+/* Mutators */
+void CreditCalc::Calculate() noexcept {
   payments_.clear();
   total_payment_ = 0;
   if (credit_type_) {
@@ -20,6 +34,15 @@ void CreditCalc::Calculate() {
   }
 }
 
+void CreditCalc::SetData(double amount, double term, double interest_rate,
+                         int credit_type) noexcept {
+  amount_ = amount;
+  term_ = term;
+  interest_rate_ = interest_rate / (12.0 * 100.0);
+  credit_type_ = credit_type;
+}
+
+/* Private credit functions */
 void CreditCalc::CalculateAnnuity() {
   AnnuityPayment();
   total_payment_ = payments_.back() * term_;
@@ -41,7 +64,7 @@ void CreditCalc::AnnuityPayment() {
   } else {
     payment = amount_ / term_;
   }
-  payment = std::round(payment * 100) / 100;
+  payment = std::round(payment * 100.0) / 100.0;
   payments_.push_back(payment);
 }
 
@@ -51,24 +74,10 @@ void CreditCalc::DifferentiatedPayment() {
 
   for (int i = 0; i != term_; ++i) {
     double payment = amount * interest_rate_ + pay_off;
-    payment = std::round(payment * 100) / 100;
+    payment = std::round(payment * 100.0) / 100.0;
     payments_.push_back(payment);
     total_payment_ += payment;
     amount -= pay_off;
   }
 }
-
-void CreditCalc::SetData(double amount, double term, double interest_rate,
-                         int credit_type) {
-  amount_ = amount;
-  term_ = term;
-  interest_rate_ = interest_rate / (12.0 * 100.0);
-  credit_type_ = credit_type;
-}
-
-std::vector<double> CreditCalc::GetPayments() { return payments_; }
-
-double CreditCalc::GetOverpayment() { return overpayment_; }
-
-double CreditCalc::GetTotalPayment() { return total_payment_; }
 }  // namespace s21
