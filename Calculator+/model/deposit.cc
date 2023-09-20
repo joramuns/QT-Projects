@@ -83,6 +83,7 @@ void DepositCalc::EvaluateDeposit() noexcept {
   for (int day = 1; day <= term_; ++day) {
     profit_amount += daily_profit;
     if (day % deposit_type_ == 0 || day == term_) {
+      BankRounding(profit_amount);
       payoffs_.push_back(profit_amount);
       total_profit_ += profit_amount;
       if (capitalization_) {
@@ -95,6 +96,32 @@ void DepositCalc::EvaluateDeposit() noexcept {
       profit_amount = 0.0;
     }
   }
+}
+
+/* Private deposit model functions */
+void DepositCalc::BankRounding(double &number) const noexcept {
+  double temp_number = number * 100.0;
+  int checker = GetFloatingDigit(number, 3);
+  if (checker == 5) {
+    checker = GetFloatingDigit(number, 2);
+    if (checker % 2 != 0) {
+      number = std::ceil(temp_number);
+    } else {
+      number = std::floor(temp_number);
+    }
+  } else {
+    number = std::round(temp_number);
+  }
+  number /= 100.0;
+}
+
+const int DepositCalc::GetFloatingDigit(const double number,
+                                        int place) const noexcept {
+  int real_number = static_cast<int>(number * std::pow(10.0, place));
+  --place;
+  int temp_number = static_cast<int>(number * std::pow(10.0, place));
+  temp_number *= 10;
+  return real_number - temp_number;
 }
 
 }  // namespace s21

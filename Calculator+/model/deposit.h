@@ -1,6 +1,7 @@
 #ifndef MODEL_DEPOSIT_H_
 #define MODEL_DEPOSIT_H_
 
+#include <cmath>
 #include <map>
 #include <vector>
 
@@ -28,6 +29,9 @@ class DepositCalc final {
   void EvaluateDeposit() noexcept;
 
  private:
+  void BankRounding(double &number) const noexcept;
+  const int GetFloatingDigit(const double number, int place) const noexcept;
+
  private:
   /* Input data */
   double amount_;
