@@ -46,12 +46,20 @@ void CreditCalc::SetData(double amount, double term, double interest_rate,
 void CreditCalc::CalculateAnnuity() {
   AnnuityPayment();
   total_payment_ = payments_.back() * term_;
-  overpayment_ = total_payment_ - amount_;
+  if (total_payment_ < amount_) {
+    payments_.back() += (amount_ - total_payment_);
+    total_payment_ = amount_;
+  }
+  overpayment_ = total_payment_ < amount_ ? 0.0 : total_payment_ - amount_;
 }
 
 void CreditCalc::CalculateDifferentiated() {
   DifferentiatedPayment();
-  overpayment_ = total_payment_ - amount_;
+  if (total_payment_ < amount_) {
+    payments_.back() += (amount_ - total_payment_);
+    total_payment_ = amount_;
+  }
+  overpayment_ = total_payment_ < amount_ ? 0.0 : total_payment_ - amount_;
 }
 
 void CreditCalc::AnnuityPayment() {
@@ -65,7 +73,9 @@ void CreditCalc::AnnuityPayment() {
     payment = amount_ / term_;
   }
   payment = std::round(payment * 100.0) / 100.0;
-  payments_.push_back(payment);
+  for (int i = 0; i != term_; ++i) {
+    payments_.push_back(payment);
+  }
 }
 
 void CreditCalc::DifferentiatedPayment() {
