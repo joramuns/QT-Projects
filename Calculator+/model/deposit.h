@@ -31,6 +31,8 @@ class DepositCalc final {
  private:
   void BankRounding(double &number) const noexcept;
   const int GetFloatingDigit(const double number, int place) const noexcept;
+  bool AccountMovement(const int day) noexcept;
+  double RecalculateDaily() const noexcept;
 
  private:
   /* Input data */

@@ -79,17 +79,20 @@ void DepositCalc::EvaluateDeposit() noexcept {
     payoffs_.reserve(payoffs_number);
   }
 
-  double daily_profit = (amount_ * interest_rate_) / 365.0;
+  double daily_profit = RecalculateDaily();
   for (int day = 1; day <= term_; ++day) {
     profit_amount += daily_profit;
     if (day % deposit_type_ == 0 || day == term_) {
+      if (AccountMovement(day)) {
+        RecalculateDaily();
+      }
       BankRounding(profit_amount);
       payoffs_.push_back(profit_amount);
       total_profit_ += profit_amount;
       if (capitalization_) {
         amount_ += profit_amount;
         end_amount_ = amount_;
-        daily_profit = (amount_ * interest_rate_) / 365.0;
+        daily_profit = RecalculateDaily();
       } else {
         end_amount_ += profit_amount;
       }
@@ -122,6 +125,30 @@ const int DepositCalc::GetFloatingDigit(const double number,
   int temp_number = static_cast<int>(number * std::pow(10.0, place));
   temp_number *= 10;
   return real_number - temp_number;
+}
+
+bool DepositCalc::AccountMovement(const int day) noexcept {
+  bool result = false;
+
+  auto wd_iter = withdrawals_.find(static_cast<double>(day));
+  if (wd_iter != withdrawals_.end()) {
+    result = true;
+    if (amount_ > wd_iter->second) {
+      amount_ -= wd_iter->second;
+    } else {
+      withdrawals_.erase(wd_iter);
+    }
+  }
+  auto rep_iter = replenishments_.find(static_cast<double>(day));
+  if (rep_iter != replenishments_.end()) {
+    result = true;
+    amount_ += rep_iter->second;
+  }
+
+  return result;
+}
+double DepositCalc::RecalculateDaily() const noexcept {
+  return (amount_ * interest_rate_) / 365.0;
 }
 
 }  // namespace s21
