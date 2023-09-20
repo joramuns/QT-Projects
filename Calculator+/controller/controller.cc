@@ -181,14 +181,11 @@ void Controller::RenderCredit() noexcept {
 /* Private deposit calc function */
 void Controller::RenderReplenishment() const noexcept {
   view_->deposit_window_->ClearReplenishment();
-  QString replenishment_line;
   auto replenishment_list = model_->deposit_model_.GetReplenishmentList();
   for (const auto &item : replenishment_list) {
-    replenishment_line = "[" + QString::number(item.first) +
-                         "] Added: " + QString::number(item.second);
-    view_->deposit_window_->AddReplenishment(replenishment_line);
-    view_->deposit_window_->ScrollLists();
+    view_->deposit_window_->AddReplenishment(item);
   }
+  view_->deposit_window_->ScrollLists();
 }
 
 void Controller::RenderWithdrawal() const noexcept {
@@ -196,32 +193,37 @@ void Controller::RenderWithdrawal() const noexcept {
   QString withdrawal_line;
   auto withdrawal_list = model_->deposit_model_.GetWithdrawalList();
   for (const auto &item : withdrawal_list) {
-    withdrawal_line = "[" + QString::number(item.first) +
-                      "] Withdrawn: " + QString::number(item.second);
-    view_->deposit_window_->AddWithdrawal(withdrawal_line);
-    view_->deposit_window_->ScrollLists();
+    view_->deposit_window_->AddWithdrawal(item);
   }
+  view_->deposit_window_->ScrollLists();
 }
 
 void Controller::SetDepositData() noexcept {
   DepositWindow *deposit_window = view_->deposit_window_;
+  DepositCalc *deposit_model = &model_->deposit_model_;
+
   double set_amount = deposit_window->GetDepositAmount();
   double set_term = deposit_window->GetDepositTerm();
   double set_rate = deposit_window->GetDepositRate();
-  model_->deposit_model_.SetDepositData(set_amount, set_term, set_rate);
-  double set_periodicity = deposit_window->GetPeriodicity();
-  bool set_capitalization = deposit_window->GetCapitalization();
-  model_->deposit_model_.SetDepositType(set_periodicity, set_capitalization);
+  deposit_model->SetDepositData(set_amount, set_term, set_rate);
+  double set_tax = deposit_window->GetDepositTaxRate();
+  int set_period = deposit_window->GetPeriodicity();
+  bool set_capit = deposit_window->GetCapitalization();
+  deposit_model->SetDepositType(set_tax, set_period, set_capit);
 }
 
 void Controller::RenderDeposit() const noexcept {
-  view_->deposit_window_->ClearPayoff();
-  QString payoff_line;
-  auto payoffs_list = model_->deposit_model_.GetPayoffsList();
+  DepositWindow *deposit_window = view_->deposit_window_;
+  DepositCalc *deposit_model = &model_->deposit_model_;
+
+  deposit_window->ClearPayoff();
+  auto payoffs_list = deposit_model->GetPayoffsList();
   for (const auto &item : payoffs_list) {
-    payoff_line = QString::number(item);
-    view_->deposit_window_->AddPayoff(payoff_line);
+    deposit_window->AddPayoff(item);
   }
+  deposit_window->SetTotalProfit(deposit_model->GetTotalProfit());
+  deposit_window->SetTaxAmount(deposit_model->GetTaxCharge());
+  deposit_window->SetEndAmount(deposit_model->GetEndAmount());
 }
 
 }  // namespace s21
