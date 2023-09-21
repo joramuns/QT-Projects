@@ -11,8 +11,8 @@ class CreditCalc final {
 
   /* Accessors */
   const std::vector<double> GetPayments() const noexcept;
-  const double GetOverpayment() const noexcept;
-  const double GetTotalPayment() const noexcept;
+  double GetOverpayment() const noexcept;
+  double GetTotalPayment() const noexcept;
 
   /* Mutators */
   void Calculate() noexcept;

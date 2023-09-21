@@ -20,13 +20,13 @@ Element::Element(const char input) noexcept : is_operator_(false), value_(0) {
 }
 
 /* Getters */
-const bool Element::IsOperator() const noexcept { return is_operator_; }
+bool Element::IsOperator() const noexcept { return is_operator_; }
 
-const bool Element::IsVariable() const noexcept { return string_value_ == "x"; }
+bool Element::IsVariable() const noexcept { return string_value_ == "x"; }
 
-const double Element::GetValue() const noexcept { return value_; }
+double Element::GetValue() const noexcept { return value_; }
 
-const int Element::GetPriority() const noexcept {
+int Element::GetPriority() const noexcept {
   return is_operator_ ? (int)log10(value_) : -1;
 }
 

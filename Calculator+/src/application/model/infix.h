@@ -29,17 +29,15 @@ class InfixExpr {
   [[nodiscard]] const std::deque<std::unique_ptr<Element>> &GetInfixData()
       const noexcept;
   [[nodiscard]] const std::string GetInfixString() const noexcept;
-  [[nodiscard]] const bool LastIsOperator() const noexcept;
-  [[nodiscard]] const bool LastIsVariable() const noexcept;
+  [[nodiscard]] bool LastIsOperator() const noexcept;
+  [[nodiscard]] bool LastIsVariable() const noexcept;
 
  private:
-  [[nodiscard]] const int SizeValid(
-      const elem_iterator iter_begin) const noexcept;
-  [[nodiscard]] const int BeginValid(
-      const elem_iterator iter_begin) const noexcept;
-  [[nodiscard]] const int EndValid() const noexcept;
-  [[nodiscard]] const int MiddleValid(elem_iterator iter_begin) const noexcept;
-  [[nodiscard]] const int DoubleOperator(
+  [[nodiscard]] int SizeValid(const elem_iterator iter_begin) const noexcept;
+  [[nodiscard]] int BeginValid(const elem_iterator iter_begin) const noexcept;
+  [[nodiscard]] int EndValid() const noexcept;
+  [[nodiscard]] int MiddleValid(elem_iterator iter_begin) const noexcept;
+  [[nodiscard]] int DoubleOperator(
       const elem_iterator type_first,
       const elem_iterator type_second) const noexcept;
 

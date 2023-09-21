@@ -18,7 +18,7 @@ class Model final : public InfixExpr, public PostfixExpr {
   void ClearModel() noexcept;
 
   /* Calculators */
-  [[nodiscard]] const double Evaluate() noexcept;
+  [[nodiscard]] double Evaluate() noexcept;
   [[nodiscard]] const std::string GetResult() noexcept;
   [[nodiscard]] const std::pair<std::vector<double>, std::vector<double>>
   GetCoordinates(const std::vector<double> &value_borders);

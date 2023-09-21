@@ -20,12 +20,12 @@ class PostfixExpr {
   void PopAndPushAll() noexcept;
 
   /* Debug getters */
-  [[nodiscard]] const std::deque<Element> GetPostfixExpr() const noexcept;
-  [[nodiscard]] const std::deque<Element> GetQueue() const noexcept;
+  [[nodiscard]] const std::deque<Element> &GetPostfixExpr() const noexcept;
+  [[nodiscard]] const std::deque<Element> &GetQueue() const noexcept;
 
  private:
   void PopAndPush() noexcept;
-  [[nodiscard]] const bool TopOpenBracket() const noexcept;
+  [[nodiscard]] bool TopOpenBracket() const noexcept;
 
  private:
   /* Fields */

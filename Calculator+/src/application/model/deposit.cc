@@ -27,15 +27,13 @@ const std::vector<double> &DepositCalc::GetPayoffsList() const noexcept {
   return payoffs_;
 }
 
-const double DepositCalc::GetTotalProfit() const noexcept {
-  return total_profit_;
-}
+double DepositCalc::GetTotalProfit() const noexcept { return total_profit_; }
 
-const double DepositCalc::GetTaxCharge() const noexcept {
+double DepositCalc::GetTaxCharge() const noexcept {
   return total_profit_ * tax_rate_;
 }
 
-const double DepositCalc::GetEndAmount() const noexcept { return end_amount_; }
+double DepositCalc::GetEndAmount() const noexcept { return end_amount_; }
 
 /* Mutators */
 void DepositCalc::AddReplenishment(double day, double amount) noexcept {
@@ -84,7 +82,7 @@ void DepositCalc::EvaluateDeposit() noexcept {
   tax_amount_ = 0.0;
 
   int payoffs_number = term_ / deposit_type_;
-  if (payoffs_.capacity() < payoffs_number) {
+  if (static_cast<int>(payoffs_.capacity()) < payoffs_number) {
     payoffs_.reserve(payoffs_number);
   }
 
@@ -128,8 +126,8 @@ void DepositCalc::BankRounding(double &number) const noexcept {
   number /= 100.0;
 }
 
-const int DepositCalc::GetFloatingDigit(const double number,
-                                        int place) const noexcept {
+int DepositCalc::GetFloatingDigit(const double number,
+                                  int place) const noexcept {
   int real_number = static_cast<int>(number * std::pow(10.0, place));
   --place;
   int temp_number = static_cast<int>(number * std::pow(10.0, place));
@@ -137,7 +135,7 @@ const int DepositCalc::GetFloatingDigit(const double number,
   return real_number - temp_number;
 }
 
-const bool DepositCalc::AccountMovement(const int day) noexcept {
+bool DepositCalc::AccountMovement(const int day) noexcept {
   bool result = false;
 
   auto wd_iter = withdrawals_.find(static_cast<double>(day));

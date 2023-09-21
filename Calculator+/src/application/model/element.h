@@ -15,10 +15,10 @@ class Element final {
   explicit Element(const char input) noexcept;
 
   /* Getters */
-  [[nodiscard]] const bool IsOperator() const noexcept;
-  [[nodiscard]] const bool IsVariable() const noexcept;
-  [[nodiscard]] const double GetValue() const noexcept;
-  [[nodiscard]] const int GetPriority() const noexcept;
+  [[nodiscard]] bool IsOperator() const noexcept;
+  [[nodiscard]] bool IsVariable() const noexcept;
+  [[nodiscard]] double GetValue() const noexcept;
+  [[nodiscard]] int GetPriority() const noexcept;
 
   /* Modifiers */
   void AppendNumber(const char input) noexcept;

@@ -14,9 +14,9 @@ class DepositCalc final {
   const std::map<double, double> &GetReplenishmentList() const noexcept;
   const std::map<double, double> &GetWithdrawalList() const noexcept;
   const std::vector<double> &GetPayoffsList() const noexcept;
-  const double GetTotalProfit() const noexcept;
-  const double GetTaxCharge() const noexcept;
-  const double GetEndAmount() const noexcept;
+  double GetTotalProfit() const noexcept;
+  double GetTaxCharge() const noexcept;
+  double GetEndAmount() const noexcept;
 
   /* Mutators */
   void AddReplenishment(double day, double amount) noexcept;
@@ -30,8 +30,8 @@ class DepositCalc final {
 
  private:
   void BankRounding(double &number) const noexcept;
-  const int GetFloatingDigit(const double number, int place) const noexcept;
-  [[nodiscard]] const bool AccountMovement(const int day) noexcept;
+  int GetFloatingDigit(const double number, int place) const noexcept;
+  [[nodiscard]] bool AccountMovement(const int day) noexcept;
   [[nodiscard]] double RecalculateDaily() const noexcept;
 
  private:

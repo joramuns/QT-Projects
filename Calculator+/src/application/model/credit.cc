@@ -15,13 +15,9 @@ const std::vector<double> CreditCalc::GetPayments() const noexcept {
   return payments_;
 }
 
-const double CreditCalc::GetOverpayment() const noexcept {
-  return overpayment_;
-}
+double CreditCalc::GetOverpayment() const noexcept { return overpayment_; }
 
-const double CreditCalc::GetTotalPayment() const noexcept {
-  return total_payment_;
-}
+double CreditCalc::GetTotalPayment() const noexcept { return total_payment_; }
 
 /* Mutators */
 void CreditCalc::Calculate() noexcept {

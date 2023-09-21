@@ -71,15 +71,15 @@ const std::string InfixExpr::GetInfixString() const noexcept {
   return result;
 }
 
-const bool InfixExpr::LastIsOperator() const noexcept {
+bool InfixExpr::LastIsOperator() const noexcept {
   return infix_data_.empty() ? true : infix_data_.back()->IsOperator();
 }
 
-const bool InfixExpr::LastIsVariable() const noexcept {
+bool InfixExpr::LastIsVariable() const noexcept {
   return infix_data_.empty() ? false : infix_data_.back()->IsVariable();
 }
 
-const int InfixExpr::SizeValid(const elem_iterator iter_begin) const noexcept {
+int InfixExpr::SizeValid(const elem_iterator iter_begin) const noexcept {
   int ex_code = 0;
   int expression_size = infix_data_.size();
   if (!expression_size ||
@@ -90,7 +90,7 @@ const int InfixExpr::SizeValid(const elem_iterator iter_begin) const noexcept {
   return ex_code;
 }
 
-const int InfixExpr::BeginValid(const elem_iterator iter_begin) const noexcept {
+int InfixExpr::BeginValid(const elem_iterator iter_begin) const noexcept {
   int ex_code = 0;
   /* Check operator going first */
   if ((*iter_begin)->IsOperator()) {
@@ -105,7 +105,7 @@ const int InfixExpr::BeginValid(const elem_iterator iter_begin) const noexcept {
   return ex_code;
 }
 
-const int InfixExpr::EndValid() const noexcept {
+int InfixExpr::EndValid() const noexcept {
   /* Check end expression */
   int ex_code = 0;
   if (infix_data_.back()->IsOperator() &&
@@ -117,7 +117,7 @@ const int InfixExpr::EndValid() const noexcept {
   return ex_code;
 }
 
-const int InfixExpr::MiddleValid(elem_iterator iter_begin) const noexcept {
+int InfixExpr::MiddleValid(elem_iterator iter_begin) const noexcept {
   int ex_code = 0;
   /* Check duplicate operators + count brackets */
   int bracket_counter = 0;
@@ -163,9 +163,8 @@ const int InfixExpr::MiddleValid(elem_iterator iter_begin) const noexcept {
   return ex_code;
 }
 
-const int InfixExpr::DoubleOperator(
-    const elem_iterator op_first,
-    const elem_iterator op_second) const noexcept {
+int InfixExpr::DoubleOperator(const elem_iterator op_first,
+                              const elem_iterator op_second) const noexcept {
   int ex_code = 0;
   int type_first = static_cast<int>((*op_first)->GetValue());
   int type_second = static_cast<int>((*op_second)->GetValue());

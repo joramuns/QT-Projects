@@ -20,7 +20,7 @@ void Model::ClearModel() noexcept {
 }
 
 /* Calculators */
-const double Model::Evaluate() noexcept {
+double Model::Evaluate() noexcept {
   Convert();
   Element result;
   std::stack<Element> eval_stack;
