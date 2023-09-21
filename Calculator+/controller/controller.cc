@@ -69,15 +69,13 @@ void Controller::OperButton() noexcept {
 
 void Controller::EvalButton() noexcept {
   VariableSet();
-  std::string result = model_->GetResult();
-  view_->results_display_->addItem(QString::fromStdString(result));
-  view_->results_display_->scrollToBottom();
+  view_->AddResults(model_->GetResult());
 }
 
 void Controller::MakePlot() {
   std::vector<double> value_borders(4);
   for (int i = 0; i != 4; ++i) {
-    auto input_string = view_->input_lines_[i + 1]->text().toStdString();
+    auto input_string = view_->GetDomains(i + 1);
     if (input_string.empty()) {
       value_borders[i] = i % 2 == 0 ? 1.0 : -1.0;
     } else {
@@ -91,10 +89,9 @@ void Controller::MakePlot() {
 }
 
 void Controller::VariableSet() noexcept {
-  QString input_value = view_->input_lines_[0]->text();
-  if (!input_value.isEmpty()) {
-    std::string std_input_value = input_value.toStdString();
-    model_->SetVariables(std_input_value);
+  auto input_value = view_->GetDomains(0);
+  if (!input_value.empty()) {
+    model_->SetVariables(std::stod(input_value));
   }
 }
 
@@ -154,8 +151,7 @@ void Controller::DepositEvalButton() noexcept {
 
 /* Private main calc function */
 void Controller::Render() const noexcept {
-  std::string infix_line = model_->GetInfixString();
-  view_->display_->setText(QString::fromStdString(infix_line));
+  view_->SetExpression(model_->GetInfixString());
 }
 
 /* Private credit calc functions */
