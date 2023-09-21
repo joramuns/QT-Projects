@@ -2,15 +2,24 @@ CXX=g++
 CFLAGS=-Wall -Werror -Wextra -std=c++17
 ASAN=-fsanitize=address
 GCOV=--coverage
+
 TARGET=Calculator.app
 TESTTARGET=test.out
 DISTTARGET=SmartCalc_v2.0.tar.gz
+
 SRCDIR=application/model
+TESTSRCDIR=tests
 OBJDIR=bin
 BUILDDIR=../build
+
 CMAKELISTS=../src/application/CMakeLists.txt
+
 SOURCES=$(shell find $(SRCDIR) -type f -name '*.cc')
+TESTSOURCES=$(shell find $(TESTSRCDIR) -type f -name '*.cc')
+
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$($(notdir SOURCES):.cc=.o))
+TESTOBJECTS = $(patsubst $(TESTSRCDIR)/%,$(OBJDIR)/%,$($(notdir TESTSOURCES):.cc=.o))
+
 LIB=-lgtest -pthread
 
 VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kinds=all --track-origins=yes
@@ -35,9 +44,9 @@ dvi:
 
 ##################################################################
 
-test: $(TARGET)
+test: $(TESTTARGET)
 	@echo "Running executable:"
-	@./$(TARGET) --gtest_brief=1
+	@./$(TESTTARGET) --gtest_brief=1
 
 asan:CXX+=$(ASAN)
 asan: clean test clean
@@ -50,7 +59,11 @@ gcov_report: clean test
 
 $(TARGET): $(OBJECTS)
 	@echo "Linking object files..."
-	@$(CXX) $(CFLAGS) -o $@ $(OBJDIR)/*.o $(OBJDIR)/*/*.o $(LIB)
+	@$(CXX) $(CFLAGS) -o $@ $(OBJDIR)/*.o $(LIB)
+
+$(TESTTARGET): $(OBJECTS) 
+	@echo "Linking object files..."
+	@$(CXX) $(CFLAGS) -o $@ $(OBJDIR)/*.o $(LIB)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.cc | $(OBJDIR)
 	@echo "Compiling source files..."
