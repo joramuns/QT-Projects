@@ -1,7 +1,5 @@
 #include "controller.h"
 
-#include <QDebug>
-#include <QLocale>
 #include <QPushButton>
 
 namespace s21 {
@@ -96,7 +94,6 @@ void Controller::VariableSet() noexcept {
 }
 
 /* Credit calc */
-
 void Controller::CreditEvalButton() noexcept {
   SetCreditData();
   model_->credit_model_.Calculate();
@@ -104,7 +101,6 @@ void Controller::CreditEvalButton() noexcept {
 }
 
 /* Deposit calc */
-
 void Controller::DepositAddReplenishment() noexcept {
   DepositWindow *deposit_window = view_->deposit_window_;
   double max_day = deposit_window->GetDepositTerm();

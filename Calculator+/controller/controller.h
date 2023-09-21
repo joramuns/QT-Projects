@@ -1,7 +1,6 @@
 #ifndef CONTROLLER_CONTROLLER_H_
 #define CONTROLLER_CONTROLLER_H_
 
-#include <QLabel>
 #include <QObject>
 
 #include "../model/model.h"
