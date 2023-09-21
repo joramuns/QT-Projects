@@ -10,24 +10,24 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 message(STATUS "Project \"${PROJECT_NAME}\" compiled with C++ standard ${CMAKE_CXX_STANDARD}")
 
 set(COMMON_SOURCES
-  main.cc
-  view/calcwindow.cc
-  view/operatorbutton.cc
-  view/creditwindow.cc
-  view/depositwindow.cc
-  controller/controller.cc
-  model/model.cc
-  model/element.cc
-  model/infix.cc
-  model/postfix.cc
-  model/credit.cc
-  model/deposit.cc
+  application/main.cc
+  application/view/calcwindow.cc
+  application/view/operatorbutton.cc
+  application/view/creditwindow.cc
+  application/view/depositwindow.cc
+  application/controller/controller.cc
+  application/model/model.cc
+  application/model/element.cc
+  application/model/infix.cc
+  application/model/postfix.cc
+  application/model/credit.cc
+  application/model/deposit.cc
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport)
 
 qt_add_library(QCustomPlot SHARED
-  qcustomplot/qcustomplot.cc
+  application/libs/qcustomplot/qcustomplot.cc
 )
 target_link_libraries(QCustomPlot PUBLIC Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(QCustomPlot PUBLIC Qt${QT_VERSION_MAJOR}::PrintSupport)
