@@ -81,11 +81,11 @@ void DepositCalc::EvaluateDeposit() noexcept {
 
   double daily_profit = RecalculateDaily();
   for (int day = 1; day <= term_; ++day) {
+    if (AccountMovement(day)) {
+      daily_profit = RecalculateDaily();
+    }
     profit_amount += daily_profit;
     if (day % deposit_type_ == 0 || day == term_) {
-      if (AccountMovement(day)) {
-        RecalculateDaily();
-      }
       BankRounding(profit_amount);
       payoffs_.push_back(profit_amount);
       total_profit_ += profit_amount;
@@ -99,6 +99,7 @@ void DepositCalc::EvaluateDeposit() noexcept {
       profit_amount = 0.0;
     }
   }
+  end_amount_ = amount_;
 }
 
 /* Private deposit model functions */
