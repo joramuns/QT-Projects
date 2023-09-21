@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QRegularExpressionValidator>
+#include <memory>
 #define QCUSTOMPLOT_USE_LIBRARY
 #include "../model/model.h"
 #include "../qcustomplot/qcustomplot.h"
@@ -21,7 +22,6 @@ class CalcWindow : public QMainWindow {
 
  public:
   explicit CalcWindow(Model *cmodel);
-  ~CalcWindow();
 
   /* Accessors */
   const std::string GetDomains(const int number) const noexcept;
@@ -72,7 +72,7 @@ class CalcWindow : public QMainWindow {
   };
   std::array<QLabel *, 5> input_labels_;
   std::array<QLineEdit *, 5> input_lines_;
-  QRegularExpressionValidator *regex_validator_;
+  std::unique_ptr<QRegularExpressionValidator> regex_validator_;
   QCustomPlot *plot_;
   QLabel *display_;
   QListWidget *results_display_;

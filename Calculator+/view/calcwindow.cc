@@ -25,8 +25,6 @@ CalcWindow::CalcWindow(Model *cmodel)
   InitOutput();
 }
 
-CalcWindow::~CalcWindow() { delete regex_validator_; }
-
 /* Accessors */
 const std::string CalcWindow::GetDomains(const int number) const noexcept {
   return input_lines_[number]->text().toStdString();
@@ -184,8 +182,9 @@ void CalcWindow::InitInputLines() {
   QSize q_button_size{button_size, button_size};
   QPoint button_pos{0, 150};
 
-  regex_validator_ = new QRegularExpressionValidator(
-      QRegularExpression("[-]?[0]+[.][0-9]+|[-]?[1-9]+[0-9]*[.][0-9]*"));
+  QRegularExpression regexp("[-]?[0]+[.][0-9]+|[-]?[1-9]+[0-9]*[.][0-9]*");
+
+  regex_validator_ = std::make_unique<QRegularExpressionValidator>(regexp);
   QVector<QString> labels{"X", "X min", "X max", "Y min", "Y max"};
 
   for (int i = 0; i < 5; ++i) {
@@ -203,7 +202,7 @@ void CalcWindow::InitInputLines() {
     input_lines_[i]->setGeometry(QRect(button_pos, q_button_size));
     /* std::locale loc("en_US.utf8"); */
     /* std::locale::global(loc); */
-    input_lines_[i]->setValidator(regex_validator_);
+    input_lines_[i]->setValidator(regex_validator_.get());
   }
 }
 
