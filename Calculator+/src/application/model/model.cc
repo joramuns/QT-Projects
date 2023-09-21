@@ -46,23 +46,23 @@ double Model::Evaluate() noexcept {
 }
 
 /* Debug output */
-void Model::OutputModel() noexcept {
-  std::cout << "Infix notation: ";
-  for (const auto &item : GetInfixData()) {
-    std::cout << *item << " ";
-  }
-  std::cout << std::endl << "Polish notation: ";
-  for (const auto &item : GetPostfixExpr()) {
-    std::cout << item << " ";
-  }
-  if (GetQueue().size()) {
-    std::cout << std::endl << "Queue stack: ";
-    for (const auto &item : GetQueue()) {
-      std::cout << item << " ";
-    }
-  }
-  std::cout << std::endl;
-}
+/* void Model::OutputModel() noexcept { */
+/*   std::cout << "Infix notation: "; */
+/*   for (const auto &item : GetInfixData()) { */
+/*     std::cout << *item << " "; */
+/*   } */
+/*   std::cout << std::endl << "Polish notation: "; */
+/*   for (const auto &item : GetPostfixExpr()) { */
+/*     std::cout << item << " "; */
+/*   } */
+/*   if (GetQueue().size()) { */
+/*     std::cout << std::endl << "Queue stack: "; */
+/*     for (const auto &item : GetQueue()) { */
+/*       std::cout << item << " "; */
+/*     } */
+/*   } */
+/*   std::cout << std::endl; */
+/* } */
 
 const Element Model::Calculate(const Element &a, const Element &b,
                                OpType math_operator) const noexcept {
