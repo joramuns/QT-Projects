@@ -1,0 +1,77 @@
+[
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQCUSTOMPLOT_COMPILE_LIBRARY -DQCustomPlot_EXPORTS -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/QCustomPlot_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtPrintSupport.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtWidgets.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -fPIC -std=gnu++17 -o CMakeFiles/QCustomPlot.dir/QCustomPlot_autogen/mocs_compilation.cpp.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/build/QCustomPlot_autogen/mocs_compilation.cpp",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/build/QCustomPlot_autogen/mocs_compilation.cpp"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQCUSTOMPLOT_COMPILE_LIBRARY -DQCustomPlot_EXPORTS -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/QCustomPlot_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtPrintSupport.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtWidgets.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -fPIC -std=gnu++17 -o CMakeFiles/QCustomPlot.dir/libs/qcustomplot/qcustomplot.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/libs/qcustomplot/qcustomplot.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/libs/qcustomplot/qcustomplot.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/Calculator_autogen/mocs_compilation.cpp.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/mocs_compilation.cpp",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/mocs_compilation.cpp"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/main.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/main.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/main.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/view/calcwindow.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/calcwindow.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/calcwindow.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/view/operatorbutton.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/operatorbutton.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/operatorbutton.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/view/creditwindow.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/creditwindow.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/creditwindow.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/view/depositwindow.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/depositwindow.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/view/depositwindow.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/controller/controller.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/controller/controller.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/controller/controller.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/model/model.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/model.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/model.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/model/element.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/element.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/element.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/model/infix.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/infix.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/infix.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/model/postfix.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/postfix.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/postfix.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/model/credit.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/credit.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/credit.cc"
+},
+{
+  "directory": "/Users/joramuns/Projects/QT-Projects/Calculator+/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -I/Users/joramuns/Projects/QT-Projects/Calculator+/build/Calculator_autogen/include -iframework /usr/local/lib -isystem /usr/local/lib/QtCore.framework/Headers -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -isystem /usr/local/lib/QtPrintSupport.framework/Headers  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fPIC -std=gnu++17 -o CMakeFiles/Calculator.dir/model/deposit.cc.o -c /Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/deposit.cc",
+  "file": "/Users/joramuns/Projects/QT-Projects/Calculator+/src/application/model/deposit.cc"
+}
+]
