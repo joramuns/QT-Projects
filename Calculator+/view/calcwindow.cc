@@ -25,8 +25,21 @@ CalcWindow::CalcWindow(Model *cmodel)
   InitOutput();
 }
 
-CalcWindow::~CalcWindow() {
-  delete regex_validator_;
+CalcWindow::~CalcWindow() { delete regex_validator_; }
+
+/* Accessors */
+const std::string CalcWindow::GetDomains(const int number) const noexcept {
+  return input_lines_[number]->text().toStdString();
+}
+
+/* Mutators */
+void CalcWindow::SetExpression(const std::string &expression) noexcept {
+  display_->setText(QString::fromStdString(expression));
+}
+
+void CalcWindow::AddResults(const std::string &result) noexcept {
+  results_display_->addItem(QString::fromStdString(result));
+  results_display_->scrollToBottom();
 }
 
 void CalcWindow::DrawPlot(const QVector<double> &x, const QVector<double> &y,
