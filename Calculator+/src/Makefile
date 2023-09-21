@@ -82,7 +82,7 @@ $(OBJDIR):
 asan:CXX+=$(ASAN)
 asan: clean test clean
 
-gcov_report:CXX+=$(GCOV)
+gcov_report: CXX+=$(GCOV)
 gcov_report: fclean test
 	lcov -t "Calculator+" -o coverage.info -c -d . --rc lcov_branch_coverage=0 --no-external
 	genhtml -o report coverage.info --rc lcov_branc_coverage=0
