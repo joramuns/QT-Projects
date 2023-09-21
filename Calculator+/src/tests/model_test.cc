@@ -6,41 +6,9 @@ class ModelTest : public ::testing::Test {
 
  protected:
   void SetUp() override {}
-  /* s21::Element OpType::kAddition{OpType::kAddition}; */
-  /* s21::Element OpType::kSubtraction{OpType::kSubtraction}; */
-  /* s21::Element OpType::kModulus{OpType::kModulus}; */
-  /* s21::Element OpType::kMultiplication{OpType::kMultiplication}; */
-  /* s21::Element OpType::kDivision{OpType::kDivision}; */
-
-  /* s21::Element OpType::kSin{OpType::kSin}; */
-  /* s21::Element OpType::kCos{OpType::kCos}; */
-  /* s21::Element OpType::kTan{OpType::kTan}; */
-  /* s21::Element e_asin{OpType::kAsin}; */
-  /* s21::Element e_acos{OpType::kAcos}; */
-  /* s21::Element e_atan{OpType::kAtan}; */
-  /* s21::Element OpType::kSqrt{OpType::kSqrt}; */
-  /* s21::Element e_ln{OpType::kLn}; */
-  /* s21::Element OpType::kLog{OpType::kLog}; */
-  /* s21::Element OpType::kPower{OpType::kPower}; */
-
-  /* s21::Element OpType::kBracketOpen{OpType::kBracketOpen}; */
-  /* s21::Element OpType::kBracketClose{OpType::kBracketClose}; */
-
-  /* s21::Element '1'{1.0}; */
-  /* s21::Element '2'{2.0}; */
-  /* s21::Element '3'{3.0}; */
-  /* s21::Element '4'{4.0}; */
-  /* s21::Element '5'{5.0}; */
-  /* s21::Element '6'{6.0}; */
-  /* s21::Element '7'{7.0}; */
-  /* s21::Element '8'{8.0}; */
-  /* s21::Element '9'{9.0}; */
-  /* s21::Element '9'_3{9.3}; */
-  /* s21::Element '5'6_2{56.2}; */
-  /* s21::Element '4'31_2{431.2}; */
-
   s21::Model test_model;
 };
+
 /* 4 + 4 * 2 / ( 1 - 5 ) = 2 */
 TEST_F(ModelTest, n_1) {
   test_model.AddElement('4');
@@ -54,6 +22,9 @@ TEST_F(ModelTest, n_1) {
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
   test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 4.0 + 4.0 * 2.0 / (1.0 - 5.0);
@@ -72,6 +43,9 @@ TEST_F(ModelTest, n_2) {
   test_model.AddElement('1');
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 4.0 + 4.0 * 2.0 / 1.0 - 5.0;
@@ -93,6 +67,9 @@ TEST_F(ModelTest, n_3) {
   test_model.AddElement('5');
   test_model.AddElement(OpType::kBracketClose);
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = 4.0 + 4.0 * (2.0 / 1.0 - 5.0);
   ASSERT_DOUBLE_EQ(result, expect);
@@ -112,6 +89,9 @@ TEST_F(ModelTest, n_4) {
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
   test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 4.0 + (4.0 * 2.0 / 1.0 - 5.0);
@@ -133,6 +113,9 @@ TEST_F(ModelTest, n_5) {
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = 4.0 + 4.0 * (2.0 / 1.0) - 5.0;
   ASSERT_DOUBLE_EQ(result, expect);
@@ -152,6 +135,9 @@ TEST_F(ModelTest, n_6) {
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 4.0 + (4.0 * 2.0 / 1.0) - 5.0;
@@ -173,6 +159,9 @@ TEST_F(ModelTest, n_7) {
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = (4.0 + 4.0 * 2.0 / 1.0) - 5.0;
   ASSERT_DOUBLE_EQ(result, expect);
@@ -192,6 +181,9 @@ TEST_F(ModelTest, n_8) {
   test_model.AddElement('1');
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 4.0 + (4.0 * 2.0) / 1.0 - 5.0;
@@ -213,6 +205,9 @@ TEST_F(ModelTest, n_9) {
   test_model.AddElement(OpType::kSubtraction);
   test_model.AddElement('5');
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = (4.0 + 4.0 * 2.0) / 1.0 - 5.0;
   ASSERT_DOUBLE_EQ(result, expect);
@@ -233,6 +228,9 @@ TEST_F(ModelTest, n_10) {
   test_model.AddElement(OpType::kAddition);
   test_model.AddElement('3');
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = 8.0 * (7.0 + 6.0 * 4.0) + 3.0;
   ASSERT_DOUBLE_EQ(result, expect);
@@ -250,6 +248,9 @@ TEST_F(ModelTest, n_11) {
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kMultiplication);
   test_model.AddElement('5');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 2.0 / (3.0 + 2.0) * 5.0;
@@ -275,6 +276,9 @@ TEST_F(ModelTest, n_12) {
   test_model.AddElement('6');
   test_model.AddElement('.');
   test_model.AddElement('2');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 2.0 + 9.3 - pow(8.0, 3.0) / 4.0 + 56.2;
@@ -303,6 +307,9 @@ TEST_F(ModelTest, n_13) {
   test_model.AddElement('2');
   test_model.AddElement(OpType::kBracketClose);
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = 2.0 + 9.3 - pow(8.0, 3.0) / (4.0 + 56.2);
   ASSERT_DOUBLE_EQ(result, expect);
@@ -316,6 +323,9 @@ TEST_F(ModelTest, n_14) {
   test_model.AddElement('3');
   test_model.AddElement(OpType::kPower);
   test_model.AddElement('2');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = pow(2.0, pow(3.0, 2.0));
@@ -334,6 +344,9 @@ TEST_F(ModelTest, n_15) {
   test_model.AddElement('2');
   test_model.AddElement(OpType::kBracketClose);
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = pow(2.0, pow(3.0, 2.0));
   ASSERT_DOUBLE_EQ(result, expect);
@@ -350,6 +363,9 @@ TEST_F(ModelTest, n_16) {
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kPower);
   test_model.AddElement('2');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = pow(pow(2.0, 3.0), 2.0);
@@ -375,6 +391,9 @@ TEST_F(ModelTest, n_17) {
   test_model.AddElement('8');
   test_model.AddElement(OpType::kBracketClose);
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = cos(431.2 * pow(2.0, 2.0) / 8.0);
   ASSERT_DOUBLE_EQ(result, expect);
@@ -391,6 +410,9 @@ TEST_F(ModelTest, n_18) {
   test_model.AddElement(OpType::kAddition);
   test_model.AddElement('5');
   test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 3.0 * sin(4.0 + 5.0);
@@ -411,6 +433,9 @@ TEST_F(ModelTest, n_19) {
   test_model.AddElement('2');
   test_model.AddElement(OpType::kDivision);
   test_model.AddElement('8');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = 431.2 * pow(2.0, 2.0) / 8.0;
@@ -441,6 +466,9 @@ TEST_F(ModelTest, n_20) {
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = cos(sin(2.0 + 9.0 * pow(6.0, 1.2) - tan(1.0)));
@@ -473,6 +501,9 @@ TEST_F(ModelTest, n_21) {
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = sqrt(cos(sin(2.0 + 9.0 * pow(6.0, 1.2) - tan(1.0))));
@@ -509,6 +540,9 @@ TEST_F(ModelTest, n_22) {
   test_model.AddElement('0');
   test_model.AddElement('.');
   test_model.AddElement('1');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect =
@@ -547,6 +581,9 @@ TEST_F(ModelTest, n_23) {
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kBracketClose);
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = sqrt(pow(2.0, 2.0)) * 5.0 / (4.0 - fmod(3.0, 2.0)) *
                   (4.0 - sqrt(9.0 * 9.0));
@@ -579,6 +616,9 @@ TEST_F(ModelTest, n_24) {
   test_model.AddElement('3');
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
   double result = test_model.Evaluate();
   double expect = cos(1.0 / 3.0) * sin(pow(1.352, 9.0) / (4.0 + 3.0));
@@ -629,6 +669,9 @@ TEST_F(ModelTest, n_25) {
   test_model.AddElement('0');
   test_model.AddElement(OpType::kBracketClose);
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect =
       (cos(1.0 / 3.0) * sin(pow(1.352, 9.0) / (4.0 + 3.0)) / 76.56) *
@@ -663,53 +706,124 @@ TEST_F(ModelTest, n_26) {
   test_model.AddElement(OpType::kBracketClose);
   test_model.AddElement(OpType::kBracketClose);
 
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
   double result = test_model.Evaluate();
   double expect = sqrt(cos(sin(2.0 + 9.0 * pow(6.0, 1.2) - tan(1.0))));
   ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
-/*   double num1 = 1; */
-/*   double num2 = 2; */
-/*   double num3 = 3; */
-/*   double num4 = 4; */
-/*   double num5 = 5; */
-/*   s21::Element enum1(num1); */
-/*   s21::Element enum2(num2); */
-/*   enum2.AppendNumber(3); */
-/*   s21::Element enum3(num3); */
-/*   s21::Element enum4(num4); */
-/*   enum4.AppendNumber(3, 1); */
-/*   enum4.AppendNumber(3, 3); */
 
-/*   s21::Element enum5(num5); */
-/*   s21::Element znakmin(s21::Element::kSubtraction); */
-/*   s21::Element znakplu(s21::Element::kAddition); */
-/*   s21::Element znakumn(s21::Element::kMultiplication); */
-/*   s21::Element znakdel(s21::Element::kDivision); */
-/*   s21::Element znakosk(s21::Element::kBracketOpen); */
-/*   s21::Element znakzsk(s21::Element::kBracketClose); */
-/*   s21::Element znakste(s21::Element::kPower); */
-/*   s21::Element znaksin(s21::Element::kSin); */
-/*   s21::Model keka; */
+/* -1-(-1) */
+TEST_F(ModelTest, n_27) {
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement('1');
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement(OpType::kBracketOpen);
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement('1');
+  test_model.AddElement(OpType::kBracketClose);
 
-/*   keka.AddElement(enum3); */
-/*   keka.AddElement(znakplu); */
-/*   keka.AddElement(enum4); */
-/*   keka.AddElement(znakumn); */
-/*   keka.AddElement(enum2); */
-/*   keka.AddElement(znakdel); */
-/*   keka.AddElement(znaksin); */
-/*   keka.AddElement(znakosk); */
-/*   keka.AddElement(enum1); */
-/*   keka.AddElement(znakmin); */
-/*   keka.AddElement(enum5); */
-/*   keka.AddElement(znakzsk); */
-/*   keka.AddElement(znakste); */
-/*   keka.AddElement(enum2); */
-/*   keka.AddElement(znakste); */
-/*   keka.AddElement(enum3); */
-/*   keka.Convert(); */
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
 
-/*   keka.OutputModel(); */
-/*   std::cout << std::endl; */
-/*   double res = keka.Evaluate(); */
+  double result = test_model.Evaluate();
+  double expect = -1 - (-1);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* -1-(-(+1)) */
+TEST_F(ModelTest, n_28) {
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement('1');
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement(OpType::kBracketOpen);
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement(OpType::kBracketOpen);
+  test_model.AddElement(OpType::kAddition);
+  test_model.AddElement('1');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = -1 - (-(+1));
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 1e2 = 100 */
+TEST_F(ModelTest, n_29) {
+  test_model.AddElement('1');
+  test_model.AddElement('e');
+  test_model.AddElement('2');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = 1e2;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 0.1e2 = 10 */
+TEST_F(ModelTest, n_30) {
+  test_model.AddElement('0');
+  test_model.AddElement('.');
+  test_model.AddElement('1');
+  test_model.AddElement('e');
+  test_model.AddElement('2');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = 0.1e2;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 100e-2 = 1 */
+TEST_F(ModelTest, n_31) {
+  test_model.AddElement('1');
+  test_model.AddElement('0');
+  test_model.AddElement('0');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('2');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = 100e-2;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 100e-2 = 1 */
+TEST_F(ModelTest, n_32) {
+  test_model.AddElement('1');
+  test_model.AddElement('0');
+  test_model.AddElement('0');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('.');
+  test_model.AddElement('e');
+  test_model.AddElement('2');
+  test_model.AddElement('.');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = 100e-2;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
