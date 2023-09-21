@@ -11,7 +11,7 @@
 #include <memory>
 #define QCUSTOMPLOT_USE_LIBRARY
 #include "../model/model.h"
-#include "../qcustomplot/qcustomplot.h"
+#include "../libs/qcustomplot/qcustomplot.h"
 #include "creditwindow.h"
 #include "depositwindow.h"
 #include "operatorbutton.h"

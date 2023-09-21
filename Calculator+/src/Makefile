@@ -1,10 +1,14 @@
-CC=g++
+CXX=g++
 CFLAGS=-Wall -Werror -Wextra -std=c++17
 ASAN=-fsanitize=address
 GCOV=--coverage
-TARGET=test.out
-SRCDIR=.
+TARGET=Calculator.app
+TESTTARGET=test.out
+DISTTARGET=SmartCalc_v2.0.tar.gz
+SRCDIR=application/model
 OBJDIR=bin
+BUILDDIR=../build
+CMAKELISTS=../src/application/CMakeLists.txt
 SOURCES=$(shell find $(SRCDIR) -type f -name '*.cc')
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$($(notdir SOURCES):.cc=.o))
 LIB=-lgtest -pthread
@@ -13,11 +17,29 @@ VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kind
 
 all: test
 
+install:
+	@echo "Installing application..."
+	@mkdir -p $(BUILDDIR)
+	@cd $(BUILDDIR) && cmake $(CMAKELISTS)
+	@cd $(BUILDDIR) && make
+	@mv -f $(BUILDDIR)/$(TARGET) .
+
+dist: install
+	@echo "Creating a distribution file for the program..."
+	@tar -czf $(DISTTARGET) $(TARGET)
+
+uninstall: clean
+	@rm -rf $(TARGET)
+
+dvi:
+
+##################################################################
+
 test: $(TARGET)
 	@echo "Running executable:"
 	@./$(TARGET) --gtest_brief=1
 
-asan:CC+=$(ASAN)
+asan:CXX+=$(ASAN)
 asan: clean test clean
 
 gcov_report:CC+=$(GCOV)
@@ -28,12 +50,12 @@ gcov_report: clean test
 
 $(TARGET): $(OBJECTS)
 	@echo "Linking object files..."
-	@$(CC) $(CFLAGS) -o $@ $(OBJDIR)/*.o $(OBJDIR)/*/*.o $(LIB)
+	@$(CXX) $(CFLAGS) -o $@ $(OBJDIR)/*.o $(OBJDIR)/*/*.o $(LIB)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.cc | $(OBJDIR)
 	@echo "Compiling source files..."
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) -o $@ -c $< $(LIB)
+	@$(CXX) $(CFLAGS) -o $@ -c $< $(LIB)
 
 $(OBJDIR):
 	@mkdir -p $@
@@ -42,6 +64,8 @@ vg: $(TARGET)
 	valgrind $(VGFLAGS) ./$<
 
 clean:
-	@rm -rf $(TARGET) $(OBJDIR)
+	@rm -rf $(TESTTARGET) $(OBJDIR)
+	@rm -rf $(TARGET) $(BUILDDIR)
+	@rm -rf $(DISTTARGET)
 	@rm -rf *.out *.gcno *.gcov *.gcda objects report *.info
 
