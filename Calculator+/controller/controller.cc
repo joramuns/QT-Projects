@@ -220,6 +220,7 @@ void Controller::RenderDeposit() const noexcept {
   for (const auto &item : payoffs_list) {
     deposit_window->AddPayoff(item);
   }
+  RenderWithdrawal();
   deposit_window->SetTotalProfit(deposit_model->GetTotalProfit());
   deposit_window->SetTaxAmount(deposit_model->GetTaxCharge());
   deposit_window->SetEndAmount(deposit_model->GetEndAmount());
