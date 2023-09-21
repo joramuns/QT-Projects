@@ -20,7 +20,7 @@ void Model::ClearModel() noexcept {
 }
 
 /* Calculators */
-double Model::Evaluate() noexcept {
+const double Model::Evaluate() noexcept {
   Convert();
   Element result;
   std::stack<Element> eval_stack;
@@ -64,8 +64,8 @@ void Model::OutputModel() noexcept {
   std::cout << std::endl;
 }
 
-Element Model::Calculate(const Element &a, const Element &b,
-                         OpType math_operator) const noexcept {
+const Element Model::Calculate(const Element &a, const Element &b,
+                               OpType math_operator) const noexcept {
   Element result;
   if (math_operator == OpType::kAddition ||
       math_operator == OpType::kUnaryAddition) {
@@ -86,8 +86,8 @@ Element Model::Calculate(const Element &a, const Element &b,
   return result;
 }
 
-Element Model::Calculate(const Element &a,
-                         OpType math_operator) const noexcept {
+const Element Model::Calculate(const Element &a,
+                               OpType math_operator) const noexcept {
   Element result;
   if (math_operator == OpType::kSin) {
     result = a.sin();
@@ -112,7 +112,7 @@ Element Model::Calculate(const Element &a,
   return result;
 }
 
-std::string Model::GetResult() noexcept {
+const std::string Model::GetResult() noexcept {
   std::string result{};
   if (ValidateExpr()) {
     result = "Malformed expression";
@@ -128,7 +128,7 @@ std::string Model::GetResult() noexcept {
   return result;
 }
 
-std::pair<std::vector<double>, std::vector<double>> Model::GetCoordinates(
+const std::pair<std::vector<double>, std::vector<double>> Model::GetCoordinates(
     const std::vector<double> &value_borders) {
   std::vector<double> x{};
   std::vector<double> y{};

@@ -12,14 +12,9 @@ class InfixExpr {
   using elem_iterator = std::deque<std::unique_ptr<Element>>::iterator;
 
  public:
-  /* RFive */
   InfixExpr() = default;
-  InfixExpr(const InfixExpr &other) = default;
-  InfixExpr(InfixExpr &&other) = delete;
-  InfixExpr &operator=(const InfixExpr &other) = default;
-  InfixExpr &operator=(InfixExpr &&other) = delete;
-  virtual ~InfixExpr() = default;
 
+ public:
   /* Modifiers */
   void AddElement(const int type);
   void AddElement(const char number);
@@ -31,18 +26,22 @@ class InfixExpr {
   void SetVariables(const double number) noexcept;
 
   /* Getters */
-  const std::deque<std::unique_ptr<Element>> &GetInfixData() const noexcept;
-  std::string GetInfixString() const noexcept;
-  bool LastIsOperator() const noexcept;
-  bool LastIsVariable() const noexcept;
+  [[nodiscard]] const std::deque<std::unique_ptr<Element>> &GetInfixData()
+      const noexcept;
+  [[nodiscard]] const std::string GetInfixString() const noexcept;
+  [[nodiscard]] const bool LastIsOperator() const noexcept;
+  [[nodiscard]] const bool LastIsVariable() const noexcept;
 
  private:
-  int SizeValid(const elem_iterator iter_begin);
-  int BeginValid(const elem_iterator iter_begin);
-  int EndValid();
-  int MiddleValid(elem_iterator iter_begin);
-  int DoubleOperator(const elem_iterator type_first,
-                     const elem_iterator type_second);
+  [[nodiscard]] const int SizeValid(
+      const elem_iterator iter_begin) const noexcept;
+  [[nodiscard]] const int BeginValid(
+      const elem_iterator iter_begin) const noexcept;
+  [[nodiscard]] const int EndValid() const noexcept;
+  [[nodiscard]] const int MiddleValid(elem_iterator iter_begin) const noexcept;
+  [[nodiscard]] const int DoubleOperator(
+      const elem_iterator type_first,
+      const elem_iterator type_second) const noexcept;
 
  private:
   std::deque<std::unique_ptr<Element>> infix_data_;

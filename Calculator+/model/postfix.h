@@ -9,15 +9,7 @@
 namespace s21 {
 class PostfixExpr {
  public:
-  /* RFive */
   PostfixExpr() = default;
-  PostfixExpr(const PostfixExpr &other) = default;
-  PostfixExpr(PostfixExpr &&other) = delete;
-  PostfixExpr &operator=(const PostfixExpr &other) = default;
-  PostfixExpr &operator=(PostfixExpr &&other) = delete;
-  virtual ~PostfixExpr() = default;
-
-  /* Getters */
 
  protected:
   using OpType = s21::Element::OperatorType;
@@ -28,12 +20,12 @@ class PostfixExpr {
   void PopAndPushAll() noexcept;
 
   /* Debug getters */
-  std::deque<Element> GetPostfixExpr() const noexcept;
-  std::deque<Element> GetQueue() const noexcept;
+  [[nodiscard]] const std::deque<Element> GetPostfixExpr() const noexcept;
+  [[nodiscard]] const std::deque<Element> GetQueue() const noexcept;
 
  private:
   void PopAndPush() noexcept;
-  bool TopOpenBracket() const noexcept;
+  [[nodiscard]] const bool TopOpenBracket() const noexcept;
 
  private:
   /* Fields */

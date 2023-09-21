@@ -1,7 +1,16 @@
 #include "deposit.h"
 
 namespace s21 {
-DepositCalc::DepositCalc() {}
+DepositCalc::DepositCalc() noexcept
+    : amount_(0.0),
+      term_(0),
+      interest_rate_(0.0),
+      deposit_type_(0),
+      tax_rate_(0.0),
+      capitalization_(false),
+      total_profit_(0.0),
+      end_amount_(0.0),
+      tax_amount_(0.0) {}
 
 /* Accessors */
 const std::map<double, double> &DepositCalc::GetReplenishmentList()
@@ -128,7 +137,7 @@ const int DepositCalc::GetFloatingDigit(const double number,
   return real_number - temp_number;
 }
 
-bool DepositCalc::AccountMovement(const int day) noexcept {
+const bool DepositCalc::AccountMovement(const int day) noexcept {
   bool result = false;
 
   auto wd_iter = withdrawals_.find(static_cast<double>(day));

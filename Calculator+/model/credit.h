@@ -7,7 +7,7 @@
 namespace s21 {
 class CreditCalc final {
  public:
-  CreditCalc();
+  CreditCalc() noexcept;
 
   /* Accessors */
   const std::vector<double> GetPayments() const noexcept;
@@ -20,10 +20,10 @@ class CreditCalc final {
                int credit_type) noexcept;
 
  private:
-  void CalculateAnnuity();
-  void CalculateDifferentiated();
-  void AnnuityPayment();
-  void DifferentiatedPayment();
+  void CalculateAnnuity() noexcept;
+  void CalculateDifferentiated() noexcept;
+  void AnnuityPayment() noexcept;
+  void DifferentiatedPayment() noexcept;
 
  private:
   /* Input data */

@@ -8,7 +8,7 @@
 namespace s21 {
 class DepositCalc final {
  public:
-  DepositCalc();
+  DepositCalc() noexcept;
 
   /* Accessors */
   const std::map<double, double> &GetReplenishmentList() const noexcept;
@@ -31,8 +31,8 @@ class DepositCalc final {
  private:
   void BankRounding(double &number) const noexcept;
   const int GetFloatingDigit(const double number, int place) const noexcept;
-  bool AccountMovement(const int day) noexcept;
-  double RecalculateDaily() const noexcept;
+  [[nodiscard]] const bool AccountMovement(const int day) noexcept;
+  [[nodiscard]] double RecalculateDaily() const noexcept;
 
  private:
   /* Input data */

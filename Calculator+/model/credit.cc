@@ -2,7 +2,7 @@
 
 namespace s21 {
 
-CreditCalc::CreditCalc()
+CreditCalc::CreditCalc() noexcept
     : amount_(0.0),
       term_(0.0),
       interest_rate_(0.0),
@@ -43,7 +43,7 @@ void CreditCalc::SetData(double amount, double term, double interest_rate,
 }
 
 /* Private credit functions */
-void CreditCalc::CalculateAnnuity() {
+void CreditCalc::CalculateAnnuity() noexcept {
   AnnuityPayment();
   total_payment_ = payments_.back() * term_;
   if (total_payment_ < amount_) {
@@ -53,7 +53,7 @@ void CreditCalc::CalculateAnnuity() {
   overpayment_ = total_payment_ < amount_ ? 0.0 : total_payment_ - amount_;
 }
 
-void CreditCalc::CalculateDifferentiated() {
+void CreditCalc::CalculateDifferentiated() noexcept {
   DifferentiatedPayment();
   if (total_payment_ < amount_) {
     payments_.back() += (amount_ - total_payment_);
@@ -62,7 +62,7 @@ void CreditCalc::CalculateDifferentiated() {
   overpayment_ = total_payment_ < amount_ ? 0.0 : total_payment_ - amount_;
 }
 
-void CreditCalc::AnnuityPayment() {
+void CreditCalc::AnnuityPayment() noexcept {
   double payment{0};
   if (interest_rate_) {
     payment =
@@ -78,7 +78,7 @@ void CreditCalc::AnnuityPayment() {
   }
 }
 
-void CreditCalc::DifferentiatedPayment() {
+void CreditCalc::DifferentiatedPayment() noexcept {
   double amount = amount_;
   double pay_off = amount_ / term_;
 

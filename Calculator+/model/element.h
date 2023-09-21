@@ -13,17 +13,12 @@ class Element final {
   explicit Element(const int input) noexcept;
   explicit Element(const double input) noexcept;
   explicit Element(const char input) noexcept;
-  Element(const Element &other) = default;
-  Element(Element &&other) = default;
-  Element &operator=(const Element &other) = delete;
-  Element &operator=(Element &&other) = default;
-  ~Element() = default;
 
   /* Getters */
-  bool IsOperator() const noexcept;
-  bool IsVariable() const noexcept;
-  double GetValue() const noexcept;
-  int GetPriority() const noexcept;
+  [[nodiscard]] const bool IsOperator() const noexcept;
+  [[nodiscard]] const bool IsVariable() const noexcept;
+  [[nodiscard]] const double GetValue() const noexcept;
+  [[nodiscard]] const int GetPriority() const noexcept;
 
   /* Modifiers */
   void AppendNumber(const char input) noexcept;

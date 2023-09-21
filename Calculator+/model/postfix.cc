@@ -1,8 +1,6 @@
 #include "postfix.h"
 
 namespace s21 {
-/* Getters */
-
 /* Modifiers */
 void PostfixExpr::AddOperand(const Element &number) noexcept {
   stack_out_.push_back(number);
@@ -45,11 +43,11 @@ void PostfixExpr::PopAndPushAll() noexcept {
 }
 
 /* Debug getters */
-std::deque<Element> PostfixExpr::GetPostfixExpr() const noexcept {
+const std::deque<Element> PostfixExpr::GetPostfixExpr() const noexcept {
   return stack_out_;
 }
 
-std::deque<Element> PostfixExpr::GetQueue() const noexcept {
+const std::deque<Element> PostfixExpr::GetQueue() const noexcept {
   return queue_stack_;
 }
 
@@ -59,7 +57,7 @@ void PostfixExpr::PopAndPush() noexcept {
   queue_stack_.pop_back();
 }
 
-bool PostfixExpr::TopOpenBracket() const noexcept {
+const bool PostfixExpr::TopOpenBracket() const noexcept {
   return (int)queue_stack_.back().GetValue() == OpType::kBracketOpen;
 }
 }  // namespace s21
