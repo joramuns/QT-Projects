@@ -8,7 +8,7 @@ VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kind
 
 TARGET=Calculator.app
 TEST_TARGET=test.out
-LIB_TARGET=calc_model.a
+LIB_TARGET=libbin/calc_model.a
 DISTTARGET=SmartCalc_v2.0.tar.gz
 
 MODEL_SRCDIR=application/model
@@ -50,7 +50,6 @@ $(LIB_TARGET): $(LIB_OBJECTS)
 	@echo "Building model library..."
 	@$(STATLIB_BUILD) $@ $(LIB_OBJECTS)
 	@ranlib $@
-	@mv $@ $(LIBDIR)/
 
 $(LIBDIR)/%.o : $(MODEL_SRCDIR)/%.cc | $(LIBDIR)
 	@echo "Compiling source files..."
@@ -68,7 +67,7 @@ test: $(TEST_TARGET)
 
 $(TEST_TARGET): $(LIB_TARGET) $(TEST_OBJECTS)
 	@echo "Linking object files..."
-	@$(CXX) $(CFLAGS) -o $@ $(OBJDIR)/*.o $(LIBDIR)/$(LIB_TARGET) $(LIB_FLAGS)
+	@$(CXX) $(CFLAGS) -o $@ $(TEST_OBJECTS) $(LIB_TARGET) $(LIB_FLAGS)
 
 $(OBJDIR)/%.o : $(TEST_SRCDIR)/%.cc | $(OBJDIR)
 	@echo "Compiling test source files..."
@@ -94,9 +93,10 @@ vg: $(TEST_TARGET)
 
 clean:
 	@rm -rf $(TEST_TARGET) $(OBJDIR)/*.o
-	@rm -rf $(TARGET) $(BUILDDIR)
+	@rm -rf $(LIB_TARGET) $(LIBDIR)/*.o
+	@rm -rf $(TARGET)
 	@rm -rf $(DISTTARGET)
 	@rm -rf *.out *.gcno *.gcov *.gcda objects report *.info
 
 fclean: clean
-	@rm -rf $(OBJDIR) $(LIBDIR)
+	@rm -rf $(OBJDIR) $(LIBDIR) $(BUILDDIR)
