@@ -26,7 +26,6 @@ TEST_F(CreditTest, n_1) {
   ASSERT_NEAR(payments[0], expect_payment, 1e-2);
 }
 
-
 TEST_F(CreditTest, n_2) {
   double amount = 253987.0;
   double term = 31.0;
@@ -126,7 +125,6 @@ TEST_F(CreditTest, d_1) {
   ASSERT_NEAR(totalpayment, expect_totalpayment, 1e-2);
   ASSERT_NEAR(payments[0], expect_payment, 1e-2);
 }
-
 
 TEST_F(CreditTest, d_2) {
   double amount = 253987.0;
