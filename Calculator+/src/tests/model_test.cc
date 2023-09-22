@@ -827,3 +827,123 @@ TEST_F(ModelTest, n_32) {
   ASSERT_DOUBLE_EQ(result, expect);
   test_model.ClearModel();
 }
+
+/* asin(5*(4^(3+2*2)-0.03e+3)*1e-5)+acos(ln(10)*2e-2)-atan(0.04) */
+TEST_F(ModelTest, n_33) {
+  test_model.AddElement(OpType::kAsin);
+  test_model.AddElement('5');
+  test_model.AddElement(OpType::kMultiplication);
+  test_model.AddElement(OpType::kBracketOpen);
+  test_model.AddElement('4');
+  test_model.AddElement(OpType::kPower);
+  test_model.AddElement(OpType::kBracketOpen);
+  test_model.AddElement('3');
+  test_model.AddElement(OpType::kAddition);
+  test_model.AddElement('2');
+  test_model.AddElement(OpType::kMultiplication);
+  test_model.AddElement('2');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement('0');
+  test_model.AddElement('.');
+  test_model.AddElement('0');
+  test_model.AddElement('3');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('3');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kMultiplication);
+  test_model.AddElement('1');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('5');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kAddition);
+  test_model.AddElement(OpType::kAcos);
+  test_model.AddElement(OpType::kLn);
+  test_model.AddElement('1');
+  test_model.AddElement('0');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kMultiplication);
+  test_model.AddElement('2');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('e');
+  test_model.AddElement('2');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement(OpType::kAtan);
+  test_model.AddElement('0');
+  test_model.AddElement('.');
+  test_model.AddElement('0');
+  test_model.AddElement('4');
+  test_model.AddElement(OpType::kBracketClose);
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = asin(5.0 * (pow(4.0, (3.0 + 2.0 * 2.0)) - 0.03e+3) * 1e-5) +
+                  acos(log(10.0) * 2e-2) - atan(0.04);
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* .e1 */
+TEST_F(ModelTest, n_34) {
+  test_model.AddElement('.');
+  test_model.AddElement('e');
+  test_model.AddElement('1');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = 0.e1;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* 1.e111 = 1.0e11 */
+TEST_F(ModelTest, n_35) {
+  test_model.AddElement('1');
+  test_model.AddElement('.');
+  test_model.AddElement('e');
+  test_model.AddElement('1');
+  test_model.AddElement('1');
+  test_model.AddElement('1');
+
+  int validator = test_model.ValidateExpr();
+  EXPECT_EQ(validator, 0);
+
+  double result = test_model.Evaluate();
+  double expect = 1.e11;
+  ASSERT_DOUBLE_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* -1+2mod3*4/sin(cos(tan(5))) */
+TEST_F(ModelTest, n_36) {
+  test_model.AddElement(OpType::kSubtraction);
+  test_model.AddElement('1');
+  test_model.AddElement(OpType::kAddition);
+  test_model.AddElement('2');
+  test_model.AddElement(OpType::kModulus);
+  test_model.AddElement('3');
+  test_model.AddElement(OpType::kMultiplication);
+  test_model.AddElement('4');
+  test_model.AddElement(OpType::kDivision);
+  test_model.AddElement(OpType::kSin);
+  test_model.AddElement(OpType::kCos);
+  test_model.AddElement(OpType::kTan);
+  test_model.AddElement('5');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kBracketClose);
+
+  std::string result = test_model.GetResult();
+  std::string expect = "\u2212 1 \u002B 2 mod 3 \u00D7 4 \u00F7 sin ( cos ( tan ( 5 ) ) )  = -10.687746";
+  ASSERT_EQ(result, expect);
+  test_model.ClearModel();
+}
