@@ -887,6 +887,13 @@ TEST_F(ModelTest, n_33) {
   double expect = asin(5.0 * (pow(4.0, (3.0 + 2.0 * 2.0)) - 0.03e+3) * 1e-5) +
                   acos(log(10.0) * 2e-2) - atan(0.04);
   ASSERT_DOUBLE_EQ(result, expect);
+
+  std::string string_result = test_model.GetResult();
+  std::string string_expect =
+      "asin ( 5 \u00D7 ( 4 ^ ( 3 \u002B 2 \u00D7 2 ) \u2212 0.03e+3 ) \u00D7 "
+      "1e-5 ) \u002B acos ( ln ( 10 ) \u00D7 2e-2 ) \u2212 atan ( 0.04 )  = "
+      "2.442154";
+  ASSERT_EQ(string_result, string_expect);
   test_model.ClearModel();
 }
 
@@ -943,7 +950,43 @@ TEST_F(ModelTest, n_36) {
   test_model.AddElement(OpType::kBracketClose);
 
   std::string result = test_model.GetResult();
-  std::string expect = "\u2212 1 \u002B 2 mod 3 \u00D7 4 \u00F7 sin ( cos ( tan ( 5 ) ) )  = -10.687746";
+  std::string expect =
+      "\u2212 1 \u002B 2 mod 3 \u00D7 4 \u00F7 sin ( cos ( tan ( 5 ) ) )  = "
+      "-10.687746";
+  ASSERT_EQ(result, expect);
+  test_model.ClearModel();
+}
+
+/* x */
+TEST_F(ModelTest, n_37) {
+  test_model.AddElement('x');
+  std::vector<double> bounds{-100.0, 100.0, -100.0, 100.0};
+
+  auto coords = test_model.GetCoordinates(bounds);
+
+  auto x_iter = coords.first.begin();
+  auto x_end_iter = coords.first.end();
+  auto y_iter = coords.first.begin();
+  auto y_end_iter = coords.first.end();
+  while (++x_iter != x_end_iter && ++y_iter != y_end_iter) {
+    ASSERT_DOUBLE_EQ(*x_iter, *y_iter);
+  }
+  test_model.ClearModel();
+}
+
+/* log(10)^sqrt(4) */
+TEST_F(ModelTest, n_38) {
+  test_model.AddElement(OpType::kLog);
+  test_model.AddElement('1');
+  test_model.AddElement('0');
+  test_model.AddElement(OpType::kBracketClose);
+  test_model.AddElement(OpType::kPower);
+  test_model.AddElement(OpType::kSqrt);
+  test_model.AddElement('4');
+  test_model.AddElement(OpType::kBracketClose);
+
+  std::string result = test_model.GetResult();
+  std::string expect = "log ( 10 ) ^ sqrt ( 4 )  = 1";
   ASSERT_EQ(result, expect);
   test_model.ClearModel();
 }
