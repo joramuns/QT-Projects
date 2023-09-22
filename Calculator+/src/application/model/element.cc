@@ -19,7 +19,7 @@ Element::Element(const char input) noexcept : is_operator_(false), value_(0) {
   }
 }
 
-/* Getters */
+/* Accessors */
 bool Element::IsOperator() const noexcept { return is_operator_; }
 
 bool Element::IsVariable() const noexcept { return string_value_ == "x"; }
@@ -30,7 +30,7 @@ int Element::GetPriority() const noexcept {
   return is_operator_ ? (int)log10(value_) : -1;
 }
 
-/* Modifiers */
+/* Mutators */
 void Element::AppendNumber(const char input) noexcept {
   bool allowed = true;
   char last_char = string_value_.back();

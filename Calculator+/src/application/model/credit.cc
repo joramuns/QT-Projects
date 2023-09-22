@@ -86,4 +86,5 @@ void CreditCalc::DifferentiatedPayment() noexcept {
     amount -= pay_off;
   }
 }
+
 }  // namespace s21

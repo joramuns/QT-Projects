@@ -85,5 +85,6 @@ class DepositWindow : public QWidget {
   QLineEdit *tax_amount_;
   QLineEdit *deposit_end_amount_;
 };
+
 }  // namespace s21
 #endif  // VIEW_DEPOSITWINDOW_H_

@@ -19,9 +19,11 @@ class PostfixExpr {
   void ClearPostfixExpr() noexcept;
   void PopAndPushAll() noexcept;
 
-  /* Debug getters */
+  /* Accessors */
   [[nodiscard]] const std::deque<Element> &GetPostfixExpr() const noexcept;
-  [[nodiscard]] const std::deque<Element> &GetQueue() const noexcept;
+
+  /* Debug accessor */
+  /* [[nodiscard]] const std::deque<Element> &GetQueue() const noexcept; */
 
  private:
   void PopAndPush() noexcept;
@@ -32,6 +34,7 @@ class PostfixExpr {
   std::deque<Element> stack_out_;
   std::deque<Element> queue_stack_;
 };
+
 }  // namespace s21
 
 #endif  // MODEL_POSTFIX_H_

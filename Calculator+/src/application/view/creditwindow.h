@@ -49,5 +49,6 @@ class CreditWindow : public QWidget {
   QLineEdit *payment_over_;
   QLineEdit *payment_total_;
 };
+
 }  // namespace s21
 #endif  // VIEW_CREDITWINDOW_H_

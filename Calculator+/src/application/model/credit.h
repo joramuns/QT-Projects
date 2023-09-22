@@ -37,5 +37,6 @@ class CreditCalc final {
   double overpayment_;
   double total_payment_;
 };
+
 }  // namespace s21
 #endif  // MODEL_CREDIT_H_

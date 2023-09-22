@@ -1,7 +1,7 @@
 #include "model.h"
 
 namespace s21 {
-/* Modifiers */
+/* Mutators */
 void Model::Convert() noexcept {
   ClearPostfixExpr();
   for (const auto &item : GetInfixData()) {
@@ -45,6 +45,47 @@ double Model::Evaluate() noexcept {
   return eval_stack.top().GetValue();
 }
 
+const std::string Model::GetResult() noexcept {
+  std::string result{};
+  if (ValidateExpr()) {
+    result = "Malformed expression";
+  } else {
+    double value = Evaluate();
+    std::stringstream ss;
+    ss << std::fixed << value;
+    result = GetInfixString() + " = " + ss.str();
+    result.erase(result.find_last_not_of('0') + 1, std::string::npos);
+    result.erase(result.find_last_not_of('.') + 1, std::string::npos);
+  }
+
+  return result;
+}
+
+const std::pair<std::vector<double>, std::vector<double>> Model::GetCoordinates(
+    const std::vector<double> &value_borders) {
+  std::vector<double> x{};
+  std::vector<double> y{};
+  double x_min = value_borders[0];
+  double x_max = value_borders[1];
+  double y_min = value_borders[2];
+  double y_max = value_borders[3];
+
+  if (ValidateExpr()) {
+  } else if (x_min < x_max && y_min < y_max) {
+    double step_number = 200.0;
+    double step = (x_max - x_min) / step_number;
+    x.reserve(static_cast<int>(step_number) + 1);
+    y.reserve(static_cast<int>(step_number) + 1);
+    for (double i = x_min; i <= x_max; i += step) {
+      SetVariables(i);
+      x.push_back(i);
+      y.push_back(Evaluate());
+    }
+  }
+
+  return std::make_pair(x, y);
+}
+
 /* Debug output */
 /* void Model::OutputModel() noexcept { */
 /*   std::cout << "Infix notation: "; */
@@ -64,6 +105,7 @@ double Model::Evaluate() noexcept {
 /*   std::cout << std::endl; */
 /* } */
 
+/* Private model functions */
 const Element Model::Calculate(const Element &a, const Element &b,
                                OpType math_operator) const noexcept {
   Element result;
@@ -110,47 +152,6 @@ const Element Model::Calculate(const Element &a,
   }
 
   return result;
-}
-
-const std::string Model::GetResult() noexcept {
-  std::string result{};
-  if (ValidateExpr()) {
-    result = "Malformed expression";
-  } else {
-    double value = Evaluate();
-    std::stringstream ss;
-    ss << std::fixed << value;
-    result = GetInfixString() + " = " + ss.str();
-    result.erase(result.find_last_not_of('0') + 1, std::string::npos);
-    result.erase(result.find_last_not_of('.') + 1, std::string::npos);
-  }
-
-  return result;
-}
-
-const std::pair<std::vector<double>, std::vector<double>> Model::GetCoordinates(
-    const std::vector<double> &value_borders) {
-  std::vector<double> x{};
-  std::vector<double> y{};
-  double x_min = value_borders[0];
-  double x_max = value_borders[1];
-  double y_min = value_borders[2];
-  double y_max = value_borders[3];
-
-  if (ValidateExpr()) {
-  } else if (x_min < x_max && y_min < y_max) {
-    double step_number = 200.0;
-    double step = (x_max - x_min) / step_number;
-    x.reserve(static_cast<int>(step_number) + 1);
-    y.reserve(static_cast<int>(step_number) + 1);
-    for (double i = x_min; i <= x_max; i += step) {
-      SetVariables(i);
-      x.push_back(i);
-      y.push_back(Evaluate());
-    }
-  }
-
-  return std::make_pair(x, y);
 }
 
 }  // namespace s21

@@ -13,7 +13,7 @@ class Model final : public InfixExpr, public PostfixExpr {
  public:
   Model() = default;
 
-  /* Modifiers */
+  /* Mutators */
   void Convert() noexcept;
   void ClearModel() noexcept;
 
@@ -24,7 +24,7 @@ class Model final : public InfixExpr, public PostfixExpr {
   GetCoordinates(const std::vector<double> &value_borders);
 
   /* Debug output */
-  void OutputModel() noexcept;
+  /* void OutputModel() noexcept; */
 
  public:
   CreditCalc credit_model_;
@@ -37,5 +37,6 @@ class Model final : public InfixExpr, public PostfixExpr {
   [[nodiscard]] const Element Calculate(const Element &a,
                                         OpType math_operator) const noexcept;
 };
+
 }  // namespace s21
 #endif  // MODEL_MODEL_H_

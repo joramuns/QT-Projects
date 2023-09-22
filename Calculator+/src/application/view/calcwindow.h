@@ -77,5 +77,6 @@ class CalcWindow : public QMainWindow {
   QLabel *display_;
   QListWidget *results_display_;
 };
+
 }  // namespace s21
 #endif  // MAINWINDOW_H

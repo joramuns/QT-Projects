@@ -8,19 +8,18 @@
 namespace s21 {
 class Element final {
  public:
-  /* RFive */
   Element() noexcept;
   explicit Element(const int input) noexcept;
   explicit Element(const double input) noexcept;
   explicit Element(const char input) noexcept;
 
-  /* Getters */
+  /* Accessors */
   [[nodiscard]] bool IsOperator() const noexcept;
   [[nodiscard]] bool IsVariable() const noexcept;
   [[nodiscard]] double GetValue() const noexcept;
   [[nodiscard]] int GetPriority() const noexcept;
 
-  /* Modifiers */
+  /* Mutators */
   void AppendNumber(const char input) noexcept;
   void SetUnary() noexcept;
   void SetValue(const double number) noexcept;
@@ -86,6 +85,7 @@ class Element final {
   double value_;
   std::string string_value_{};
 };
+
 }  // namespace s21
 
 std::ostream &operator<<(std::ostream &os, const s21::Element &output);

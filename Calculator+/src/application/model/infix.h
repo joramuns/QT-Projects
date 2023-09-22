@@ -15,22 +15,24 @@ class InfixExpr {
   InfixExpr() = default;
 
  public:
-  /* Modifiers */
-  void AddElement(const int type);
-  void AddElement(const char number);
-  void AddElement(std::unique_ptr<Element> token) noexcept;
-  void DelElement() noexcept;
-  int ValidateExpr() noexcept;
-  void ClearInfixExpr() noexcept;
-  void AppendNumber(const char number) noexcept;
-  void SetVariables(const double number) noexcept;
-
-  /* Getters */
+  /* Accessors */
   [[nodiscard]] const std::deque<std::unique_ptr<Element>> &GetInfixData()
       const noexcept;
   [[nodiscard]] const std::string GetInfixString() const noexcept;
   [[nodiscard]] bool LastIsOperator() const noexcept;
   [[nodiscard]] bool LastIsVariable() const noexcept;
+
+  /* Mutators */
+  void AddElement(const int type);
+  void AddElement(const char number);
+  void AddElement(std::unique_ptr<Element> token) noexcept;
+  int ValidateExpr() noexcept;
+  void ClearInfixExpr() noexcept;
+  void AppendNumber(const char number) noexcept;
+  void SetVariables(const double number) noexcept;
+
+  /* Excluded due to perfect visual fitment without this button */
+  /* void DelElement() noexcept; */
 
  private:
   [[nodiscard]] int SizeValid(const elem_iterator iter_begin) const noexcept;
@@ -45,6 +47,7 @@ class InfixExpr {
   std::deque<std::unique_ptr<Element>> infix_data_;
   std::vector<Element *> var_array_;
 };
+
 }  // namespace s21
 
 #endif  // MODEL_INFIX_H_

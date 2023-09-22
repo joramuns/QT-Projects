@@ -228,4 +228,5 @@ QGroupBox *DepositWindow::AddOutputGroupBox() {
 
   return output_group_box;
 }
+
 }  // namespace s21

@@ -1,11 +1,33 @@
 #include "infix.h"
 
 namespace s21 {
+/* Accessors */
+const std::deque<std::unique_ptr<Element>> &InfixExpr::GetInfixData()
+    const noexcept {
+  return infix_data_;
+}
+
+const std::string InfixExpr::GetInfixString() const noexcept {
+  std::string result{};
+  for (const auto &item : infix_data_) {
+    result += *(*item) + " ";
+  }
+  return result;
+}
+
+bool InfixExpr::LastIsOperator() const noexcept {
+  return infix_data_.empty() ? true : infix_data_.back()->IsOperator();
+}
+
+bool InfixExpr::LastIsVariable() const noexcept {
+  return infix_data_.empty() ? false : infix_data_.back()->IsVariable();
+}
 void InfixExpr::AddElement(const int type) {
   auto e_operator = std::make_unique<Element>(type);
   AddElement(std::move(e_operator));
 }
 
+/* Mutators */
 void InfixExpr::AddElement(const char number) {
   if (number == 'x' || LastIsOperator() || LastIsVariable()) {
     auto e_number = std::make_unique<Element>(number);
@@ -28,8 +50,6 @@ void InfixExpr::AddElement(std::unique_ptr<Element> token) noexcept {
     infix_data_.push_back(std::move(e_operator));
   }
 };
-
-void InfixExpr::DelElement() noexcept { infix_data_.pop_back(); }
 
 int InfixExpr::ValidateExpr() noexcept {
   int ex_code = 0;
@@ -58,26 +78,10 @@ void InfixExpr::SetVariables(const double number) noexcept {
   }
 }
 
-const std::deque<std::unique_ptr<Element>> &InfixExpr::GetInfixData()
-    const noexcept {
-  return infix_data_;
-}
+/* Excluded due to perfect visual fitment without this button */
+/* void InfixExpr::DelElement() noexcept { infix_data_.pop_back(); } */
 
-const std::string InfixExpr::GetInfixString() const noexcept {
-  std::string result{};
-  for (const auto &item : infix_data_) {
-    result += *(*item) + " ";
-  }
-  return result;
-}
-
-bool InfixExpr::LastIsOperator() const noexcept {
-  return infix_data_.empty() ? true : infix_data_.back()->IsOperator();
-}
-
-bool InfixExpr::LastIsVariable() const noexcept {
-  return infix_data_.empty() ? false : infix_data_.back()->IsVariable();
-}
+/* Private infix functions */
 
 int InfixExpr::SizeValid(const elem_iterator iter_begin) const noexcept {
   int ex_code = 0;
@@ -199,4 +203,5 @@ int InfixExpr::DoubleOperator(const elem_iterator op_first,
   }
   return ex_code;
 }
+
 }  // namespace s21

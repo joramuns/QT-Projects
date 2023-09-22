@@ -12,5 +12,6 @@ class OperatorButton : public QPushButton {
  private:
   int button_type_;
 };
+
 }  // namespace s21
 #endif  // VIEW_OPERATORBUTTON_H_

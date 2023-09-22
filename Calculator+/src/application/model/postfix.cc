@@ -42,14 +42,15 @@ void PostfixExpr::PopAndPushAll() noexcept {
   }
 }
 
-/* Debug getters */
+/* Accessors */
 const std::deque<Element> &PostfixExpr::GetPostfixExpr() const noexcept {
   return stack_out_;
 }
 
-const std::deque<Element> &PostfixExpr::GetQueue() const noexcept {
-  return queue_stack_;
-}
+/* Debug accessor */
+/* const std::deque<Element> &PostfixExpr::GetQueue() const noexcept { */
+/*   return queue_stack_; */
+/* } */
 
 /* Private functions */
 void PostfixExpr::PopAndPush() noexcept {
@@ -60,4 +61,5 @@ void PostfixExpr::PopAndPush() noexcept {
 bool PostfixExpr::TopOpenBracket() const noexcept {
   return (int)queue_stack_.back().GetValue() == OpType::kBracketOpen;
 }
+
 }  // namespace s21

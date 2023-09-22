@@ -50,5 +50,6 @@ class DepositCalc final {
   double end_amount_;
   double tax_amount_;
 };
+
 }  // namespace s21
 #endif  // MODEL_DEPOSIT_H_

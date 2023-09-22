@@ -103,4 +103,5 @@ QGroupBox *CreditWindow::AddOutputGroupBox() {
 
   return output_group_box;
 }
+
 }  // namespace s21

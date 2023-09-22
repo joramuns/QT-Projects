@@ -46,5 +46,6 @@ class Controller : public QObject {
   CalcWindow *view_;
   Model *model_;
 };
+
 }  // namespace s21
 #endif  // CONTROLLER_CONTROLLER_H_
