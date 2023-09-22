@@ -88,6 +88,7 @@ class Element final {
 
 }  // namespace s21
 
-std::ostream &operator<<(std::ostream &os, const s21::Element &output);
+/* Debug output for element */
+/* std::ostream &operator<<(std::ostream &os, const s21::Element &output); */
 
 #endif  // MODEL_ELEMENT_H_

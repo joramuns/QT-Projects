@@ -209,6 +209,7 @@ bool Element::CheckDigit() noexcept {
 
 }  // namespace s21
 
-std::ostream &operator<<(std::ostream &os, const s21::Element &output) {
-  return os << *output;
-}
+/* Debug output for element */
+/* std::ostream &operator<<(std::ostream &os, const s21::Element &output) { */
+/*   return os << *output; */
+/* } */
