@@ -86,13 +86,6 @@ void Controller::MakePlot() {
   view_->DrawPlot(x_qvector, y_qvector, value_borders);
 }
 
-void Controller::VariableSet() noexcept {
-  auto input_value = view_->GetDomains(0);
-  if (!input_value.empty()) {
-    model_->SetVariables(std::stod(input_value));
-  }
-}
-
 /* Credit calc */
 void Controller::CreditEvalButton() noexcept {
   SetCreditData();
@@ -146,6 +139,13 @@ void Controller::DepositEvalButton() noexcept {
 }
 
 /* Private main calc function */
+void Controller::VariableSet() noexcept {
+  auto input_value = view_->GetDomains(0);
+  if (!input_value.empty()) {
+    model_->SetVariables(std::stod(input_value));
+  }
+}
+
 void Controller::Render() const noexcept {
   view_->SetExpression(model_->GetInfixString());
 }
