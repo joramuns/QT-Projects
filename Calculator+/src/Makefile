@@ -43,6 +43,8 @@ uninstall: clean
 	@rm -rf $(TARGET)
 
 dvi:
+	doxygen dox_config
+	open dvi/index.html
 
 ##################################################################
 
@@ -97,6 +99,7 @@ clean:
 	@rm -rf $(TARGET)
 	@rm -rf $(DISTTARGET)
 	@rm -rf *.out *.gcno *.gcov *.gcda objects report *.info
+	@rm -rf dvi
 
 fclean: clean
 	@rm -rf $(OBJDIR) $(LIBDIR) $(BUILDDIR)
