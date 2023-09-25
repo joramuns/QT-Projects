@@ -892,7 +892,7 @@ TEST_F(ModelTest, n_33) {
   std::string string_expect =
       "asin ( 5 \u00D7 ( 4 ^ ( 3 \u002B 2 \u00D7 2 ) \u2212 0.03e+3 ) \u00D7 "
       "1e-5 ) \u002B acos ( ln ( 10 ) \u00D7 2e-2 ) \u2212 atan ( 0.04 )  = "
-      "2.442154";
+      "2.4421537";
   ASSERT_EQ(string_result, string_expect);
   test_model.ClearModel();
 }
@@ -952,7 +952,7 @@ TEST_F(ModelTest, n_36) {
   std::string result = test_model.GetResult();
   std::string expect =
       "\u2212 1 \u002B 2 mod 3 \u00D7 4 \u00F7 sin ( cos ( tan ( 5 ) ) )  = "
-      "-10.687746";
+      "-10.6877457";
   ASSERT_EQ(result, expect);
   test_model.ClearModel();
 }
