@@ -33,6 +33,7 @@ install:
 	@mkdir -p $(BUILDDIR)
 	@cd $(BUILDDIR) && cmake $(CMAKELISTS)
 	@cd $(BUILDDIR) && make
+	@rm -rf $(TARGET)
 	@mv -f $(BUILDDIR)/$(TARGET) .
 
 dist: install
