@@ -1,6 +1,7 @@
 #ifndef MODEL_MODEL_H_
 #define MODEL_MODEL_H_
 
+#include <iomanip>
 #include <stack>
 
 #include "credit.h"

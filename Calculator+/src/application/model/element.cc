@@ -15,7 +15,9 @@ Element::Element(const char input) noexcept : is_operator_(false), value_(0) {
     if (string_value_ == "." || string_value_ == "e") {
       string_value_ = "0" + string_value_;
     }
-    value_ = std::stod(string_value_);
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(7) << string_value_;
+    ss >> value_;
   }
 }
 
@@ -44,7 +46,9 @@ void Element::AppendNumber(const char input) noexcept {
   }
   if (allowed) {
     string_value_ += input;
-    value_ = std::stod(string_value_);
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(7) << string_value_;
+    ss >> value_;
   }
 }
 
