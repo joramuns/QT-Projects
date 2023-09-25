@@ -1,7 +1,5 @@
 #include "creditwindow.h"
 
-#include <iostream>
-
 namespace s21 {
 CreditWindow::CreditWindow() {
   setAttribute(Qt::WA_DeleteOnClose, true);
