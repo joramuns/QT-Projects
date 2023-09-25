@@ -26,7 +26,7 @@ TEST_OBJECTS = $(patsubst $(TEST_SRCDIR)/%,$(OBJDIR)/%,$($(notdir TEST_SOURCES):
 
 ##################################################################
 
-all: test
+all: gcov_report dvi dist
 
 install:
 	@echo "Installing application..."
