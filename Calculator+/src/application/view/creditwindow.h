@@ -18,7 +18,6 @@ class CreditWindow : public QWidget {
 
  public:
   CreditWindow();
-  ~CreditWindow();
 
   /* Accessors */
   const double GetCreditAmount() const noexcept;

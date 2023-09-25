@@ -19,8 +19,6 @@ CreditWindow::CreditWindow() {
   setLayout(main_layout);
 }
 
-CreditWindow::~CreditWindow() {}
-
 /* Accessors */
 const double CreditWindow::GetCreditAmount() const noexcept {
   return credit_amount_->value();
