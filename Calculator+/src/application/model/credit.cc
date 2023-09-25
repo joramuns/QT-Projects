@@ -11,7 +11,7 @@ CreditCalc::CreditCalc() noexcept
       total_payment_(0.0){};
 
 /* Accessors */
-const std::vector<double> CreditCalc::GetPayments() const noexcept {
+const std::vector<double> &CreditCalc::GetPayments() const noexcept {
   return payments_;
 }
 
