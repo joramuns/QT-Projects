@@ -200,8 +200,13 @@ void CalcWindow::InitInputLines() {
     button_pos.setY(i * 50 + 150);
     q_button_size.setWidth(150);
     input_lines_[i]->setGeometry(QRect(button_pos, q_button_size));
-    /* std::locale loc("en_US.utf8"); */
-    /* std::locale::global(loc); */
+#if defined(__APPLE__)
+    std::locale loc("en_US.UTF-8");
+    std::locale::global(loc);
+#elif defined(__linux__)
+    std::locale loc("en_US.utf8");
+    std::locale::global(loc);
+#endif
     input_lines_[i]->setValidator(regex_validator_.get());
   }
 }
