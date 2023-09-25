@@ -4,7 +4,7 @@ namespace s21 {
 Element::Element() noexcept : is_operator_(false), value_(0){};
 
 Element::Element(const int input) noexcept
-    : is_operator_(true), value_((double)input) {}
+    : is_operator_(true), value_(static_cast<double>(input)) {}
 
 Element::Element(const double input) noexcept
     : is_operator_(false), value_(input) {}
