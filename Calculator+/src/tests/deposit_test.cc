@@ -9,7 +9,7 @@ class DepositTest : public ::testing::Test {
 TEST_F(DepositTest, n_1) {
   double amount = 10000.0;
   int term = 7;
-  double rate = 3.3;
+  double rate = 0.033;
   double tax = 0.13;
   int periodicity = 30;
   bool capitalization = false;
@@ -32,7 +32,7 @@ TEST_F(DepositTest, n_1) {
 TEST_F(DepositTest, n_2) {
   double amount = 10000.0;
   int term = 30;
-  double rate = 3.3;
+  double rate = 0.033;
   double tax = 0.13;
   int periodicity = 30;
   bool capitalization = true;
@@ -55,7 +55,7 @@ TEST_F(DepositTest, n_2) {
 TEST_F(DepositTest, n_3) {
   double amount = 329789.0;
   int term = 30;
-  double rate = 7.23;
+  double rate = 0.0723;
   double tax = 0.04;
   int periodicity = 30;
   bool capitalization = true;
@@ -80,7 +80,7 @@ TEST_F(DepositTest, n_3) {
 TEST_F(DepositTest, n_4) {
   double amount = 329789.0;
   int term = 30;
-  double rate = 7.23;
+  double rate = 0.0723;
   double tax = 0.00;
   int periodicity = 30;
   bool capitalization = true;
@@ -111,7 +111,7 @@ TEST_F(DepositTest, n_4) {
 TEST_F(DepositTest, n_5) {
   double amount = 184728.12;
   int term = 40;
-  double rate = 3.97;
+  double rate = 0.0397;
   double tax = 0.00;
   int periodicity = 30;
   bool capitalization = false;
@@ -158,7 +158,7 @@ TEST_F(DepositTest, n_5) {
 TEST_F(DepositTest, n_6) {
   double amount = 20000.0;
   int term = 15;
-  double rate = 1.5;
+  double rate = 0.015;
   double tax = 0.0;
   int periodicity = 30;
   bool capitalization = false;
@@ -181,7 +181,7 @@ TEST_F(DepositTest, n_6) {
 TEST_F(DepositTest, n_7) {
   double amount = 20000.0;
   int term = 15;
-  double rate = 1.5;
+  double rate = 0.015;
   double tax = 0.0;
   int periodicity = 30;
   bool capitalization = true;
@@ -204,7 +204,7 @@ TEST_F(DepositTest, n_7) {
 TEST_F(DepositTest, n_8) {
   double amount = 9325.76;
   int term = 1;
-  double rate = 10;
+  double rate = 0.1;
   double tax = 0.0;
   int periodicity = 30;
   bool capitalization = false;
@@ -227,7 +227,7 @@ TEST_F(DepositTest, n_8) {
 TEST_F(DepositTest, n_9) {
   double amount = 9727.25;
   int term = 1;
-  double rate = 10;
+  double rate = 0.1;
   double tax = 0.0;
   int periodicity = 30;
   bool capitalization = false;
