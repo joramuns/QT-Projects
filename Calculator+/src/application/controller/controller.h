@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Заголовочный файл с описанием класса controller
+ * @brief Заголовочный файл с описанием класса Controller
  *
  * Данный класс связывает между собой классы model и view в соответствии с
  * паттерном MVC в приложении калькулятора.
@@ -23,7 +23,7 @@ namespace s21 {
  * в ином архитектурном решении, приходится откусывать кусок функционала от view
  * класса.
  */
-class Controller : public QObject {
+class Controller final : public QObject {
   Q_OBJECT
 
  public:
