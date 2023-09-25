@@ -59,7 +59,8 @@ void PostfixExpr::PopAndPush() noexcept {
 }
 
 bool PostfixExpr::TopOpenBracket() const noexcept {
-  return (int)queue_stack_.back().GetValue() == OpType::kBracketOpen;
+  return static_cast<int>(queue_stack_.back().GetValue()) ==
+         OpType::kBracketOpen;
 }
 
 }  // namespace s21
