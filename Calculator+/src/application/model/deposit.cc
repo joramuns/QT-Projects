@@ -64,7 +64,7 @@ void DepositCalc::SetDepositData(double amount, int term,
                                  double rate) noexcept {
   amount_ = amount;
   term_ = term;
-  interest_rate_ = rate / 100.0;
+  interest_rate_ = rate;
 }
 
 void DepositCalc::SetDepositType(double tax, int periodicity,

@@ -29,7 +29,7 @@ const int DepositWindow::GetDepositTerm() const noexcept {
   return static_cast<int>(deposit_term_->value());
 }
 const double DepositWindow::GetDepositRate() const noexcept {
-  return deposit_interest_->value();
+  return deposit_interest_->value() / 100.0;
 }
 
 const double DepositWindow::GetDepositTaxRate() const noexcept {
