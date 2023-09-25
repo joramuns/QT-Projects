@@ -3,7 +3,7 @@ STATLIB_BUILD=ar rcs
 CFLAGS=-Wall -Werror -Wextra -std=c++17
 ASAN=-fsanitize=address
 GCOV=--coverage
-LIB_FLAGS=-lgtest -pthread
+LIB_FLAGS=-lgtest -pthread -I/usr/local/include -L/usr/local/lib/ 
 VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 TARGET=Calculator.app
