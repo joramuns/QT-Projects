@@ -15,13 +15,6 @@ const std::string InfixExpr::GetInfixString() const noexcept {
   return result;
 }
 
-bool InfixExpr::LastIsOperator() const noexcept {
-  return infix_data_.empty() ? true : infix_data_.back()->IsOperator();
-}
-
-bool InfixExpr::LastIsVariable() const noexcept {
-  return infix_data_.empty() ? false : infix_data_.back()->IsVariable();
-}
 void InfixExpr::AddElement(const int type) {
   auto e_operator = std::make_unique<Element>(type);
   AddElement(std::move(e_operator));
@@ -82,6 +75,14 @@ void InfixExpr::SetVariables(const double number) noexcept {
 /* void InfixExpr::DelElement() noexcept { infix_data_.pop_back(); } */
 
 /* Private infix functions */
+
+bool InfixExpr::LastIsOperator() const noexcept {
+  return infix_data_.empty() ? true : infix_data_.back()->IsOperator();
+}
+
+bool InfixExpr::LastIsVariable() const noexcept {
+  return infix_data_.empty() ? false : infix_data_.back()->IsVariable();
+}
 
 int InfixExpr::SizeValid(const elem_iterator iter_begin) const noexcept {
   int ex_code = 0;
