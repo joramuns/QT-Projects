@@ -161,7 +161,8 @@ class CalcWindow final : public QMainWindow {
    */
   std::array<QLineEdit *, 5> input_lines_;
   /**
-   * @brief Умный уникальный указатель на валидатор поля по регулярному выражению
+   * @brief Умный уникальный указатель на валидатор поля по регулярному
+   * выражению
    */
   std::unique_ptr<QRegularExpressionValidator> regex_validator_;
   /**
