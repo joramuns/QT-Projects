@@ -1,7 +1,5 @@
 #include "controller.h"
 
-#include <QPushButton>
-
 namespace s21 {
 Controller::Controller(CalcWindow *cview, Model *cmodel)
     : view_(cview), model_(cmodel) {

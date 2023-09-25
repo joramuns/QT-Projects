@@ -9,6 +9,7 @@
 #define CONTROLLER_CONTROLLER_H_
 
 #include <QObject>
+#include <QPushButton>
 
 #include "../model/model.h"
 #include "../view/calcwindow.h"
