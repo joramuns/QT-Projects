@@ -1,7 +1,7 @@
 #include "calcwindow.h"
 
 namespace s21 {
-CalcWindow::CalcWindow(Model *cmodel)
+CalcWindow::CalcWindow()
     : QMainWindow(nullptr),
       credit_window_(new CreditWindow()),
       deposit_window_(new DepositWindow()) {

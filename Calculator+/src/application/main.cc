@@ -3,7 +3,7 @@
 int main(int argc, char **argv) {
   QApplication app(argc, argv);
   s21::Model cmodel;
-  s21::CalcWindow cview(&cmodel);
+  s21::CalcWindow cview;
   s21::Controller controller(&cview, &cmodel);
   cview.show();
 #if defined(__APPLE__)
