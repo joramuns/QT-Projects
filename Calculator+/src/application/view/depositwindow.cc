@@ -21,8 +21,6 @@ DepositWindow::DepositWindow() {
   setLayout(main_layout);
 }
 
-DepositWindow::~DepositWindow(){};
-
 /* Accessors */
 const double DepositWindow::GetDepositAmount() const noexcept {
   return deposit_amount_->value();
