@@ -22,21 +22,23 @@ DepositWindow::DepositWindow() {
 }
 
 /* Accessors */
-const double DepositWindow::GetDepositAmount() const noexcept {
+double DepositWindow::GetDepositAmount() const noexcept {
   return deposit_amount_->value();
 }
-const int DepositWindow::GetDepositTerm() const noexcept {
+
+int DepositWindow::GetDepositTerm() const noexcept {
   return static_cast<int>(deposit_term_->value());
 }
-const double DepositWindow::GetDepositRate() const noexcept {
+
+double DepositWindow::GetDepositRate() const noexcept {
   return deposit_interest_->value() / 100.0;
 }
 
-const double DepositWindow::GetDepositTaxRate() const noexcept {
+double DepositWindow::GetDepositTaxRate() const noexcept {
   return deposit_tax_rate_->value() / 100.0;
 }
 
-const int DepositWindow::GetPeriodicity() const noexcept {
+int DepositWindow::GetPeriodicity() const noexcept {
   int periodicity = 0;
   int selection_number = deposit_periodicity_->currentIndex();
 
@@ -51,31 +53,31 @@ const int DepositWindow::GetPeriodicity() const noexcept {
   return periodicity;
 }
 
-const bool DepositWindow::GetCapitalization() const noexcept {
+bool DepositWindow::GetCapitalization() const noexcept {
   return capitalization_->isChecked();
 }
 
-const double DepositWindow::GetReplenishmentDay() const noexcept {
+double DepositWindow::GetReplenishmentDay() const noexcept {
   return replenishment_day_->value();
 }
 
-const double DepositWindow::GetReplenishmentAmount() const noexcept {
+double DepositWindow::GetReplenishmentAmount() const noexcept {
   return replenishment_amount_->value();
 }
 
-const int DepositWindow::GetCurrentReplenishment() const noexcept {
+int DepositWindow::GetCurrentReplenishment() const noexcept {
   return replenishments_list_->currentRow();
 }
 
-const double DepositWindow::GetWithdrawalDay() const noexcept {
+double DepositWindow::GetWithdrawalDay() const noexcept {
   return withdrawal_day_->value();
 }
 
-const double DepositWindow::GetWithdrawalAmount() const noexcept {
+double DepositWindow::GetWithdrawalAmount() const noexcept {
   return withdrawal_amount_->value();
 }
 
-const int DepositWindow::GetCurrentWithdrawal() const noexcept {
+int DepositWindow::GetCurrentWithdrawal() const noexcept {
   return withdrawals_list_->currentRow();
 }
 

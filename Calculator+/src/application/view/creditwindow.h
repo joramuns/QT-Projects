@@ -40,25 +40,25 @@ class CreditWindow : public QWidget {
    *
    * @return Сумма кредита
    */
-  const double GetCreditAmount() const noexcept;
+  double GetCreditAmount() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода срока кредита
    *
    * @return Срок кредита
    */
-  const double GetCreditTerm() const noexcept;
+  double GetCreditTerm() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода процентной ставки кредита
    *
    * @return Процентная ставка
    */
-  const double GetCreditRate() const noexcept;
+  double GetCreditRate() const noexcept;
   /**
    * @brief Функция, возвращающая тип кредита
    *
    * @return 1 - дифференцированный, 0 - аннуитетный
    */
-  const int GetCreditType() const noexcept;
+  int GetCreditType() const noexcept;
 
   /* Mutators */
   /**

@@ -41,75 +41,75 @@ class DepositWindow : public QWidget {
    *
    * @return Сумма депозита
    */
-  const double GetDepositAmount() const noexcept;
+  double GetDepositAmount() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода срока депозита
    *
    * @return Срок депозита
    */
-  const int GetDepositTerm() const noexcept;
+  int GetDepositTerm() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода процентной ставки депозита
    *
    * @return Процентная ставка
    */
-  const double GetDepositRate() const noexcept;
+  double GetDepositRate() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода налоговой ставки с прибыли
    *
    * @return Налоговая ставка
    */
-  const double GetDepositTaxRate() const noexcept;
+  double GetDepositTaxRate() const noexcept;
   /**
    * @brief Функция, возвращающая тип периодических выплат в соответствии с enum
    *
    * @return Значение периода enum
    */
-  const int GetPeriodicity() const noexcept;
+  int GetPeriodicity() const noexcept;
   /**
    * @brief Функция, возвращающая тип депозита
    *
    * @return 1 - с капитализацией, 0 без капитализации
    */
-  const bool GetCapitalization() const noexcept;
+  bool GetCapitalization() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода дня пополнения депозита
    *
    * @return День пополнения депозита
    */
-  const double GetReplenishmentDay() const noexcept;
+  double GetReplenishmentDay() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода суммы пополнения депозита
    *
    * @return Сумма пополнения депозита
    */
-  const double GetReplenishmentAmount() const noexcept;
+  double GetReplenishmentAmount() const noexcept;
   /**
    * @brief Функция, возвращающая номер выделенного поля в списке пополнений
    * депозита (нумерация с 0)
    *
    * @return Номер выделенного поля пополнения депозита
    */
-  const int GetCurrentReplenishment() const noexcept;
+  int GetCurrentReplenishment() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода дня снятия с депозита
    *
    * @return День снятия с депозита
    */
-  const double GetWithdrawalDay() const noexcept;
+  double GetWithdrawalDay() const noexcept;
   /**
    * @brief Функция, возвращающая значение поля ввода суммы снятия с депозита
    *
    * @return Сумма снятия с депозита
    */
-  const double GetWithdrawalAmount() const noexcept;
+  double GetWithdrawalAmount() const noexcept;
   /**
    * @brief Функция, возвращающая номер выделенного поля в списке снятий с
    * депозита (нумерация с 0)
    *
    * @return Номер выделенного поля снятия с депозита
    */
-  const int GetCurrentWithdrawal() const noexcept;
+  int GetCurrentWithdrawal() const noexcept;
 
   /* Mutators */
   /**

@@ -20,19 +20,19 @@ CreditWindow::CreditWindow() {
 }
 
 /* Accessors */
-const double CreditWindow::GetCreditAmount() const noexcept {
+double CreditWindow::GetCreditAmount() const noexcept {
   return credit_amount_->value();
 }
 
-const double CreditWindow::GetCreditTerm() const noexcept {
+double CreditWindow::GetCreditTerm() const noexcept {
   return credit_term_->value();
 }
 
-const double CreditWindow::GetCreditRate() const noexcept {
+double CreditWindow::GetCreditRate() const noexcept {
   return credit_interest_->value();
 }
 
-const int CreditWindow::GetCreditType() const noexcept {
+int CreditWindow::GetCreditType() const noexcept {
   return credit_type_->currentIndex();
 }
 
