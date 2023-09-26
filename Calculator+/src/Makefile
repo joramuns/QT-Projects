@@ -16,6 +16,7 @@ TEST_SRCDIR=tests
 OBJDIR=bin
 LIBDIR=libbin
 BUILDDIR=../build
+BINDIR=../bin
 CMAKELISTS=../src/application/CMakeLists.txt
 
 LIB_SOURCES=$(shell find $(MODEL_SRCDIR) -type f -name '*.cc')
@@ -30,18 +31,18 @@ all: gcov_report dvi dist
 
 install:
 	@echo "Installing application..."
-	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(BUILDDIR) $(BINDIR)
 	@cd $(BUILDDIR) && cmake $(CMAKELISTS)
 	@cd $(BUILDDIR) && make
-	@rm -rf $(TARGET)
-	@mv -f $(BUILDDIR)/$(TARGET) .
+	@rm -rf $(BINDIR)/$(TARGET)
+	@mv -f $(BUILDDIR)/$(TARGET) $(BINDIR)/$(TARGET)
 
 dist: install
 	@echo "Creating a distribution file for the program..."
-	@tar -czf $(DISTTARGET) $(TARGET)
+	@tar -czf $(BINDIR)/$(DISTTARGET) $(BINDIR)/$(TARGET)
 
 uninstall: clean
-	@rm -rf $(TARGET)
+	@rm -rf $(BINDIR)/$(TARGET)
 
 dvi:
 	doxygen dox_config
@@ -88,7 +89,7 @@ asan: clean test clean
 gcov_report: CXX+=$(GCOV)
 gcov_report: fclean test
 	lcov -t "Calculator+" -o coverage.info -c -d . --rc lcov_branch_coverage=0 --no-external
-	genhtml -o report coverage.info --rc lcov_branc_coverage=0
+	genhtml -o report coverage.info --rc lcov_branch_coverage=0
 	open ./report/index.html
 
 vg: $(TEST_TARGET)
@@ -97,10 +98,10 @@ vg: $(TEST_TARGET)
 clean:
 	@rm -rf $(TEST_TARGET) $(OBJDIR)/*.o
 	@rm -rf $(LIB_TARGET) $(LIBDIR)/*.o
-	@rm -rf $(TARGET)
-	@rm -rf $(DISTTARGET)
+	@rm -rf $(BINDIR)/$(TARGET)
+	@rm -rf $(BINDIR)/$(DISTTARGET)
 	@rm -rf *.out *.gcno *.gcov *.gcda objects report *.info
 	@rm -rf dvi
 
 fclean: clean
-	@rm -rf $(OBJDIR) $(LIBDIR) $(BUILDDIR)
+	@rm -rf $(OBJDIR) $(LIBDIR) $(BUILDDIR) $(BINDIR)
