@@ -1,3 +1,4 @@
+#include <epoxy/gl.h>
 /* #include <glm/glm.hpp> */
 /* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
 /* brew install glm */
@@ -17,13 +18,13 @@ class ObjModel {
   int ReadObj();
 
   struct point {
-    float x_;
-    float y_;
-    float z_;
-    float a_{0.0};
+    GLfloat x_;
+    GLfloat y_;
+    GLfloat z_;
+    GLfloat a_{0.0};
   };
 
   std::vector<point> vertices_;
-  std::vector<int> faces_;
+  std::vector<GLuint> faces_;
 };
 }  // namespace s21

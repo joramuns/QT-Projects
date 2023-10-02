@@ -20,6 +20,7 @@ int ObjModel::ReadObj() {
         data >> vertex.x_;
         data >> vertex.y_;
         data >> vertex.z_;
+        std::cout << vertex.x_ << " " << vertex.y_ << " " << vertex.z_ << std::endl;
       } else if (prefix == "f ") {
           
       }
