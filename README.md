@@ -94,7 +94,7 @@
 
 ### Сборка
 
-Для сборки используется Makefile, включены стандартные GNU цели сборки: **all, install, uninstall, clean, dvi, dist, test, gcov**. 
+Для сборки используется Makefile и CMake, включены стандартные GNU цели сборки: **all, install, uninstall, clean, dvi, dist, test, gcov**. 
 - Тестирование проекта: ```make test```
 - Установка приложения: ```make install```
 - Создание архива приложения: ```make dist```
