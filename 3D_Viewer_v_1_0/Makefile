@@ -22,7 +22,7 @@ all: clean $(LIB_NAME)
 
 build: install open
 
-open:
+open: install
 	@chmod a+rwx 3D_Viewer
 	@open 3D_Viewer/3D_Viewer.app/Contents/MacOS/3D_Viewer
 	
