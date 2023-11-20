@@ -5,7 +5,7 @@ void wrong_filename() {
   std::cout << "Success" << std::endl;
 }
 void true_filename() {
-  s21::Parser test("../../data-samples/lamp.obj");
+  s21::Parser test("../../data-samples/simple.obj");
   std::cout << "Success" << std::endl;
 }
 

@@ -11,7 +11,7 @@ int Parser::ReadObj(const std::string &filename) {
     /* file.exceptions(std::ifstream::failbit); */
     std::cout << "here" << std::endl;
     std::string line;
-    if (file) { 
+    if (file) {
     } else {
       std::cout << "opana" << std::endl;
     }
@@ -24,9 +24,22 @@ int Parser::ReadObj(const std::string &filename) {
         data >> vertex.y_;
         data >> vertex.z_;
         data >> vertex.a_;
-        std::cout << vertex.x_ << " " << vertex.y_ << " " << vertex.z_
-                  << " " << vertex.a_ << std::endl;
+        std::cout << vertex.x_ << " " << vertex.y_ << " " << vertex.z_ << " "
+                  << vertex.a_ << std::endl;
       } else if (prefix == "f ") {
+        std::istringstream data(line.substr(2));
+        std::string group;
+        while (data >> group) {
+          /* std::vector<f_element> element; */
+          std::istringstream data_group(group);
+          f_element e_temp;
+          char temp;
+          /* int i_temp; */
+          data_group >> e_temp.v_ >> temp >> e_temp.vt_ >> temp >> e_temp.vn_;
+          std::cout << "origin " << group << std::endl;
+          std::cout << "ho ho " << e_temp.v_ << " " << e_temp.vt_ << " " << e_temp.vn_ << std::endl;
+
+        }
       }
     }
   } catch (const std::ifstream::failure &e) {
