@@ -17,21 +17,26 @@ class Parser {
  private:
   int ReadObj(const std::string &filename);
 
-  struct point {
-    GLfloat x_;
-    GLfloat y_;
-    GLfloat z_;
-    GLfloat a_{0.0};
+  struct Point {
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
+    GLfloat a{0.0};
   };
 
-  struct f_element {
-    GLuint v_{0};
-    GLuint vt_{0};
-    GLuint vn_{0};
-  };
+  struct TypePars {
+    bool textures{false};
+    bool normales{false};
+  }
+
+  // struct f_element {
+  //   GLuint v_{0};
+  //   GLuint vt_{0};
+  //   GLuint vn_{0};
+  // };
 
   std::vector<point> vertices_;
-  std::vector<std::vector<f_element>> f_elements_;
+  // std::vector<std::vector<f_element>> f_elements_;
   std::vector<GLuint> faces_;
 };
 }  // namespace s21
