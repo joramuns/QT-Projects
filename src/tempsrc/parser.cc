@@ -45,7 +45,7 @@ void Parser::AddPoint(std::istringstream &data) noexcept {
   data >> vertex.y;
   data >> vertex.z;
   data >> vertex.a;
-  vertices_.push_back(vertex);
+  vertex_points_.push_back(vertex);
 };
 
 void Parser::AddTexturePoint(std::istringstream &data) noexcept {
@@ -61,7 +61,19 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
   data >> normals.x;
   data >> normals.y;
   data >> normals.z;
-  normals_points_.push_back(normals);
+  normal_points_.push_back(normals);
+};
+
+void Parser::ParsFaces() noexcept {
+  if (texture_points_.empty() && normal_points_.empty()) { //v
+    caseone();
+  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt  
+    casetwo();
+  } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
+    casethree();
+  } else { // v/vt/vn
+    casefour();
+  }
 };
 
 } // namespace s21
