@@ -17,7 +17,7 @@ class Parser {
  private:
   int ReadObj(const std::string &filename);
 
-  struct Point {
+  struct Coordinates {
     GLfloat x;
     GLfloat y;
     GLfloat z;
@@ -27,7 +27,7 @@ class Parser {
   struct TypePars {
     bool textures{false};
     bool normales{false};
-  }
+  };
 
   // struct f_element {
   //   GLuint v_{0};
