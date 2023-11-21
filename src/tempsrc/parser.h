@@ -42,11 +42,15 @@ class Parser {
   void AddPoint(std::istringstream &data) noexcept;
   void AddTexturePoint(std::istringstream &data) noexcept;
   void AddNormalsPoint(std::istringstream &data) noexcept;
+  void ParsFaces() noexcept;
 
 private:
-  std::vector<PointCoordinates> vertices_;
+  std::vector<PointCoordinates> vertex_points_;
   std::vector<TexturesCoordinates> texture_points_;
-  std::vector<NormalsCoordinate> normals_points_;
-  std::vector<GLuint> faces_;
+  std::vector<NormalsCoordinate> normal_points_;
+  // std::vector<GLuint> faces_;
+  std::vector<GLfloat> vertices_;
+  std::vector<GLfloat> textures_;
+  std::vector<GLfloat> normals_;
 };
 }  // namespace s21
