@@ -30,7 +30,7 @@ class Parser {
     GLfloat w{0.0};
   };
 
-  struct NormalesCoordinate {
+  struct NormalsCoordinate {
     GLfloat x;
     GLfloat y;
     GLfloat z;
@@ -44,7 +44,7 @@ class Parser {
 private:
   std::vector<PointCoordinates> vertices_;
   std::vector<TexturesCoordinates> textures_;
-  std::vector<NormalesCoordinate> normales_;
+  std::vector<NormalsCoordinate> normals_;
   // std::vector<std::vector<f_element>> f_elements_;
   std::vector<GLuint> faces_;
 };
