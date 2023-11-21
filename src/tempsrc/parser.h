@@ -1,5 +1,5 @@
-#include <epoxy/gl.h>
-/* #include <glm/glm.hpp> */
+#include <OpenGL/gl.h>
+// #include <glm/glm.hpp>
 /* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
 /* brew install glm */
 #include <fstream>
@@ -7,6 +7,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+
+#define BAD_FILENAME 1
 
 namespace s21 {
 class Parser {
