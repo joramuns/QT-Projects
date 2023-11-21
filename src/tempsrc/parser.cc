@@ -16,24 +16,11 @@ int Parser::ReadObj(const std::string &filename) {
       std::istringstream data(line.substr(2));
       std::cout << line;
       if (prefix == "v ") {
-        PointCoordinates vertex;
-        data >> vertex.x;
-        data >> vertex.y;
-        data >> vertex.z;
-        data >> vertex.a;
-        vertices_.push_back(vertex);
+        AddPoint(data);
       } else if (prefix == "vt") {
-        TexturesCoordinates textures;
-        data >> textures.u;
-        data >> textures.v;
-        data >> textures.w;
-        texture_points_.push_back(textures);
+        AddTexturePoint(data);
       } else if (prefix == "vn") {
-        NormalsCoordinate normals;
-        data >> normals.x;
-        data >> normals.y;
-        data >> normals.z;
-        normals_points_.push_back(normals);
+        AddNormalsPoint(data);
       } else if (prefix == "f ") {
         // std::istringstream data(line.substr(2));
         // std::string group;
@@ -42,14 +29,39 @@ int Parser::ReadObj(const std::string &filename) {
         //   std::istringstream data_group(group);
         //   char temp;
         //   /* int i_temp; */
-        //   data_group >> e_temp.v_ >> temp >> e_temp.vt_ >> temp >> e_temp.vn_;
-        //   std::cout << "origin " << group << std::endl;
-        //   std::cout << "ho ho " << e_temp.v_ << " " << e_temp.vt_ << " "
+        //   data_group >> e_temp.v_ >> temp >> e_temp.vt_ >> temp >>
+        //   e_temp.vn_; std::cout << "origin " << group << std::endl; std::cout
+        //   << "ho ho " << e_temp.v_ << " " << e_temp.vt_ << " "
         //             << e_temp.vn_ << std::endl;
-        }
       }
     }
-  return 0;
   }
+  return 0;
+};
+
+void Parser::AddPoint(std::istringstream &data) noexcept {
+  PointCoordinates vertex;
+  data >> vertex.x;
+  data >> vertex.y;
+  data >> vertex.z;
+  data >> vertex.a;
+  vertices_.push_back(vertex);
+};
+
+void Parser::AddTexturePoint(std::istringstream &data) noexcept {
+  TexturesCoordinates textures;
+  data >> textures.u;
+  data >> textures.v;
+  data >> textures.w;
+  texture_points_.push_back(textures);
+};
+
+void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
+  NormalsCoordinate normals;
+  data >> normals.x;
+  data >> normals.y;
+  data >> normals.z;
+  normals_points_.push_back(normals);
+};
 
 } // namespace s21

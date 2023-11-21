@@ -1,4 +1,5 @@
 #include <OpenGL/gl.h>
+// #include <epoxy/gl.h>
 // #include <glm/glm.hpp>
 /* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
 /* brew install glm */
@@ -38,16 +39,14 @@ class Parser {
     GLfloat z;
   };
 
-  // struct f_element {
-  //   GLuint v_{0};
-  //   GLuint vt_{0};
-  //   GLuint vn_{0};
-  // };
+  void AddPoint(std::istringstream &data) noexcept;
+  void AddTexturePoint(std::istringstream &data) noexcept;
+  void AddNormalsPoint(std::istringstream &data) noexcept;
+
 private:
   std::vector<PointCoordinates> vertices_;
   std::vector<TexturesCoordinates> texture_points_;
   std::vector<NormalsCoordinate> normals_points_;
-  // std::vector<std::vector<f_element>> f_elements_;
   std::vector<GLuint> faces_;
 };
 }  // namespace s21
