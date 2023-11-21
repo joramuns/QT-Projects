@@ -17,16 +17,23 @@ class Parser {
  private:
   int ReadObj(const std::string &filename);
 
-  struct Coordinates {
+  struct PointCoordinates {
     GLfloat x;
     GLfloat y;
     GLfloat z;
     GLfloat a{0.0};
   };
 
-  struct TypePars {
-    bool textures{false};
-    bool normales{false};
+  struct TexturesCoordinates {
+    GLfloat u;
+    GLfloat v;
+    GLfloat w{0.0};
+  };
+
+  struct NormalesCoordinate {
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
   };
 
   // struct f_element {
@@ -34,8 +41,10 @@ class Parser {
   //   GLuint vt_{0};
   //   GLuint vn_{0};
   // };
-
-  std::vector<point> vertices_;
+private:
+  std::vector<PointCoordinates> vertices_;
+  std::vector<TexturesCoordinates> textures_;
+  std::vector<NormalesCoordinate> normales_;
   // std::vector<std::vector<f_element>> f_elements_;
   std::vector<GLuint> faces_;
 };
