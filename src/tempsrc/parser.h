@@ -43,8 +43,8 @@ class Parser {
   // };
 private:
   std::vector<PointCoordinates> vertices_;
-  std::vector<TexturesCoordinates> textures_;
-  std::vector<NormalsCoordinate> normals_;
+  std::vector<TexturesCoordinates> texture_points_;
+  std::vector<NormalsCoordinate> normals_points_;
   // std::vector<std::vector<f_element>> f_elements_;
   std::vector<GLuint> faces_;
 };
