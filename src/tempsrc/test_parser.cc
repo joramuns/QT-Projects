@@ -4,8 +4,9 @@ void wrong_filename() {
   s21::Parser test("cube.obj");
   std::cout << "Success" << std::endl;
 }
+
 void true_filename() {
-  s21::Parser test("../../data-samples/simple.obj");
+  s21::Parser test("../../data-samples/just.obj");
   std::cout << "Success" << std::endl;
 }
 
