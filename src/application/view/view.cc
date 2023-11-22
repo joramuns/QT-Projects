@@ -14,7 +14,7 @@ View::View() : QWidget(nullptr) {
 
   TransformationTab *transformation_tab = new TransformationTab();
 
-  SettingsTab *settings_tab = new SettingsTab;
+  SettingsTab *settings_tab = new SettingsTab();
 
   main_layout->addWidget(transformation_tab, 0, 0);
   main_layout->addWidget(settings_tab, 2, 0);
