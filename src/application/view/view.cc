@@ -5,7 +5,7 @@
 /* test->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum); */
 namespace s21 {
 View::View() : QWidget(nullptr) {
-  main_layout = new QGridLayout;
+  main_layout = new QGridLayout();
   setLayout(main_layout);
   setWindowTitle("3D Viewer 2.0");
   setFixedSize(500, 500);
@@ -20,7 +20,10 @@ View::View() : QWidget(nullptr) {
       {QChar(0x00002190), QChar(0x00002193), QChar(0x00002192)}};
   TransformButtons *move_buttons = new TransformButtons(move_labels);
 
+  ScaleButtons *scale_buttons = new ScaleButtons();
+
   main_layout->addWidget(rotate_buttons, 0, 0);
   main_layout->addWidget(move_buttons, 1, 0);
+  main_layout->addWidget(scale_buttons, 2, 0);
 }
 }  // namespace s21
