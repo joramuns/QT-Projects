@@ -1,26 +1,25 @@
 #ifndef VIEW_H_
 #define VIEW_H_
 
-#include <QMainWindow>
-
-/* QT_BEGIN_NAMESPACE */
-/* class QWidge; */
-/* class QGridLayout; */
-/* QT_END_NAMESPACE */
 #include <QGridLayout>
 #include <QGroupBox>
-#include <QTextEdit>
+#include <QLabel>
+#include <QMainWindow>
 #include <QPushButton>
+#include <QTextEdit>
 #include <QWidget>
 
+#include "transform_buttons.h"
+
 namespace s21 {
-class View final : public QMainWindow {
+class View final : public QWidget {
   Q_OBJECT
 
  public:
   View();
 
  private:
+  QGridLayout *main_layout;
 };
 }  // namespace s21
 
