@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "faces_strategy.h"
+
 #define BAD_FILENAME 1
 
 namespace s21 {
@@ -16,6 +18,7 @@ class Parser {
  public:
   Parser() = delete;
   explicit Parser(const std::string &filename);
+  ~Parser();
 
  private:
   int ReadObj(const std::string &filename);
@@ -42,7 +45,7 @@ class Parser {
   void AddPoint(std::istringstream &data) noexcept;
   void AddTexturePoint(std::istringstream &data) noexcept;
   void AddNormalsPoint(std::istringstream &data) noexcept;
-  void ParsFaces() noexcept;
+  void SetStrategy(std::ifstream *file, int current_position) noexcept;
 
 private:
   std::vector<PointCoordinates> vertex_points_;
@@ -52,5 +55,6 @@ private:
   std::vector<GLfloat> vertices_;
   std::vector<GLfloat> textures_;
   std::vector<GLfloat> normals_;
+  FacesStrategy *faces_pars_;
 };
 }  // namespace s21

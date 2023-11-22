@@ -3,6 +3,8 @@
 namespace s21 {
 Parser::Parser(const std::string &filename) { ReadObj(filename); }
 
+Parser::~Parser() {}
+
 /* Private functions */
 int Parser::ReadObj(const std::string &filename) {
   std::ifstream file;
@@ -11,10 +13,10 @@ int Parser::ReadObj(const std::string &filename) {
   if (!file) {
     return BAD_FILENAME;
   } else {
+    int file_position;
     while (std::getline(file, line)) {
       std::string prefix = line.substr(0, 2);
       std::istringstream data(line.substr(2));
-      std::cout << line;
       if (prefix == "v ") {
         AddPoint(data);
       } else if (prefix == "vt") {
@@ -22,6 +24,9 @@ int Parser::ReadObj(const std::string &filename) {
       } else if (prefix == "vn") {
         AddNormalsPoint(data);
       } else if (prefix == "f ") {
+
+        SetStrategy(&file, file_position);
+
         // std::istringstream data(line.substr(2));
         // std::string group;
         // while (data >> group) {
@@ -34,6 +39,7 @@ int Parser::ReadObj(const std::string &filename) {
         //   << "ho ho " << e_temp.v_ << " " << e_temp.vt_ << " "
         //             << e_temp.vn_ << std::endl;
       }
+      file_position = file.tellg();
     }
   }
   return 0;
@@ -64,16 +70,18 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
   normal_points_.push_back(normals);
 };
 
-void Parser::ParsFaces() noexcept {
-  if (texture_points_.empty() && normal_points_.empty()) { //v
-    caseone();
-  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt  
-    casetwo();
-  } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
-    casethree();
-  } else { // v/vt/vn
-    casefour();
+void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
+  if (texture_points_.empty() && normal_points_.empty()) { // v
+    faces_pars_ = new VertexStrategy(file, current_position);
   }
+  //   caseone();
+  // } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
+  //   casetwo();
+  // } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
+  //   casethree();
+  // } else { // v/vt/vn
+  //   casefour();
+  // }
 };
 
 } // namespace s21
