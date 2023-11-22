@@ -24,20 +24,8 @@ int Parser::ReadObj(const std::string &filename) {
       } else if (prefix == "vn") {
         AddNormalsPoint(data);
       } else if (prefix == "f ") {
-
         SetStrategy(&file, file_position);
-
-        // std::istringstream data(line.substr(2));
-        // std::string group;
-        // while (data >> group) {
-        //   /* std::vector<f_element> element; */
-        //   std::istringstream data_group(group);
-        //   char temp;
-        //   /* int i_temp; */
-        //   data_group >> e_temp.v_ >> temp >> e_temp.vt_ >> temp >>
-        //   e_temp.vn_; std::cout << "origin " << group << std::endl; std::cout
-        //   << "ho ho " << e_temp.v_ << " " << e_temp.vt_ << " "
-        //             << e_temp.vn_ << std::endl;
+        faces_pars_->Pars();
       }
       file_position = file.tellg();
     }
@@ -73,10 +61,9 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
   if (texture_points_.empty() && normal_points_.empty()) { // v
     faces_pars_ = new VertexStrategy(file, current_position);
+  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
+    faces_pars_ = new VertexTexturesStrategy(file, current_position);
   }
-  //   caseone();
-  // } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
-  //   casetwo();
   // } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
   //   casethree();
   // } else { // v/vt/vn
