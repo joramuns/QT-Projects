@@ -16,6 +16,7 @@ set(COMMON_SOURCES
   main.cc
   view/view.cc
   view/transform_buttons.cc
+  view/settings.cc
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport)
