@@ -10,6 +10,7 @@
 #include <QWidget>
 
 #include "transform_buttons.h"
+#include "settings.h"
 
 namespace s21 {
 class View final : public QWidget {
