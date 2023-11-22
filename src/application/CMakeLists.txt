@@ -15,6 +15,7 @@ message(STATUS "Project \"${PROJECT_NAME}\" compiled with C++ standard ${CMAKE_C
 set(COMMON_SOURCES
   main.cc
   view/view.cc
+  view/transform_buttons.cc
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport)
