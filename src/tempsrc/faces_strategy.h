@@ -16,7 +16,6 @@ public:
   std::vector<GLfloat> GetTextures();
   std::vector<GLfloat> GetNormals();
 
-private:
   virtual void Pars() = 0;
 
 protected:
@@ -29,15 +28,14 @@ protected:
 
 class VertexStrategy : public FacesStrategy {
   public:
-  explicit VertexStrategy(std::ifstream *file, int file_pos);
-  
-  private:
+  VertexStrategy(std::ifstream *file, int file_pos);
   void Pars() override;
-
 };
 
 class VertexTexturesStrategy: public FacesStrategy {
-
+  public:
+  VertexTexturesStrategy(std::ifstream *file, int file_pos);
+  void Pars() override;
 };
 
 class VertexNormalsStrategy: public FacesStrategy {
