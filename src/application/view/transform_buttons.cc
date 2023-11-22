@@ -12,12 +12,25 @@
 #define Y_DECREASE_COL 1
 #define Z_DECREASE_ROW 0
 #define Z_DECREASE_COL 0
+
+#define L_STEP_ROW 2
+#define L_STEP_COL 0
 #define STEP_ROW 2
-#define STEP_COL 0
+#define STEP_COL 1
+
+#define S_INCREASE_ROW 0
+#define S_INCREASE_COL 0
+#define S_DECREASE_ROW 1
+#define S_DECREASE_COL 0
+
+#define S_L_STEP_ROW 0
+#define S_L_STEP_COL 1
+#define S_STEP_ROW 1
+#define S_STEP_COL 1
 
 namespace s21 {
 TransformButtons::TransformButtons(const QChar labels[2][3]) : QWidget(nullptr) {
-  layout = new QGridLayout;
+  QGridLayout *layout = new QGridLayout;
   setLayout(layout);
 
   x_increase_ = new QPushButton('X' + labels[X_INCREASE_ROW][X_INCREASE_COL]);
@@ -37,7 +50,22 @@ TransformButtons::TransformButtons(const QChar labels[2][3]) : QWidget(nullptr) 
   layout->addWidget(y_decrease_, Y_DECREASE_ROW, Y_DECREASE_COL);
   layout->addWidget(z_increase_, Z_INCREASE_ROW, Z_INCREASE_COL);
   layout->addWidget(z_decrease_, Z_DECREASE_ROW, Z_DECREASE_COL);
-  layout->addWidget(new QLabel("Step: "), STEP_ROW, STEP_COL);
-  layout->addWidget(step_, STEP_ROW, STEP_COL + 1, 1, 2);
+  layout->addWidget(new QLabel("Step: "), L_STEP_ROW, L_STEP_COL);
+  layout->addWidget(step_, STEP_ROW, STEP_COL, 1, 2);
+}
+
+ScaleButtons::ScaleButtons() : QWidget(nullptr) {
+  QGridLayout *layout = new QGridLayout;
+  setLayout(layout);
+
+  increase_ = new QPushButton("+");
+  decrease_ = new QPushButton("-");
+
+  step_ = new QDoubleSpinBox;
+
+  layout->addWidget(increase_, S_INCREASE_ROW, S_INCREASE_COL);
+  layout->addWidget(decrease_, S_DECREASE_ROW, S_DECREASE_COL);
+  layout->addWidget(new QLabel("Step: "), S_L_STEP_ROW, S_L_STEP_COL);
+  layout->addWidget(step_, S_STEP_ROW, S_STEP_COL);
 }
 }  // namespace s21

@@ -18,8 +18,6 @@ class TransformButtons final : public QWidget {
   explicit TransformButtons(const QChar labels[2][3]);
 
  private:
-  QGridLayout *layout;
-
   QPushButton *x_increase_;
   QPushButton *x_decrease_;
 
@@ -28,6 +26,19 @@ class TransformButtons final : public QWidget {
 
   QPushButton *z_increase_;
   QPushButton *z_decrease_;
+
+  QDoubleSpinBox *step_;
+};
+
+class ScaleButtons final : public QWidget {
+  Q_OBJECT
+
+ public:
+  ScaleButtons();
+
+ private:
+  QPushButton *increase_;
+  QPushButton *decrease_;
 
   QDoubleSpinBox *step_;
 };
