@@ -9,39 +9,47 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-class CommonSettings final : public QWidget {
+class ASettings : public QWidget {
   Q_OBJECT
 
  public:
-  CommonSettings();
+  ASettings();
+  virtual ~ASettings() = default;
 
- public:
-  QComboBox *type_;
-  QPushButton *color_;
+ protected:
+  QVBoxLayout *layout_;
+
+ private:
+  virtual void InitFields() = 0;
+  virtual void InitLayouts() = 0;
 };
 
-class VertexSettings final : public QWidget {
-  Q_OBJECT
-
+class SceneSettings : public ASettings {
  public:
-  VertexSettings();
+  SceneSettings();
+  void SetComboBoxOptions(const QVector<QString> &labels);
 
- public:
-  QComboBox *type_;
-  QDoubleSpinBox *size_;
+ private:
+  void InitFields() override;
+  void InitLayouts() override;
+
+ private:
   QPushButton *color_;
+  QComboBox *type_;
 };
 
-class EdgeSettings final : public QWidget {
+class ModelSettings final : public SceneSettings {
   Q_OBJECT
 
  public:
-  EdgeSettings();
+  ModelSettings();
 
- public:
-  QCheckBox *type_;
+ private:
+  void InitFields() override;
+  void InitLayouts() override;
+
+ private:
   QDoubleSpinBox *size_;
-  QPushButton *color_;
 };
 
 class SettingsTab final : public QTabWidget {
@@ -51,9 +59,9 @@ class SettingsTab final : public QTabWidget {
   SettingsTab();
 
  private:
-  CommonSettings *common_settings_;
-  VertexSettings *vertex_settings_;
-  EdgeSettings *edge_settings_;
+  SceneSettings *scene_settings_;
+  ModelSettings *vertex_settings_;
+  ModelSettings *edge_settings_;
 };
 
 #endif  // VIEW_SETTINGS_H_
