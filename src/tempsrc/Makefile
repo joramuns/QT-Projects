@@ -11,5 +11,5 @@ LIB=-lgtest -pthread
 VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 parser:
-	@$(CC) -I/Users/mammiemi/.brew/Cellar/glm/0.9.9.8/include test_parser.cc parser.cc 
+	@$(CC) *.cc 
 	@./a.out
