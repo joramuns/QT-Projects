@@ -4,9 +4,12 @@
 #include <QDoubleSpinBox>
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QTabWidget>
+#include <QFormLayout>
+#include <QVBoxLayout>
 #include <QWidget>
 #include <string>
 #include <vector>
@@ -51,6 +54,10 @@ class TransformButtons final : public QWidget {
   explicit TransformButtons(const QChar labels[2][3]);
 
  private:
+  void InitFields(const QChar labels[2][3]);
+  void InitLayouts();
+
+ private:
   QPushButton *x_increase_;
   QPushButton *x_decrease_;
 
@@ -70,6 +77,10 @@ class ScaleButtons final : public QWidget {
   ScaleButtons();
 
  private:
+  void InitFields();
+  void InitLayouts();
+
+ private:
   QPushButton *increase_;
   QPushButton *decrease_;
 
@@ -85,13 +96,13 @@ class TButton final : public QPushButton {
 class TransformationTab final : public QTabWidget {
   Q_OBJECT
 
-  public:
-    TransformationTab();
+ public:
+  TransformationTab();
 
-  private:
-    TransformButtons *rotate_buttons_;
-    TransformButtons *move_buttons_;
-    ScaleButtons *scale_buttons_;
+ private:
+  TransformButtons *rotate_buttons_;
+  TransformButtons *move_buttons_;
+  ScaleButtons *scale_buttons_;
 };
 }  // namespace s21
 

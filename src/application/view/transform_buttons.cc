@@ -3,12 +3,11 @@
 namespace s21 {
 TransformButtons::TransformButtons(const QChar labels[2][3])
     : QWidget(nullptr) {
-  setFixedSize(3 * BUTTON_SIZE + 2 * SPACING,
-               2 * SPACING + 2 * BUTTON_SIZE + BUTTON_SIZE / 2);
-  QGridLayout *layout = new QGridLayout;
-  layout->setSpacing(SPACING);
-  setLayout(layout);
+  InitFields(labels);
+  InitLayouts();
+}
 
+void TransformButtons::InitFields(const QChar labels[2][3]) {
   x_increase_ = new TButton('X' + labels[X_INCREASE_ROW][X_INCREASE_COL]);
   x_decrease_ = new TButton(labels[X_DECREASE_ROW][X_DECREASE_COL] + 'X');
 
@@ -19,38 +18,63 @@ TransformButtons::TransformButtons(const QChar labels[2][3])
   z_decrease_ = new TButton(labels[Z_DECREASE_ROW][Z_DECREASE_COL] + 'Z');
 
   step_ = new QDoubleSpinBox;
+}
 
-  layout->addWidget(x_increase_, X_INCREASE_ROW, X_INCREASE_COL);
-  layout->addWidget(x_decrease_, X_DECREASE_ROW, X_DECREASE_COL);
-  layout->addWidget(y_increase_, Y_INCREASE_ROW, Y_INCREASE_COL);
-  layout->addWidget(y_decrease_, Y_DECREASE_ROW, Y_DECREASE_COL);
-  layout->addWidget(z_increase_, Z_INCREASE_ROW, Z_INCREASE_COL);
-  layout->addWidget(z_decrease_, Z_DECREASE_ROW, Z_DECREASE_COL);
-  layout->addWidget(new QLabel("Step: "), L_STEP_ROW, L_STEP_COL);
-  layout->addWidget(step_, STEP_ROW, STEP_COL, 1, 2);
+void TransformButtons::InitLayouts() {
+  QVBoxLayout *layout = new QVBoxLayout();
+  setLayout(layout);
+
+  QHBoxLayout *h_layout_upper = new QHBoxLayout();
+  QHBoxLayout *h_layout_lower = new QHBoxLayout();
+  QFormLayout *form_layout = new QFormLayout();
+  form_layout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+
+  h_layout_upper->addWidget(z_decrease_);
+  h_layout_upper->addWidget(y_increase_);
+  h_layout_upper->addWidget(z_increase_);
+
+  h_layout_lower->addWidget(x_decrease_);
+  h_layout_lower->addWidget(y_decrease_);
+  h_layout_lower->addWidget(x_increase_);
+
+  form_layout->addRow(new QLabel(tr("Step:")), step_);
+
+  layout->addLayout(h_layout_upper);
+  layout->addLayout(h_layout_lower);
+  layout->addLayout(form_layout);
 }
 
 ScaleButtons::ScaleButtons() : QWidget(nullptr) {
-  setFixedSize(2 * BUTTON_SIZE +  SPACING,
-               SPACING + BUTTON_SIZE + BUTTON_SIZE / 2);
-  QGridLayout *layout = new QGridLayout;
-  layout->setSpacing(SPACING);
-  setLayout(layout);
+  InitFields();
+  InitLayouts();
+}
 
+void ScaleButtons::InitFields() {
   increase_ = new TButton("+");
   decrease_ = new TButton("-");
 
   step_ = new QDoubleSpinBox;
+}
 
-  layout->addWidget(increase_, S_INCREASE_ROW, S_INCREASE_COL);
-  layout->addWidget(decrease_, S_DECREASE_ROW, S_DECREASE_COL);
-  layout->addWidget(new QLabel("Step: "), S_L_STEP_ROW, S_L_STEP_COL);
-  layout->addWidget(step_, S_STEP_ROW, S_STEP_COL);
+void ScaleButtons::InitLayouts() {
+  QVBoxLayout *layout = new QVBoxLayout;
+  setLayout(layout);
+
+  QHBoxLayout *h_layout = new QHBoxLayout();
+  QFormLayout *form_layout = new QFormLayout();
+  form_layout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+
+  h_layout->addWidget(increase_);
+  h_layout->addWidget(decrease_);
+
+  form_layout->addRow(new QLabel(tr("Step:")), step_);
+
+  layout->addLayout(h_layout);
+  layout->addLayout(form_layout);
 }
 
 TButton::TButton(const QString &label) : QPushButton(label) {
   setFixedSize(BUTTON_SIZE, BUTTON_SIZE);
-  /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum); */
   setStyleSheet("background-color: #893101; font: white;");
 }
 
@@ -66,7 +90,7 @@ TransformationTab::TransformationTab() {
   move_buttons_ = new TransformButtons(move_labels);
 
   scale_buttons_ = new ScaleButtons();
-  
+
   addTab(rotate_buttons_, "Rotation");
   addTab(move_buttons_, "Movement");
   addTab(scale_buttons_, "Scaling");
