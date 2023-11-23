@@ -4,7 +4,6 @@
 #include <QGroupBox>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QWidget>
 
 namespace s21 {
 class AppManagement : public QGroupBox {

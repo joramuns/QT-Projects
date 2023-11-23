@@ -10,9 +10,9 @@
 #include <QWidget>
 
 #include "app_management.h"
-#include "settings.h"
 #include "opengl/glwidget.h"
-#include "transform_buttons.h"
+#include "settings.h"
+#include "transform_tab.h"
 
 namespace s21 {
 class View final : public QWidget {

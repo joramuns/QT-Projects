@@ -1,13 +1,11 @@
 #ifndef VIEW_SETTINGS_H_
 #define VIEW_SETTINGS_H_
 
-#include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
 #include <QPushButton>
 #include <QTabWidget>
 #include <QVBoxLayout>
-#include <QWidget>
 
 namespace s21 {
 class ASettings : public QWidget {

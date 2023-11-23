@@ -1,15 +1,8 @@
 #include "view.h"
 
-#include <QCheckBox>
-#include <QComboBox>
-#include <QTabWidget>
-#include <QSizePolicy>
-#include <iostream>
-
 namespace s21 {
 View::View() : QWidget(nullptr) {
-  main_layout = new QGridLayout();
-  setLayout(main_layout);
+  main_layout = new QGridLayout(this);
   setWindowTitle("3D Viewer 2.0");
   /* setFixedSize(500, 500); */
 
@@ -28,10 +21,6 @@ View::View() : QWidget(nullptr) {
   GLWidget *gl_widget = new GLWidget();
   group_layout->addWidget(gl_widget);
 
-  /* main_layout->addWidget(transformation_tab, 0, 0); */
-  /* main_layout->addWidget(settings_tab, 1, 0); */
-  /* main_layout->addWidget(app_management, 2, 0); */
-  /* main_layout->addWidget(gl_widget, 0, 1, 3, 3); */
   main_layout->addWidget(menu_box, 0, 0, 1, 1);
   main_layout->addWidget(group_box, 0, 1, 1, 6);
 }
