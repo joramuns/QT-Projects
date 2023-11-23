@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+namespace s21 {
 class ASettings : public QWidget {
   Q_OBJECT
 
@@ -63,5 +64,6 @@ class SettingsTab final : public QTabWidget {
   ModelSettings *vertex_settings_;
   ModelSettings *edge_settings_;
 };
+}  // namespace s21
 
 #endif  // VIEW_SETTINGS_H_

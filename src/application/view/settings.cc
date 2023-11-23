@@ -1,5 +1,6 @@
 #include "settings.h"
 
+namespace s21 {
 ASettings::ASettings() {
   layout_ = new QVBoxLayout();
   setLayout(layout_);
@@ -49,3 +50,4 @@ SettingsTab::SettingsTab() {
   addTab(vertex_settings_, "Vertex");
   addTab(edge_settings_, "Edge");
 }
+}  // namespace s21
