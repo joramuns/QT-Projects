@@ -51,16 +51,17 @@ class TransformButtons final : public QWidget {
 
  public:
   TransformButtons() = delete;
-  explicit TransformButtons(const QChar labels[2][3]);
+  TransformButtons(const QChar labels[2][3], int type);
 
  private slots:
-  void HandleTransform(double value, char axis);
+  void HandleTransform(double value, char axis, int type);
 
  signals:
-  void EmitTransform(double value, char axis);
+  void EmitTransform(double value, char axis, int type);
 
  private:
   void InitFields(const QChar labels[2][3]);
+  void ConnectFields(int type);
   void InitLayouts();
 
  private:

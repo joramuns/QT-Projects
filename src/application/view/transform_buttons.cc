@@ -4,15 +4,15 @@
 #include <iostream>
 
 namespace s21 {
-TransformButtons::TransformButtons(const QChar labels[2][3])
+TransformButtons::TransformButtons(const QChar labels[2][3], int type)
     : QWidget(nullptr) {
   InitFields(labels);
+  ConnectFields(type);
   InitLayouts();
 }
 
-void TransformButtons::HandleTransform(double value, char axis) {
-  std::cout << axis << " " << value << std::endl;
-  emit EmitTransform(value, axis);
+void TransformButtons::HandleTransform(double value, char axis, int type) {
+  emit EmitTransform(value, axis, type);
 }
 
 void TransformButtons::InitFields(const QChar labels[2][3]) {
@@ -21,26 +21,28 @@ void TransformButtons::InitFields(const QChar labels[2][3]) {
   x_increase_ = new TButton('X' + labels[X_INCREASE_ROW][X_INCREASE_COL]);
   x_decrease_ = new TButton(labels[X_DECREASE_ROW][X_DECREASE_COL] + 'X');
 
-  connect(x_increase_, &QPushButton::clicked, this,
-          [=]() { this->HandleTransform(step_->value(), 'X'); });
-  connect(x_decrease_, &QPushButton::clicked, this,
-          [=]() { this->HandleTransform(-step_->value(), 'X'); });
-
   y_increase_ = new TButton('Y' + labels[Y_INCREASE_ROW][Y_INCREASE_COL]);
   y_decrease_ = new TButton('Y' + labels[Y_DECREASE_ROW][Y_DECREASE_COL]);
 
-  connect(y_increase_, &QPushButton::clicked, this,
-          [=]() { this->HandleTransform(step_->value(), 'Y'); });
-  connect(y_decrease_, &QPushButton::clicked, this,
-          [=]() { this->HandleTransform(-step_->value(), 'Y'); });
-
   z_increase_ = new TButton('Z' + labels[Z_INCREASE_ROW][Z_INCREASE_COL]);
   z_decrease_ = new TButton(labels[Z_DECREASE_ROW][Z_DECREASE_COL] + 'Z');
+}
 
-  connect(z_increase_, &QPushButton::clicked, this,
-          [=]() { this->HandleTransform(step_->value(), 'Z'); });
-  connect(z_decrease_, &QPushButton::clicked, this,
-          [=]() { this->HandleTransform(-step_->value(), 'Z'); });
+void TransformButtons::ConnectFields(int type) {
+  connect(x_increase_, &TButton::clicked, this,
+          [=]() { HandleTransform(step_->value(), 'X', type); });
+  connect(x_decrease_, &TButton::clicked, this,
+          [=]() { HandleTransform(-step_->value(), 'X', type); });
+
+  connect(y_increase_, &TButton::clicked, this,
+          [=]() { HandleTransform(step_->value(), 'Y', type); });
+  connect(y_decrease_, &TButton::clicked, this,
+          [=]() { HandleTransform(-step_->value(), 'Y', type); });
+
+  connect(z_increase_, &TButton::clicked, this,
+          [=]() { HandleTransform(step_->value(), 'Z', type); });
+  connect(z_decrease_, &TButton::clicked, this,
+          [=]() { HandleTransform(-step_->value(), 'Z', type); });
 }
 
 void TransformButtons::InitLayouts() {
