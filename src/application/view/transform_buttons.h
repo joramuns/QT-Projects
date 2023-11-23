@@ -2,13 +2,13 @@
 #define TRANSFORM_BUTTONS_H_
 
 #include <QDoubleSpinBox>
+#include <QFormLayout>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QTabWidget>
-#include <QFormLayout>
 #include <QVBoxLayout>
 #include <QWidget>
 #include <string>
@@ -52,6 +52,12 @@ class TransformButtons final : public QWidget {
  public:
   TransformButtons() = delete;
   explicit TransformButtons(const QChar labels[2][3]);
+
+ private slots:
+  void HandleTransform(double value, char axis);
+
+ signals:
+  void EmitTransform(double value, char axis);
 
  private:
   void InitFields(const QChar labels[2][3]);
