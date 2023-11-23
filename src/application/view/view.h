@@ -9,8 +9,10 @@
 #include <QTextEdit>
 #include <QWidget>
 
-#include "transform_buttons.h"
+#include "app_management.h"
 #include "settings.h"
+#include "opengl/glwidget.h"
+#include "transform_buttons.h"
 
 namespace s21 {
 class View final : public QWidget {
@@ -21,6 +23,7 @@ class View final : public QWidget {
 
  private:
   QGridLayout *main_layout;
+  int test = 1;
 };
 }  // namespace s21
 
