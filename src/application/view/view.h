@@ -21,6 +21,12 @@ class View final : public QWidget {
  public:
   View();
 
+ private slots:
+  void HandleTransform(double value, char axis, int type);
+
+ signals:
+  void EmitTransform(double value, char axis, int type);
+
  private:
   QGridLayout *main_layout;
   int test = 1;

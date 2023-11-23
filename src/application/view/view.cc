@@ -10,8 +10,11 @@ View::View() : QWidget(nullptr) {
   menu_box->setFixedWidth(330);
   QVBoxLayout *menu_layout = new QVBoxLayout(menu_box);
   TransformationTab *transformation_tab = new TransformationTab();
+  connect(transformation_tab, &TransformationTab::EmitTransform, this, &View::HandleTransform);
+
   SettingsTab *settings_tab = new SettingsTab();
   AppManagement *app_management = new AppManagement("Main menu");
+
   menu_layout->addWidget(transformation_tab);
   menu_layout->addWidget(settings_tab);
   menu_layout->addWidget(app_management);
@@ -23,5 +26,9 @@ View::View() : QWidget(nullptr) {
 
   main_layout->addWidget(menu_box, 0, 0, 1, 1);
   main_layout->addWidget(group_box, 0, 1, 1, 6);
+}
+
+void View::HandleTransform(double value, char axis, int type) {
+  emit EmitTransform(value, axis, type);
 }
 }  // namespace s21
