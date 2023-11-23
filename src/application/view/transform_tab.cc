@@ -1,8 +1,5 @@
 #include "transform_tab.h"
 
-// TEMP
-#include <iostream>
-
 namespace s21 {
 TransformationTab::TransformationTab() {
   InitFields();
@@ -10,8 +7,6 @@ TransformationTab::TransformationTab() {
 }
 
 void TransformationTab::HandleTransform(double value, char axis, int type) {
-  std::cout << (type ? "Move " : "Rotate ") << "tab: " << axis << " " << value
-            << " " << std::endl;
   emit EmitTransform(value, axis, type);
 }
 
