@@ -17,15 +17,17 @@ set(COMMON_SOURCES
   view/view.cc
   view/transform_buttons.cc
   view/settings.cc
+  view/app_management.cc
+  view/opengl/glwidget.cc
 )
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport OpenGLWidgets)
 
 qt_add_executable(3DViewer
   ${COMMON_SOURCES}
 )
 
-target_link_libraries(3DViewer PRIVATE Qt6::Core Qt6::Widgets)
+target_link_libraries(3DViewer PRIVATE Qt6::Core Qt6::Widgets Qt6::OpenGLWidgets)
 
 set_target_properties(3DViewer PROPERTIES
   MACOSX_BUNDLE ON)
