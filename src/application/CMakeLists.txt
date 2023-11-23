@@ -15,7 +15,10 @@ message(STATUS "Project \"${PROJECT_NAME}\" compiled with C++ standard ${CMAKE_C
 set(COMMON_SOURCES
   main.cc
   view/view.cc
+  view/tbutton.cc
   view/transform_buttons.cc
+  view/transform_tab.cc
+  view/scale_buttons.cc
   view/settings.cc
   view/app_management.cc
   view/opengl/glwidget.cc
