@@ -22,6 +22,7 @@ set(COMMON_SOURCES
   view/settings.cc
   view/app_management.cc
   view/opengl/glwidget.cc
+  controller/controller.cc
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport OpenGLWidgets)
