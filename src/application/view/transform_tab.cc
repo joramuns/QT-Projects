@@ -32,5 +32,7 @@ void TransformationTab::ConnectFields() {
           &TransformationTab::HandleTransform);
   connect(move_buttons_, &TransformButtons::EmitTransform, this,
           &TransformationTab::HandleTransform);
+  connect(scale_buttons_, &ScaleButtons::EmitTransform, this,
+          &TransformationTab::HandleTransform);
 }
 }  // namespace s21

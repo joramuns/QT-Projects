@@ -9,7 +9,7 @@ Controller::Controller(View *v) : view_(v) {
 }
 
 void Controller::HandleTransform(double value, char axis, int type) {
-  std::cout << (type ? "Move " : "Rotate ") << "tab: " << axis << " " << value
+  std::cout << (type ? axis == 'S' ? "Scale " : "Move " : "Rotate ") << "tab: " << axis << " " << value
             << " " << std::endl;
 }
 }  // namespace s21

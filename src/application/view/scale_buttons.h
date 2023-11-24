@@ -10,6 +10,8 @@
 
 #include "tbutton.h"
 
+#define SCALE 2
+
 namespace s21 {
 class ScaleButtons final : public QWidget {
   Q_OBJECT
@@ -17,8 +19,15 @@ class ScaleButtons final : public QWidget {
  public:
   ScaleButtons();
 
+ public slots:
+  void HandleTransform(double value, char axis, int type);
+
+ signals:
+  void EmitTransform(double value, char axis, int type);
+
  private:
   void InitFields();
+  void ConnectFields();
   void InitLayouts();
 
  private:

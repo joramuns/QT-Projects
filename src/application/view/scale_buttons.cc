@@ -3,7 +3,12 @@
 namespace s21 {
 ScaleButtons::ScaleButtons() : QWidget(nullptr) {
   InitFields();
+  ConnectFields();
   InitLayouts();
+}
+
+void ScaleButtons::HandleTransform(double value, char axis, int type) {
+  emit EmitTransform(value, axis, type);
 }
 
 void ScaleButtons::InitFields() {
@@ -11,6 +16,14 @@ void ScaleButtons::InitFields() {
   decrease_ = new TButton("-");
 
   step_ = new QDoubleSpinBox;
+}
+
+void ScaleButtons::ConnectFields() {
+  connect(increase_, &TButton::clicked, this,
+          [=]() { ScaleButtons::HandleTransform(step_->value(), 'S', SCALE); });
+  connect(decrease_, &TButton::clicked, this, [=]() {
+    ScaleButtons::HandleTransform(-step_->value(), 'S', SCALE);
+  });
 }
 
 void ScaleButtons::InitLayouts() {
