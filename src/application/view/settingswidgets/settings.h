@@ -50,18 +50,6 @@ class ModelSettings final : public SceneSettings {
  private:
   QDoubleSpinBox *size_;
 };
-
-class SettingsTab final : public QTabWidget {
-  Q_OBJECT
-
- public:
-  SettingsTab();
-
- private:
-  SceneSettings *scene_settings_;
-  ModelSettings *vertex_settings_;
-  ModelSettings *edge_settings_;
-};
 }  // namespace s21
 
 #endif  // VIEW_SETTINGS_H_

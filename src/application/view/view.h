@@ -11,8 +11,8 @@
 
 #include "app_management.h"
 #include "opengl/glwidget.h"
-#include "settings.h"
-#include "transform_tab.h"
+#include "settingswidgets/settingstab.h"
+#include "transformwidgets/transform_tab.h"
 
 namespace s21 {
 class View final : public QWidget {
