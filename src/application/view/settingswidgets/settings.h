@@ -4,7 +4,6 @@
 #include <QComboBox>
 #include <QDoubleSpinBox>
 #include <QPushButton>
-#include <QTabWidget>
 #include <QVBoxLayout>
 
 namespace s21 {
@@ -15,11 +14,20 @@ class ASettings : public QWidget {
   ASettings();
   virtual ~ASettings() = default;
 
+ public slots:
+  void ColorSlot();
+  void ComboBoxSlot();
+
+ signals:
+  void ColorSignal();
+  void ComboBoxSignal(const QString &index);
+
  protected:
   QVBoxLayout *layout_;
 
  private:
   virtual void InitFields() = 0;
+  virtual void ConnectFields() = 0;
   virtual void InitLayouts() = 0;
 };
 
@@ -30,6 +38,7 @@ class SceneSettings : public ASettings {
 
  private:
   void InitFields() override;
+  void ConnectFields() override;
   void InitLayouts() override;
 
  private:
@@ -43,8 +52,15 @@ class ModelSettings final : public SceneSettings {
  public:
   ModelSettings();
 
+ public slots:
+  void SpinBoxSlot();
+
+ signals:
+  void SpinBoxSignal(double value);
+
  private:
   void InitFields() override;
+  void ConnectFields() override;
   void InitLayouts() override;
 
  private:
