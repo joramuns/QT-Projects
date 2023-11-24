@@ -10,8 +10,8 @@ TransformButtons::TransformButtons(const QChar labels[2][3], int type) {
   InitLayouts();
 }
 
-void TransformButtons::HandleTransform(double value, char axis, int type) {
-  emit EmitTransform(value, axis, type);
+void TransformButtons::TransformSlot(double value, char axis, int type) {
+  emit TransformSignal(value, axis, type);
 }
 
 void TransformButtons::InitFields(const QChar labels[2][3]) {
@@ -28,20 +28,26 @@ void TransformButtons::InitFields(const QChar labels[2][3]) {
 }
 
 void TransformButtons::ConnectFields(int type) {
-  connect(x_increase_, &TButton::clicked, this,
-          [=]() { TransformButtons::HandleTransform(step_->value(), 'X', type); });
-  connect(x_decrease_, &TButton::clicked, this,
-          [=]() { TransformButtons::HandleTransform(-step_->value(), 'X', type); });
+  connect(x_increase_, &TButton::clicked, this, [=]() {
+    TransformButtons::TransformSlot(step_->value(), 'X', type);
+  });
+  connect(x_decrease_, &TButton::clicked, this, [=]() {
+    TransformButtons::TransformSlot(-step_->value(), 'X', type);
+  });
 
-  connect(y_increase_, &TButton::clicked, this,
-          [=]() { TransformButtons::HandleTransform(step_->value(), 'Y', type); });
-  connect(y_decrease_, &TButton::clicked, this,
-          [=]() { TransformButtons::HandleTransform(-step_->value(), 'Y', type); });
+  connect(y_increase_, &TButton::clicked, this, [=]() {
+    TransformButtons::TransformSlot(step_->value(), 'Y', type);
+  });
+  connect(y_decrease_, &TButton::clicked, this, [=]() {
+    TransformButtons::TransformSlot(-step_->value(), 'Y', type);
+  });
 
-  connect(z_increase_, &TButton::clicked, this,
-          [=]() { TransformButtons::HandleTransform(step_->value(), 'Z', type); });
-  connect(z_decrease_, &TButton::clicked, this,
-          [=]() { TransformButtons::HandleTransform(-step_->value(), 'Z', type); });
+  connect(z_increase_, &TButton::clicked, this, [=]() {
+    TransformButtons::TransformSlot(step_->value(), 'Z', type);
+  });
+  connect(z_decrease_, &TButton::clicked, this, [=]() {
+    TransformButtons::TransformSlot(-step_->value(), 'Z', type);
+  });
 }
 
 void TransformButtons::InitLayouts() {

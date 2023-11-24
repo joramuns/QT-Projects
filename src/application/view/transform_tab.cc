@@ -6,8 +6,8 @@ TransformationTab::TransformationTab() {
   ConnectFields();
 }
 
-void TransformationTab::HandleTransform(double value, char axis, int type) {
-  emit EmitTransform(value, axis, type);
+void TransformationTab::TransformTabSlot(double value, char axis, int type) {
+  emit TransformTabSignal(value, axis, type);
 }
 
 void TransformationTab::InitFields() {
@@ -28,11 +28,11 @@ void TransformationTab::InitFields() {
 }
 
 void TransformationTab::ConnectFields() {
-  connect(rotate_buttons_, &TransformButtons::EmitTransform, this,
-          &TransformationTab::HandleTransform);
-  connect(move_buttons_, &TransformButtons::EmitTransform, this,
-          &TransformationTab::HandleTransform);
-  connect(scale_buttons_, &ScaleButtons::EmitTransform, this,
-          &TransformationTab::HandleTransform);
+  connect(rotate_buttons_, &TransformButtons::TransformSignal, this,
+          &TransformationTab::TransformTabSlot);
+  connect(move_buttons_, &TransformButtons::TransformSignal, this,
+          &TransformationTab::TransformTabSlot);
+  connect(scale_buttons_, &ScaleButtons::ScaleSignal, this,
+          &TransformationTab::TransformTabSlot);
 }
 }  // namespace s21

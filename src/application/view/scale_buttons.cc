@@ -7,8 +7,8 @@ ScaleButtons::ScaleButtons() : QWidget(nullptr) {
   InitLayouts();
 }
 
-void ScaleButtons::HandleTransform(double value, char axis, int type) {
-  emit EmitTransform(value, axis, type);
+void ScaleButtons::ScaleSlot(double value, char axis, int type) {
+  emit ScaleSignal(value, axis, type);
 }
 
 void ScaleButtons::InitFields() {
@@ -20,10 +20,9 @@ void ScaleButtons::InitFields() {
 
 void ScaleButtons::ConnectFields() {
   connect(increase_, &TButton::clicked, this,
-          [=]() { ScaleButtons::HandleTransform(step_->value(), 'S', SCALE); });
-  connect(decrease_, &TButton::clicked, this, [=]() {
-    ScaleButtons::HandleTransform(-step_->value(), 'S', SCALE);
-  });
+          [=]() { ScaleButtons::ScaleSlot(step_->value(), 'S', SCALE); });
+  connect(decrease_, &TButton::clicked, this,
+          [=]() { ScaleButtons::ScaleSlot(-step_->value(), 'S', SCALE); });
 }
 
 void ScaleButtons::InitLayouts() {

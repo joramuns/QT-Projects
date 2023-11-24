@@ -20,10 +20,10 @@ class ScaleButtons final : public QWidget {
   ScaleButtons();
 
  public slots:
-  void HandleTransform(double value, char axis, int type);
+  void ScaleSlot(double value, char axis, int type);
 
  signals:
-  void EmitTransform(double value, char axis, int type);
+  void ScaleSignal(double value, char axis, int type);
 
  private:
   void InitFields();

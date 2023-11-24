@@ -36,10 +36,10 @@ class TransformButtons final : public QWidget {
   TransformButtons(const QChar labels[2][3], int type);
 
  public slots:
-  void HandleTransform(double value, char axis, int type);
+  void TransformSlot(double value, char axis, int type);
 
  signals:
-  void EmitTransform(double value, char axis, int type);
+  void TransformSignal(double value, char axis, int type);
 
  private:
   void InitFields(const QChar labels[2][3]);

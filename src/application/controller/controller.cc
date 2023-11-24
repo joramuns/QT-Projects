@@ -5,11 +5,12 @@
 
 namespace s21 {
 Controller::Controller(View *v) : view_(v) {
-  connect(view_, &View::EmitTransform, this, &Controller::HandleTransform);
+  connect(view_, &View::ViewTransformSignal, this,
+          &Controller::ControllerTransformSlot);
 }
 
-void Controller::HandleTransform(double value, char axis, int type) {
-  std::cout << (type ? axis == 'S' ? "Scale " : "Move " : "Rotate ") << "tab: " << axis << " " << value
-            << " " << std::endl;
+void Controller::ControllerTransformSlot(double value, char axis, int type) {
+  std::cout << (type ? axis == 'S' ? "Scale " : "Move " : "Rotate ")
+            << "tab: " << axis << " " << value << " " << std::endl;
 }
 }  // namespace s21

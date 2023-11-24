@@ -6,18 +6,18 @@
 #include "../view/view.h"
 
 namespace s21 {
-  class Controller final : public QObject {
-    Q_OBJECT
+class Controller final : public QObject {
+  Q_OBJECT
 
-   public:
-    explicit Controller(View *v);
+ public:
+  explicit Controller(View *v);
 
-   private slots:
-    void HandleTransform(double value, char axis, int type);
+ private slots:
+  void ControllerTransformSlot(double value, char axis, int type);
 
-   private:
-    View *view_;
-  };
-}
+ private:
+  View *view_;
+};
+}  // namespace s21
 
 #endif  // CONTROLLER_CONTROLLER_H_

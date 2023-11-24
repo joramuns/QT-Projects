@@ -14,10 +14,10 @@ class TransformationTab final : public QTabWidget {
   TransformationTab();
 
  private slots:
-  void HandleTransform(double value, char axis, int type);
+  void TransformTabSlot(double value, char axis, int type);
 
  signals:
-  void EmitTransform(double value, char axis, int type);
+  void TransformTabSignal(double value, char axis, int type);
 
  private:
   void InitFields();
