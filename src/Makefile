@@ -38,7 +38,8 @@ install:
 	@mv -f $(BUILDDIR)/$(TARGET) $(BINDIR)/$(TARGET)
 
 open: install
-	@open $(BINDIR)/$(TARGET)
+	# @open $(BINDIR)/$(TARGET)
+	@./$(BINDIR)/$(TARGET)/Contents/MacOS/3DViewer
 
 dist: install
 	@echo "Creating a distribution file for the program..."
