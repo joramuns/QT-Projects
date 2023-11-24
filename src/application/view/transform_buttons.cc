@@ -4,8 +4,7 @@
 #include <iostream>
 
 namespace s21 {
-TransformButtons::TransformButtons(const QChar labels[2][3], int type)
-    : QWidget(nullptr) {
+TransformButtons::TransformButtons(const QChar labels[2][3], int type) {
   InitFields(labels);
   ConnectFields(type);
   InitLayouts();
@@ -30,19 +29,19 @@ void TransformButtons::InitFields(const QChar labels[2][3]) {
 
 void TransformButtons::ConnectFields(int type) {
   connect(x_increase_, &TButton::clicked, this,
-          [=]() { HandleTransform(step_->value(), 'X', type); });
+          [=]() { TransformButtons::HandleTransform(step_->value(), 'X', type); });
   connect(x_decrease_, &TButton::clicked, this,
-          [=]() { HandleTransform(-step_->value(), 'X', type); });
+          [=]() { TransformButtons::HandleTransform(-step_->value(), 'X', type); });
 
   connect(y_increase_, &TButton::clicked, this,
-          [=]() { HandleTransform(step_->value(), 'Y', type); });
+          [=]() { TransformButtons::HandleTransform(step_->value(), 'Y', type); });
   connect(y_decrease_, &TButton::clicked, this,
-          [=]() { HandleTransform(-step_->value(), 'Y', type); });
+          [=]() { TransformButtons::HandleTransform(-step_->value(), 'Y', type); });
 
   connect(z_increase_, &TButton::clicked, this,
-          [=]() { HandleTransform(step_->value(), 'Z', type); });
+          [=]() { TransformButtons::HandleTransform(step_->value(), 'Z', type); });
   connect(z_decrease_, &TButton::clicked, this,
-          [=]() { HandleTransform(-step_->value(), 'Z', type); });
+          [=]() { TransformButtons::HandleTransform(-step_->value(), 'Z', type); });
 }
 
 void TransformButtons::InitLayouts() {
