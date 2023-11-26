@@ -65,10 +65,9 @@ void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
     faces_pars_ = new VertexTexturesStrategy(file, current_position);
   } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
     faces_pars_ = new VertexNormalsStrategy(file, current_position);
+  } else {
+    faces_pars_ = new VertexTexturesNormalsStrategy(file, current_position);
   }
-  // } else { // v/vt/vn
-  //   casefour();
-  // }
 };
 
 } // namespace s21

@@ -6,7 +6,7 @@ void wrong_filename() {
 }
 
 void true_filename() {
-  s21::Parser test("../../data-samples/test_vertex_texutres.obj");
+  s21::Parser test("../../data-samples/test_vertex_textures_normals.obj");
   std::cout << "Success" << std::endl;
 }
 
