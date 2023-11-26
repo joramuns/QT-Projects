@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "faces_strategy.h"
+#include "coordinatestruct.h"
 
 #define BAD_FILENAME 1
 
@@ -24,24 +25,7 @@ class Parser {
  private:
   int ReadObj(const std::string &filename);
 
-  struct PointCoordinates {
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
-    GLfloat a{0.0};
-  };
 
-  struct TexturesCoordinates {
-    GLfloat u;
-    GLfloat v;
-    GLfloat w{0.0};
-  };
-
-  struct NormalsCoordinate {
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
-  };
 
   void AddPoint(std::istringstream &data) noexcept;
   void AddTexturePoint(std::istringstream &data) noexcept;
