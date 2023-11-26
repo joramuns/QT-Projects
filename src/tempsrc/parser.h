@@ -1,5 +1,6 @@
-#include <OpenGL/gl.h>
+// #include <OpenGL/gl.h>
 // #include <epoxy/gl.h>
+#include <GL/glut.h>
 // #include <glm/glm.hpp>
 /* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
 /* brew install glm */

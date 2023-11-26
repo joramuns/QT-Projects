@@ -1,8 +1,9 @@
 #include "faces_strategy.h"
 
 namespace s21 {
-FacesStrategy::FacesStrategy(std::ifstream *file, int file_pos)
-    : file_(file), file_position_(file_pos){};
+FacesStrategy::FacesStrategy(std::ifstream *file, int file_pos) : file_(file) {
+  file_->seekg(file_pos);
+};
 
 std::vector<GLfloat> FacesStrategy::GetVertices() { return vertices_; };
 
@@ -13,9 +14,8 @@ std::vector<GLfloat> FacesStrategy::GetNormals() { return normals_; };
 VertexStrategy::VertexStrategy(std::ifstream *file, int file_pos)
     : FacesStrategy(file, file_pos){};
 
-void VertexStrategy::Pars() {
+void VertexStrategy::Pars() noexcept {
   std::string line;
-  file_->seekg(file_position_);
   while (std::getline(*file_, line)) {
     std::istringstream data(line.substr(2));
     int x;
@@ -28,30 +28,45 @@ void VertexStrategy::Pars() {
   }
 };
 
-VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file, int file_pos) : FacesStrategy(file, file_pos){};
+VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
+                                               int file_pos)
+    : FacesStrategy(file, file_pos){};
 
-void VertexTexturesStrategy::Pars() {
+void VertexTexturesStrategy::Pars() noexcept {
   std::string line;
-  file_->seekg(file_position_);
   while (std::getline(*file_, line)) {
+    std::string prefix = line.substr(0, 2);
     std::istringstream data(line.substr(2));
-    char bebra;
-    int x;
-    data >> x;
-    data >> bebra;
-    int xt;
-    data >> xt;
-    int y;
-    data >> y;
-    data >> bebra;
-    int yt;
-    data >> yt;
-    int z;
-    data >> z;
-    data >> bebra;
-    int zt;
-    data >> zt;
-    std::cout << x << " | " << xt << " | " << y << " | " << yt << " | " << z << " | " << zt << std::endl;
+    while (data.peek() != EOF && prefix == "f ") {
+      int x;
+      data >> x;
+      data.get();
+      int xt;
+      data >> xt;
+      std::cout << x << " | " << xt << std::endl;
+      data.get();
+    }
+  }
+}
+
+VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file, int file_pos)
+    : FacesStrategy(file, file_pos){};
+
+void VertexNormalsStrategy::Pars() noexcept {
+  std::string line;
+  while (std::getline(*file_, line)) {
+    std::string prefix = line.substr(0, 2);
+    std::istringstream data(line.substr(2));
+    while (data.peek() != EOF && prefix == "f ") {
+      int x;
+      data >> x;
+      data.get();
+      data.get();
+      int xn;
+      data >> xn;
+      std::cout << x << " | " << xn << std::endl;
+      data.get();
+    }
   }
 }
 
