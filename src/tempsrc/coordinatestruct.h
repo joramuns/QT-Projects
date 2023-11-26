@@ -1,3 +1,5 @@
+#ifndef COORDINATE_STRUCT_H
+#define COORDINATE_STRUCT_H
 #include <GL/glut.h>
 
 namespace s21 {
@@ -21,3 +23,5 @@ struct NormalsCoordinate {
   GLfloat z;
 };
 } // namespace s21
+
+#endif
