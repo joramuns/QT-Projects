@@ -12,6 +12,7 @@
 
 #include "faces_strategy.h"
 #include "coordinatestruct.h"
+#include "coordinatecontain.h"
 
 #define BAD_FILENAME 1
 
