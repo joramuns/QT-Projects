@@ -26,6 +26,9 @@ int Parser::ReadObj(const std::string &filename) {
       } else if (prefix == "f ") {
         SetStrategy(&file, file_position);
         faces_pars_->Pars();
+        vertices_ = faces_pars_->GetVertices();
+        textures_ = faces_pars_->GetTextures();
+        normals_ = faces_pars_->GetNormals();
       }
       file_position = file.tellg();
     }
@@ -59,14 +62,16 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
 };
 
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
+  CoordinateContain container(vertex_points_, texture_points_, normal_points_);
   if (texture_points_.empty() && normal_points_.empty()) { // v
-    faces_pars_ = new VertexStrategy(file, current_position);
+    faces_pars_ = new VertexStrategy(file, current_position, container);
   } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
-    faces_pars_ = new VertexTexturesStrategy(file, current_position);
+    faces_pars_ = new VertexTexturesStrategy(file, current_position, container);
   } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
-    faces_pars_ = new VertexNormalsStrategy(file, current_position);
+    faces_pars_ = new VertexNormalsStrategy(file, current_position, container);
   } else {
-    faces_pars_ = new VertexTexturesNormalsStrategy(file, current_position);
+    faces_pars_ =
+        new VertexTexturesNormalsStrategy(file, current_position, container);
   }
 };
 
