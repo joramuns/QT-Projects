@@ -9,17 +9,17 @@ CoordinateContain::CoordinateContain(
 
 const PointCoordinates &
 CoordinateContain::GetPointCoordinates(const int i) const noexcept {
-  return vertex_points_[i];
+  return vertex_points_[i - 1];
 }
 
 const TexturesCoordinates &
 CoordinateContain::GetTexturesCoordinates(const int i) const noexcept {
-  return texture_points_[i];
+  return texture_points_[i - 1];
 }
 
 const NormalsCoordinate &
 CoordinateContain::GetNormalsCoordinates(const int i) const noexcept {
-  return normal_points_[i];
+  return normal_points_[i - 1];
 }
 
 } // namespace s21
