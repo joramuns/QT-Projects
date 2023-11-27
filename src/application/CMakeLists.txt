@@ -23,6 +23,7 @@ set(COMMON_SOURCES
   view/settingswidgets/settingstab.cc
   view/app_management.cc
   view/opengl/glwidget.cc
+  view/opengl/shaderreader.cc
   controller/controller.cc
 )
 

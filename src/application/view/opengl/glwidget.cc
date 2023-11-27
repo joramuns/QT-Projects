@@ -1,5 +1,7 @@
 #include "glwidget.h"
 
+#include "shaderreader.h"
+
 namespace s21 {
   GLWidget::GLWidget() {
     /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
@@ -10,6 +12,8 @@ namespace s21 {
     // Set up the rendering context, load shaders and other resources, etc.:
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glClearColor(0.5f, 1.0f, 1.0f, 1.0f);
+
+    ReadShader("./application/view/opengl/v_shader.glsl");
   }
 
   void GLWidget::resizeGL(int w, int h) {
