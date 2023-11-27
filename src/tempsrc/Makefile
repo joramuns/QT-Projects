@@ -11,5 +11,5 @@ LIB=-lgtest -pthread
 VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 parser:
-	@$(CC) *.cc 
+	@$(CC) $(ASAN) *.cc 
 	@./a.out
