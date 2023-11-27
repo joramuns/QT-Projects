@@ -15,6 +15,7 @@ int Parser::ReadObj(const std::string &filename) {
   } else {
     int file_position;
     while (std::getline(file, line)) {
+      // std::cout << line;
       std::string prefix = line.substr(0, 2);
       std::istringstream data(line.substr(2));
       if (prefix == "v ") {
@@ -25,16 +26,59 @@ int Parser::ReadObj(const std::string &filename) {
         AddNormalsPoint(data);
       } else if (prefix == "f ") {
         SetStrategy(&file, file_position);
-        faces_pars_->Pars();
-        vertices_ = faces_pars_->GetVertices();
-        textures_ = faces_pars_->GetTextures();
-        normals_ = faces_pars_->GetNormals();
+        file.seekg(faces_pars_->Pars());
+        SortedDataFill();
+        UnsortedDataClear();
       }
       file_position = file.tellg();
     }
   }
+  DebugPrint();
   return 0;
 };
+
+void Parser::SortedDataFill() noexcept {
+  vertices_.push_back(faces_pars_->GetVertices());
+        textures_.push_back(faces_pars_->GetTextures());
+        normals_.push_back(faces_pars_->GetNormals());
+        delete faces_pars_;
+}
+
+void Parser::UnsortedDataClear() noexcept {
+  vertex_points_.clear();
+        texture_points_.clear();
+        normal_points_.clear();
+
+}
+
+void Parser::DebugPrint() noexcept {
+  for (const auto item : vertices_) {
+    std::cout << std::endl << "Model verices :";
+    for (size_t i = 0; i < item.size(); ++i){
+      if(i%4 == 0) std::cout << std::endl;
+      std::cout << item[i] << " ||| ";
+    }
+    std::cout << std::endl;
+  }
+  
+  for (const auto item : textures_) {
+    std::cout << std::endl << "Model textures :";
+    for (size_t i = 0; i < item.size(); ++i) {
+      if(i%3 == 0) std::cout << std::endl;
+      std::cout << item[i] << " <|> ";
+    }
+    std::cout << std::endl;
+  }
+
+  for (const auto item: normals_) {
+    std::cout << std::endl << "Model normals :";
+    for (size_t i = 0; i < item.size(); ++i) {
+      if (i%3 == 0) std::cout << std::endl;
+      std::cout << item[i] << " >|< ";
+    }
+    std::cout << std::endl;
+  }
+}
 
 void Parser::AddPoint(std::istringstream &data) noexcept {
   PointCoordinates vertex;

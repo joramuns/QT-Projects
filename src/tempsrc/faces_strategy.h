@@ -20,7 +20,7 @@ public:
   std::vector<GLfloat> GetTextures();
   std::vector<GLfloat> GetNormals();
 
-  virtual void Pars() noexcept = 0;
+  virtual int Pars() noexcept = 0;
 
 protected:
   void PointFill(const int index) noexcept;
@@ -39,28 +39,28 @@ class VertexStrategy : public FacesStrategy {
 public:
   VertexStrategy(std::ifstream *file, const int file_pos,
                  const CoordinateContain &contain);
-  void Pars() noexcept override;
+  int Pars() noexcept override;
 };
 
 class VertexTexturesStrategy : public FacesStrategy {
 public:
   VertexTexturesStrategy(std::ifstream *file, const int file_pos,
                          const CoordinateContain &contain);
-  void Pars() noexcept override;
+  int Pars() noexcept override;
 };
 
 class VertexNormalsStrategy : public FacesStrategy {
 public:
   VertexNormalsStrategy(std::ifstream *file, const int file_pos,
                         const CoordinateContain &contain);
-  void Pars() noexcept override;
+  int Pars() noexcept override;
 };
 
 class VertexTexturesNormalsStrategy : public FacesStrategy {
 public:
   VertexTexturesNormalsStrategy(std::ifstream *file, const int file_pos,
                                 const CoordinateContain &contain);
-  void Pars() noexcept override;
+  int Pars() noexcept override;
 };
 
 } // namespace s21

@@ -26,21 +26,22 @@ class Parser {
  private:
   int ReadObj(const std::string &filename);
 
-
-
+  void SortedDataFill() noexcept;
+  void UnsortedDataClear() noexcept;
   void AddPoint(std::istringstream &data) noexcept;
   void AddTexturePoint(std::istringstream &data) noexcept;
   void AddNormalsPoint(std::istringstream &data) noexcept;
   void SetStrategy(std::ifstream *file, int current_position) noexcept;
 
+  void DebugPrint() noexcept;
 private:
   std::vector<PointCoordinates> vertex_points_;
   std::vector<TexturesCoordinates> texture_points_;
   std::vector<NormalsCoordinate> normal_points_;
   // std::vector<GLuint> faces_;
-  std::vector<GLfloat> vertices_;
-  std::vector<GLfloat> textures_;
-  std::vector<GLfloat> normals_;
+  std::vector<std::vector<GLfloat>> vertices_;
+  std::vector<std::vector<GLfloat>> textures_;
+  std::vector<std::vector<GLfloat>> normals_;
   FacesStrategy *faces_pars_;
 };
 }  // namespace s21

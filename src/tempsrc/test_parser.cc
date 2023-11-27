@@ -5,21 +5,23 @@ void wrong_filename() {
   std::cout << "Success" << std::endl;
 }
 
-void model_filename(const std::string &filename) {
+void model_pars(const std::string &filename) {
   s21::Parser test(filename);
   std::cout << "Success" << std::endl;
 }
 
 int main() {
-  std::cout << "test 1:" << std::endl;
-  wrong_filename();
-  std::cout << "test 2: Only Vertex obj" << std::endl;
-  model_filename("../../data-samples/test_vertex.obj");
-  std::cout << "test 3: Vertex Textures obj" << std::endl;
-  model_filename("../../data-samples/test_vertex_textures.obj");
-  std::cout << "test 3: Vertex Normals obj" << std::endl;
-  model_filename("../../data-samples/test_vertex_normals.obj");
-  std::cout << "test 3: Vertex Textures Normals obj" << std::endl;
-  model_filename("../../data-samples/test_vertex_textures_normals.obj");
+  // std::cout << "test 1:" << std::endl;
+  // wrong_filename();
+  // std::cout << "test 2: Only Vertex obj" << std::endl;
+  // model_pars("../../data-samples/test_vertex.obj");
+  // std::cout << "test 3: Vertex Textures obj" << std::endl;
+  // model_pars("../../data-samples/test_vertex_textures.obj");
+  // std::cout << "test 4: Vertex Normals obj" << std::endl;
+  // model_pars("../../data-samples/test_vertex_normals.obj");
+  // std::cout << "test 5: Vertex Textures Normals obj" << std::endl;
+  // model_pars("../../data-samples/test_vertex_textures_normals.obj");
+  std::cout << "test 6: Multiobject Vertex Model obj" << std::endl;
+  model_pars("../../data-samples/test_multiobject_vertex.obj");
   return 0;
 }

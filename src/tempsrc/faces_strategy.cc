@@ -39,18 +39,23 @@ VertexStrategy::VertexStrategy(std::ifstream *file, const int file_pos,
                                const CoordinateContain &contain)
     : FacesStrategy(file, file_pos, contain){};
 
-void VertexStrategy::Pars() noexcept {
+int VertexStrategy::Pars() noexcept {
   std::string line;
+  int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
+    
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;
       PointFill(v);
       data.get();
     }
+    position = file_->tellg();
   }
+  return position;
 };
 
 VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
@@ -58,10 +63,12 @@ VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
                                                const CoordinateContain &contain)
     : FacesStrategy(file, file_pos, contain){};
 
-void VertexTexturesStrategy::Pars() noexcept {
+int VertexTexturesStrategy::Pars() noexcept {
   std::string line;
+  int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
     while (data.peek() != EOF && prefix == "f ") {
       int v;
@@ -73,7 +80,9 @@ void VertexTexturesStrategy::Pars() noexcept {
       TexturesFill(vt);
       data.get();
     }
+    position = file_->tellg();
   }
+  return position;
 }
 
 VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file,
@@ -81,10 +90,12 @@ VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file,
                                              const CoordinateContain &contain)
     : FacesStrategy(file, file_pos, contain){};
 
-void VertexNormalsStrategy::Pars() noexcept {
+int VertexNormalsStrategy::Pars() noexcept {
   std::string line;
+  int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
     while (data.peek() != EOF && prefix == "f ") {
       int v;
@@ -97,17 +108,21 @@ void VertexNormalsStrategy::Pars() noexcept {
       NormalsFill(vn);
       data.get();
     }
+    position = file_->tellg();
   }
+  return position;
 }
 
 VertexTexturesNormalsStrategy::VertexTexturesNormalsStrategy(
     std::ifstream *file, const int file_pos, const CoordinateContain &contain)
     : FacesStrategy(file, file_pos, contain){};
 
-void VertexTexturesNormalsStrategy::Pars() noexcept {
+int VertexTexturesNormalsStrategy::Pars() noexcept {
   std::string line;
+  int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
     while (data.peek() != EOF && prefix == "f ") {
       int v;
@@ -123,7 +138,9 @@ void VertexTexturesNormalsStrategy::Pars() noexcept {
       NormalsFill(vn);
       data.get();
     }
+    position = file_->tellg();
   }
+  return position;
 }
 
 } // namespace s21
