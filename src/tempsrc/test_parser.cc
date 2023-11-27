@@ -6,7 +6,7 @@ void wrong_filename() {
 }
 
 void true_filename() {
-  s21::Parser test("../../data-samples/test_two.obj");
+  s21::Parser test("../../data-samples/test_one.obj");
   std::cout << "Success" << std::endl;
 }
 
