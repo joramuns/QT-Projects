@@ -1,6 +1,8 @@
 #ifndef COORDINATE_CONTAIN_H
 #define COORDINATE_CONTAIN_H
-#include <GL/glut.h>
+// #include <GL/glut.h>
+#include <OpenGL/gl.h>
+
 #include <vector>
 
 #include "coordinatestruct.h"

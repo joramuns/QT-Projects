@@ -1,6 +1,7 @@
 #ifndef COORDINATE_STRUCT_H
 #define COORDINATE_STRUCT_H
-#include <GL/glut.h>
+// #include <GL/glut.h>
+#include <OpenGL/gl.h>
 
 namespace s21 {
 

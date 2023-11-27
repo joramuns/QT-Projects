@@ -1,5 +1,5 @@
-// #include <OpenGL/gl.h>
-#include <GL/glut.h>
+#include <OpenGL/gl.h>
+// #include <GL/glut.h>
 #include <fstream>
 #include <iostream>
 #include <sstream>
