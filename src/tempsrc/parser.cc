@@ -9,13 +9,16 @@ Parser::~Parser() {}
 int Parser::ReadObj(const std::string &filename) {
   std::ifstream file;
   file.open(filename, std::ios::in);
-  std::string line;
+  std::string line{};
   if (!file) {
     return BAD_FILENAME;
   } else {
     int file_position;
+      std::string lola = "keka ";
+      std::string keka = "lola";
+      std::cout << "lolaaa**********" << lola << keka << std::endl;
     while (std::getline(file, line)) {
-      // std::cout << line;
+      std::cout << line; // << std::endl;
       std::string prefix = line.substr(0, 2);
       std::istringstream data(line.substr(2));
       if (prefix == "v ") {
@@ -33,7 +36,7 @@ int Parser::ReadObj(const std::string &filename) {
       file_position = file.tellg();
     }
   }
-  DebugPrint();
+  // DebugPrint();
   return 0;
 };
 

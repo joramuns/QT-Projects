@@ -46,7 +46,6 @@ int VertexStrategy::Pars() noexcept {
     std::string prefix = line.substr(0, 2);
     if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
-    
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;

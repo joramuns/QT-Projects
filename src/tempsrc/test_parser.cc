@@ -17,11 +17,17 @@ int main() {
   // model_pars("../../data-samples/test_vertex.obj");
   // std::cout << "test 3: Vertex Textures obj" << std::endl;
   // model_pars("../../data-samples/test_vertex_textures.obj");
-  // std::cout << "test 4: Vertex Normals obj" << std::endl;
-  // model_pars("../../data-samples/test_vertex_normals.obj");
+  std::cout << "test 4: Vertex Normals obj" << std::endl;
+  model_pars("../../data-samples/test_vertex_normals.obj");
   // std::cout << "test 5: Vertex Textures Normals obj" << std::endl;
   // model_pars("../../data-samples/test_vertex_textures_normals.obj");
-  std::cout << "test 6: Multiobject Vertex Model obj" << std::endl;
-  model_pars("../../data-samples/test_multiobject_vertex.obj");
+  // std::cout << "test 6: Multiobject Vertex Model obj" << std::endl;
+  // model_pars("../../data-samples/test_multiobject_vertex.obj");
+  // std::cout << "test 7: Multiobject Vertex Textures Model obj" << std::endl;
+  // model_pars("../../data-samples/test_multiobject_vertex_textures.obj");
+  // std::cout << "test 8: Multiobject Vertex Normals Model obj" << std::endl;
+  // model_pars("../../data-samples/test_multiobject_vertex_normals.obj");
+  // std::cout << "test 9: Multiobject Vertex Textures Normals Model obj" << std::endl;
+  // model_pars("../../data-samples/test_multiobject_vertex_textures_normals.obj");
   return 0;
 }

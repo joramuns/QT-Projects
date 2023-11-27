@@ -1,4 +1,4 @@
-CC=g++ -Wall -Werror -Wextra -std=c++17
+CC=g++ -Wall -Werror -Wextra -std=c++17 -g
 ASAN=-fsanitize=address
 GCOV=--coverage
 TARGET=test.out
