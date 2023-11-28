@@ -24,6 +24,7 @@ set(COMMON_SOURCES
   view/app_management.cc
   view/opengl/glwidget.cc
   view/opengl/shaderreader.cc
+  view/opengl/v_shader.glsl
   controller/controller.cc
 )
 
