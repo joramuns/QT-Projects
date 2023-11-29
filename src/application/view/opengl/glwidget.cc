@@ -4,6 +4,7 @@
 
 #include <QDebug>
 /* #include <QFile> */
+#include <vector>
 
 namespace s21 {
 GLWidget::GLWidget() {
@@ -22,38 +23,56 @@ void GLWidget::initializeGL() {
   initializeOpenGLFunctions();
 
   program_ = new QOpenGLShaderProgram();
-  if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                         ":/v_shader"))
+  if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/v_shader"))
     qDebug() << "Vertex shader errors:\n" << program_->log();
 
-  if (!program_->addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                         ":/f_shader"))
+  if (!program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/f_shader"))
     qDebug() << "Fragment shader errors:\n" << program_->log();
-
 
   if (!program_->link())
     qDebug() << "Shader linker errors:\n" << program_->log();
 
-  GLfloat vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f,
-                        0.0f,  0.0f,  0.5f, 0.0f};
+  /* GLfloat vertices[] = {-0.5f, -0.5f, -0.3f, 0.5f, -0.5f, */
+  /*                       0.0f,  0.0f,  0.5f,  0.0f}; */
+
+  std::vector<GLfloat> vertices{
+      0.5f,  0.5f,  0.0f,  // Верхний правый угол
+      0.5f,  -0.5f, 0.0f,  // Нижний правый угол
+      -0.5f, -0.5f, 0.0f,  // Нижний левый угол
+      -0.5f, 0.5f,  0.0f   // Верхний левый угол
+  };
+
+  /* GLuint indices[] = {0, 1, 3, 1, 2, 3}; */
+  /* GLuint indices[] = {0, 1, 3, 0, 3, 2}; */
+  std::vector<GLuint> indices{0, 1, 3, 0, 3, 2};
+
+  /* 0 1 3 2 4 2 1 */
+  /*   0 1 3 */
+  /*   0 3 2 */
+  /*   0 2 4 */
+  /*   0 4 2 */
+  /*   0 2 1 */
+
+  VAO_.create();
+  VAO_.bind();
 
   VBO_ = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
   VBO_.create();
   VBO_.setUsagePattern(QOpenGLBuffer::StaticDraw);
   VBO_.bind();
-  VBO_.allocate(vertices, sizeof(vertices));
+  VBO_.allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
 
-  VAO_.create();
-  VAO_.bind();
+  EBO_ = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+  EBO_.create();
+  EBO_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+  EBO_.bind();
+  EBO_.allocate(indices.data(), indices.size() * sizeof(GLuint));
 
   program_->enableAttributeArray(0);
   program_->setAttributeBuffer(0, GL_FLOAT, 0, 3);
 
-  /* VBO_.release(); */
-  /* VAO_.release(); */
-
-  /* unsigned int indices[] = {0, 1, 3, 1, 2, 3}; */
-  /* unsigned int EBO; */
+  VBO_.release();
+  VAO_.release();
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -73,7 +92,10 @@ void GLWidget::paintGL() {
   program_->bind();
   VAO_.bind();
 
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  /* glPointSize(9); */
+  /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  /* glDrawArrays(GL_POINTS, 0, 9); */
   VAO_.release();
 
   program_->release();
