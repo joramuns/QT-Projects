@@ -6,14 +6,12 @@
 #include <string>
 #include <vector>
 
-#include "coordinatecontain.h"
 
 namespace s21 {
 class FacesStrategy {
 public:
   FacesStrategy() = delete;
-  FacesStrategy(std::ifstream *file, const int file_pos,
-                const CoordinateContain &contain);
+  FacesStrategy(std::ifstream *file, const int file_pos);
   virtual ~FacesStrategy(){};
 
   std::vector<GLfloat> GetVertices();
@@ -29,7 +27,7 @@ protected:
 
 protected:
   std::ifstream *file_;
-  CoordinateContain container_;
+
   std::vector<GLfloat> vertices_;
   std::vector<GLfloat> texutres_;
   std::vector<GLfloat> normals_;
@@ -37,29 +35,25 @@ protected:
 
 class VertexStrategy : public FacesStrategy {
 public:
-  VertexStrategy(std::ifstream *file, const int file_pos,
-                 const CoordinateContain &contain);
+  VertexStrategy(std::ifstream *file, const int file_pos);
   int Pars() noexcept override;
 };
 
 class VertexTexturesStrategy : public FacesStrategy {
 public:
-  VertexTexturesStrategy(std::ifstream *file, const int file_pos,
-                         const CoordinateContain &contain);
+  VertexTexturesStrategy(std::ifstream *file, const int file_pos);
   int Pars() noexcept override;
 };
 
 class VertexNormalsStrategy : public FacesStrategy {
 public:
-  VertexNormalsStrategy(std::ifstream *file, const int file_pos,
-                        const CoordinateContain &contain);
+  VertexNormalsStrategy(std::ifstream *file, const int file_pos);
   int Pars() noexcept override;
 };
 
 class VertexTexturesNormalsStrategy : public FacesStrategy {
 public:
-  VertexTexturesNormalsStrategy(std::ifstream *file, const int file_pos,
-                                const CoordinateContain &contain);
+  VertexTexturesNormalsStrategy(std::ifstream *file, const int file_pos);
   int Pars() noexcept override;
 };
 

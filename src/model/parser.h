@@ -12,7 +12,7 @@
 
 #include "faces_strategy.h"
 #include "coordinatestruct.h"
-#include "coordinatecontain.h"
+// #include "coordinatecontain.h"
 
 #define BAD_FILENAME 1
 
@@ -32,16 +32,19 @@ class Parser {
   void AddTexturePoint(std::istringstream &data) noexcept;
   void AddNormalsPoint(std::istringstream &data) noexcept;
   void SetStrategy(std::ifstream *file, int current_position) noexcept;
+  void StructFill(const PointCoordinates &vertices_struct) noexcept;
+  void StructFill(const TexturesCoordinates &textures_struct) noexcept;
+  void StructFill(const NormalsCoordinate &normals_struct) noexcept;
 
   void DebugPrint() noexcept;
 private:
-  // std::vector<PointCoordinates> vertex_points_;
-  // std::vector<TexturesCoordinates> texture_points_;
-  // std::vector<NormalsCoordinate> normal_points_;
+  std::vector<GLfloat> vertex_points_;
+  std::vector<GLfloat> texture_points_;
+  std::vector<GLfloat> normal_points_;
 
-  std::vector<std::vector<GLfloat>> vertices_; // may b list
-  std::vector<std::vector<GLfloat>> textures_;
-  std::vector<std::vector<GLfloat>> normals_;
+  std::vector<std::vector<GLfloat>> all_vertices_; // may b list
+  std::vector<std::vector<GLfloat>> all_textures_;
+  std::vector<std::vector<GLfloat>> all_normals_;
 
   std::vector<std::vector<GLint>> vertex_faces_;
   std::vector<std::vector<GLint>> texutre_faces_;

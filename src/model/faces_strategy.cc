@@ -1,9 +1,8 @@
 #include "faces_strategy.h"
 
 namespace s21 {
-FacesStrategy::FacesStrategy(std::ifstream *file, const int file_pos,
-                             const CoordinateContain &contain)
-    : file_(file), container_(contain) {
+FacesStrategy::FacesStrategy(std::ifstream *file, const int file_pos)
+    : file_(file) {
   file_->seekg(file_pos);
 };
 
@@ -35,16 +34,16 @@ void FacesStrategy::NormalsFill(const int index) noexcept {
   normals_.push_back(cord.z);
 }
 
-VertexStrategy::VertexStrategy(std::ifstream *file, const int file_pos,
-                               const CoordinateContain &contain)
-    : FacesStrategy(file, file_pos, contain){};
+VertexStrategy::VertexStrategy(std::ifstream *file, const int file_pos)
+    : FacesStrategy(file, file_pos){};
 
 int VertexStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ") break;
+    if (prefix == "v ")
+      break;
     std::istringstream data(line.substr(2));
     while (data.peek() != EOF && prefix == "f ") {
       int v;
@@ -58,16 +57,16 @@ int VertexStrategy::Pars() noexcept {
 };
 
 VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
-                                               const int file_pos,
-                                               const CoordinateContain &contain)
-    : FacesStrategy(file, file_pos, contain){};
+                                               const int file_pos)
+    : FacesStrategy(file, file_pos){};
 
 int VertexTexturesStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ") break;
+    if (prefix == "v ")
+      break;
     std::istringstream data(line.substr(2));
     while (data.peek() != EOF && prefix == "f ") {
       int v;
@@ -85,16 +84,16 @@ int VertexTexturesStrategy::Pars() noexcept {
 }
 
 VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file,
-                                             const int file_pos,
-                                             const CoordinateContain &contain)
-    : FacesStrategy(file, file_pos, contain){};
+                                             const int file_pos)
+    : FacesStrategy(file, file_pos){};
 
 int VertexNormalsStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ") break;
+    if (prefix == "v ")
+      break;
     std::istringstream data(line.substr(2));
     while (data.peek() != EOF && prefix == "f ") {
       int v;
@@ -113,15 +112,16 @@ int VertexNormalsStrategy::Pars() noexcept {
 }
 
 VertexTexturesNormalsStrategy::VertexTexturesNormalsStrategy(
-    std::ifstream *file, const int file_pos, const CoordinateContain &contain)
-    : FacesStrategy(file, file_pos, contain){};
+    std::ifstream *file, const int file_pos)
+    : FacesStrategy(file, file_pos){};
 
 int VertexTexturesNormalsStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ") break;
+    if (prefix == "v ")
+      break;
     std::istringstream data(line.substr(2));
     while (data.peek() != EOF && prefix == "f ") {
       int v;
