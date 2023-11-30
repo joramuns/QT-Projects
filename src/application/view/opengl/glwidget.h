@@ -22,6 +22,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
  private:
   QOpenGLShaderProgram *program_;
   QOpenGLVertexArrayObject VAO_;
+  QOpenGLVertexArrayObject VAO2_;
   QOpenGLBuffer VBO_;
   QOpenGLBuffer EBO_;
 };
