@@ -26,8 +26,8 @@ class Parser {
  private:
   int ReadObj(const std::string &filename);
 
-  void SortedDataFill() noexcept;
-  void UnsortedDataClear() noexcept;
+  void AddPointInArray() noexcept;
+  void DataClear() noexcept;
   void AddPoint(std::istringstream &data) noexcept;
   void AddTexturePoint(std::istringstream &data) noexcept;
   void AddNormalsPoint(std::istringstream &data) noexcept;
@@ -35,6 +35,7 @@ class Parser {
   void StructFill(const PointCoordinates &vertices_struct) noexcept;
   void StructFill(const TexturesCoordinates &textures_struct) noexcept;
   void StructFill(const NormalsCoordinate &normals_struct) noexcept;
+  void GetIndexes() noexcept;
 
   void DebugPrint() noexcept;
 private:
@@ -46,9 +47,9 @@ private:
   std::vector<std::vector<GLfloat>> all_textures_;
   std::vector<std::vector<GLfloat>> all_normals_;
 
-  std::vector<std::vector<GLint>> vertex_faces_;
-  std::vector<std::vector<GLint>> texutre_faces_;
-  std::vector<std::vector<GLint>> normal_faces_;
+  std::vector<std::vector<GLuint>> vertex_faces_;
+  std::vector<std::vector<GLuint>> texutre_faces_;
+  std::vector<std::vector<GLuint>> normal_faces_;
   FacesStrategy *faces_pars_;
 };
 }  // namespace s21

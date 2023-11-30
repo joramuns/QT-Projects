@@ -6,33 +6,28 @@ FacesStrategy::FacesStrategy(std::ifstream *file, const int file_pos)
   file_->seekg(file_pos);
 };
 
-std::vector<GLfloat> FacesStrategy::GetVertices() { return vertices_; };
+std::vector<GLuint> FacesStrategy::GetVertices() const noexcept {
+  return vertices_;
+};
 
-std::vector<GLfloat> FacesStrategy::GetTextures() { return texutres_; };
+std::vector<GLuint> FacesStrategy::GetTextures() const noexcept {
+  return texutres_;
+};
 
-std::vector<GLfloat> FacesStrategy::GetNormals() { return normals_; };
+std::vector<GLuint> FacesStrategy::GetNormals() const noexcept {
+  return normals_;
+};
 
-void FacesStrategy::PointFill(const int index) noexcept {
-  PointCoordinates cord = container_.GetPointCoordinates(index);
-  vertices_.push_back(cord.x);
-  vertices_.push_back(cord.y);
-  vertices_.push_back(cord.z);
-  vertices_.push_back(cord.a);
-}
-
-void FacesStrategy::TexturesFill(const int index) noexcept {
-  TexturesCoordinates cord = container_.GetTexturesCoordinates(index);
-  texutres_.push_back(cord.u);
-  texutres_.push_back(cord.v);
-  texutres_.push_back(cord.w);
-}
-
-void FacesStrategy::NormalsFill(const int index) noexcept {
-  NormalsCoordinate cord = container_.GetNormalsCoordinates(index);
-  normals_.push_back(cord.x);
-  normals_.push_back(cord.y);
-  normals_.push_back(cord.z);
-}
+void FacesStrategy::TesselationFill(
+    const std::vector<GLuint> &indexes) noexcept {
+  for (size_t i = 0; i < indexes.size(); ++i) {
+    if (i > 2) {
+      vertices_.push_back(indexes[0]);
+      vertices_.push_back(indexes[i - 1]);
+    }
+    vertices_.push_back(indexes[i]);
+  }
+};
 
 VertexStrategy::VertexStrategy(std::ifstream *file, const int file_pos)
     : FacesStrategy(file, file_pos){};
@@ -45,12 +40,14 @@ int VertexStrategy::Pars() noexcept {
     if (prefix == "v ")
       break;
     std::istringstream data(line.substr(2));
+    std::vector<GLuint> v_tmp;
     while (data.peek() != EOF && prefix == "f ") {
-      int v;
+      GLuint v;
       data >> v;
-      PointFill(v);
+      v_tmp.push_back(v);
       data.get();
     }
+    TesselationFill(v_tmp);
     position = file_->tellg();
   }
   return position;
@@ -68,14 +65,16 @@ int VertexTexturesStrategy::Pars() noexcept {
     if (prefix == "v ")
       break;
     std::istringstream data(line.substr(2));
+    // std::vector<GLuint> v_tmp;
+    // std::vector<GLuint> vt_tmp;
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;
-      PointFill(v);
+      //
       data.get();
       int vt;
       data >> vt;
-      TexturesFill(vt);
+      // TexturesFill(vt);
       data.get();
     }
     position = file_->tellg();
@@ -98,12 +97,12 @@ int VertexNormalsStrategy::Pars() noexcept {
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;
-      PointFill(v);
+      // PointFill(v);
       data.get();
       data.get();
       int vn;
       data >> vn;
-      NormalsFill(vn);
+      // NormalsFill(vn);
       data.get();
     }
     position = file_->tellg();
@@ -126,15 +125,15 @@ int VertexTexturesNormalsStrategy::Pars() noexcept {
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;
-      PointFill(v);
+      // PointFill(v);
       data.get();
       int vt;
       data >> vt;
-      TexturesFill(vt);
+      // TexturesFill(vt);
       data.get();
       int vn;
       data >> vn;
-      NormalsFill(vn);
+      // NormalsFill(vn);
       data.get();
     }
     position = file_->tellg();

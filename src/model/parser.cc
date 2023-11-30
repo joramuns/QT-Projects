@@ -24,61 +24,68 @@ int Parser::ReadObj(const std::string &filename) {
       } else if (prefix == "vn") {
         AddNormalsPoint(data);
       } else if (prefix == "f ") {
+        AddPointInArray();
         SetStrategy(&file, file_position);
         file.seekg(faces_pars_->Pars());
-        SortedDataFill();
-        UnsortedDataClear();
+        GetIndexes();
+        DataClear();
       }
       file_position = file.tellg();
     }
   }
-  // DebugPrint();
+  DebugPrint();
   return 0;
 };
 
-void Parser::SortedDataFill() noexcept {
-  vertices_.push_back(faces_pars_->GetVertices());
-  textures_.push_back(faces_pars_->GetTextures());
-  normals_.push_back(faces_pars_->GetNormals());
-  delete faces_pars_;
+void Parser::AddPointInArray() noexcept {
+  all_vertices_.push_back(vertex_points_);
+  all_textures_.push_back(texture_points_);
+  all_normals_.push_back(normal_points_);
 }
 
-void Parser::UnsortedDataClear() noexcept {
+void Parser::DataClear() noexcept {
   vertex_points_.clear();
   texture_points_.clear();
   normal_points_.clear();
+  delete faces_pars_;
 }
 
 void Parser::DebugPrint() noexcept {
-  for (const auto item : vertices_) {
-    std::cout << std::endl << "Model verices :";
-    for (size_t i = 0; i < item.size(); ++i) {
-      if (i % 4 == 0)
-        std::cout << std::endl;
-      std::cout << item[i] << " ||| ";
+  for (const auto item : vertex_faces_) {
+    for (const auto it : item) {
+      std::cout << it << " ";
     }
-    std::cout << std::endl;
   }
+  std::cout << std::endl;
+  // for (const auto item : all_vertices_) {
+  //   std::cout << std::endl << "Model verices :";
+  //   for (size_t i = 0; i < item.size(); ++i) {
+  //     if (i % 4 == 0)
+  //       std::cout << std::endl;
+  //     std::cout << item[i] << " ||| ";
+  //   }
+  //   std::cout << std::endl;
+  // }
 
-  for (const auto item : textures_) {
-    std::cout << std::endl << "Model textures :";
-    for (size_t i = 0; i < item.size(); ++i) {
-      if (i % 3 == 0)
-        std::cout << std::endl;
-      std::cout << item[i] << " <|> ";
-    }
-    std::cout << std::endl;
-  }
+  // for (const auto item : all_textures_) {
+  //   std::cout << std::endl << "Model textures :";
+  //   for (size_t i = 0; i < item.size(); ++i) {
+  //     if (i % 3 == 0)
+  //       std::cout << std::endl;
+  //     std::cout << item[i] << " <|> ";
+  //   }
+  //   std::cout << std::endl;
+  // }
 
-  for (const auto item : normals_) {
-    std::cout << std::endl << "Model normals :";
-    for (size_t i = 0; i < item.size(); ++i) {
-      if (i % 3 == 0)
-        std::cout << std::endl;
-      std::cout << item[i] << " >|< ";
-    }
-    std::cout << std::endl;
-  }
+  // for (const auto item : all_normals_) {
+  //   std::cout << std::endl << "Model normals :";
+  //   for (size_t i = 0; i < item.size(); ++i) {
+  //     if (i % 3 == 0)
+  //       std::cout << std::endl;
+  //     std::cout << item[i] << " >|< ";
+  //   }
+  //   std::cout << std::endl;
+  // }
 }
 
 void Parser::AddPoint(std::istringstream &data) noexcept {
@@ -95,7 +102,7 @@ void Parser::AddTexturePoint(std::istringstream &data) noexcept {
   data >> textures.u;
   data >> textures.v;
   data >> textures.w;
-  texture_points_.push_back(textures);
+  StructFill(textures);
 };
 
 void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
@@ -103,7 +110,7 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
   data >> normals.x;
   data >> normals.y;
   data >> normals.z;
-  normal_points_.push_back(normals);
+  StructFill(normals);
 };
 
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
@@ -137,6 +144,10 @@ void Parser::StructFill(const NormalsCoordinate &normals_struct) noexcept {
   normal_points_.push_back(normals_struct.x);
   normal_points_.push_back(normals_struct.y);
   normal_points_.push_back(normals_struct.z);
+};
+
+void Parser::GetIndexes() noexcept {
+  vertex_faces_.push_back(faces_pars_->GetVertices());
 };
 
 } // namespace s21
