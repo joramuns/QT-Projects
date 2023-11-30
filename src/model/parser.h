@@ -35,13 +35,17 @@ class Parser {
 
   void DebugPrint() noexcept;
 private:
-  std::vector<PointCoordinates> vertex_points_;
-  std::vector<TexturesCoordinates> texture_points_;
-  std::vector<NormalsCoordinate> normal_points_;
-  // std::vector<GLuint> faces_;
-  std::vector<std::vector<GLfloat>> vertices_;
+  // std::vector<PointCoordinates> vertex_points_;
+  // std::vector<TexturesCoordinates> texture_points_;
+  // std::vector<NormalsCoordinate> normal_points_;
+
+  std::vector<std::vector<GLfloat>> vertices_; // may b list
   std::vector<std::vector<GLfloat>> textures_;
   std::vector<std::vector<GLfloat>> normals_;
+
+  std::vector<std::vector<GLint>> vertex_faces_;
+  std::vector<std::vector<GLint>> texutre_faces_;
+  std::vector<std::vector<GLint>> normal_faces_;
   FacesStrategy *faces_pars_;
 };
 }  // namespace s21
