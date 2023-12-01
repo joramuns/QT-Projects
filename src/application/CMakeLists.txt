@@ -27,6 +27,7 @@ set(SOURCES
   view/opengl/glwidget.cc
   view/opengl/v_shader.glsl
   controller/controller.cc
+  model/shaderprogram.cc
 )
 
 set(RESOURCES
