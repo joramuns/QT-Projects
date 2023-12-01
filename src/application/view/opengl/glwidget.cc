@@ -13,16 +13,17 @@ GLWidget::GLWidget() {
 }
 
 GLWidget::~GLWidget() {
-  /* VAO_.destroy(); */
-  /* VBO_.destroy(); */
+  makeCurrent();
+  VAO_.destroy();
+  VBO_.destroy();
+  EBO_.destroy();
+  program_->disableAttributeArray(0);
   program_->release();
   delete program_;
 }
 
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
-  initializeOpenGLFunctions();
-
   program_ = new QOpenGLShaderProgram();
   if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/v_shader"))
     qDebug() << "Vertex shader errors:\n" << program_->log();
@@ -41,31 +42,33 @@ void GLWidget::initializeGL() {
   };
 
   std::vector<GLfloat> vertices2{
-      0.999999,  -0.999999, -0.999999,  //
-      0.999999,  -0.999999, 0.999999,   //
-      -0.999999, -0.999999, 0.999999,   //
-      -0.999999, -0.999999, -0.999999,  //
-      0.999999,  0.999999,  -0.999999,  //
-      0.999999,  0.999999,  0.999999,   //
-      -0.999999, 0.999999,  0.999999,   //
-      -0.999999, 0.999999,  -0.999999   //
-
+      0.0, 0.0, 0.0,  //
+      0.0, 0.0, 0.5,  //
+      0.0, 0.5, 0.0,  //
+      0.0, 0.5, 0.5,  //
+      0.5, 0.0, 0.0,  //
+      0.5, 0.0, 0.5,  //
+      0.5, 0.5, 0.0,  //
+      0.5, 0.5, 0.5   //
   };
 
   std::vector<GLuint> indices1{0, 1, 3};
   std::vector<GLuint> indices2{
-      2, 3, 4, 8, 7, 6,  //
-      5, 6, 2,           //
-      6, 7, 3,           //
-      3, 7, 8,           //
-      1, 4, 8,           //
-      1, 2, 4,           //
-      5, 8, 6,           //
-      1, 5, 2,           //
-      2, 6, 3,           //
-      4, 3, 8,           //
-      5, 1, 8            //
+      0, 6, 4,  //
+      0, 2, 6,  //
+      0, 3, 2,  //
+      0, 1, 3,  //
+      2, 7, 6,  //
+      2, 3, 7,  //
+      4, 6, 7,  //
+      4, 7, 5,  //
+      0, 4, 5,  //
+      0, 5, 1,  //
+      1, 5, 7,  //
+      1, 7, 3,  //
   };
+
+
 
   VAO_.create();
   VAO_.bind();
@@ -91,11 +94,11 @@ void GLWidget::initializeGL() {
   VAO2_.create();
   VAO2_.bind();
 
-  VBO_ = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-  VBO_.create();
-  VBO_.setUsagePattern(QOpenGLBuffer::StaticDraw);
-  VBO_.bind();
-  VBO_.allocate(vertices2.data(), vertices2.size() * sizeof(GLfloat));
+  VBO2_ = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+  VBO2_.create();
+  VBO2_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+  VBO2_.bind();
+  VBO2_.allocate(vertices2.data(), vertices2.size() * sizeof(GLfloat));
 
   EBO_ = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
   EBO_.create();
@@ -106,9 +109,10 @@ void GLWidget::initializeGL() {
   program_->enableAttributeArray(0);
   program_->setAttributeBuffer(0, GL_FLOAT, 0, 3);
 
-  VBO_.release();
+  VBO2_.release();
   VAO2_.release();
-  program_->bind();
+
+  initializeOpenGLFunctions();
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -135,16 +139,17 @@ void GLWidget::paintGL() {
   QVector3D translate_vector{x_move, y_move, z_move};
   program_->setUniformValue("translateVector", translate_vector);
 
-  GLfloat x_rotate{0.0f}, y_rotate{0.0f}, z_rotate{0.0f};
+  GLfloat x_rotate{0.5f}, y_rotate{0.0f}, z_rotate{0.0f};
   QVector3D rotate_vector{x_rotate, y_rotate, z_rotate};
   program_->setUniformValue("rotateVector", rotate_vector);
 
-  VAO_.bind();
-  glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-  VAO_.release();
+  program_->bind();
+  /* VAO_.bind(); */
+  /* glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0); */
+  /* VAO_.release(); */
 
-  /* VAO2_.bind(); */
-  /* glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0); */
-  /* VAO2_.release(); */
+  VAO2_.bind();
+  glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+  VAO2_.release();
 }
 }  // namespace s21
