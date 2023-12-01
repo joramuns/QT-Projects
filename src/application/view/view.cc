@@ -16,9 +16,13 @@ View::View() : QWidget(nullptr) {
   SettingsTab *settings_tab = new SettingsTab();
   AppManagement *app_management = new AppManagement("Main menu");
 
+  menu_layout->addStretch();
   menu_layout->addWidget(transformation_tab);
+  menu_layout->addStretch();
   menu_layout->addWidget(settings_tab);
+  menu_layout->addStretch();
   menu_layout->addWidget(app_management);
+  menu_layout->addStretch();
 
   QGroupBox *group_box = new QGroupBox();
   QVBoxLayout *group_layout = new QVBoxLayout(group_box);
