@@ -135,13 +135,18 @@ void GLWidget::paintGL() {
   const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f};
   program_->setUniformValue("ourColor", color);
 
-  GLfloat x_move{0.0f}, y_move{0.0f}, z_move{0.0f};
+  GLfloat x_move{0.0f}, y_move{0.0f}, z_move{-2.0f};
   QVector3D translate_vector{x_move, y_move, z_move};
   program_->setUniformValue("translateVector", translate_vector);
 
   GLfloat x_rotate{0.5f}, y_rotate{0.0f}, z_rotate{0.0f};
   QVector3D rotate_vector{x_rotate, y_rotate, z_rotate};
   program_->setUniformValue("rotateVector", rotate_vector);
+
+  QMatrix4x4 perspective_matrix{};
+  perspective_matrix.perspective(90.0, 1.0, 0.1, 10.0);
+  /* perspective_matrix.translate(0, 0, -2.0); */
+  program_->setUniformValue("perspectiveMatrix", perspective_matrix);
 
   program_->bind();
   /* VAO_.bind(); */

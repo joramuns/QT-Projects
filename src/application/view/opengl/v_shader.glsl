@@ -3,6 +3,7 @@ layout(location = 0) in vec3 aPos;
 
 uniform vec3 translateVector;
 uniform vec3 rotateVector;
+uniform mat4 perspectiveMatrix;
 
 mat4 RotateX() {
   mat4 rotation = mat4(1.0f);
@@ -40,17 +41,17 @@ mat4 RotateZ() {
   return rotation;
 }
 
-mat4 Rotation() {
-  return FillX() * FillY() * FillZ();
-}
+mat4 Rotation() { return RotateX() * RotateY() * RotateZ(); }
 
 mat4 Perspective() {
-  mat4 perspective = mat4(1.0f);
-  perspective[0][0] = 0.5;
-  perspective[1][1] = 0.5;
-  perspective[2][2] = -2 / (90 - 10);
-  perspective[2][3] = -((90 + 10) / (90 - 10));
-  perspective[3][3] = 1;
+  float near = 10.0f;
+  float far = 90.0f;
+  float right = 10.0f;
+  float top = 10.0f;
+  mat4 perspective = mat4(near / right, 0.0f, 0.0f, 0.0f,                    //
+                          0.0f, near / top, 0.0f, 0.0f,                      //
+                          0.0f, 0.0f, (far + near) / (near - far), -1.0f,    //
+                          0.0f, 0.0f, 2.0f * far * near / (near - far), 0.0f);  //
 
   return perspective;
 }
@@ -66,6 +67,8 @@ void main() {
   mat4 translation = Translation();
   mat4 perspective = Perspective();
   mat4 rotation = Rotation();
+  vec4 myPos = vec4(aPos, 1.0);
 
-  gl_Position = rotation * translation * perspective * vec4(aPos, 1.0);
+
+  gl_Position = perspectiveMatrix * translation * rotation * myPos;
 }
