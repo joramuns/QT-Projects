@@ -19,13 +19,14 @@ std::vector<GLuint> FacesStrategy::GetNormals() const noexcept {
 };
 
 void FacesStrategy::TesselationFill(
-    const std::vector<GLuint> &indexes) noexcept {
+    const std::vector<GLuint> &indexes,
+    std::vector<GLuint> &type_of_indexes) noexcept {
   for (size_t i = 0; i < indexes.size(); ++i) {
     if (i > 2) {
-      vertices_.push_back(indexes[0]);
-      vertices_.push_back(indexes[i - 1]);
+      type_of_indexes.push_back(indexes[0]);
+      type_of_indexes.push_back(indexes[i - 1]);
     }
-    vertices_.push_back(indexes[i]);
+    type_of_indexes.push_back(indexes[i]);
   }
 };
 
@@ -47,7 +48,7 @@ int VertexStrategy::Pars() noexcept {
       v_tmp.push_back(v);
       data.get();
     }
-    TesselationFill(v_tmp);
+    TesselationFill(v_tmp, vertices_);
     position = file_->tellg();
   }
   return position;
@@ -65,18 +66,20 @@ int VertexTexturesStrategy::Pars() noexcept {
     if (prefix == "v ")
       break;
     std::istringstream data(line.substr(2));
-    // std::vector<GLuint> v_tmp;
-    // std::vector<GLuint> vt_tmp;
+    std::vector<GLuint> v_tmp;
+    std::vector<GLuint> vt_tmp;
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;
-      //
+      v_tmp.push_back(v);
       data.get();
       int vt;
       data >> vt;
-      // TexturesFill(vt);
+      vt_tmp.push_back(vt);
       data.get();
     }
+    TesselationFill(v_tmp, vertices_);
+    TesselationFill(vt_tmp, texutres_);
     position = file_->tellg();
   }
   return position;
@@ -94,17 +97,21 @@ int VertexNormalsStrategy::Pars() noexcept {
     if (prefix == "v ")
       break;
     std::istringstream data(line.substr(2));
+    std::vector<GLuint> v_tmp;
+    std::vector<GLuint> vn_tmp;
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;
-      // PointFill(v);
+      v_tmp.push_back(v);
       data.get();
       data.get();
       int vn;
       data >> vn;
-      // NormalsFill(vn);
+      vn_tmp.push_back(vn);
       data.get();
     }
+    TesselationFill(v_tmp, vertices_);
+    TesselationFill(vn_tmp, normals_);
     position = file_->tellg();
   }
   return position;
@@ -122,22 +129,29 @@ int VertexTexturesNormalsStrategy::Pars() noexcept {
     if (prefix == "v ")
       break;
     std::istringstream data(line.substr(2));
+    std::vector<GLuint> v_tmp;
+    std::vector<GLuint> vt_tmp;
+    std::vector<GLuint> vn_tmp;
     while (data.peek() != EOF && prefix == "f ") {
       int v;
       data >> v;
-      // PointFill(v);
+      v_tmp.push_back(v);
       data.get();
       int vt;
       data >> vt;
-      // TexturesFill(vt);
+      vt_tmp.push_back(vt);
       data.get();
       int vn;
       data >> vn;
-      // NormalsFill(vn);
+      vn_tmp.push_back(vn);
       data.get();
     }
+    TesselationFill(v_tmp, vertices_);
+    TesselationFill(vt_tmp, texutres_);
+    TesselationFill(vn_tmp, normals_);
     position = file_->tellg();
   }
+
   return position;
 }
 

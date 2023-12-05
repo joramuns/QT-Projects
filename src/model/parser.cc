@@ -51,7 +51,24 @@ void Parser::DataClear() noexcept {
 }
 
 void Parser::DebugPrint() noexcept {
+  std::cout << "V: ";
   for (const auto item : vertex_faces_) {
+    for (const auto it : item) {
+      std::cout << it << " ";
+    }
+  }
+  std::cout << std::endl;
+
+  std::cout << "T: ";
+  for (const auto item : texture_faces_) {
+    for (const auto it : item) {
+      std::cout << it << " ";
+    }
+  }
+  std::cout << std::endl;
+  
+  std::cout << "N: ";
+  for (const auto item : normal_faces_) {
     for (const auto it : item) {
       std::cout << it << " ";
     }
@@ -148,6 +165,8 @@ void Parser::StructFill(const NormalsCoordinate &normals_struct) noexcept {
 
 void Parser::GetIndexes() noexcept {
   vertex_faces_.push_back(faces_pars_->GetVertices());
+  texture_faces_.push_back(faces_pars_->GetTextures());
+  normal_faces_.push_back(faces_pars_->GetNormals());
 };
 
 } // namespace s21

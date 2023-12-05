@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 
-
 namespace s21 {
 class FacesStrategy {
 public:
@@ -20,9 +19,9 @@ public:
 
   virtual int Pars() noexcept = 0;
 
-
 protected:
-  void TesselationFill(const std::vector<GLuint> &indexes) noexcept;
+  void TesselationFill(const std::vector<GLuint> &indexes,
+                       std::vector<GLuint> &type_of_indexes) noexcept;
 
 protected:
   std::ifstream *file_;

@@ -48,7 +48,7 @@ private:
   std::vector<std::vector<GLfloat>> all_normals_;
 
   std::vector<std::vector<GLuint>> vertex_faces_;
-  std::vector<std::vector<GLuint>> texutre_faces_;
+  std::vector<std::vector<GLuint>> texture_faces_;
   std::vector<std::vector<GLuint>> normal_faces_;
   FacesStrategy *faces_pars_;
 };
