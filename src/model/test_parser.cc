@@ -1,16 +1,10 @@
-#include "parser.h"
-
-void wrong_filename() {
-  s21::Parser test("cube.obj");
-  std::cout << "Success" << std::endl;
-}
-
-void model_pars(const std::string &filename) {
-  s21::Parser test(filename);
-  std::cout << "Success" << std::endl;
-}
+#include "fasade/fasade.h"
 
 int main() {
+  s21::Fasade bebras;
+  bebras.AddModel("../../data-samples/test_vertex.obj");
+  bebras.AddModel("../../data-samples/test_multiobject_vertex.obj");
+  bebras.PrintDate();
   // std::cout << "test 1:" << std::endl;
   // wrong_filename();
   // std::cout << "test 2: Only Vertex obj" << std::endl;
@@ -27,7 +21,7 @@ int main() {
   // model_pars("../../data-samples/test_multiobject_vertex_textures.obj");
   // std::cout << "test 8: Multiobject Vertex Normals Model obj" << std::endl;
   // model_pars("../../data-samples/test_multiobject_vertex_normals.obj");
-  std::cout << "test 9: Multiobject Vertex Textures Normals Model obj" << std::endl;
-  model_pars("../../data-samples/test_multiobject_vertex_textures_normals.obj");
+  // std::cout << "test 9: Multiobject Vertex Textures Normals Model obj" << std::endl;
+  // model_pars("../../data-samples/test_multiobject_vertex_textures_normals.obj");
   return 0;
 }

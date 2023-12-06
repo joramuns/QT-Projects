@@ -24,6 +24,13 @@ public:
   explicit Parser(const std::string &filename);
   ~Parser();
 
+  std::vector<std::vector<GLfloat>> GetVertices() const noexcept;
+  std::vector<std::vector<GLfloat>> GetTextures() const noexcept;
+  std::vector<std::vector<GLfloat>> GetNormals() const noexcept;
+
+  std::vector<std::vector<GLuint>> GetVertexIndexes() const noexcept;
+  std::vector<std::vector<GLuint>> GetTextureIndexes() const noexcept;
+  std::vector<std::vector<GLuint>> GetNormalIndexes() const noexcept;
 private:
   int ReadObj(const std::string &filename);
 
@@ -37,6 +44,8 @@ private:
   void StructFill(const TexturesCoordinates &textures_struct) noexcept;
   void StructFill(const NormalsCoordinate &normals_struct) noexcept;
   void GetIndexes() noexcept;
+
+  //accessors
 
   void DebugPrint() noexcept;
 

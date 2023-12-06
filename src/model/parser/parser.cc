@@ -1,9 +1,33 @@
 #include "parser.h"
 
 namespace s21 {
-Parser::Parser(const std::string &filename) { ReadObj(filename); }
+Parser::Parser(const std::string &filename) { ReadObj(filename); };
 
-Parser::~Parser() {}
+Parser::~Parser() {};
+
+std::vector<std::vector<GLfloat>> Parser::GetVertices() const noexcept {
+  return all_vertices_;
+};
+
+std::vector<std::vector<GLfloat>> Parser::GetTextures() const noexcept {
+  return all_textures_;
+};
+
+std::vector<std::vector<GLfloat>> Parser::GetNormals() const noexcept {
+  return all_normals_;
+};
+
+std::vector<std::vector<GLuint>> Parser::GetVertexIndexes() const noexcept {
+  return vertex_faces_;
+};
+
+std::vector<std::vector<GLuint>> Parser::GetTextureIndexes() const noexcept {
+  return texture_faces_;
+};
+
+std::vector<std::vector<GLuint>> Parser::GetNormalIndexes() const noexcept {
+  return normal_faces_;
+};
 
 /* Private functions */
 int Parser::ReadObj(const std::string &filename) {
@@ -33,7 +57,7 @@ int Parser::ReadObj(const std::string &filename) {
       file_position = file.tellg();
     }
   }
-  DebugPrint();
+  // DebugPrint();
   return 0;
 };
 
@@ -41,14 +65,14 @@ void Parser::AddPointInArray() noexcept {
   all_vertices_.push_back(vertex_points_);
   all_textures_.push_back(texture_points_);
   all_normals_.push_back(normal_points_);
-}
+};
 
 void Parser::DataClear() noexcept {
   vertex_points_.clear();
   texture_points_.clear();
   normal_points_.clear();
   delete faces_pars_;
-}
+};
 
 void Parser::DebugPrint() noexcept {
   std::cout << "V: ";
@@ -66,7 +90,7 @@ void Parser::DebugPrint() noexcept {
     }
   }
   std::cout << std::endl;
-  
+
   std::cout << "N: ";
   for (const auto item : normal_faces_) {
     for (const auto it : item) {
@@ -103,7 +127,7 @@ void Parser::DebugPrint() noexcept {
   //   }
   //   std::cout << std::endl;
   // }
-}
+};
 
 void Parser::AddPoint(std::istringstream &data) noexcept {
   PointCoordinates vertex;
@@ -131,7 +155,8 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
 };
 
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
-  // CoordinateContain container(vertex_points_, texture_points_, normal_points_);
+  // CoordinateContain container(vertex_points_, texture_points_,
+  // normal_points_);
   if (texture_points_.empty() && normal_points_.empty()) { // v
     faces_pars_ = new VertexStrategy(file, current_position);
   } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
@@ -139,8 +164,7 @@ void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
   } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
     faces_pars_ = new VertexNormalsStrategy(file, current_position);
   } else {
-    faces_pars_ =
-        new VertexTexturesNormalsStrategy(file, current_position);
+    faces_pars_ = new VertexTexturesNormalsStrategy(file, current_position);
   }
 };
 
@@ -151,7 +175,7 @@ void Parser::StructFill(const PointCoordinates &vertices_struct) noexcept {
   vertex_points_.push_back(vertices_struct.a);
 };
 
-void Parser::StructFill(const TexturesCoordinates &textures_struct) noexcept{
+void Parser::StructFill(const TexturesCoordinates &textures_struct) noexcept {
   texture_points_.push_back(textures_struct.u);
   texture_points_.push_back(textures_struct.v);
   texture_points_.push_back(textures_struct.w);
