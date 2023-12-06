@@ -21,15 +21,19 @@ class View final : public QWidget {
  public:
   View();
 
+  void Render(QOpenGLShaderProgram *program, QOpenGLVertexArrayObject *VAO);
+
  private slots:
   void ViewTransformSlot(double value, char axis, int type);
+  void OpenFileSlot();
 
  signals:
   void ViewTransformSignal(double value, char axis, int type);
+  void OpenFileSignal();
 
  private:
-  QGridLayout *main_layout;
-  int test = 1;
+  QGridLayout *main_layout_;
+  GLWidget *gl_widget_;
 };
 }  // namespace s21
 

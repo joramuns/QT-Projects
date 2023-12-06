@@ -1,8 +1,11 @@
 #include "view.h"
 
+// TEMP
+#include <iostream>
+
 namespace s21 {
 View::View() : QWidget(nullptr) {
-  main_layout = new QGridLayout(this);
+  main_layout_ = new QGridLayout(this);
   setWindowTitle("3D Viewer 2.0");
   /* setFixedSize(500, 500); */
 
@@ -15,6 +18,7 @@ View::View() : QWidget(nullptr) {
 
   SettingsTab *settings_tab = new SettingsTab();
   AppManagement *app_management = new AppManagement("Main menu");
+  connect(app_management, &AppManagement::AppOpenFileSignal, this, &View::OpenFileSlot);
 
   menu_layout->addStretch();
   menu_layout->addWidget(transformation_tab);
@@ -26,14 +30,22 @@ View::View() : QWidget(nullptr) {
 
   QGroupBox *group_box = new QGroupBox();
   QVBoxLayout *group_layout = new QVBoxLayout(group_box);
-  GLWidget *gl_widget = new GLWidget();
-  group_layout->addWidget(gl_widget);
+  gl_widget_ = new GLWidget();
+  group_layout->addWidget(gl_widget_);
 
-  main_layout->addWidget(menu_box, 0, 0, 1, 1);
-  main_layout->addWidget(group_box, 0, 1, 1, 6);
+  main_layout_->addWidget(menu_box, 0, 0, 1, 1);
+  main_layout_->addWidget(group_box, 0, 1, 1, 6);
+}
+
+void View::Render(QOpenGLShaderProgram *program, QOpenGLVertexArrayObject *VAO) {
+  gl_widget_->Render(program, VAO);
 }
 
 void View::ViewTransformSlot(double value, char axis, int type) {
   emit ViewTransformSignal(value, axis, type);
+}
+
+void View::OpenFileSlot() {
+  emit OpenFileSignal();
 }
 }  // namespace s21

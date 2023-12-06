@@ -13,6 +13,12 @@ class AppManagement : public QGroupBox {
   AppManagement() = delete;
   explicit AppManagement(const QString &label);
 
+ signals:
+  void AppOpenFileSignal();
+
+ public slots:
+  void AppOpenFileSlot();
+
  private:
   void InitFields();
   void InitLayouts();
