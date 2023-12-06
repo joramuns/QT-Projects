@@ -10,5 +10,9 @@ void Fasade::PrintDate() const noexcept {
   for (const ObjectModel item : models_) {
     item.PrintResult();
   }
-}
+};
+
+ObjectModel Fasade::GetModel(const unsigned int index) const noexcept {
+  return models_[index];
+};
 }
