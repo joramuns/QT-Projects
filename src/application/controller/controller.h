@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+#include "../model/shaderprogram.h"
 #include "../view/view.h"
 
 namespace s21 {
@@ -14,6 +15,7 @@ class Controller final : public QObject {
 
  private slots:
   void ControllerTransformSlot(double value, char axis, int type);
+  void ControllerOpenFileSlot();
 
  private:
   View *view_;
