@@ -1,3 +1,5 @@
+#ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_FACES_STRATEGY_H
+#define CPP4_3DVIEWER_V2_MODEL_PARSER_FACES_STRATEGY_H
 #include <OpenGL/gl.h>
 // #include <GL/glut.h>
 #include <fstream>
@@ -58,3 +60,4 @@ public:
 };
 
 } // namespace s21
+#endif // CPP4_3DVIEWER_V2_MODEL_PARSER_FACES_STRATEGY_H

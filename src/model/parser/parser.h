@@ -1,3 +1,5 @@
+#ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
+#define CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
 #include <OpenGL/gl.h>
 // #include <epoxy/gl.h>
 // #include <GL/glut.h>
@@ -10,20 +12,19 @@
 #include <string>
 #include <vector>
 
-#include "faces_strategy.h"
 #include "coordinatestruct.h"
-// #include "coordinatecontain.h"
+#include "faces_strategy.h"
 
 #define BAD_FILENAME 1
 
 namespace s21 {
 class Parser {
- public:
+public:
   Parser() = delete;
   explicit Parser(const std::string &filename);
   ~Parser();
 
- private:
+private:
   int ReadObj(const std::string &filename);
 
   void AddPointInArray() noexcept;
@@ -38,6 +39,7 @@ class Parser {
   void GetIndexes() noexcept;
 
   void DebugPrint() noexcept;
+
 private:
   std::vector<GLfloat> vertex_points_;
   std::vector<GLfloat> texture_points_;
@@ -52,4 +54,5 @@ private:
   std::vector<std::vector<GLuint>> normal_faces_;
   FacesStrategy *faces_pars_;
 };
-}  // namespace s21
+} // namespace s21
+#endif // CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
