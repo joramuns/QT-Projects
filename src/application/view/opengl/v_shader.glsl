@@ -44,21 +44,21 @@ mat4 RotateZ() {
 mat4 Rotation() { return RotateX() * RotateY() * RotateZ(); }
 
 mat4 Perspective() {
-  float near = 10.0f;
+  float near = 0.1f;
   float far = 90.0f;
-  float right = 10.0f;
-  float top = 10.0f;
-  mat4 perspective = mat4(near / right, 0.0f, 0.0f, 0.0f,                    //
-                          0.0f, near / top, 0.0f, 0.0f,                      //
-                          0.0f, 0.0f, (far + near) / (near - far), -1.0f,    //
-                          0.0f, 0.0f, 2.0f * far * near / (near - far), 0.0f);  //
+  float right = 1.1f;
+  float top = 1.1f;
+  mat4 perspective = mat4(near / right, 0.0f, 0.0f, 0.0f,                     //
+                          0.0f, near / top, 0.0f, 0.0f,                       //
+                          0.0f, 0.0f, -(far + near) / (far - near), -1.0f,    //
+                          0.0f, 0.0f, -2 * far * near / (far - near), 0.0f);  //
 
   return perspective;
 }
 
 mat4 Translation() {
   mat4 translation = mat4(1.0f);
-  translation[3] = vec4(translateVector, 1.0f);
+  translation[3] = vec4(translateVector.xy, translateVector.z - 1.0f, 1.0f);
 
   return translation;
 }
@@ -69,6 +69,7 @@ void main() {
   mat4 rotation = Rotation();
   vec4 myPos = vec4(aPos, 1.0);
 
+  mat4 mvp = perspective * translation * rotation;
 
-  gl_Position = perspectiveMatrix * translation * rotation * myPos;
+  gl_Position = mvp * myPos;
 }
