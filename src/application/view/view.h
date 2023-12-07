@@ -1,0 +1,40 @@
+#ifndef VIEW_H_
+#define VIEW_H_
+
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QMainWindow>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QWidget>
+
+#include "app_management.h"
+#include "opengl/glwidget.h"
+#include "settingswidgets/settingstab.h"
+#include "transformwidgets/transform_tab.h"
+
+namespace s21 {
+class View final : public QWidget {
+  Q_OBJECT
+
+ public:
+  View();
+
+  void Render(QOpenGLShaderProgram *program, QOpenGLVertexArrayObject *VAO);
+
+ private slots:
+  void ViewTransformSlot(double value, char axis, int type);
+  void OpenFileSlot();
+
+ signals:
+  void ViewTransformSignal(double value, char axis, int type);
+  void OpenFileSignal();
+
+ private:
+  QGridLayout *main_layout_;
+  GLWidget *gl_widget_;
+};
+}  // namespace s21
+
+#endif  // VIEW_H_
