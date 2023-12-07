@@ -30,21 +30,14 @@ GLWidget::~GLWidget() {
   // VAO_.destroy();
   // VBO_.destroy();
   // EBO_.destroy();
-  program_->disableAttributeArray(0);
-  program_->release();
-  delete program_;
-}
-
-void GLWidget::Render(QOpenGLShaderProgram *program,
-                      QOpenGLVertexArrayObject *VAO) {
-  program_ = program;
-  // (void)VAO;
-  VAO->bind();
-  paintGL();
-  VAO->release(); 
+  // program_->disableAttributeArray(0);
+  // program_->release();
+  // delete program_;
 }
 
 void GLWidget::initializeGL() {
+  initializeOpenGLFunctions();
+  
   GLuint vertex_shader;
   vertex_shader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertex_shader, 1, &vertexShaderSource, NULL);
@@ -193,7 +186,6 @@ void GLWidget::initializeGL() {
   /* VBO2_.release(); */
   /* VAO2_.release(); */
 
-  initializeOpenGLFunctions();
 }
 
 void GLWidget::resizeGL(int w, int h) {

@@ -14,8 +14,6 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   GLWidget();
   ~GLWidget();
 
-  void Render(QOpenGLShaderProgram *program,
-                        QOpenGLVertexArrayObject *VAO);
 
  protected:
   /* void initializeGL() override; */
@@ -24,7 +22,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void paintGL() override;
 
  private:
-  QOpenGLShaderProgram *program_;
+  // QOpenGLShaderProgram *program_;
   // QOpenGLVertexArrayObject VAO_;
   // QOpenGLVertexArrayObject VAO2_;
   GLuint VAO_;

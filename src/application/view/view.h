@@ -21,7 +21,6 @@ class View final : public QWidget {
  public:
   View();
 
-  void Render(QOpenGLShaderProgram *program, QOpenGLVertexArrayObject *VAO);
 
  private slots:
   void ViewTransformSlot(double value, char axis, int type);

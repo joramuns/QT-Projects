@@ -37,10 +37,6 @@ View::View() : QWidget(nullptr) {
   main_layout_->addWidget(group_box, 0, 1, 1, 6);
 }
 
-void View::Render(QOpenGLShaderProgram *program, QOpenGLVertexArrayObject *VAO) {
-  gl_widget_->Render(program, VAO);
-}
-
 void View::ViewTransformSlot(double value, char axis, int type) {
   emit ViewTransformSignal(value, axis, type);
 }

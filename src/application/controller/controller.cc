@@ -44,6 +44,5 @@ void Controller::ControllerOpenFileSlot() {
       1, 7, 3,  //
   };
   ShaderProgram test_program(vertices, indices);
-  view_->Render(test_program.GetProgram(), test_program.GetVAO());
 }
 }  // namespace s21
