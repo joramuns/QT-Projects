@@ -4,6 +4,7 @@
 
 #include <QDebug>
 /* #include <QFile> */
+#include <iostream>
 #include <vector>
 
 namespace s21 {
@@ -22,60 +23,132 @@ GLWidget::~GLWidget() {
   delete program_;
 }
 
-void GLWidget::Render(QOpenGLShaderProgram *program,
-                      QOpenGLVertexArrayObject *VAO) {
-  program_ = program;
-  (void)VAO;
+void GLWidget::Render(QOpenGLVertexArrayObject *VAO) {
   /* VAO->bind(); */
-  paintGL();
-  /* VAO.release(); */
+  /* update(); */
+  /* VAO->release(); */
+  VAO = 0;
+  VAO2_.bind();
+  update();
+  VAO2_.release();
+}
+
+void GLWidget::LoadModel(std::vector<GLfloat> vertices,
+                         std::vector<GLuint> indices) {
+  auto VAO_current = VAO_vector_.emplace_back(new QOpenGLVertexArrayObject{});
+  VAO_current->create();
+  VAO_current->bind();
+  /* VAO2_.create(); */
+  /* VAO2_.bind(); */
+
+  auto VBO_current =
+      VBO_vector_.emplace_back(new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer));
+  VBO_current->create();
+  VBO_current->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+  /* VBO2_ = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer); */
+  /* VBO2_.create(); */
+  /* VBO2_.setUsagePattern(QOpenGLBuffer::DynamicDraw); */
+
+  auto EBO_current =
+      EBO_vector_.emplace_back(new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer));
+  EBO_current->create();
+  EBO_current->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+  /* EBO_ = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer); */
+  /* EBO_.create(); */
+  /* EBO_.setUsagePattern(QOpenGLBuffer::DynamicDraw); */
+
+  VBO_current->release();
+  /* VBO2_.release(); */
+  EBO_current->release();
+  /* EBO_.release(); */
+
+  VAO_current->release();
+  /* VAO2_.release(); */
+
+  VAO_current->bind();
+  /* VAO2_.bind(); */
+  VBO_current->bind();
+  /* VBO2_.bind(); */
+  EBO_current->bind();
+  /* EBO_.bind(); */
+
+  int VBO_size = VBO_current->size();
+  VBO_current->allocate((VBO_size + vertices.size()) * sizeof(GLfloat));
+  VBO_current->write(VBO_size, vertices.data(),
+                     vertices.size() * sizeof(GLfloat));
+  /* int VBO_size = VBO2_.size(); */
+  /* VBO2_.allocate((VBO_size + vertices.size()) * sizeof(GLfloat)); */
+  /* VBO2_.write(VBO_size, vertices.data(), vertices.size() * sizeof(GLfloat));
+   */
+  //  /* VBO2_.allocate(vertices.data(), vertices.size() * sizeof(GLfloat)); */
+  EBO_current->bind();
+  /* EBO_.bind(); */
+  int EBO_size = EBO_current->size();
+  EBO_current->allocate((EBO_size + indices.size()) * sizeof(GLuint));
+  EBO_current->write(EBO_size, indices.data(), indices.size() * sizeof(GLuint));
+  /* int EBO_size = EBO_.size(); */
+  /* EBO_.allocate((EBO_size + indices.size()) * sizeof(GLuint)); */
+  /* EBO_.write(EBO_size, indices.data(), indices.size() * sizeof(GLuint)); */
+  //  /* EBO_.allocate(indices.data(), indices.size() * sizeof(GLuint)); */
+
+  program_->enableAttributeArray(0);
+  program_->setAttributeBuffer(0, GL_FLOAT, 0, 3);
+
+  VAO_current->release();
+  /* VAO2_.release(); */
+  VBO_current->release();
+  /* VBO2_.release(); */
+  /* VBO2_.destroy(); */
+  EBO_current->release();
+  /* EBO_.release(); */
+  /* EBO_.destroy(); */
 }
 
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
-  /* program_ = new QOpenGLShaderProgram(); */
-  /* if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/v_shader")) */
-  /*   qDebug() << "Vertex shader errors:\n" << program_->log(); */
+  program_ = new QOpenGLShaderProgram();
+  if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/v_shader"))
+    qDebug() << "Vertex shader errors:\n" << program_->log();
 
-  /* if (!program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/f_shader")) */
-  /*   qDebug() << "Fragment shader errors:\n" << program_->log(); */
+  if (!program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/f_shader"))
+    qDebug() << "Fragment shader errors:\n" << program_->log();
 
-  /* if (!program_->link()) */
-  /*   qDebug() << "Shader linker errors:\n" << program_->log(); */
+  if (!program_->link())
+    qDebug() << "Shader linker errors:\n" << program_->log();
 
-  /* std::vector<GLfloat> vertices1{ */
-  /*     0.5f,  0.5f,  0.0f,  // Верхний правый угол */
-  /*     0.5f,  -0.5f, 0.0f,  // Нижний правый угол */
-  /*     -0.5f, -0.5f, 0.0f,  // Нижний левый угол */
-  /*     -0.5f, 0.5f,  0.0f   // Верхний левый угол */
-  /* }; */
+  std::vector<GLfloat> vertices1{
+      0.5f,  0.5f,  0.0f,  // Верхний правый угол
+      0.5f,  -0.5f, 0.0f,  // Нижний правый угол
+      -0.5f, -0.5f, 0.0f,  // Нижний левый угол
+      -0.5f, 0.5f,  0.0f   // Верхний левый угол
+  };
 
-  /* std::vector<GLfloat> vertices2{ */
-  /*     0.0, 0.0, 0.0,  // */
-  /*     0.0, 0.0, 0.5,  // */
-  /*     0.0, 0.5, 0.0,  // */
-  /*     0.0, 0.5, 0.5,  // */
-  /*     0.5, 0.0, 0.0,  // */
-  /*     0.5, 0.0, 0.5,  // */
-  /*     0.5, 0.5, 0.0,  // */
-  /*     0.5, 0.5, 0.5   // */
-  /* }; */
+  std::vector<GLfloat> vertices2{
+      0.0, 0.0, 0.0,  //
+      0.0, 0.0, 0.5,  //
+      0.0, 0.5, 0.0,  //
+      0.0, 0.5, 0.5,  //
+      0.5, 0.0, 0.0,  //
+      0.5, 0.0, 0.5,  //
+      0.5, 0.5, 0.0,  //
+      0.5, 0.5, 0.5   //
+  };
 
-  /* std::vector<GLuint> indices1{0, 1, 3}; */
-  /* std::vector<GLuint> indices2{ */
-  /*     0, 6, 4,  // */
-  /*     0, 2, 6,  // */
-  /*     0, 3, 2,  // */
-  /*     0, 1, 3,  // */
-  /*     2, 7, 6,  // */
-  /*     2, 3, 7,  // */
-  /*     4, 6, 7,  // */
-  /*     4, 7, 5,  // */
-  /*     0, 4, 5,  // */
-  /*     0, 5, 1,  // */
-  /*     1, 5, 7,  // */
-  /*     1, 7, 3,  // */
-  /* }; */
+  std::vector<GLuint> indices1{0, 1, 3};
+  std::vector<GLuint> indices2{
+      0, 6, 4,  //
+      0, 2, 6,  //
+      0, 3, 2,  //
+      0, 1, 3,  //
+      2, 7, 6,  //
+      2, 3, 7,  //
+      4, 6, 7,  //
+      4, 7, 5,  //
+      0, 4, 5,  //
+      0, 5, 1,  //
+      1, 5, 7,  //
+      1, 7, 3,  //
+  };
 
   /* VAO_.create(); */
   /* VAO_.bind(); */
@@ -103,21 +176,19 @@ void GLWidget::initializeGL() {
 
   /* VBO2_ = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer); */
   /* VBO2_.create(); */
-  /* VBO2_.setUsagePattern(QOpenGLBuffer::StaticDraw); */
-  /* VBO2_.bind(); */
-  /* VBO2_.allocate(vertices2.data(), vertices2.size() * sizeof(GLfloat)); */
+  /* VBO2_.setUsagePattern(QOpenGLBuffer::DynamicDraw); */
 
   /* EBO_ = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer); */
   /* EBO_.create(); */
-  /* EBO_.setUsagePattern(QOpenGLBuffer::StaticDraw); */
-  /* EBO_.bind(); */
-  /* EBO_.allocate(indices2.data(), indices2.size() * sizeof(GLuint)); */
-
-  /* program_->enableAttributeArray(0); */
-  /* program_->setAttributeBuffer(0, GL_FLOAT, 0, 3); */
+  /* EBO_.setUsagePattern(QOpenGLBuffer::DynamicDraw); */
 
   /* VBO2_.release(); */
+  /* EBO_.release(); */
+
   /* VAO2_.release(); */
+
+  LoadModel(vertices2, indices2);
+  /* LoadModel(vertices1, indices1); */
 
   initializeOpenGLFunctions();
 }
@@ -139,26 +210,36 @@ void GLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT);
   /* glMatrixMode(GL_PROJECTION); */
 
-  /* const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f}; */
-  /* program_->setUniformValue("ourColor", color); */
+  const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f};
+  program_->setUniformValue("ourColor", color);
 
-  /* GLfloat x_move{-0.25f}, y_move{-0.25f}, z_move{0.0f}; */
-  /* QVector3D translate_vector{x_move, y_move, z_move}; */
-  /* program_->setUniformValue("translateVector", translate_vector); */
+  GLfloat x_move{-0.25f}, y_move{-0.25f}, z_move{0.0f};
+  QVector3D translate_vector{x_move, y_move, z_move};
+  program_->setUniformValue("translateVector", translate_vector);
 
-  /* GLfloat x_rotate{0.0f}, y_rotate{0.0f}, z_rotate{0.0f}; */
-  /* QVector3D rotate_vector{x_rotate, y_rotate, z_rotate}; */
-  /* program_->setUniformValue("rotateVector", rotate_vector); */
+  GLfloat x_rotate{0.0f}, y_rotate{0.0f}, z_rotate{0.0f};
+  QVector3D rotate_vector{x_rotate, y_rotate, z_rotate};
+  program_->setUniformValue("rotateVector", rotate_vector);
 
-  /* QMatrix4x4 perspective_matrix{}; */
-  /* perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0); */
-  /* perspective_matrix.translate(-0.0, -0.0, -2.0); */
-  /* program_->setUniformValue("perspectiveMatrix", perspective_matrix); */
+  QMatrix4x4 perspective_matrix{};
+  perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
+  perspective_matrix.translate(-0.0, -0.0, -2.0);
+  program_->setUniformValue("perspectiveMatrix", perspective_matrix);
 
-  /* program_->bind(); */
+  program_->bind();
   /* VAO_.bind(); */
   /* glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0); */
   /* VAO_.release(); */
+
+  for (std::size_t i = 0; i < VAO_vector_.size(); i++) {
+    VAO_vector_[i]->bind();
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+    VAO_vector_[i]->release();
+  }
+  /* QOpenGLVertexArrayObject *VAO_current = VAO_vector_.back(); */
+  /* VAO_current->bind(); */
+  /* glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0); */
+  /* VAO_current->release(); */
 
   /* VAO2_.bind(); */
   /* glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0); */
