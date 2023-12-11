@@ -7,14 +7,18 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLWidget>
 
+#include "transform_class.h"
+
 namespace s21 {
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
  public:
   GLWidget();
   ~GLWidget();
 
-  void Render(QOpenGLVertexArrayObject *VAO);
   void LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> indices);
+  void Rotate(double value, char axis);
+  void Move(double value, char axis);
+  void Scale(double value);
 
  protected:
   /* void initializeGL() override; */
@@ -23,16 +27,18 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void paintGL() override;
 
  private:
-  QOpenGLShaderProgram *program_;
-  QOpenGLVertexArrayObject VAO_;
-  QOpenGLVertexArrayObject VAO2_;
-  QOpenGLBuffer VBO_;
-  QOpenGLBuffer VBO2_;
-  QOpenGLBuffer EBO_;
+  void LoadShaders();
+  void LoadUniforms();
 
+ private:
+  QOpenGLShaderProgram *program_;
   std::vector<QOpenGLVertexArrayObject *> VAO_vector_;
   std::vector<QOpenGLBuffer *> VBO_vector_;
   std::vector<QOpenGLBuffer *> EBO_vector_;
+
+  Axes move_uniform_;
+  Axes rotate_uniform_;
+  Axes scale_uniform_;
 };
 }  // namespace s21
 #endif  // VIEW_OPENGL_GLWIDGET_H_
