@@ -19,6 +19,7 @@ class Controller final : public QObject {
 
  private:
   View *view_;
+  int kek = 0;
 };
 }  // namespace s21
 

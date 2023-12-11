@@ -15,6 +15,13 @@ Controller::Controller(View *v) : view_(v) {
 void Controller::ControllerTransformSlot(double value, char axis, int type) {
   std::cout << (type ? axis == 'S' ? "Scale " : "Move " : "Rotate ")
             << "tab: " << axis << " " << value << " " << std::endl;
+  if (type == ROTATE) {
+    view_->Rotate(value, axis);
+  } else if (type == MOVE) {
+    view_->Move(value, axis);
+  } else if (type == SCALE) {
+    view_->Scale(value);
+  }
 }
 
 void Controller::ControllerOpenFileSlot() {
@@ -43,7 +50,19 @@ void Controller::ControllerOpenFileSlot() {
       1, 5, 7,  //
       1, 7, 3,  //
   };
-  ShaderProgram test_program(vertices, indices);
-  view_->Render(test_program.GetProgram(), test_program.GetVAO());
+  std::vector<GLfloat> vertices1{
+      0.5f,  0.5f,  0.0f,  // Верхний правый угол
+      0.5f,  -0.5f, 0.0f,  // Нижний правый угол
+      -0.5f, -0.5f, 0.0f,  // Нижний левый угол
+      -0.5f, 0.5f,  0.0f   // Верхний левый угол
+  };
+  std::vector<GLuint> indices1{0, 1, 3};
+  if (kek == 0) {
+    view_->LoadModel(vertices, indices);
+    ++kek;
+  } else if (kek == 1) {
+    view_->LoadModel(vertices1, indices1);
+    ++kek;
+  }
 }
 }  // namespace s21
