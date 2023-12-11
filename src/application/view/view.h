@@ -21,7 +21,10 @@ class View final : public QWidget {
  public:
   View();
 
-  void Render(QOpenGLShaderProgram *program, QOpenGLVertexArrayObject *VAO);
+  void LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> indices);
+  void Rotate(double value, char axis);
+  void Move(double value, char axis);
+  void Scale(double value);
 
  private slots:
   void ViewTransformSlot(double value, char axis, int type);

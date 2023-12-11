@@ -18,7 +18,8 @@ View::View() : QWidget(nullptr) {
 
   SettingsTab *settings_tab = new SettingsTab();
   AppManagement *app_management = new AppManagement("Main menu");
-  connect(app_management, &AppManagement::AppOpenFileSignal, this, &View::OpenFileSlot);
+  connect(app_management, &AppManagement::AppOpenFileSignal, this,
+          &View::OpenFileSlot);
 
   menu_layout->addStretch();
   menu_layout->addWidget(transformation_tab);
@@ -37,15 +38,29 @@ View::View() : QWidget(nullptr) {
   main_layout_->addWidget(group_box, 0, 1, 1, 6);
 }
 
-void View::Render(QOpenGLShaderProgram *program, QOpenGLVertexArrayObject *VAO) {
-  gl_widget_->Render(program, VAO);
+void View::LoadModel(std::vector<GLfloat> vertices,
+                     std::vector<GLuint> indices) {
+  gl_widget_->LoadModel(vertices, indices);
+}
+
+void View::Rotate(double value, char axis) {
+  gl_widget_->Rotate(value, axis);
+  gl_widget_->update();
+}
+
+void View::Move(double value, char axis) {
+  gl_widget_->Move(value, axis);
+  gl_widget_->update();
+}
+
+void View::Scale(double value) {
+  gl_widget_->Scale(value);
+  gl_widget_->update();
 }
 
 void View::ViewTransformSlot(double value, char axis, int type) {
   emit ViewTransformSignal(value, axis, type);
 }
 
-void View::OpenFileSlot() {
-  emit OpenFileSignal();
-}
+void View::OpenFileSlot() { emit OpenFileSignal(); }
 }  // namespace s21
