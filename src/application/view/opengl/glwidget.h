@@ -1,6 +1,8 @@
 #ifndef VIEW_OPENGL_GLWIDGET_H_
 #define VIEW_OPENGL_GLWIDGET_H_
 #include <OpenGL/gl.h>
+
+#include <ctime>
 #include <QOpenGLBuffer>
 #include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLShaderProgram>
@@ -27,6 +29,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   // QOpenGLVertexArrayObject VAO2_;
   GLuint VAO_;
   GLuint VBO_;
+  GLuint EBO_;
   GLuint shader_program_;
   // QOpenGLBuffer VBO_;
   // QOpenGLBuffer VBO2_;

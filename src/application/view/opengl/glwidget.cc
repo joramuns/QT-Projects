@@ -9,15 +9,21 @@
 namespace s21 {
 const GLchar* vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 position;\n"
+    "layout (location = 1) in vec3 color;\n"
+    "out vec3 ourColor;\n"
+    // "out vec4 vertexColor;\n"
     "void main()\n"
     "{\n"
     "gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+    "ourColor = color;\n"
     "}\0";
 const GLchar* fragmentShaderSource = "#version 330 core\n"
+    "in vec3 ourColor;\n"
     "out vec4 color;\n"
+    // "uniform vec4 ourColor;\n"
     "void main()\n"
     "{\n"
-    "color = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "color = vec4(ourColor, 1.0f);\n"
     "}\n\0";
 
 GLWidget::GLWidget() {
@@ -37,7 +43,6 @@ GLWidget::~GLWidget() {
 
 void GLWidget::initializeGL() {
   initializeOpenGLFunctions();
-  
   GLuint vertex_shader;
   vertex_shader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertex_shader, 1, &vertexShaderSource, NULL);
@@ -78,114 +83,38 @@ void GLWidget::initializeGL() {
   }
 
   GLfloat vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f, 0.5f, 0.0f
+     0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // Нижний правый угол
+    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // Нижний левый угол
+     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f  // Bottom Left
   };
   
+  // GLuint indices[] = {  // Note that we start from 0!
+  //       0, 1, 3 // First Triangle
+  //       // 1, 2, 3   // Second Triangle
+  //   };
+
   glGenVertexArrays(1, &VAO_);
   glGenBuffers(1, &VBO_);
+  glGenBuffers(1, &EBO_);
 
   glBindVertexArray(VAO_);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO_);
 
+  glBindBuffer(GL_ARRAY_BUFFER, VBO_);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (GLvoid*)0);
-  glEnableVertexAttribArray(0);
-  
-  glUseProgram(shader_program_);
+  // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
+  // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (GLvoid*)0);
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (GLvoid*)(3 * sizeof(GL_FLOAT)));
+  glEnableVertexAttribArray(1);
+  
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
+  // glUseProgram(shader_program_);
   glDeleteShader(vertex_shader);
   glDeleteShader(fragment_shader);
-  // Set up the rendering context, load shaders and other resources, etc.:
-  /* program_ = new QOpenGLShaderProgram(); */
-  /* if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/v_shader")) */
-  /*   qDebug() << "Vertex shader errors:\n" << program_->log(); */
-
-  /* if (!program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/f_shader")) */
-  /*   qDebug() << "Fragment shader errors:\n" << program_->log(); */
-
-  /* if (!program_->link()) */
-  /*   qDebug() << "Shader linker errors:\n" << program_->log(); */
-
-  /* std::vector<GLfloat> vertices1{ */
-  /*     0.5f,  0.5f,  0.0f,  // Верхний правый угол */
-  /*     0.5f,  -0.5f, 0.0f,  // Нижний правый угол */
-  /*     -0.5f, -0.5f, 0.0f,  // Нижний левый угол */
-  /*     -0.5f, 0.5f,  0.0f   // Верхний левый угол */
-  /* }; */
-
-  /* std::vector<GLfloat> vertices2{ */
-  /*     0.0, 0.0, 0.0,  // */
-  /*     0.0, 0.0, 0.5,  // */
-  /*     0.0, 0.5, 0.0,  // */
-  /*     0.0, 0.5, 0.5,  // */
-  /*     0.5, 0.0, 0.0,  // */
-  /*     0.5, 0.0, 0.5,  // */
-  /*     0.5, 0.5, 0.0,  // */
-  /*     0.5, 0.5, 0.5   // */
-  /* }; */
-
-  /* std::vector<GLuint> indices1{0, 1, 3}; */
-  /* std::vector<GLuint> indices2{ */
-  /*     0, 6, 4,  // */
-  /*     0, 2, 6,  // */
-  /*     0, 3, 2,  // */
-  /*     0, 1, 3,  // */
-  /*     2, 7, 6,  // */
-  /*     2, 3, 7,  // */
-  /*     4, 6, 7,  // */
-  /*     4, 7, 5,  // */
-  /*     0, 4, 5,  // */
-  /*     0, 5, 1,  // */
-  /*     1, 5, 7,  // */
-  /*     1, 7, 3,  // */
-  /* }; */
-
-  /* VAO_.create(); */
-  /* VAO_.bind(); */
-
-  /* VBO_ = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer); */
-  /* VBO_.create(); */
-  /* VBO_.setUsagePattern(QOpenGLBuffer::StaticDraw); */
-  /* VBO_.bind(); */
-  /* VBO_.allocate(vertices1.data(), vertices1.size() * sizeof(GLfloat)); */
-
-  /* EBO_ = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer); */
-  /* EBO_.create(); */
-  /* EBO_.setUsagePattern(QOpenGLBuffer::StaticDraw); */
-  /* EBO_.bind(); */
-  /* EBO_.allocate(indices1.data(), indices1.size() * sizeof(GLuint)); */
-
-  /* program_->enableAttributeArray(0); */
-  /* program_->setAttributeBuffer(0, GL_FLOAT, 0, 3); */
-
-  /* VBO_.release(); */
-  /* VAO_.release(); */
-
-  /* VAO2_.create(); */
-  /* VAO2_.bind(); */
-
-  /* VBO2_ = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer); */
-  /* VBO2_.create(); */
-  /* VBO2_.setUsagePattern(QOpenGLBuffer::StaticDraw); */
-  /* VBO2_.bind(); */
-  /* VBO2_.allocate(vertices2.data(), vertices2.size() * sizeof(GLfloat)); */
-
-  /* EBO_ = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer); */
-  /* EBO_.create(); */
-  /* EBO_.setUsagePattern(QOpenGLBuffer::StaticDraw); */
-  /* EBO_.bind(); */
-  /* EBO_.allocate(indices2.data(), indices2.size() * sizeof(GLuint)); */
-
-  /* program_->enableAttributeArray(0); */
-  /* program_->setAttributeBuffer(0, GL_FLOAT, 0, 3); */
-
-  /* VBO2_.release(); */
-  /* VAO2_.release(); */
-
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -204,9 +133,18 @@ void GLWidget::paintGL() {
   glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
   glUseProgram(shader_program_);
+
+  std::time_t time_value = std::time(nullptr);
+  GLfloat green_value = (sin(time_value) / 8) + 0.5;
+  GLint vertex_color_location = glGetUniformLocation(shader_program_, "ourColor");
+  glUniform4f(vertex_color_location, 0.0f, green_value, 0.0f, 1.0f);
+
   glBindVertexArray(VAO_);
   glDrawArrays(GL_TRIANGLES, 0, 3);
+  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
+  update();
   /* glMatrixMode(GL_PROJECTION); */
 
   /* const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f}; */
