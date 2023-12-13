@@ -74,7 +74,7 @@ mat4 Scaling() {
 }
 
 void main() {
-  mat4 perspective = Perspective();
+  mat4 perspective = perspectiveMatrix;
   mat4 rotation = Rotation();
   mat4 translation = Translation();
   mat4 scaling = Scaling();
