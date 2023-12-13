@@ -10,6 +10,9 @@ LIB=-lgtest -pthread
 
 VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kinds=all --track-origins=yes
 
-parser:
-	@$(CC) $(ASAN) *.cc 
+all:
+	@$(CC) $(ASAN) parser/*.cc fasade/*.cc *.cc
+	@./a.out
+
+run:
 	@./a.out

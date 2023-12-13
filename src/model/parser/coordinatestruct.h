@@ -1,5 +1,5 @@
-#ifndef COORDINATE_STRUCT_H
-#define COORDINATE_STRUCT_H
+#ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_COORDINATE_STRUCT_H
+#define CPP4_3DVIEWER_V2_MODEL_PARSER_COORDINATE_STRUCT_H
 // #include <GL/glut.h>
 #include <OpenGL/gl.h>
 
@@ -25,4 +25,4 @@ struct NormalsCoordinate {
 };
 } // namespace s21
 
-#endif
+#endif // CPP4_3DVIEWER_V2_MODEL_PARSER_COORDINATE_STRUCT_H
