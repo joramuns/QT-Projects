@@ -1,6 +1,7 @@
 #ifndef VIEW_APP_MANAGEMENT_H_
 #define VIEW_APP_MANAGEMENT_H_
 
+#include <QFileDialog>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -14,7 +15,7 @@ class AppManagement : public QGroupBox {
   explicit AppManagement(const QString &label);
 
  signals:
-  void AppOpenFileSignal();
+  void AppOpenFileSignal(QString filename);
 
  public slots:
   void AppOpenFileSlot();

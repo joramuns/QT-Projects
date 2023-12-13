@@ -62,5 +62,7 @@ void View::ViewTransformSlot(double value, char axis, int type) {
   emit ViewTransformSignal(value, axis, type);
 }
 
-void View::OpenFileSlot() { emit OpenFileSignal(); }
+void View::OpenFileSlot(QString filename) {
+  emit OpenFileSignal(filename);
+}
 }  // namespace s21

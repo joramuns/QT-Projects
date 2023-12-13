@@ -28,11 +28,11 @@ class View final : public QWidget {
 
  private slots:
   void ViewTransformSlot(double value, char axis, int type);
-  void OpenFileSlot();
+  void OpenFileSlot(QString filename);
 
  signals:
   void ViewTransformSignal(double value, char axis, int type);
-  void OpenFileSignal();
+  void OpenFileSignal(QString filename);
 
  private:
   QGridLayout *main_layout_;

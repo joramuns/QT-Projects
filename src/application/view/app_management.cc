@@ -10,8 +10,10 @@ AppManagement::AppManagement(const QString &label) : QGroupBox(label) {
 }
 
 void AppManagement::AppOpenFileSlot() {
-  emit AppOpenFileSignal();
+  QString filename = QFileDialog::getOpenFileName(this, tr("Choose model file:"), "", tr("Files (*.obj)"));
+  emit AppOpenFileSignal(filename);
 }
+
 
 void AppManagement::InitFields() {
   open_button_ = new QPushButton("Open file");

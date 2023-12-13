@@ -24,8 +24,8 @@ void Controller::ControllerTransformSlot(double value, char axis, int type) {
   }
 }
 
-void Controller::ControllerOpenFileSlot() {
-  std::cout << "Open file" << std::endl;
+void Controller::ControllerOpenFileSlot(QString filename) {
+  std::cout << "Open file " << filename.toStdString() << std::endl;
   std::vector<GLfloat> vertices{
       0.0, 0.0, 0.0,  //
       0.0, 0.0, 0.5,  //
