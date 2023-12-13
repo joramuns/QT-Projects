@@ -48,14 +48,8 @@ void GLWidget::LoadModel(std::vector<GLfloat> vertices,
   VBO_current->bind();
   EBO_current->bind();
 
-  int VBO_size = VBO_current->size();
-  VBO_current->allocate((VBO_size + vertices.size()) * sizeof(GLfloat));
-  VBO_current->write(VBO_size, vertices.data(),
-                     vertices.size() * sizeof(GLfloat));
-
-  int EBO_size = EBO_current->size();
-  EBO_current->allocate((EBO_size + indices.size()) * sizeof(GLuint));
-  EBO_current->write(EBO_size, indices.data(), indices.size() * sizeof(GLuint));
+  VBO_current->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
+  EBO_current->allocate(indices.data(), indices.size() * sizeof(GLuint));
 
   program_->enableAttributeArray(0);
   program_->setAttributeBuffer(0, GL_FLOAT, 0, 3);
