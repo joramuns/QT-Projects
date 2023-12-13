@@ -52,7 +52,7 @@ void GLWidget::LoadModel(std::vector<GLfloat> vertices,
   EBO_current->allocate(indices.data(), indices.size() * sizeof(GLuint));
 
   program_->enableAttributeArray(0);
-  program_->setAttributeBuffer(0, GL_FLOAT, 0, 3);
+  program_->setAttributeBuffer(0, GL_FLOAT, 0, 4);
 
   VBO_current->release();
   VAO_current->release();

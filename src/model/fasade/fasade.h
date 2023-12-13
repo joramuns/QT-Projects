@@ -9,7 +9,7 @@
 namespace s21 {
 class Fasade {
 public:
-  void AddModel(const std::string &filename) noexcept;
+  ObjectModel AddModel(const std::string &filename) noexcept;
   ObjectModel GetModel(const unsigned int index) const noexcept;
   //debug
   void PrintDate() const noexcept;

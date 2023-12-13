@@ -5,13 +5,14 @@
 
 #include "../model/shaderprogram.h"
 #include "../view/view.h"
+#include "../../model/fasade/fasade.h"
 
 namespace s21 {
 class Controller final : public QObject {
   Q_OBJECT
 
  public:
-  explicit Controller(View *v);
+  Controller(View *v, Fasade *f);
 
  private slots:
   void ControllerTransformSlot(double value, char axis, int type);
@@ -19,6 +20,7 @@ class Controller final : public QObject {
 
  private:
   View *view_;
+  Fasade *fasade_;
   int kek = 0;
 };
 }  // namespace s21

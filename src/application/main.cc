@@ -11,9 +11,10 @@ int main(int argc, char **argv) {
   app.setApplicationName("3D Viewer");
   app.setApplicationVersion("2.0");
   /* s21::Model m; */
+  s21::Fasade f;
   s21::View v;
   /* s21::Controller(v, m); */
-  s21::Controller c(&v);
+  s21::Controller c(&v, &f);
   v.show();
 
   return app.exec();

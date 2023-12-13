@@ -23,10 +23,10 @@ void FacesStrategy::TesselationFill(
     std::vector<GLuint> &type_of_indexes) noexcept {
   for (size_t i = 0; i < indexes.size(); ++i) {
     if (i > 2) {
-      type_of_indexes.push_back(indexes[0]);
-      type_of_indexes.push_back(indexes[i - 1]);
+      type_of_indexes.push_back(indexes[0] - 1);
+      type_of_indexes.push_back(indexes[i - 1] - 1);
     }
-    type_of_indexes.push_back(indexes[i]);
+    type_of_indexes.push_back(indexes[i] - 1);
   }
 };
 

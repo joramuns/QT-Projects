@@ -3,7 +3,7 @@
 namespace s21 {
 Parser::Parser(const std::string &filename) { ReadObj(filename); };
 
-Parser::~Parser() {};
+Parser::~Parser(){};
 
 std::vector<std::vector<GLfloat>> Parser::GetVertices() const noexcept {
   return all_vertices_;
@@ -76,7 +76,7 @@ void Parser::DataClear() noexcept {
 
 void Parser::DebugPrint() noexcept {
   std::cout << "V: ";
-  for (const auto item : vertex_faces_) {
+  for (const auto &item : vertex_faces_) {
     for (const auto it : item) {
       std::cout << it << " ";
     }
@@ -84,7 +84,7 @@ void Parser::DebugPrint() noexcept {
   std::cout << std::endl;
 
   std::cout << "T: ";
-  for (const auto item : texture_faces_) {
+  for (const auto &item : texture_faces_) {
     for (const auto it : item) {
       std::cout << it << " ";
     }
@@ -92,7 +92,7 @@ void Parser::DebugPrint() noexcept {
   std::cout << std::endl;
 
   std::cout << "N: ";
-  for (const auto item : normal_faces_) {
+  for (const auto &item : normal_faces_) {
     for (const auto it : item) {
       std::cout << it << " ";
     }
@@ -157,11 +157,11 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
   // CoordinateContain container(vertex_points_, texture_points_,
   // normal_points_);
-  if (texture_points_.empty() && normal_points_.empty()) { // v
+  if (texture_points_.empty() && normal_points_.empty()) {  // v
     faces_pars_ = new VertexStrategy(file, current_position);
-  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
+  } else if (!texture_points_.empty() && normal_points_.empty()) {  // v/vt
     faces_pars_ = new VertexTexturesStrategy(file, current_position);
-  } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
+  } else if (texture_points_.empty() && !normal_points_.empty()) {  // v//vn
     faces_pars_ = new VertexNormalsStrategy(file, current_position);
   } else {
     faces_pars_ = new VertexTexturesNormalsStrategy(file, current_position);
@@ -193,4 +193,4 @@ void Parser::GetIndexes() noexcept {
   normal_faces_.push_back(faces_pars_->GetNormals());
 };
 
-} // namespace s21
+}  // namespace s21

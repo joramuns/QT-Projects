@@ -29,6 +29,11 @@ set(SOURCES
   view/opengl/transform_class.cc
   controller/controller.cc
   model/shaderprogram.cc
+
+  ../model/fasade/fasade.cc
+  ../model/object_model.cc
+  ../model/parser/parser.cc
+  ../model/parser/faces_strategy.cc
 )
 
 set(RESOURCES

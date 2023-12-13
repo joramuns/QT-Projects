@@ -2,9 +2,10 @@
 
 // TEMP
 #include <iostream>
+#include <vector>
 
 namespace s21 {
-Controller::Controller(View *v) : view_(v) {
+Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
   connect(view_, &View::ViewTransformSignal, this,
           &Controller::ControllerTransformSlot);
 
@@ -26,43 +27,18 @@ void Controller::ControllerTransformSlot(double value, char axis, int type) {
 
 void Controller::ControllerOpenFileSlot(QString filename) {
   std::cout << "Open file " << filename.toStdString() << std::endl;
-  std::vector<GLfloat> vertices{
-      0.0, 0.0, 0.0,  //
-      0.0, 0.0, 0.5,  //
-      0.0, 0.5, 0.0,  //
-      0.0, 0.5, 0.5,  //
-      0.5, 0.0, 0.0,  //
-      0.5, 0.0, 0.5,  //
-      0.5, 0.5, 0.0,  //
-      0.5, 0.5, 0.5   //
-  };
-  std::vector<GLuint> indices{
-      0, 6, 4,  //
-      0, 2, 6,  //
-      0, 3, 2,  //
-      0, 1, 3,  //
-      2, 7, 6,  //
-      2, 3, 7,  //
-      4, 6, 7,  //
-      4, 7, 5,  //
-      0, 4, 5,  //
-      0, 5, 1,  //
-      1, 5, 7,  //
-      1, 7, 3,  //
-  };
-  std::vector<GLfloat> vertices1{
-      0.5f,  0.5f,  0.0f,  // Верхний правый угол
-      0.5f,  -0.5f, 0.0f,  // Нижний правый угол
-      -0.5f, -0.5f, 0.0f,  // Нижний левый угол
-      -0.5f, 0.5f,  0.0f   // Верхний левый угол
-  };
-  std::vector<GLuint> indices1{0, 1, 3};
-  if (kek == 0) {
-    view_->LoadModel(vertices, indices);
-    ++kek;
-  } else if (kek == 1) {
-    view_->LoadModel(vertices1, indices1);
-    ++kek;
+  ObjectModel a = fasade_->AddModel(filename.toStdString());
+  std::vector<GLfloat> vertices;
+  for (const auto &item : a.GetVertices()) {
+    vertices.insert(vertices.end(), item.begin(), item.end());
   }
+  std::vector<GLuint> indices;
+  for (const auto &item : a.GetVertexIndexes()) {
+    for (const auto &iitem : item) {
+      std::cout << iitem << std::endl;
+    }
+    indices.insert(indices.end(), item.begin(), item.end());
+  }
+  view_->LoadModel(vertices, indices);
 }
 }  // namespace s21
