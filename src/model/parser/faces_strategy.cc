@@ -37,9 +37,12 @@ int VertexStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
+    if (line.size() < 3) {
+      continue;
+    }
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ")
-      break;
+    // Already checked condition?
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
     std::vector<GLuint> v_tmp;
     while (data.peek() != EOF && prefix == "f ") {
@@ -63,8 +66,7 @@ int VertexTexturesStrategy::Pars() noexcept {
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ")
-      break;
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
     std::vector<GLuint> v_tmp;
     std::vector<GLuint> vt_tmp;
@@ -94,8 +96,7 @@ int VertexNormalsStrategy::Pars() noexcept {
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ")
-      break;
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
     std::vector<GLuint> v_tmp;
     std::vector<GLuint> vn_tmp;
@@ -126,8 +127,7 @@ int VertexTexturesNormalsStrategy::Pars() noexcept {
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ")
-      break;
+    if (prefix == "v ") break;
     std::istringstream data(line.substr(2));
     std::vector<GLuint> v_tmp;
     std::vector<GLuint> vt_tmp;
@@ -155,4 +155,4 @@ int VertexTexturesNormalsStrategy::Pars() noexcept {
   return position;
 }
 
-} // namespace s21
+}  // namespace s21

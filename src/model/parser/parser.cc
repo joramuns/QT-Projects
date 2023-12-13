@@ -39,6 +39,10 @@ int Parser::ReadObj(const std::string &filename) {
   } else {
     int file_position;
     while (std::getline(file, line)) {
+      if (line.size() < 3) {
+        std::cout << "BEBRA" << std::endl;
+        continue;
+      }
       std::string prefix = line.substr(0, 2);
       std::istringstream data(line.substr(2));
       if (prefix == "v ") {
