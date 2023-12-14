@@ -16,6 +16,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   ~GLWidget();
 
   void LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> indices);
+  void UnloadModel(int model_number);
   void Rotate(double value, char axis);
   void Move(double value, char axis);
   void Scale(double value);

@@ -17,6 +17,7 @@ class Controller final : public QObject {
  private slots:
   void ControllerTransformSlot(double value, char axis, int type);
   void ControllerOpenFileSlot(QString filename);
+  void ControllerCloseFileSlot(int model_number);
 
  private:
   View *view_;

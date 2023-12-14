@@ -16,9 +16,11 @@ class AppManagement : public QGroupBox {
 
  signals:
   void AppOpenFileSignal(QString filename);
+  void AppCloseFileSignal();
 
  public slots:
   void AppOpenFileSlot();
+  void AppCloseFileSlot();
 
  private:
   void InitFields();
@@ -26,6 +28,7 @@ class AppManagement : public QGroupBox {
 
  private:
   QPushButton *open_button_;
+  QPushButton *close_button_;
   QPushButton *shot_button_;
   QPushButton *cast_button_;
 };

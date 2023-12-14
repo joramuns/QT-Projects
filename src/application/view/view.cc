@@ -20,6 +20,8 @@ View::View() : QWidget(nullptr) {
   AppManagement *app_management = new AppManagement("Main menu");
   connect(app_management, &AppManagement::AppOpenFileSignal, this,
           &View::OpenFileSlot);
+  connect(app_management, &AppManagement::AppCloseFileSignal, this,
+          &View::CloseFileSlot);
 
   menu_layout->addStretch();
   menu_layout->addWidget(transformation_tab);
@@ -34,13 +36,24 @@ View::View() : QWidget(nullptr) {
   gl_widget_ = new GLWidget();
   group_layout->addWidget(gl_widget_);
 
+  QGroupBox *list_box = new QGroupBox();
+  QHBoxLayout *list_layout = new QHBoxLayout(list_box);
+  list_widget_ = new QListWidget();
+  list_layout->addWidget(list_widget_);
+
   main_layout_->addWidget(menu_box, 0, 0, 1, 1);
   main_layout_->addWidget(group_box, 0, 1, 1, 6);
+  main_layout_->addWidget(list_box, 1, 0, 1, 6);
 }
 
 void View::LoadModel(std::vector<GLfloat> vertices,
                      std::vector<GLuint> indices) {
   gl_widget_->LoadModel(vertices, indices);
+}
+
+void View::UnloadModel(int model_number) {
+  gl_widget_->UnloadModel(model_number);
+  list_widget_->removeItemWidget(list_widget_->takeItem(model_number));
 }
 
 void View::Rotate(double value, char axis) {
@@ -58,11 +71,19 @@ void View::Scale(double value) {
   gl_widget_->update();
 }
 
+void View::AddListWidgetItem(const QString filename) {
+  new QListWidgetItem(filename, list_widget_);
+}
+
 void View::ViewTransformSlot(double value, char axis, int type) {
   emit ViewTransformSignal(value, axis, type);
 }
 
-void View::OpenFileSlot(QString filename) {
-  emit OpenFileSignal(filename);
+void View::OpenFileSlot(QString filename) { emit OpenFileSignal(filename); }
+
+void View::CloseFileSlot() {
+  if (list_widget_->currentRow() >= 0) {
+    emit CloseFileSignal(list_widget_->currentRow());
+  }
 }
 }  // namespace s21

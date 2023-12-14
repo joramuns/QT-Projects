@@ -11,6 +11,9 @@ Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
 
   connect(view_, &View::OpenFileSignal, this,
           &Controller::ControllerOpenFileSlot);
+
+  connect(view_, &View::CloseFileSignal, this,
+          &Controller::ControllerCloseFileSlot);
 }
 
 void Controller::ControllerTransformSlot(double value, char axis, int type) {
@@ -34,11 +37,17 @@ void Controller::ControllerOpenFileSlot(QString filename) {
   }
   std::vector<GLuint> indices;
   for (const auto &item : a.GetVertexIndexes()) {
-    for (const auto &iitem : item) {
-      std::cout << iitem << std::endl;
-    }
     indices.insert(indices.end(), item.begin(), item.end());
   }
   view_->LoadModel(vertices, indices);
+  view_->AddListWidgetItem(filename);
 }
+
+void Controller::ControllerCloseFileSlot(int model_number) {
+  if (fasade_->CountModel()) {
+    fasade_->RemoveModel(model_number);
+    view_->UnloadModel(model_number);
+  }
+}
+
 }  // namespace s21

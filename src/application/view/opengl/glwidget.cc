@@ -8,7 +8,8 @@
 #include <vector>
 
 namespace s21 {
-GLWidget::GLWidget() : move_uniform_(0.0f), rotate_uniform_(0.0f), scale_uniform_(1.0f) {
+GLWidget::GLWidget()
+    : move_uniform_(0.0f), rotate_uniform_(0.0f), scale_uniform_(1.0f) {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
@@ -58,6 +59,19 @@ void GLWidget::LoadModel(std::vector<GLfloat> vertices,
   VAO_current->release();
 
   EBO_current->release();
+  update();
+}
+
+void GLWidget::UnloadModel(int model_number) {
+  VAO_vector_[model_number]->destroy();
+  VBO_vector_[model_number]->destroy();
+  EBO_vector_[model_number]->destroy();
+  delete VAO_vector_[model_number];
+  delete VBO_vector_[model_number];
+  delete EBO_vector_[model_number];
+  VAO_vector_.erase(VAO_vector_.begin() + model_number);
+  VBO_vector_.erase(VBO_vector_.begin() + model_number);
+  EBO_vector_.erase(EBO_vector_.begin() + model_number);
   update();
 }
 
