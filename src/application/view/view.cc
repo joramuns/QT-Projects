@@ -14,7 +14,9 @@ View::View() : QWidget(nullptr) {
   QVBoxLayout *menu_layout = new QVBoxLayout(menu_box);
   TransformationTab *transformation_tab = new TransformationTab();
   connect(transformation_tab, &TransformationTab::TransformTabSignal, this,
-          &View::ViewTransformSlot);
+          [=](double value, char axis, int type) {
+          View::ViewTransformSlot(value, axis, type, list_widget_->currentRow());
+          });
 
   SettingsTab *settings_tab = new SettingsTab();
   AppManagement *app_management = new AppManagement("Main menu");
@@ -56,18 +58,18 @@ void View::UnloadModel(int model_number) {
   list_widget_->removeItemWidget(list_widget_->takeItem(model_number));
 }
 
-void View::Rotate(double value, char axis) {
-  gl_widget_->Rotate(value, axis);
+void View::Rotate(double value, char axis, int model_number) {
+  gl_widget_->Rotate(value, axis, model_number);
   gl_widget_->update();
 }
 
-void View::Move(double value, char axis) {
-  gl_widget_->Move(value, axis);
+void View::Move(double value, char axis, int model_number) {
+  gl_widget_->Move(value, axis, model_number);
   gl_widget_->update();
 }
 
-void View::Scale(double value) {
-  gl_widget_->Scale(value);
+void View::Scale(double value, int model_number) {
+  gl_widget_->Scale(value, model_number);
   gl_widget_->update();
 }
 
@@ -75,8 +77,9 @@ void View::AddListWidgetItem(const QString filename) {
   new QListWidgetItem(filename, list_widget_);
 }
 
-void View::ViewTransformSlot(double value, char axis, int type) {
-  emit ViewTransformSignal(value, axis, type);
+void View::ViewTransformSlot(double value, char axis, int type,
+                             int model_number) {
+  emit ViewTransformSignal(value, axis, type, model_number);
 }
 
 void View::OpenFileSlot(QString filename) { emit OpenFileSignal(filename); }

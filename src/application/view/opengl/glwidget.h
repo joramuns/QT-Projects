@@ -17,9 +17,9 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
   void LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> indices);
   void UnloadModel(int model_number);
-  void Rotate(double value, char axis);
-  void Move(double value, char axis);
-  void Scale(double value);
+  void Rotate(double value, char axis, int model_number);
+  void Move(double value, char axis, int model_number);
+  void Scale(double value, int model_number);
 
  protected:
   /* void initializeGL() override; */
@@ -29,7 +29,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
  private:
   void LoadShaders();
-  void LoadUniforms();
+  void LoadUniforms(int model_number);
 
  private:
   QOpenGLShaderProgram *program_;
@@ -37,9 +37,9 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   std::vector<QOpenGLBuffer *> VBO_vector_;
   std::vector<QOpenGLBuffer *> EBO_vector_;
 
-  Axes move_uniform_;
-  Axes rotate_uniform_;
-  Axes scale_uniform_;
+  std::vector<Axes> move_uniform_;
+  std::vector<Axes> rotate_uniform_;
+  std::vector<Axes> scale_uniform_;
 };
 }  // namespace s21
 #endif  // VIEW_OPENGL_GLWIDGET_H_

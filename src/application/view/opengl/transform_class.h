@@ -6,7 +6,7 @@
 namespace s21 {
 class Axes {
  public:
-  Axes() = default;
+  Axes() = delete;
   explicit Axes(double init);
   void Change(double value, char axis);
   QVector3D GetChangeVector();

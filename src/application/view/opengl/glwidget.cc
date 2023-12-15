@@ -8,8 +8,7 @@
 #include <vector>
 
 namespace s21 {
-GLWidget::GLWidget()
-    : move_uniform_(0.0f), rotate_uniform_(0.0f), scale_uniform_(1.0f) {
+GLWidget::GLWidget() {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
@@ -31,6 +30,9 @@ GLWidget::~GLWidget() {
 
 void GLWidget::LoadModel(std::vector<GLfloat> vertices,
                          std::vector<GLuint> indices) {
+  move_uniform_.push_back(Axes{0});
+  rotate_uniform_.push_back(Axes{0});
+  scale_uniform_.push_back(Axes{1});
   auto VAO_current = VAO_vector_.emplace_back(new QOpenGLVertexArrayObject{});
   VAO_current->create();
   VAO_current->bind();
@@ -72,18 +74,23 @@ void GLWidget::UnloadModel(int model_number) {
   VAO_vector_.erase(VAO_vector_.begin() + model_number);
   VBO_vector_.erase(VBO_vector_.begin() + model_number);
   EBO_vector_.erase(EBO_vector_.begin() + model_number);
+  move_uniform_.erase(move_uniform_.begin() + model_number);
+  rotate_uniform_.erase(rotate_uniform_.begin() + model_number);
+  scale_uniform_.erase(scale_uniform_.begin() + model_number);
   update();
 }
 
-void GLWidget::Rotate(double value, char axis) {
-  rotate_uniform_.Change(value, axis);
+void GLWidget::Rotate(double value, char axis, int model_number) {
+  rotate_uniform_[model_number].Change(value, axis);
 }
 
-void GLWidget::Move(double value, char axis) {
-  move_uniform_.Change(value, axis);
+void GLWidget::Move(double value, char axis, int model_number) {
+  move_uniform_[model_number].Change(value, axis);
 }
 
-void GLWidget::Scale(double value) { scale_uniform_.Change(value, 'A'); }
+void GLWidget::Scale(double value, int model_number) {
+  scale_uniform_[model_number].Change(value, 'A');
+}
 
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
@@ -108,10 +115,10 @@ void GLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT);
 
   program_->bind();
-  LoadUniforms();
 
   for (std::size_t i = 0; i < VAO_vector_.size(); i++) {
     VAO_vector_[i]->bind();
+    LoadUniforms(i);
     glDrawElements(GL_TRIANGLES, EBO_vector_[i]->size() / sizeof(GLuint),
                    GL_UNSIGNED_INT, 0);
     VAO_vector_[i]->release();
@@ -130,19 +137,22 @@ void GLWidget::LoadShaders() {
     qDebug() << "Shader linker errors:\n" << program_->log();
 }
 
-void GLWidget::LoadUniforms() {
+void GLWidget::LoadUniforms(int model_number) {
   const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f};
   program_->setUniformValue("ourColor", color);
 
   /* GLfloat x_move{-0.25f}, y_move{-0.25f}, z_move{0.0f}; */
   /* QVector3D translate_vector{x_move, y_move, z_move}; */
-  program_->setUniformValue("translateVector", move_uniform_.GetChangeVector());
+  program_->setUniformValue("translateVector",
+                            move_uniform_[model_number].GetChangeVector());
 
   /* GLfloat x_rotate{0.0f}, y_rotate{0.0f}, z_rotate{0.0f}; */
   /* QVector3D rotate_vector{x_rotate, y_rotate, z_rotate}; */
-  program_->setUniformValue("rotateVector", rotate_uniform_.GetChangeVector());
+  program_->setUniformValue("rotateVector",
+                            rotate_uniform_[model_number].GetChangeVector());
 
-  program_->setUniformValue("scaleVector", scale_uniform_.GetChangeVector());
+  program_->setUniformValue("scaleVector",
+                            scale_uniform_[model_number].GetChangeVector());
 
   QMatrix4x4 perspective_matrix{};
   perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);

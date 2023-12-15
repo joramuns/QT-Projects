@@ -16,15 +16,18 @@ Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
           &Controller::ControllerCloseFileSlot);
 }
 
-void Controller::ControllerTransformSlot(double value, char axis, int type) {
+void Controller::ControllerTransformSlot(double value, char axis, int type,
+                                         int model_number) {
   std::cout << (type ? axis == 'S' ? "Scale " : "Move " : "Rotate ")
             << "tab: " << axis << " " << value << " " << std::endl;
-  if (type == ROTATE) {
-    view_->Rotate(value, axis);
-  } else if (type == MOVE) {
-    view_->Move(value, axis);
-  } else if (type == SCALE) {
-    view_->Scale(value);
+  if (fasade_->CountModel() && model_number >= 0) {
+    if (type == ROTATE) {
+      view_->Rotate(value, axis, model_number);
+    } else if (type == MOVE) {
+      view_->Move(value, axis, model_number);
+    } else if (type == SCALE) {
+      view_->Scale(value, model_number);
+    }
   }
 }
 
