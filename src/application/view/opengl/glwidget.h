@@ -8,6 +8,7 @@
 #include <QOpenGLWidget>
 
 #include "transform_class.h"
+#include "glbuffer.h"
 
 namespace s21 {
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
@@ -29,17 +30,12 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
  private:
   void LoadShaders();
-  void LoadUniforms(int model_number);
+  void LoadCommonUniforms();
 
  private:
   QOpenGLShaderProgram *program_;
-  std::vector<QOpenGLVertexArrayObject *> VAO_vector_;
-  std::vector<QOpenGLBuffer *> VBO_vector_;
-  std::vector<QOpenGLBuffer *> EBO_vector_;
-
-  std::vector<Axes> move_uniform_;
-  std::vector<Axes> rotate_uniform_;
-  std::vector<Axes> scale_uniform_;
+  std::vector<GLBuffer *> GLBuffers_;
 };
 }  // namespace s21
+
 #endif  // VIEW_OPENGL_GLWIDGET_H_

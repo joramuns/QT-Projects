@@ -1,0 +1,96 @@
+#include "glbuffer.h"
+
+namespace s21 {
+GLBuffer::GLBuffer() : move_uniform_{0.0}, rotate_uniform_{0.0}, scale_uniform_{1.0} {
+  initializeOpenGLFunctions();
+  VAO_ = new QOpenGLVertexArrayObject;
+
+  VBO_ = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+
+  VBO_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+
+  EBO_ = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+
+  EBO_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+}
+
+GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices,
+                   const std::vector<GLuint> &indices,
+                   QOpenGLShaderProgram *program)
+    : GLBuffer() {
+  program_ = program;
+  if (!program->bind()) qDebug() << "Program failure:\n" << program->log();
+  LoadData(vertices, indices);
+  Release();
+  program->release();
+}
+
+GLBuffer::~GLBuffer() {
+  VAO_->destroy();
+  VBO_->destroy();
+  EBO_->destroy();
+  delete VAO_;
+  delete VBO_;
+  delete EBO_;
+}
+
+void GLBuffer::Bind() const noexcept {
+  VAO_->bind();
+  VBO_->bind();
+  EBO_->bind();
+}
+
+void GLBuffer::Release() const noexcept {
+  VAO_->release();
+  VBO_->release();
+  EBO_->release();
+}
+
+void GLBuffer::LoadData(const std::vector<GLfloat> &vertices,
+                        const std::vector<GLuint> &indices) {
+  initializeOpenGLFunctions();
+  VAO_->create();
+  VBO_->create();
+  EBO_->create();
+  Bind();
+  VBO_->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
+  EBO_->allocate(indices.data(), indices.size() * sizeof(GLuint));
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4, (void *)0);
+}
+
+void GLBuffer::LoadUniforms() {
+  const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f};
+  program_->setUniformValue("ourColor", color);
+
+  program_->setUniformValue("translateVector",
+                            move_uniform_.GetChangeVector());
+
+  program_->setUniformValue("rotateVector",
+                            rotate_uniform_.GetChangeVector());
+
+  program_->setUniformValue("scaleVector",
+                            scale_uniform_.GetChangeVector());
+
+  QMatrix4x4 perspective_matrix{};
+  perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
+  perspective_matrix.translate(-0.0, -0.0, -2.0);
+  program_->setUniformValue("perspectiveMatrix", perspective_matrix);
+}
+
+GLuint GLBuffer::GetBuffSize() const noexcept {
+  return EBO_->size() / sizeof(GLuint);
+}
+
+void GLBuffer::Rotate(double value, char axis) {
+  rotate_uniform_.Change(value, axis);
+}
+
+void GLBuffer::Move(double value, char axis) {
+  move_uniform_.Change(value, axis);
+}
+
+void GLBuffer::Scale(double value) {
+  scale_uniform_.Change(value, 'A');
+}
+}  // namespace s21

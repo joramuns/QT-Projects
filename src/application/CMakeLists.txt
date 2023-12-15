@@ -25,6 +25,7 @@ set(SOURCES
   view/settingswidgets/settingstab.cc
   view/app_management.cc
   view/opengl/glwidget.cc
+  view/opengl/glbuffer.cc
   view/opengl/v_shader.glsl
   view/opengl/transform_class.cc
   controller/controller.cc

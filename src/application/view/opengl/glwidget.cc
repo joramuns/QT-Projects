@@ -15,14 +15,7 @@ GLWidget::GLWidget() {
 
 GLWidget::~GLWidget() {
   makeCurrent();
-  for (std::size_t i = 0; i < VAO_vector_.size(); i++) {
-    VAO_vector_[i]->destroy();
-    VBO_vector_[i]->destroy();
-    EBO_vector_[i]->destroy();
-    delete VAO_vector_[i];
-    delete VBO_vector_[i];
-    delete EBO_vector_[i];
-  }
+  for (auto &item : GLBuffers_) delete item;
   program_->disableAttributeArray(0);
   program_->release();
   delete program_;
@@ -30,66 +23,25 @@ GLWidget::~GLWidget() {
 
 void GLWidget::LoadModel(std::vector<GLfloat> vertices,
                          std::vector<GLuint> indices) {
-  move_uniform_.push_back(Axes{0});
-  rotate_uniform_.push_back(Axes{0});
-  scale_uniform_.push_back(Axes{1});
-  auto VAO_current = VAO_vector_.emplace_back(new QOpenGLVertexArrayObject{});
-  VAO_current->create();
-  VAO_current->bind();
-
-  auto VBO_current =
-      VBO_vector_.emplace_back(new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer));
-  VBO_current->create();
-  VBO_current->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-
-  auto EBO_current =
-      EBO_vector_.emplace_back(new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer));
-  EBO_current->create();
-  EBO_current->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-
-  VAO_current->bind();
-  VBO_current->bind();
-  EBO_current->bind();
-
-  VBO_current->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
-  EBO_current->allocate(indices.data(), indices.size() * sizeof(GLuint));
-
-  program_->enableAttributeArray(0);
-  program_->setAttributeBuffer(0, GL_FLOAT, 0, 4);
-
-  VBO_current->release();
-  VAO_current->release();
-
-  EBO_current->release();
+  GLBuffers_.emplace_back(new GLBuffer(vertices, indices, program_));
   update();
 }
 
 void GLWidget::UnloadModel(int model_number) {
-  VAO_vector_[model_number]->destroy();
-  VBO_vector_[model_number]->destroy();
-  EBO_vector_[model_number]->destroy();
-  delete VAO_vector_[model_number];
-  delete VBO_vector_[model_number];
-  delete EBO_vector_[model_number];
-  VAO_vector_.erase(VAO_vector_.begin() + model_number);
-  VBO_vector_.erase(VBO_vector_.begin() + model_number);
-  EBO_vector_.erase(EBO_vector_.begin() + model_number);
-  move_uniform_.erase(move_uniform_.begin() + model_number);
-  rotate_uniform_.erase(rotate_uniform_.begin() + model_number);
-  scale_uniform_.erase(scale_uniform_.begin() + model_number);
+  GLBuffers_.erase(GLBuffers_.begin() + model_number);
   update();
 }
 
 void GLWidget::Rotate(double value, char axis, int model_number) {
-  rotate_uniform_[model_number].Change(value, axis);
+  GLBuffers_[model_number]->Rotate(value, axis);
 }
 
 void GLWidget::Move(double value, char axis, int model_number) {
-  move_uniform_[model_number].Change(value, axis);
+  GLBuffers_[model_number]->Move(value, axis);
 }
 
 void GLWidget::Scale(double value, int model_number) {
-  scale_uniform_[model_number].Change(value, 'A');
+  GLBuffers_[model_number]->Scale(value);
 }
 
 void GLWidget::initializeGL() {
@@ -116,13 +68,16 @@ void GLWidget::paintGL() {
 
   program_->bind();
 
-  for (std::size_t i = 0; i < VAO_vector_.size(); i++) {
-    VAO_vector_[i]->bind();
-    LoadUniforms(i);
-    glDrawElements(GL_TRIANGLES, EBO_vector_[i]->size() / sizeof(GLuint),
+  for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
+    GLBuffers_[i]->Bind();
+    GLBuffers_[i]->LoadUniforms();
+    LoadCommonUniforms();
+    glDrawElements(GL_TRIANGLES, GLBuffers_[i]->GetBuffSize(),
                    GL_UNSIGNED_INT, 0);
-    VAO_vector_[i]->release();
+    GLBuffers_[i]->Release();
   }
+
+  program_->release();
 }
 
 void GLWidget::LoadShaders() {
@@ -137,22 +92,9 @@ void GLWidget::LoadShaders() {
     qDebug() << "Shader linker errors:\n" << program_->log();
 }
 
-void GLWidget::LoadUniforms(int model_number) {
+void GLWidget::LoadCommonUniforms() {
   const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f};
   program_->setUniformValue("ourColor", color);
-
-  /* GLfloat x_move{-0.25f}, y_move{-0.25f}, z_move{0.0f}; */
-  /* QVector3D translate_vector{x_move, y_move, z_move}; */
-  program_->setUniformValue("translateVector",
-                            move_uniform_[model_number].GetChangeVector());
-
-  /* GLfloat x_rotate{0.0f}, y_rotate{0.0f}, z_rotate{0.0f}; */
-  /* QVector3D rotate_vector{x_rotate, y_rotate, z_rotate}; */
-  program_->setUniformValue("rotateVector",
-                            rotate_uniform_[model_number].GetChangeVector());
-
-  program_->setUniformValue("scaleVector",
-                            scale_uniform_[model_number].GetChangeVector());
 
   QMatrix4x4 perspective_matrix{};
   perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
