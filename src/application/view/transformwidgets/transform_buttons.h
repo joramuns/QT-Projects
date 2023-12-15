@@ -22,8 +22,8 @@
 #define Z_DECREASE_ROW 0
 #define Z_DECREASE_COL 0
 
-#define ROTATE 0
-#define MOVE 1
+#define ROTATE 1
+#define MOVE -1
 
 #define SPACING 30
 

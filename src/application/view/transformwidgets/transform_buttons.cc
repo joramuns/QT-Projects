@@ -29,24 +29,24 @@ void TransformButtons::InitFields(const QChar labels[2][3]) {
 
 void TransformButtons::ConnectFields(int type) {
   connect(x_increase_, &TButton::clicked, this, [=]() {
-    TransformButtons::TransformSlot(step_->value(), 'X', type);
+    TransformButtons::TransformSlot(-step_->value() * type, 'X', type);
   });
   connect(x_decrease_, &TButton::clicked, this, [=]() {
-    TransformButtons::TransformSlot(-step_->value(), 'X', type);
+    TransformButtons::TransformSlot(step_->value() * type, 'X', type);
   });
 
   connect(y_increase_, &TButton::clicked, this, [=]() {
-    TransformButtons::TransformSlot(step_->value(), 'Y', type);
+    TransformButtons::TransformSlot(-step_->value() * type, 'Y', type);
   });
   connect(y_decrease_, &TButton::clicked, this, [=]() {
-    TransformButtons::TransformSlot(-step_->value(), 'Y', type);
+    TransformButtons::TransformSlot(step_->value() * type, 'Y', type);
   });
 
   connect(z_increase_, &TButton::clicked, this, [=]() {
-    TransformButtons::TransformSlot(step_->value(), 'Z', type);
+    TransformButtons::TransformSlot(-step_->value() * type, 'Z', type);
   });
   connect(z_decrease_, &TButton::clicked, this, [=]() {
-    TransformButtons::TransformSlot(-step_->value(), 'Z', type);
+    TransformButtons::TransformSlot(step_->value() * type, 'Z', type);
   });
 }
 
