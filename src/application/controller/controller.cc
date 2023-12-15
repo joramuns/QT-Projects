@@ -38,11 +38,19 @@ void Controller::ControllerOpenFileSlot(QString filename) {
   for (const auto &item : a.GetVertices()) {
     vertices.insert(vertices.end(), item.begin(), item.end());
   }
-  std::vector<GLuint> indices;
+  std::vector<GLuint> vertex_indices;
   for (const auto &item : a.GetVertexIndexes()) {
-    indices.insert(indices.end(), item.begin(), item.end());
+    vertex_indices.insert(vertex_indices.end(), item.begin(), item.end());
   }
-  view_->LoadModel(vertices, indices);
+  std::vector<GLfloat> normals;
+  for (const auto &item : a.GetNormals()) {
+    normals.insert(normals.end(), item.begin(), item.end());
+  }
+  std::vector<GLuint> normal_indices;
+  for (const auto &item : a.GetNormalIndexes()) {
+    normal_indices.insert(normal_indices.end(), item.begin(), item.end());
+  }
+  view_->LoadModel(vertices, vertex_indices, normals, normal_indices);
   view_->AddListWidgetItem(filename);
 }
 

@@ -1,5 +1,9 @@
 #version 410 core
 layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec3 normal;
+
+out vec3 Normal;
+out vec3 FragPos;
 
 uniform vec3 translateVector;
 uniform vec3 rotateVector;
@@ -83,4 +87,6 @@ void main() {
   mat4 mvp = perspective * translation * rotation * scaling;
 
   gl_Position = mvp * myPos;
+  FragPos = vec3(translation * rotation * scaling * myPos);
+  Normal = normal;
 }

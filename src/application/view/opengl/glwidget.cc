@@ -21,9 +21,8 @@ GLWidget::~GLWidget() {
   delete program_;
 }
 
-void GLWidget::LoadModel(std::vector<GLfloat> vertices,
-                         std::vector<GLuint> indices) {
-  GLBuffers_.emplace_back(new GLBuffer(vertices, indices, program_));
+void GLWidget::LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> vertex_indices, std::vector<GLfloat> normals, std::vector<GLuint> normal_indices) {
+  GLBuffers_.emplace_back(new GLBuffer(vertices, vertex_indices, normals, normal_indices, program_));
   update();
 }
 
@@ -59,7 +58,7 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   /* const qreal retinaScale = devicePixelRatio(); */
   /* glViewport(0, 0, width() * retinaScale, height() * retinaScale); */
   // Draw the scene:
@@ -70,11 +69,13 @@ void GLWidget::paintGL() {
 
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
+    GLBuffers_[i]->BindNormals();
     GLBuffers_[i]->LoadUniforms();
     LoadCommonUniforms();
     glDrawElements(GL_TRIANGLES, GLBuffers_[i]->GetBuffSize(),
                    GL_UNSIGNED_INT, 0);
     GLBuffers_[i]->Release();
+    GLBuffers_[i]->ReleaseNormals();
   }
 
   program_->release();
@@ -93,13 +94,13 @@ void GLWidget::LoadShaders() {
 }
 
 void GLWidget::LoadCommonUniforms() {
-  const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f};
-  program_->setUniformValue("ourColor", color);
 
   QMatrix4x4 perspective_matrix{};
   perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
   perspective_matrix.translate(-0.0, -0.0, -2.0);
   program_->setUniformValue("perspectiveMatrix", perspective_matrix);
 }
+
+
 
 }  // namespace s21

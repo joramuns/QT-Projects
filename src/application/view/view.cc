@@ -48,9 +48,8 @@ View::View() : QWidget(nullptr) {
   main_layout_->addWidget(list_box, 1, 0, 1, 6);
 }
 
-void View::LoadModel(std::vector<GLfloat> vertices,
-                     std::vector<GLuint> indices) {
-  gl_widget_->LoadModel(vertices, indices);
+void View::LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> vertex_indices, std::vector<GLfloat> normals, std::vector<GLuint> normal_indices) {
+  gl_widget_->LoadModel(vertices, vertex_indices, normals, normal_indices);
 }
 
 void View::UnloadModel(int model_number) {

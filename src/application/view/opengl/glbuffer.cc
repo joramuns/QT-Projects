@@ -3,24 +3,31 @@
 namespace s21 {
 GLBuffer::GLBuffer() : move_uniform_{0.0}, rotate_uniform_{0.0}, scale_uniform_{1.0} {
   initializeOpenGLFunctions();
-  VAO_ = new QOpenGLVertexArrayObject;
+  // VAO_ = new QOpenGLVertexArrayObject;
+  // VAO_normals_ = new QOpenGLVertexArrayObject;
 
   VBO_ = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+  VBO_normals_ = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
 
   VBO_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+  VBO_normals_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
 
   EBO_ = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+  EBO_normals_ = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 
   EBO_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+  EBO_normals_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
 }
 
 GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices,
                    const std::vector<GLuint> &indices,
+                   const std::vector<GLfloat> &normals,
+                   const std::vector<GLuint> &normal_indices,
                    QOpenGLShaderProgram *program)
     : GLBuffer() {
   program_ = program;
   if (!program->bind()) qDebug() << "Program failure:\n" << program->log();
-  LoadData(vertices, indices);
+  LoadData(vertices, indices, normals, normal_indices);
   Release();
   program->release();
 }
@@ -32,12 +39,25 @@ GLBuffer::~GLBuffer() {
   delete VAO_;
   delete VBO_;
   delete EBO_;
+  // VAO_normals_->destroy();
+  VBO_normals_->destroy();
+  EBO_normals_->destroy();
+  // delete VAO_normals_;
+  delete VBO_normals_;
+  delete EBO_normals_;
 }
 
 void GLBuffer::Bind() const noexcept {
   VAO_->bind();
   VBO_->bind();
   EBO_->bind();
+
+}
+
+void GLBuffer::BindNormals() const noexcept {
+  // VAO_normals_->bind();
+  VBO_normals_->bind();
+  EBO_normals_->bind();
 }
 
 void GLBuffer::Release() const noexcept {
@@ -46,22 +66,45 @@ void GLBuffer::Release() const noexcept {
   EBO_->release();
 }
 
+void GLBuffer::ReleaseNormals() const noexcept {
+  // VAO_normals_->release();
+  VBO_normals_->release();
+  EBO_normals_->release();
+}
+
 void GLBuffer::LoadData(const std::vector<GLfloat> &vertices,
-                        const std::vector<GLuint> &indices) {
+           const std::vector<GLuint> &vertex_indices, const std::vector<GLfloat> &normals, const std::vector<GLuint> &normal_indices) {
   initializeOpenGLFunctions();
   VAO_->create();
   VBO_->create();
   EBO_->create();
+
+  VBO_normals_->create();
+  EBO_normals_->create();
+  
   Bind();
+  BindNormals();
+  
   VBO_->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
-  EBO_->allocate(indices.data(), indices.size() * sizeof(GLuint));
+  EBO_->allocate(vertex_indices.data(), vertex_indices.size() * sizeof(GLuint));
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4, (void *)0);
+
+  // VAO_normals_->create();
+  
+  VBO_normals_->allocate(normals.data(), normals.size() * sizeof(GLfloat));
+  EBO_normals_->allocate(normal_indices.data(), normal_indices.size() * sizeof(GLuint));
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void *)0);
+  ReleaseNormals();
+  Release();
 }
 
 void GLBuffer::LoadUniforms() {
-  const QVector4D color{1.0f, 1.0f, 0.2f, 1.0f};
-  program_->setUniformValue("ourColor", color);
+  const QVector4D light_color{1.0f, 1.0f, 1.0f, 1.0f};
+  const QVector4D model_color{1.0f, 0.4f, 0.6f, 1.0f};
+  program_->setUniformValue("modelColor", model_color);
+  program_->setUniformValue("lightColor", light_color);
 
   program_->setUniformValue("translateVector",
                             move_uniform_.GetChangeVector());
