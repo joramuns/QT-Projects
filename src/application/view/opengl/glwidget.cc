@@ -69,13 +69,13 @@ void GLWidget::paintGL() {
 
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
-    GLBuffers_[i]->BindNormals();
     GLBuffers_[i]->LoadUniforms();
     LoadCommonUniforms();
     glDrawElements(GL_TRIANGLES, GLBuffers_[i]->GetBuffSize(),
                    GL_UNSIGNED_INT, 0);
     GLBuffers_[i]->Release();
-    GLBuffers_[i]->ReleaseNormals();
+    // GLBuffers_[i]->BindNormals();
+    // GLBuffers_[i]->ReleaseNormals();
   }
 
   program_->release();

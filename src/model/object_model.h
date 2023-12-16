@@ -1,6 +1,8 @@
 #ifndef CPP4_3DVIEWER_V2_MODEL_OBJECT_MODEL_H
 #define CPP4_3DVIEWER_V2_MODEL_OBJECT_MODEL_H
-#include <OpenGL/gl.h>
+// #include <OpenGL/gl.h>
+#include <GL/glut.h>
+
 #include <string>
 #include <vector>
 

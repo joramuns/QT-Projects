@@ -1,8 +1,8 @@
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
-#include <OpenGL/gl.h>
+// #include <OpenGL/gl.h>
 // #include <epoxy/gl.h>
-// #include <GL/glut.h>
+#include <GL/glut.h>
 // #include <glm/glm.hpp>
 /* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
 /* brew install glm */
