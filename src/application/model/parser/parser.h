@@ -1,8 +1,7 @@
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
-// #include <OpenGL/gl.h>
-// #include <epoxy/gl.h>
-#include <GL/glut.h>
+#include <OpenGL/gl.h>
+// #include <GL/glut.h>
 // #include <glm/glm.hpp>
 /* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
 /* brew install glm */
@@ -12,8 +11,8 @@
 #include <string>
 #include <vector>
 
-#include "coordinatestruct.h"
-#include "faces_strategy.h"
+#include "struct/coordinatestruct.h"
+#include "indices_pars/faces_strategy.h"
 
 #define BAD_FILENAME 1
 
@@ -24,13 +23,13 @@ public:
   explicit Parser(const std::string &filename);
   ~Parser();
 
-  std::vector<std::vector<GLfloat>> GetVertices() const noexcept;
-  std::vector<std::vector<GLfloat>> GetTextures() const noexcept;
-  std::vector<std::vector<GLfloat>> GetNormals() const noexcept;
+  std::vector<std::vector<GLfloat>> GetCoordinates() const noexcept;
+  // std::vector<std::vector<GLfloat>> GetTextures() const noexcept;
+  // std::vector<std::vector<GLfloat>> GetNormals() const noexcept;
 
-  std::vector<std::vector<GLuint>> GetVertexIndexes() const noexcept;
-  std::vector<std::vector<GLuint>> GetTextureIndexes() const noexcept;
-  std::vector<std::vector<GLuint>> GetNormalIndexes() const noexcept;
+  std::vector<std::vector<GLuint>> GetIndexes() const noexcept;
+  // std::vector<std::vector<GLuint>> GetTextureIndexes() const noexcept;
+  // std::vector<std::vector<GLuint>> GetNormalIndexes() const noexcept;
 private:
   int ReadObj(const std::string &filename);
 
@@ -44,8 +43,7 @@ private:
   void StructFill(const TexturesCoordinates &textures_struct) noexcept;
   void StructFill(const NormalsCoordinate &normals_struct) noexcept;
   void GetIndexes() noexcept;
-
-  //accessors
+  void Packer() noexcept;
 
   void DebugPrint() noexcept;
 
@@ -61,6 +59,10 @@ private:
   std::vector<std::vector<GLuint>> vertex_faces_;
   std::vector<std::vector<GLuint>> texture_faces_;
   std::vector<std::vector<GLuint>> normal_faces_;
+  
+  std::vector<std::vector<GLfloat>> coordinates_;
+  std::vector<std::vector<GLuint>> indices_;
+
   FacesStrategy *faces_pars_;
 };
 } // namespace s21

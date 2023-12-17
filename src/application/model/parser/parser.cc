@@ -1,28 +1,15 @@
 #include "parser.h"
 
 namespace s21 {
-Parser::Parser(const std::string &filename) { ReadObj(filename); };
+Parser::Parser(const std::string &filename) { 
+  ReadObj(filename);
+  Packer();
+};
 
 Parser::~Parser(){};
 
 std::vector<std::vector<GLfloat>> Parser::GetVertices() const noexcept {
   return all_vertices_;
-};
-
-std::vector<std::vector<GLfloat>> Parser::GetTextures() const noexcept {
-  return all_textures_;
-};
-
-std::vector<std::vector<GLfloat>> Parser::GetNormals() const noexcept {
-  return all_normals_;
-};
-
-std::vector<std::vector<GLuint>> Parser::GetVertexIndexes() const noexcept {
-  return vertex_faces_;
-};
-
-std::vector<std::vector<GLuint>> Parser::GetTextureIndexes() const noexcept {
-  return texture_faces_;
 };
 
 std::vector<std::vector<GLuint>> Parser::GetNormalIndexes() const noexcept {
@@ -159,8 +146,6 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
 };
 
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
-  // CoordinateContain container(vertex_points_, texture_points_,
-  // normal_points_);
   if (texture_points_.empty() && normal_points_.empty()) {  // v
     faces_pars_ = new VertexStrategy(file, current_position);
   } else if (!texture_points_.empty() && normal_points_.empty()) {  // v/vt
@@ -196,5 +181,9 @@ void Parser::GetIndexes() noexcept {
   texture_faces_.push_back(faces_pars_->GetTextures());
   normal_faces_.push_back(faces_pars_->GetNormals());
 };
+
+void Parser::Packer() noexcept {
+  
+}
 
 }  // namespace s21
