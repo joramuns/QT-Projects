@@ -184,8 +184,11 @@ void Parser::GetIndexes() noexcept {
 };
 
 void Parser::Packer() noexcept {
-  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>> vertices{all_vertices_, vertex_faces_};
-  CoordinatePacker *packer = new VertexCoordinatePacker(vertices);
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>>
+      vertices{all_vertices_, vertex_faces_};
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>>
+      normals{all_normals_, normal_faces_};
+  CoordinatePacker *packer = new VertexNormalsCoordinatePacker(vertices, normals);
   coordinates_ = packer->GetCoordinates();
   delete packer;
 }

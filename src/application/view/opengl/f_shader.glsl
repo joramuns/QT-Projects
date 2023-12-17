@@ -12,7 +12,7 @@ void main()
     float ambientStrength = 0.1f;
     vec4 ambient = ambientStrength * lightColor;
     
-    vec3 lightPos = vec3(0.5f);
+    vec3 lightPos = vec3(0.0f, -1.0f, 1.0f);
     vec3 lightDir = normalize(lightPos - FragPos);
     vec3 normal = normalize(Normal);
     float diff = max(dot(normal, lightDir), 0.0);

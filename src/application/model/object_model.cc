@@ -21,7 +21,7 @@ void ObjectModel::PrintResult() const noexcept {
   int count = 0;
   for (const auto &item : all_vertices_) {
     for (const GLfloat &it : item) {
-      if (count % 4 == 0) {
+      if (count % 7 == 0) {
         std::cout << std::endl;
         count = 0;
       }
