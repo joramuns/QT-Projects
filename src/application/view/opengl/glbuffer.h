@@ -43,7 +43,7 @@ class GLBuffer : QOpenGLFunctions_4_1_Core {
   QOpenGLVertexArrayObject *VAO_;
   QOpenGLBuffer *VBO_;
   QOpenGLBuffer *EBO_;
-  QOpenGLVertexArrayObject *VAO_normals_;
+  // QOpenGLVertexArrayObject *VAO_normals_;
   QOpenGLBuffer *VBO_normals_;
   QOpenGLBuffer *EBO_normals_;
   

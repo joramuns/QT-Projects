@@ -4,7 +4,6 @@ namespace s21 {
 GLBuffer::GLBuffer() : move_uniform_{0.0}, rotate_uniform_{0.0}, scale_uniform_{1.0} {
   initializeOpenGLFunctions();
   VAO_ = new QOpenGLVertexArrayObject;
-  VAO_normals_ = new QOpenGLVertexArrayObject;
 
   VBO_ = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
   VBO_normals_ = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
@@ -39,35 +38,27 @@ GLBuffer::~GLBuffer() {
   delete VAO_;
   delete VBO_;
   delete EBO_;
-  VAO_normals_->destroy();
   VBO_normals_->destroy();
   EBO_normals_->destroy();
-  delete VAO_normals_;
   delete VBO_normals_;
   delete EBO_normals_;
 }
 
 void GLBuffer::Bind() const noexcept {
   VAO_->bind();
-  VBO_->bind();
-  EBO_->bind();
 
 }
 
 void GLBuffer::BindNormals() const noexcept {
-  VAO_normals_->bind();
   VBO_normals_->bind();
   EBO_normals_->bind();
 }
 
 void GLBuffer::Release() const noexcept {
   VAO_->release();
-  VBO_->release();
-  EBO_->release();
 }
 
 void GLBuffer::ReleaseNormals() const noexcept {
-  VAO_normals_->release();
   VBO_normals_->release();
   EBO_normals_->release();
 }
@@ -78,24 +69,26 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices,
   VAO_->create();
   VBO_->create();
   EBO_->create();
+  VBO_normals_->create();
+  EBO_normals_->create();
 
   Bind();
+  VBO_->bind();
+  EBO_->bind();
   VBO_->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
   EBO_->allocate(vertex_indices.data(), vertex_indices.size() * sizeof(GLuint));
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4, (void *)0);
-  // Release();
+  VBO_->release();
+  EBO_->release();
+  BindNormals();
+  VBO_normals_->allocate(normals.data(), normals.size() * sizeof(GLfloat));
+  EBO_normals_->allocate(normal_indices.data(), normal_indices.size() * sizeof(GLuint));
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void *)0);
 
-  // VAO_normals_->create();
-  // EBO_normals_->create();
-  // VBO_normals_->create();
-  // BindNormals();
-  
-  // VBO_normals_->allocate(normals.data(), normals.size() * sizeof(GLfloat));
-  // EBO_normals_->allocate(normal_indices.data(), normal_indices.size() * sizeof(GLuint));
-  // glEnableVertexAttribArray(1);
-  // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void *)0);
-  // ReleaseNormals();
+  ReleaseNormals();
+  Release();
 }
 
 void GLBuffer::LoadUniforms() {
