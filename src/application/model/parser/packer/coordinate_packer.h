@@ -51,6 +51,18 @@ private:
   void Pack() noexcept override;
 };
 
+class VertexNormalsCoordinatePacker : CoordinatePacker {
+public:
+  VertexNormalsCoordinatePacker(
+      const std::pair<std::vector<std::vector<GLfloat>>,
+                      std::vector<std::vector<GLuint>>> &vertices,
+      const std::pair<std::vector<std::vector<GLfloat>>,
+                      std::vector<std::vector<GLuint>>> &normals) noexcept;
+
+private:
+  void Pack() noexcept override;
+};
+
 class VertexTexturesNormalsCoordinatePacker : CoordinatePacker {
 public:
   VertexTexturesNormalsCoordinatePacker(
