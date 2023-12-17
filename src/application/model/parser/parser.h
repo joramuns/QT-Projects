@@ -11,8 +11,9 @@
 #include <string>
 #include <vector>
 
-#include "struct/coordinatestruct.h"
 #include "indices_pars/faces_strategy.h"
+#include "packer/coordinate_packer.h"
+#include "struct/coordinatestruct.h"
 
 #define BAD_FILENAME 1
 
@@ -27,7 +28,7 @@ public:
   // std::vector<std::vector<GLfloat>> GetTextures() const noexcept;
   // std::vector<std::vector<GLfloat>> GetNormals() const noexcept;
 
-  std::vector<std::vector<GLuint>> GetIndexes() const noexcept;
+  // std::vector<std::vector<GLuint>> GetIndexes() const noexcept;
   // std::vector<std::vector<GLuint>> GetTextureIndexes() const noexcept;
   // std::vector<std::vector<GLuint>> GetNormalIndexes() const noexcept;
 private:
@@ -59,9 +60,8 @@ private:
   std::vector<std::vector<GLuint>> vertex_faces_;
   std::vector<std::vector<GLuint>> texture_faces_;
   std::vector<std::vector<GLuint>> normal_faces_;
-  
+
   std::vector<std::vector<GLfloat>> coordinates_;
-  std::vector<std::vector<GLuint>> indices_;
 
   FacesStrategy *faces_pars_;
 };

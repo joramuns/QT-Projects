@@ -1,20 +1,20 @@
 #include "parser.h"
 
 namespace s21 {
-Parser::Parser(const std::string &filename) { 
+Parser::Parser(const std::string &filename) {
   ReadObj(filename);
   Packer();
 };
 
 Parser::~Parser(){};
 
-std::vector<std::vector<GLfloat>> Parser::GetVertices() const noexcept {
-  return all_vertices_;
+std::vector<std::vector<GLfloat>> Parser::GetCoordinates() const noexcept {
+  return coordinates_;
 };
 
-std::vector<std::vector<GLuint>> Parser::GetNormalIndexes() const noexcept {
-  return normal_faces_;
-};
+// std::vector<std::vector<GLuint>> Parser::GetNormalIndexes() const noexcept {
+//   return normal_faces_;
+// };
 
 /* Private functions */
 int Parser::ReadObj(const std::string &filename) {
@@ -48,6 +48,7 @@ int Parser::ReadObj(const std::string &filename) {
       file_position = file.tellg();
     }
   }
+  Packer();
   // DebugPrint();
   return 0;
 };
@@ -146,11 +147,11 @@ void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
 };
 
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
-  if (texture_points_.empty() && normal_points_.empty()) {  // v
+  if (texture_points_.empty() && normal_points_.empty()) { // v
     faces_pars_ = new VertexStrategy(file, current_position);
-  } else if (!texture_points_.empty() && normal_points_.empty()) {  // v/vt
+  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
     faces_pars_ = new VertexTexturesStrategy(file, current_position);
-  } else if (texture_points_.empty() && !normal_points_.empty()) {  // v//vn
+  } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
     faces_pars_ = new VertexNormalsStrategy(file, current_position);
   } else {
     faces_pars_ = new VertexTexturesNormalsStrategy(file, current_position);
@@ -183,7 +184,10 @@ void Parser::GetIndexes() noexcept {
 };
 
 void Parser::Packer() noexcept {
-  
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>> vertices{all_vertices_, vertex_faces_};
+  CoordinatePacker *packer = new VertexCoordinatePacker(vertices);
+  coordinates_ = packer->GetCoordinates();
+  delete packer;
 }
 
-}  // namespace s21
+} // namespace s21
