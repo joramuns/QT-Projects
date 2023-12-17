@@ -22,7 +22,7 @@ class View final : public QWidget {
  public:
   View();
 
-  void LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> vertex_indices, std::vector<GLfloat> normals, std::vector<GLuint> normal_indices);
+  void LoadModel(std::vector<GLfloat> vertices);
   void UnloadModel(int model_number);
   void Rotate(double value, char axis, int model_number);
   void Move(double value, char axis, int model_number);

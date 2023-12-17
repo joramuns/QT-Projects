@@ -21,8 +21,8 @@ GLWidget::~GLWidget() {
   delete program_;
 }
 
-void GLWidget::LoadModel(std::vector<GLfloat> vertices, std::vector<GLuint> vertex_indices, std::vector<GLfloat> normals, std::vector<GLuint> normal_indices) {
-  GLBuffers_.emplace_back(new GLBuffer(vertices, vertex_indices, normals, normal_indices, program_));
+void GLWidget::LoadModel(std::vector<GLfloat> vertices) {
+  GLBuffers_.emplace_back(new GLBuffer(vertices, program_));
   update();
 }
 
@@ -71,8 +71,8 @@ void GLWidget::paintGL() {
     GLBuffers_[i]->Bind();
     GLBuffers_[i]->LoadUniforms();
     LoadCommonUniforms();
-    glDrawElements(GL_TRIANGLES, GLBuffers_[i]->GetBuffSize(),
-                   GL_UNSIGNED_INT, 0);
+    
+    glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());
     GLBuffers_[i]->Release();
     // GLBuffers_[i]->BindNormals();
     // GLBuffers_[i]->ReleaseNormals();

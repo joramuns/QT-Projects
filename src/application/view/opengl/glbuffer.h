@@ -13,9 +13,6 @@ class GLBuffer : QOpenGLFunctions_4_1_Core {
  public:
   GLBuffer();
   GLBuffer(const std::vector<GLfloat> &vertices,
-           const std::vector<GLuint> &vertex_indices,
-           const std::vector<GLfloat> &normals,
-           const std::vector<GLuint> &normal_indices,
            QOpenGLShaderProgram *program);
   GLBuffer(const GLBuffer &other) = delete;
   GLBuffer(GLBuffer &&other) = delete;
@@ -28,10 +25,7 @@ class GLBuffer : QOpenGLFunctions_4_1_Core {
   void BindNormals() const noexcept;
   void Release() const noexcept;
   void ReleaseNormals() const noexcept;
-  void LoadData(const std::vector<GLfloat> &vertices,
-           const std::vector<GLuint> &vertex_indices,
-           const std::vector<GLfloat> &normals,
-           const std::vector<GLuint> &normal_indices);
+  void LoadData(const std::vector<GLfloat> &vertices);
   void LoadUniforms();
   GLuint GetBuffSize() const noexcept;
   void Rotate(double value, char axis);
@@ -44,8 +38,8 @@ class GLBuffer : QOpenGLFunctions_4_1_Core {
   QOpenGLBuffer *VBO_;
   QOpenGLBuffer *EBO_;
   // QOpenGLVertexArrayObject *VAO_normals_;
-  QOpenGLBuffer *VBO_normals_;
-  QOpenGLBuffer *EBO_normals_;
+  // QOpenGLBuffer *VBO_normals_;
+  // QOpenGLBuffer *EBO_normals_;
   
   Axes move_uniform_;
   Axes rotate_uniform_;

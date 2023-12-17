@@ -8,6 +8,6 @@
 /* #include "model/model.h" */
 #include "view/view.h"
 #include "controller/controller.h"
-#include "../model/fasade/fasade.h"
+#include "model/fasade/fasade.h"
 
 #endif  // MAIN_H_

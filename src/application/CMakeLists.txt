@@ -9,8 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_compile_options(-Wall -Wextra)
-add_link_options(-Wall -Werror -Wextra)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra -fsanitize=address -g")
 
 message(STATUS "Project \"${PROJECT_NAME}\" compiled with C++ standard ${CMAKE_CXX_STANDARD}")
 
@@ -35,6 +34,7 @@ set(SOURCES
   model/object_model.cc
   model/parser/parser.cc
   model/parser/indices_pars/faces_strategy.cc
+  model/parser/packer/coordinate_packer.cc
 )
 
 set(RESOURCES

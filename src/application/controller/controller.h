@@ -5,7 +5,7 @@
 
 #include "../model/shaderprogram.h"
 #include "../view/view.h"
-#include "../../model/fasade/fasade.h"
+#include "../model/fasade/fasade.h"
 
 namespace s21 {
 class Controller final : public QObject {

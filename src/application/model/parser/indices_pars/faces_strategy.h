@@ -19,7 +19,7 @@ public:
   std::vector<GLuint> GetTextures() const noexcept;
   std::vector<GLuint> GetNormals() const noexcept;
 
-  virtual int Pars() noexcept = 0;
+  virtual int Pars() = 0;
 
 protected:
   void TesselationFill(const std::vector<GLuint> &indexes,
