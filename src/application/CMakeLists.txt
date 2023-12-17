@@ -31,10 +31,10 @@ set(SOURCES
   controller/controller.cc
   model/shaderprogram.cc
 
-  ../model/fasade/fasade.cc
-  ../model/object_model.cc
-  ../model/parser/parser.cc
-  ../model/parser/faces_strategy.cc
+  model/fasade/fasade.cc
+  model/object_model.cc
+  model/parser/parser.cc
+  model/parser/indices_pars/faces_strategy.cc
 )
 
 set(RESOURCES
