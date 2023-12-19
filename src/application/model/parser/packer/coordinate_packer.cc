@@ -1,5 +1,5 @@
 #include "coordinate_packer.h"
-
+#include <iostream>
 namespace s21 {
 CoordinatePacker::CoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
@@ -41,9 +41,9 @@ VertexTexturesCoordinatePacker::VertexTexturesCoordinatePacker(
 };
 
 void VertexTexturesCoordinatePacker::Pack() noexcept {
-  for (size_t i = 0; i <= vertices_.second.size(); ++i) {
+  for (size_t i = 0; i < vertices_.second.size(); ++i) {
     std::vector<GLfloat> tmp;
-    for (size_t j = 0; j <= vertices_.second[i].size(); ++j) {
+    for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
       for (size_t k = 0; k < 4; ++k) {
         tmp.push_back(vertices_.first[i][vertices_.second[i][j] * 4 + k]);
       }
@@ -66,7 +66,7 @@ VertexNormalsCoordinatePacker::VertexNormalsCoordinatePacker(
 };
 
 void VertexNormalsCoordinatePacker::Pack() noexcept {
-  for (size_t i = 0; i < vertices_.second.size(); ++i) {
+  for (size_t i = 0; i < vertices_.first.size(); ++i) {
     std::vector<GLfloat> tmp;
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
       for (size_t k = 0; k < 4; ++k) {

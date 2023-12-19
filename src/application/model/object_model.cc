@@ -5,7 +5,6 @@ namespace s21 {
 ObjectModel::ObjectModel(const std::string &filename) : filename_(filename) {
   Parser core_pars(filename_);
   all_vertices_ = core_pars.GetCoordinates();
-  PrintResult();
   // all_textures_ = core_pars.GetTextures();
   // all_normals_ = core_pars.GetNormals();
 
@@ -23,7 +22,6 @@ void ObjectModel::PrintResult() const noexcept {
     for (const GLfloat &it : item) {
       if (count % 7 == 0) {
         std::cout << std::endl;
-        count = 0;
       }
       std::cout << it << ' ';
       ++count;

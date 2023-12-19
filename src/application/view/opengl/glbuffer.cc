@@ -58,13 +58,13 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices) {
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 7, (void *)0);
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 7, (void *)(3 * sizeof(GLfloat)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 7, (void *)(4 * sizeof(GLfloat)));
   // Release();
 }
 
 void GLBuffer::LoadUniforms() {
-  const QVector4D light_color{1.0f, 1.0f, 1.0f, 1.0f};
-  const QVector4D model_color{1.0f, 0.4f, 0.6f, 1.0f};
+  const QVector3D light_color{1.0f, 0.0f, 1.0f};
+  const QVector3D model_color{1.0f, 0.4f, 0.6f};
   program_->setUniformValue("modelColor", model_color);
   program_->setUniformValue("lightColor", light_color);
 
@@ -84,7 +84,7 @@ void GLBuffer::LoadUniforms() {
 }
 
 GLuint GLBuffer::GetBuffSize() const noexcept {
-  return VBO_->size() / sizeof(GLfloat) * 4;
+  return VBO_->size() / sizeof(GLfloat) * 7;
 }
 
 void GLBuffer::Rotate(double value, char axis) {

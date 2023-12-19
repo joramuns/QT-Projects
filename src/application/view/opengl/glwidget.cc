@@ -66,7 +66,7 @@ void GLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT);
 
   program_->bind();
-
+  glEnable(GL_DEPTH_TEST);
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
     GLBuffers_[i]->LoadUniforms();
@@ -77,7 +77,7 @@ void GLWidget::paintGL() {
     // GLBuffers_[i]->BindNormals();
     // GLBuffers_[i]->ReleaseNormals();
   }
-
+  // glEnable(GL_DEPTH_TEST);
   program_->release();
 }
 

@@ -87,6 +87,6 @@ void main() {
   mat4 mvp = perspective * translation * rotation * scaling;
 
   gl_Position = mvp * myPos;
-  FragPos = vec3(translation * rotation * scaling * myPos);
+  FragPos = vec3(myPos * translation * rotation * scaling );
   Normal = normal;
 }
