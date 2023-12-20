@@ -47,6 +47,7 @@ void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();
   initializeOpenGLFunctions();
+  glEnable(GL_DEPTH_TEST);
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -63,13 +64,13 @@ void GLWidget::paintGL() {
   /* glViewport(0, 0, width() * retinaScale, height() * retinaScale); */
   // Draw the scene:
   glClearColor(0.2, 0.1, 0.1, 1.0);
-  glClear(GL_COLOR_BUFFER_BIT);
 
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glDepthFunc(GL_LESS);
   program_->bind();
-  glEnable(GL_DEPTH_TEST);
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
-    GLBuffers_[i]->LoadUniforms();
+    GLBuffers_[i]->LoadUniforms(); 
     LoadCommonUniforms();
     
     glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());

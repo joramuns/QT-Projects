@@ -73,7 +73,9 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
         tmp.push_back(vertices_.first[i][vertices_.second[i][j] * 4 + k]);
       }
       for (size_t k = 0; k < 3; ++k) {
-        tmp.push_back(normals_.first[i][normals_.second[i][j] * 3 + k]);
+        GLfloat norm_coordinate = normals_.first[i][normals_.second[i][j] * 3 + k];
+        if (norm_coordinate < 0) norm_coordinate *= -1;
+        tmp.push_back(norm_coordinate);
       }
     }
     all_coordinates_.push_back(tmp);
