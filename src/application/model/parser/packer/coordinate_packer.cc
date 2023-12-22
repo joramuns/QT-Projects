@@ -70,10 +70,19 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
     std::vector<GLfloat> tmp;
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
       for (size_t k = 0; k < 4; ++k) {
-        tmp.push_back(vertices_.first[i][vertices_.second[i][j] * 4 + k]);
+        GLint index = vertices_.second[i][j];
+        std::cout << index << std::endl;
+        if (index < 0) {
+          index = vertices_.first[i].size() + index;
+        }
+        tmp.push_back(vertices_.first[i][index * 4 + k]);
       }
       for (size_t k = 0; k < 3; ++k) {
-        GLfloat norm_coordinate = normals_.first[i][normals_.second[i][j] * 3 + k];
+        GLint index = vertices_.second[i][j];
+        if (index < 0) {
+          index = vertices_.first[i].size() + index;
+        }
+        GLfloat norm_coordinate = normals_.first[i][index * 3 + k];
         if (norm_coordinate < 0) norm_coordinate *= -1;
         tmp.push_back(norm_coordinate);
       }
