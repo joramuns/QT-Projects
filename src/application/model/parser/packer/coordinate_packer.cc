@@ -3,7 +3,7 @@
 namespace s21 {
 CoordinatePacker::CoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &vertices) noexcept
+                    std::vector<std::vector<GLint>>> &vertices) noexcept
     : vertices_(vertices) {}
 
 std::vector<std::vector<GLfloat>>
@@ -13,7 +13,7 @@ CoordinatePacker::GetCoordinates() const noexcept {
 
 VertexCoordinatePacker::VertexCoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &vertices) noexcept
+                    std::vector<std::vector<GLint>>> &vertices) noexcept
     : CoordinatePacker(vertices) {
   Pack();
 };
@@ -32,9 +32,9 @@ void VertexCoordinatePacker::Pack() noexcept {
 
 VertexTexturesCoordinatePacker::VertexTexturesCoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &vertices,
+                    std::vector<std::vector<GLint>>> &vertices,
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &textures) noexcept
+                    std::vector<std::vector<GLint>>> &textures) noexcept
     : CoordinatePacker(vertices) {
   textures_ = textures;
   Pack();
@@ -57,9 +57,9 @@ void VertexTexturesCoordinatePacker::Pack() noexcept {
 
 VertexNormalsCoordinatePacker::VertexNormalsCoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &vertices,
+                    std::vector<std::vector<GLint>>> &vertices,
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &normals) noexcept
+                    std::vector<std::vector<GLint>>> &normals) noexcept
     : CoordinatePacker(vertices) {
   normals_ = normals;
   Pack();
@@ -84,11 +84,11 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
 
 VertexTexturesNormalsCoordinatePacker::VertexTexturesNormalsCoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &vertices,
+                    std::vector<std::vector<GLint>>> &vertices,
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &textures,
+                    std::vector<std::vector<GLint>>> &textures,
     const std::pair<std::vector<std::vector<GLfloat>>,
-                    std::vector<std::vector<GLuint>>> &normals) noexcept
+                    std::vector<std::vector<GLint>>> &normals) noexcept
     : CoordinatePacker(vertices) {
   textures_ = textures;
   normals_ = normals;
@@ -106,7 +106,9 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
         tmp.push_back(textures_.first[i][textures_.second[i][j] * 3 + k]);
       }
       for (size_t k = 0; k < 3; ++k) {
-        tmp.push_back(normals_.first[i][normals_.second[i][j] * 3 + k]);
+        GLfloat norm_coordinate = normals_.first[i][normals_.second[i][j] * 3 + k];
+        if (norm_coordinate < 0) norm_coordinate *= -1;
+        tmp.push_back(norm_coordinate);
       }
     }
     all_coordinates_.push_back(tmp);

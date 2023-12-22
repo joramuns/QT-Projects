@@ -10,7 +10,7 @@ public:
   CoordinatePacker() = delete;
   CoordinatePacker(
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &vertices) noexcept;
+                      std::vector<std::vector<GLint>>> &vertices) noexcept;
   virtual ~CoordinatePacker(){};
 
   std::vector<std::vector<GLfloat>> GetCoordinates() const noexcept;
@@ -21,11 +21,11 @@ protected:
 protected:
   std::vector<std::vector<GLfloat>> all_coordinates_;
 
-  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>>
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       vertices_;
-  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>>
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       textures_;
-  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>>
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       normals_;
 };
 
@@ -33,7 +33,7 @@ class VertexCoordinatePacker : public CoordinatePacker {
 public:
   VertexCoordinatePacker(
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &vertices) noexcept;
+                      std::vector<std::vector<GLint>>> &vertices) noexcept;
 
 private:
   void Pack() noexcept override;
@@ -43,9 +43,9 @@ class VertexTexturesCoordinatePacker : public CoordinatePacker {
 public:
   VertexTexturesCoordinatePacker(
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &vertices,
+                      std::vector<std::vector<GLint>>> &vertices,
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &textures) noexcept;
+                      std::vector<std::vector<GLint>>> &textures) noexcept;
 
 private:
   void Pack() noexcept override;
@@ -55,9 +55,9 @@ class VertexNormalsCoordinatePacker : public CoordinatePacker {
 public:
   VertexNormalsCoordinatePacker(
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &vertices,
+                      std::vector<std::vector<GLint>>> &vertices,
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &normals) noexcept;
+                      std::vector<std::vector<GLint>>> &normals) noexcept;
 
 private:
   void Pack() noexcept override;
@@ -67,11 +67,11 @@ class VertexTexturesNormalsCoordinatePacker : public CoordinatePacker {
 public:
   VertexTexturesNormalsCoordinatePacker(
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &vertices,
+                      std::vector<std::vector<GLint>>> &vertices,
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &textures,
+                      std::vector<std::vector<GLint>>> &textures,
       const std::pair<std::vector<std::vector<GLfloat>>,
-                      std::vector<std::vector<GLuint>>> &normals) noexcept;
+                      std::vector<std::vector<GLint>>> &normals) noexcept;
 
 private:
   void Pack() noexcept override;

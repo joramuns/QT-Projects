@@ -28,9 +28,9 @@ public:
   // std::vector<std::vector<GLfloat>> GetTextures() const noexcept;
   // std::vector<std::vector<GLfloat>> GetNormals() const noexcept;
 
-  // std::vector<std::vector<GLuint>> GetIndexes() const noexcept;
-  // std::vector<std::vector<GLuint>> GetTextureIndexes() const noexcept;
-  // std::vector<std::vector<GLuint>> GetNormalIndexes() const noexcept;
+  // std::vector<std::vector<GLint>> GetIndexes() const noexcept;
+  // std::vector<std::vector<GLint>> GetTextureIndexes() const noexcept;
+  // std::vector<std::vector<GLint>> GetNormalIndexes() const noexcept;
 private:
   int ReadObj(const std::string &filename);
 
@@ -57,9 +57,9 @@ private:
   std::vector<std::vector<GLfloat>> all_textures_;
   std::vector<std::vector<GLfloat>> all_normals_;
 
-  std::vector<std::vector<GLuint>> vertex_faces_;
-  std::vector<std::vector<GLuint>> texture_faces_;
-  std::vector<std::vector<GLuint>> normal_faces_;
+  std::vector<std::vector<GLint>> vertex_faces_;
+  std::vector<std::vector<GLint>> texture_faces_;
+  std::vector<std::vector<GLint>> normal_faces_;
 
   std::vector<std::vector<GLfloat>> coordinates_;
 

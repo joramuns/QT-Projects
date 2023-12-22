@@ -15,22 +15,22 @@ public:
   FacesStrategy(std::ifstream *file, const int file_pos);
   virtual ~FacesStrategy(){};
 
-  std::vector<GLuint> GetVertices() const noexcept;
-  std::vector<GLuint> GetTextures() const noexcept;
-  std::vector<GLuint> GetNormals() const noexcept;
+  std::vector<GLint> GetVertices() const noexcept;
+  std::vector<GLint> GetTextures() const noexcept;
+  std::vector<GLint> GetNormals() const noexcept;
 
   virtual int Pars() = 0;
 
 protected:
-  void TesselationFill(const std::vector<GLuint> &indexes,
-                       std::vector<GLuint> &type_of_indexes) noexcept;
+  void TesselationFill(const std::vector<GLint> &indexes,
+                       std::vector<GLint> &type_of_indexes) noexcept;
 
 protected:
   std::ifstream *file_;
 
-  std::vector<GLuint> vertices_;
-  std::vector<GLuint> texutres_;
-  std::vector<GLuint> normals_;
+  std::vector<GLint> vertices_;
+  std::vector<GLint> texutres_;
+  std::vector<GLint> normals_;
 
 private:
 };

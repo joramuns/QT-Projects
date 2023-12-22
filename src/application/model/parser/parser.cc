@@ -12,7 +12,7 @@ std::vector<std::vector<GLfloat>> Parser::GetCoordinates() const noexcept {
   return coordinates_;
 };
 
-// std::vector<std::vector<GLuint>> Parser::GetNormalIndexes() const noexcept {
+// std::vector<std::vector<GLint>> Parser::GetNormalIndexes() const noexcept {
 //   return normal_faces_;
 // };
 
@@ -184,9 +184,9 @@ void Parser::GetIndexes() noexcept {
 };
 
 void Parser::Packer() noexcept {
-  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>>
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       vertices{all_vertices_, vertex_faces_};
-  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLuint>>>
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       normals{all_normals_, normal_faces_};
   CoordinatePacker *packer = new VertexNormalsCoordinatePacker(vertices, normals);
   coordinates_ = packer->GetCoordinates();
