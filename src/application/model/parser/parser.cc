@@ -48,8 +48,8 @@ int Parser::ReadObj(const std::string &filename) {
       file_position = file.tellg();
     }
   }
-  Packer();
   // DebugPrint();
+  Packer();
   return 0;
 };
 
@@ -67,21 +67,21 @@ void Parser::DataClear() noexcept {
 };
 
 void Parser::DebugPrint() noexcept {
-  std::cout << "V: ";
-  for (const auto &item : vertex_faces_) {
-    for (const auto it : item) {
-      std::cout << it << " ";
-    }
-  }
-  std::cout << std::endl;
+  // std::cout << "V: ";
+  // for (const auto &item : vertex_faces_) {
+  //   for (const auto it : item) {
+  //     std::cout << it << " ";
+  //   }
+  // }
+  // std::cout << std::endl;
 
-  std::cout << "T: ";
-  for (const auto &item : texture_faces_) {
-    for (const auto it : item) {
-      std::cout << it << " ";
-    }
-  }
-  std::cout << std::endl;
+  // std::cout << "T: ";
+  // for (const auto &item : texture_faces_) {
+  //   for (const auto it : item) {
+  //     std::cout << it << " ";
+  //   }
+  // }
+  // std::cout << std::endl;
 
   std::cout << "N: ";
   for (const auto &item : normal_faces_) {

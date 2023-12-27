@@ -69,21 +69,21 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.first.size(); ++i) {
     std::vector<GLfloat> tmp;
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
+      GLint index_vertices = vertices_.second[i][j];
       for (size_t k = 0; k < 4; ++k) {
-        GLint index = vertices_.second[i][j];
-        std::cout << index << std::endl;
-        // std::cout << index << std::endl;
-        // if (index < 0) {
-        //   index = vertices_.first[i].size() + index;
-        // }
-        tmp.push_back(vertices_.first[i][index * 4 + k]);
+        if (index_vertices < 0) {
+          // ++index_vertices;
+          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+        }
+        tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
       }
+      GLint index_normals = normals_.second[i][j];
       for (size_t k = 0; k < 3; ++k) {
-        GLint index = normals_.second[i][j];
-        // if (index < 0) {
-        //   index = normals_.first[i].size() + index;
-        // }
-        GLfloat norm_coordinate = normals_.first[i][index * 3 + k];
+        if (index_normals < 0) {
+          // ++index_normals;
+          index_normals = (normals_.first[i].size() / 3) + (++index_normals);
+        }
+        GLfloat norm_coordinate = normals_.first[i][index_normals * 3 + k];
         if (norm_coordinate < 0) norm_coordinate *= -1;
         tmp.push_back(norm_coordinate);
       }
