@@ -188,7 +188,18 @@ void Parser::Packer() noexcept {
       vertices{all_vertices_, vertex_faces_};
   std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       normals{all_normals_, normal_faces_};
-  CoordinatePacker *packer = new VertexNormalsCoordinatePacker(vertices, normals);
+  std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
+      textures{all_textures_, texture_faces_};
+  CoordinatePacker *packer = nullptr;
+  if (texture_points_.empty() && normal_points_.empty()) { // v
+    packer = new VertexCoordinatePacker(vertices);
+  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
+    packer = new VertexTexturesCoordinatePacker(vertices, textures);
+  } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
+    packer = new VertexNormalsCoordinatePacker(vertices, normals);
+  } else {
+    packer = new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
+  }
   coordinates_ = packer->GetCoordinates();
   delete packer;
 }

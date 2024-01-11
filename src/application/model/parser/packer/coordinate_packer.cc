@@ -22,8 +22,12 @@ void VertexCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.second.size(); ++i) {
     std::vector<GLfloat> tmp;
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
+      GLint index_vertices = vertices_.second[i][j];
       for (size_t k = 0; k < 4; ++k) {
-        tmp.push_back(vertices_.first[i][vertices_.second[i][j] * 4 + k]);
+        if (index_vertices < 0) {
+          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+        }
+        tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
       }
     }
     all_coordinates_.push_back(tmp);
@@ -44,11 +48,19 @@ void VertexTexturesCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.second.size(); ++i) {
     std::vector<GLfloat> tmp;
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
+      GLint index_vertices = vertices_.second[i][j];
       for (size_t k = 0; k < 4; ++k) {
-        tmp.push_back(vertices_.first[i][vertices_.second[i][j] * 4 + k]);
+        if (index_vertices < 0) {
+          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+        }
+        tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
       }
+      GLint index_textures = textures_.second[i][j];
       for (size_t k = 0; k < 3; ++k) {
-        tmp.push_back(textures_.first[i][textures_.second[i][j] * 3 + k]);
+        if (index_textures < 0) {
+          index_textures = (normals_.first[i].size() / 3) + (++index_textures);
+        }
+        tmp.push_back(textures_.first[i][index_textures * 3 + k]);
       }
     }
     all_coordinates_.push_back(tmp);
@@ -72,7 +84,6 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
       GLint index_vertices = vertices_.second[i][j];
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
-          // ++index_vertices;
           index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
         }
         tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
@@ -80,7 +91,6 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
       GLint index_normals = normals_.second[i][j];
       for (size_t k = 0; k < 3; ++k) {
         if (index_normals < 0) {
-          // ++index_normals;
           index_normals = (normals_.first[i].size() / 3) + (++index_normals);
         }
         GLfloat norm_coordinate = normals_.first[i][index_normals * 3 + k];
@@ -109,14 +119,26 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.second.size(); ++i) {
     std::vector<GLfloat> tmp;
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
+      GLint index_vertices = vertices_.second[i][j];
       for (size_t k = 0; k < 4; ++k) {
-        tmp.push_back(vertices_.first[i][vertices_.second[i][j] * 4 + k]);
+        if (index_vertices < 0) {
+          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+        }
+        tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
       }
+      GLint index_textures = textures_.second[i][j];
       for (size_t k = 0; k < 3; ++k) {
-        tmp.push_back(textures_.first[i][textures_.second[i][j] * 3 + k]);
+        if (index_textures < 0) {
+          index_textures = (normals_.first[i].size() / 3) + (++index_textures);
+        }
+        tmp.push_back(textures_.first[i][index_textures * 3 + k]);
       }
+      GLint index_normals = normals_.second[i][j];
       for (size_t k = 0; k < 3; ++k) {
-        GLfloat norm_coordinate = normals_.first[i][normals_.second[i][j] * 3 + k];
+        if (index_normals < 0) {
+          index_normals = (normals_.first[i].size() / 3) + (++index_normals);
+        }
+        GLfloat norm_coordinate = normals_.first[i][index_normals * 3 + k];
         if (norm_coordinate < 0) norm_coordinate *= -1;
         tmp.push_back(norm_coordinate);
       }
