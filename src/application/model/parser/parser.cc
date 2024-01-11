@@ -193,15 +193,15 @@ void Parser::Packer() noexcept {
 
   CoordinatePacker *packer = nullptr;
 
-  if (texture_points_.empty() && normal_points_.empty()) { // v
-    packer = new VertexCoordinatePacker(vertices);
-  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
-    packer = new VertexTexturesCoordinatePacker(vertices, textures);
-  } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
+  // if (all_textures_.empty() && all_normals_.empty()) { // v
+  //   packer = new VertexCoordinatePacker(vertices);
+  // } else if (!all_textures_.empty() && all_normals_.empty()) { // v/vt
+  //   packer = new VertexTexturesCoordinatePacker(vertices, textures);
+  // } else if (all_textures_.empty() && !all_normals_.empty()) { // v//vn
     packer = new VertexNormalsCoordinatePacker(vertices, normals);
-  } else {
-    packer = new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
-  }
+  // } else {
+    // packer = new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
+  // }
   coordinates_ = packer->GetCoordinates();
   
   delete packer;
