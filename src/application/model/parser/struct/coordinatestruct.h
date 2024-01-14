@@ -15,7 +15,7 @@ struct PointCoordinates {
 struct TexturesCoordinates {
   GLfloat u;
   GLfloat v;
-  GLfloat w{0.0};
+  // GLfloat w{0.0};
 };
 
 struct NormalsCoordinate {

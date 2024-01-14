@@ -134,7 +134,7 @@ void Parser::AddTexturePoint(std::istringstream &data) noexcept {
   TexturesCoordinates textures;
   data >> textures.u;
   data >> textures.v;
-  data >> textures.w;
+  // data >> textures.w;
   StructFill(textures);
 };
 
@@ -168,7 +168,7 @@ void Parser::StructFill(const PointCoordinates &vertices_struct) noexcept {
 void Parser::StructFill(const TexturesCoordinates &textures_struct) noexcept {
   texture_points_.push_back(textures_struct.u);
   texture_points_.push_back(textures_struct.v);
-  texture_points_.push_back(textures_struct.w);
+  // texture_points_.push_back(textures_struct.w);
 };
 
 void Parser::StructFill(const NormalsCoordinate &normals_struct) noexcept {
@@ -193,15 +193,16 @@ void Parser::Packer() noexcept {
 
   CoordinatePacker *packer = nullptr;
 
-  // if (all_textures_.empty() && all_normals_.empty()) { // v
-  //   packer = new VertexCoordinatePacker(vertices);
-  // } else if (!all_textures_.empty() && all_normals_.empty()) { // v/vt
-  //   packer = new VertexTexturesCoordinatePacker(vertices, textures);
-  // } else if (all_textures_.empty() && !all_normals_.empty()) { // v//vn
+  if (all_textures_[0].empty() && all_normals_[0].empty()) { // v
+    packer = new VertexCoordinatePacker(vertices);
+  } else if (!all_textures_[0].empty() && all_normals_[0].empty()) { // v/vt
+    packer = new VertexTexturesCoordinatePacker(vertices, textures);
+  } else if (all_textures_[0].empty() && !all_normals_[0].empty()) { // v//vn
     packer = new VertexNormalsCoordinatePacker(vertices, normals);
-  // } else {
-    // packer = new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
-  // }
+  } else {
+    std::cout << "tut____bebra_kedebra______" << std::endl;
+    packer = new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
+  }
   coordinates_ = packer->GetCoordinates();
   
   delete packer;
