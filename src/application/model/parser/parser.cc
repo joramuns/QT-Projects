@@ -27,7 +27,6 @@ int Parser::ReadObj(const std::string &filename) {
     int file_position;
     while (std::getline(file, line)) {
       if (line.size() < 3) {
-        std::cout << "BEBRA" << std::endl;
         continue;
       }
       std::string prefix = line.substr(0, 2);
