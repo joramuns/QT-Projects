@@ -64,7 +64,7 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices) {
 
 void GLBuffer::LoadUniforms() {
   const QVector3D light_color{1.0f, 1.0f, 1.0f};
-  const QVector3D model_color{1.0f, 0.4f, 0.6f};
+  const QVector3D model_color{0.85f, 0.85f, 0.85f};
   program_->setUniformValue("modelColor", model_color);
   program_->setUniformValue("lightColor", light_color);
 
