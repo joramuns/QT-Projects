@@ -1,9 +1,11 @@
 #version 410 core
 layout(location = 0) in vec3 aPos;
 layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;
 
 out vec3 Normal;
 out vec3 FragPos;
+out vec2 TexCoord;
 
 uniform vec3 translateVector;
 uniform vec3 rotateVector;
@@ -89,4 +91,5 @@ void main() {
   gl_Position = mvp * myPos;
   FragPos = vec3(translation * rotation * scaling * myPos);
   Normal = normal;
+  TexCoord = texCoord;
 }

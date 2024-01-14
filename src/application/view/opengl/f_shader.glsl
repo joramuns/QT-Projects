@@ -1,11 +1,13 @@
 #version 410 core
 in vec3 Normal;
 in vec3 FragPos;
+in vec2 TexCoord;
 
 out vec4 FragColor;
 
 uniform vec3 modelColor;
 uniform vec3 lightColor;
+uniform sampler2D ourTexture;
 
 void main()
 {   
@@ -19,5 +21,5 @@ void main()
     vec3 diffuse = diff * lightColor;
 
     vec3 result = (ambient + diffuse) * modelColor;
-    FragColor = vec4(result, 1.0f);
+    FragColor = vec4(result, 1.0f) * texture(ourTexture, TexCoord);
 }
