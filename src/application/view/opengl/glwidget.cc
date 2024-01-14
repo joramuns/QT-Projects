@@ -1,6 +1,8 @@
 #define GL_SILENCE_DEPRECATION
+#define STB_IMAGE_IMPLEMENTATION
 
 #include "glwidget.h"
+#include "stb_image.h"
 
 #include <QDebug>
 /* #include <QFile> */
@@ -15,7 +17,8 @@ GLWidget::GLWidget() {
 
 GLWidget::~GLWidget() {
   makeCurrent();
-  for (auto &item : GLBuffers_) delete item;
+  for (auto &item : GLBuffers_)
+    delete item;
   program_->disableAttributeArray(0);
   program_->release();
   delete program_;
@@ -68,11 +71,26 @@ void GLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glDepthFunc(GL_LESS);
   program_->bind();
+  
+  GLuint texture_id;
+  glGenTextures(1, &texture_id);
+  glBindTexture(GL_TEXTURE_2D, texture_id);
+  
+  int width, height, channels;
+  unsigned char *image =
+      stbi_load("/Users/mammiemi/Project/CPP4_3DViewer_v2.0-2/src/application/"
+                "view/opengl/mramor.jpeg",
+                &width, &height, &channels, 0);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+  glGenerateMipmap(GL_TEXTURE_2D);
+  stbi_image_free(image);
+  glBindTexture(GL_TEXTURE_2D, 0);
+
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
-    GLBuffers_[i]->LoadUniforms(); 
+    GLBuffers_[i]->LoadUniforms();
     LoadCommonUniforms();
-    
+
     glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());
     GLBuffers_[i]->Release();
     // GLBuffers_[i]->BindNormals();
@@ -102,6 +120,4 @@ void GLWidget::LoadCommonUniforms() {
   program_->setUniformValue("perspectiveMatrix", perspective_matrix);
 }
 
-
-
-}  // namespace s21
+} // namespace s21

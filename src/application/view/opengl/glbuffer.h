@@ -8,6 +8,7 @@
 
 #include "transform_class.h"
 
+
 namespace s21 {
 class GLBuffer : QOpenGLFunctions_4_1_Core {
  public:

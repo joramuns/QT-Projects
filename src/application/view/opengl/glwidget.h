@@ -1,6 +1,7 @@
 #ifndef VIEW_OPENGL_GLWIDGET_H_
 #define VIEW_OPENGL_GLWIDGET_H_
 
+
 #include <QOpenGLBuffer>
 #include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLShaderProgram>
