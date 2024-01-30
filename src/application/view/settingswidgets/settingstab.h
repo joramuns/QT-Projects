@@ -17,6 +17,7 @@ class SettingsTab final : public QTabWidget {
   void VertexColorSlot();
   void EdgeColorSlot();
   void SceneOptionSlot(const QString &index);
+  void ExtraSceneOptionSlot(const QString &index);
   void VertexOptionSlot(const QString &index);
   void EdgeOptionSlot(const QString &index);
   void VertexSizeSlot(double value);
@@ -27,13 +28,14 @@ class SettingsTab final : public QTabWidget {
   void TabVertexColorSignal();
   void TabEdgeColorSignal();
   void TabSceneOptionSignal(const QString &index);
+  void TabExtraSceneOptionSignal(const QString &index);
   void TabVertexOptionSignal(const QString &index);
   void TabEdgeOptionSignal(const QString &index);
   void TabVertexSizeSignal(double value);
   void TabEdgeSizeSignal(double value);
 
  private:
-  SceneSettings *scene_settings_;
+  ExtraSceneSettings *scene_settings_;
   ModelSettings *vertex_settings_;
   ModelSettings *edge_settings_;
 };

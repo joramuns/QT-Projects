@@ -5,9 +5,11 @@
 
 namespace s21 {
 SettingsTab::SettingsTab() {
-  scene_settings_ = new SceneSettings();
+  scene_settings_ = new ExtraSceneSettings();
   scene_settings_->SetComboBoxOptions(
       QVector<QString>{"Central projection", "Parallel projection"});
+  scene_settings_->SetExtraComboBoxOptions(
+      QVector<QString>{"Wireframe", "Solid"});
 
   vertex_settings_ = new ModelSettings();
   vertex_settings_->SetComboBoxOptions(
@@ -25,6 +27,8 @@ SettingsTab::SettingsTab() {
 
   connect(scene_settings_, &SceneSettings::ComboBoxSignal, this,
           &SettingsTab::SceneOptionSlot);
+  connect(scene_settings_, &ExtraSceneSettings::ExtraComboBoxSignal, this,
+          &SettingsTab::ExtraSceneOptionSlot);
   connect(vertex_settings_, &SceneSettings::ComboBoxSignal, this,
           &SettingsTab::VertexOptionSlot);
   connect(edge_settings_, &SceneSettings::ComboBoxSignal, this,
@@ -58,6 +62,11 @@ void SettingsTab::EdgeColorSlot() {
 void SettingsTab::SceneOptionSlot(const QString &index) {
   std::cout << "Scene option " << index.toStdString() << std::endl;
   emit TabSceneOptionSignal(index);
+}
+
+void SettingsTab::ExtraSceneOptionSlot(const QString &index) {
+  std::cout << "ExtraScene option " << index.toStdString() << std::endl;
+  emit TabExtraSceneOptionSignal(index);
 }
 
 void SettingsTab::VertexOptionSlot(const QString &index) {

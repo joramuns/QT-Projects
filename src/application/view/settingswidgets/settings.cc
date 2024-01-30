@@ -40,6 +40,34 @@ void SceneSettings::SetComboBoxOptions(const QVector<QString> &labels) {
   }
 }
 
+ExtraSceneSettings::ExtraSceneSettings() {
+  InitFields();
+  ConnectFields();
+  InitLayouts();
+}
+
+void ExtraSceneSettings::InitFields() { wireframe_type_ = new QComboBox(); }
+
+void ExtraSceneSettings::ConnectFields() {
+  connect(wireframe_type_, &QComboBox::currentIndexChanged, this,
+          &ExtraSceneSettings::ExtraComboBoxSlot);
+}
+
+void ExtraSceneSettings::InitLayouts() {
+  layout_->addWidget(wireframe_type_);
+}
+
+void ExtraSceneSettings::SetExtraComboBoxOptions(
+    const QVector<QString> &labels) {
+  for (const auto &item : labels) {
+    wireframe_type_->addItem(item);
+  }
+}
+
+void ExtraSceneSettings::ExtraComboBoxSlot() {
+  emit ExtraComboBoxSignal(static_cast<QComboBox *>(sender())->currentText());
+}
+
 ModelSettings::ModelSettings() {
   InitFields();
   ConnectFields();

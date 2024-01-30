@@ -46,6 +46,28 @@ class SceneSettings : public ASettings {
   QComboBox *type_;
 };
 
+class ExtraSceneSettings : public SceneSettings {
+  Q_OBJECT
+
+ public:
+  ExtraSceneSettings();
+  void SetExtraComboBoxOptions(const QVector<QString> &labels);
+
+ public slots:
+  void ExtraComboBoxSlot();
+
+ signals:
+  void ExtraComboBoxSignal(const QString &index);
+
+ private:
+  void InitFields() override;
+  void ConnectFields() override;
+  void InitLayouts() override;
+
+ private:
+  QComboBox *wireframe_type_;
+};
+
 class ModelSettings final : public SceneSettings {
   Q_OBJECT
 
