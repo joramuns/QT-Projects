@@ -57,14 +57,14 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices) {
   Bind();
   VBO_->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 9,
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 7,
                         (void *)0);
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 9,
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 7,
                         (void *)(4 * sizeof(GLfloat)));
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 9,
-                        (void *)(7 * sizeof(GLfloat)));
+  // glEnableVertexAttribArray(2);
+  // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 9,
+  //                       (void *)(7 * sizeof(GLfloat)));
   // Release();
 }
 

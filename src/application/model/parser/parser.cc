@@ -34,7 +34,7 @@ int Parser::ReadObj(const std::string &filename) {
       if (prefix == "v ") {
         AddPoint(data);
       } else if (prefix == "vt") {
-        AddTexturePoint(data);
+        // AddTexturePoint(data);
       } else if (prefix == "vn") {
         AddNormalsPoint(data);
       } else if (prefix == "f ") {
@@ -199,7 +199,6 @@ void Parser::Packer() noexcept {
   } else if (all_textures_[0].empty() && !all_normals_[0].empty()) { // v//vn
     packer = new VertexNormalsCoordinatePacker(vertices, normals);
   } else {
-    std::cout << "tut____bebra_kedebra______" << std::endl;
     packer = new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
   }
   coordinates_ = packer->GetCoordinates();

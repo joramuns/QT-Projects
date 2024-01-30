@@ -37,8 +37,8 @@ void ScaleButtons::InitLayouts() {
   h_layout->addWidget(decrease_);
 
   form_layout->addRow(new QLabel(tr("Step:")), step_);
-  step_->setMinimum(0.01f);
-  step_->setSingleStep(0.01f);
+  step_->setMinimum(0.1f);
+  step_->setSingleStep(0.05f);
 
   layout->addLayout(h_layout);
   layout->addLayout(form_layout);
