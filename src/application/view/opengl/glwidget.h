@@ -22,6 +22,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void Rotate(double value, char axis, int model_number);
   void Move(double value, char axis, int model_number);
   void Scale(double value, int model_number);
+  void SwitchProjection(int index);
+  void SwitchWireframe(int index);
 
  protected:
   /* void initializeGL() override; */
@@ -36,6 +38,11 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
  private:
   QOpenGLShaderProgram *program_;
   std::vector<GLBuffer *> GLBuffers_;
+
+  // temp settings
+  QColor bg_color_;
+  bool projection_;
+  bool solid_;
 };
 }  // namespace s21
 

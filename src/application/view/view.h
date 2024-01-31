@@ -29,16 +29,22 @@ class View final : public QWidget {
   void Scale(double value, int model_number);
   void AddListWidgetItem(const QString filename);
   void RemoveListWidgetItem(int model_number);
+  void SwitchProjection(int index);
+  void SwitchWireframe(int index);
 
  private slots:
   void ViewTransformSlot(double value, char axis, int type, int model_number);
   void OpenFileSlot(QString filename);
   void CloseFileSlot();
+  void SceneOptionSlot(int index);
+  void ExtraSceneOptionSlot(int index);
 
  signals:
   void ViewTransformSignal(double value, char axis, int type, int model_number);
   void OpenFileSignal(QString filename);
   void CloseFileSignal(int model_number);
+  void SceneOptionSignal(int index);
+  void ExtraSceneOptionSignal(int index);
 
  private:
   QGridLayout *main_layout_;

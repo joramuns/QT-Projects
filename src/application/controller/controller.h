@@ -18,6 +18,8 @@ class Controller final : public QObject {
   void ControllerTransformSlot(double value, char axis, int type, int model_number);
   void ControllerOpenFileSlot(QString filename);
   void ControllerCloseFileSlot(int model_number);
+  void ControllerSceneOptionSlot(int index);
+  void ControllerExtraSceneOptionSlot(int index);
 
  private:
   View *view_;

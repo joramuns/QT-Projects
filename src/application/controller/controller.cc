@@ -14,6 +14,12 @@ Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
 
   connect(view_, &View::CloseFileSignal, this,
           &Controller::ControllerCloseFileSlot);
+
+  connect(view_, &View::SceneOptionSignal, this,
+          &Controller::ControllerSceneOptionSlot);
+
+  connect(view_, &View::ExtraSceneOptionSignal, this,
+          &Controller::ControllerExtraSceneOptionSlot);
 }
 
 void Controller::ControllerTransformSlot(double value, char axis, int type,
@@ -47,6 +53,14 @@ void Controller::ControllerCloseFileSlot(int model_number) {
     fasade_->RemoveModel(model_number);
     view_->UnloadModel(model_number);
   }
+}
+
+void Controller::ControllerSceneOptionSlot(int index) {
+  view_->SwitchProjection(index);
+}
+
+void Controller::ControllerExtraSceneOptionSlot(int index) {
+  view_->SwitchWireframe(index);
 }
 
 }  // namespace s21

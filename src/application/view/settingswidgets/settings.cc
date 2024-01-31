@@ -9,7 +9,7 @@ ASettings::ASettings() {
 void ASettings::ColorSlot() { emit ColorSignal(); }
 
 void ASettings::ComboBoxSlot() {
-  emit ComboBoxSignal(static_cast<QComboBox *>(sender())->currentText());
+  emit ComboBoxSignal(static_cast<QComboBox *>(sender())->currentIndex());
 }
 
 SceneSettings::SceneSettings() {
@@ -65,7 +65,7 @@ void ExtraSceneSettings::SetExtraComboBoxOptions(
 }
 
 void ExtraSceneSettings::ExtraComboBoxSlot() {
-  emit ExtraComboBoxSignal(static_cast<QComboBox *>(sender())->currentText());
+  emit ExtraComboBoxSignal(static_cast<QComboBox *>(sender())->currentIndex());
 }
 
 ModelSettings::ModelSettings() {

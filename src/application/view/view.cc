@@ -15,10 +15,16 @@ View::View() : QWidget(nullptr) {
   TransformationTab *transformation_tab = new TransformationTab();
   connect(transformation_tab, &TransformationTab::TransformTabSignal, this,
           [=](double value, char axis, int type) {
-          View::ViewTransformSlot(value, axis, type, list_widget_->currentRow());
+            View::ViewTransformSlot(value, axis, type,
+                                    list_widget_->currentRow());
           });
 
   SettingsTab *settings_tab = new SettingsTab();
+  connect(settings_tab, &SettingsTab::TabSceneOptionSignal, this,
+          &View::SceneOptionSlot);
+  connect(settings_tab, &SettingsTab::TabExtraSceneOptionSignal, this,
+          &View::ExtraSceneOptionSlot);
+
   AppManagement *app_management = new AppManagement("Main menu");
   connect(app_management, &AppManagement::AppOpenFileSignal, this,
           &View::OpenFileSlot);
@@ -76,6 +82,16 @@ void View::AddListWidgetItem(const QString filename) {
   new QListWidgetItem(filename, list_widget_);
 }
 
+void View::SwitchProjection(int index) {
+  gl_widget_->SwitchProjection(index);
+  gl_widget_->update();
+}
+
+void View::SwitchWireframe(int index) {
+  gl_widget_->SwitchWireframe(index);
+  gl_widget_->update();
+}
+
 void View::ViewTransformSlot(double value, char axis, int type,
                              int model_number) {
   emit ViewTransformSignal(value, axis, type, model_number);
@@ -88,4 +104,15 @@ void View::CloseFileSlot() {
     emit CloseFileSignal(list_widget_->currentRow());
   }
 }
+
+void View::SceneOptionSlot(int index) {
+  std::cout << "Scene option " << index << std::endl;
+  emit SceneOptionSignal(index);
+}
+
+void View::ExtraSceneOptionSlot(int index) {
+  std::cout << "ExtraScene option " << index << std::endl;
+  emit ExtraSceneOptionSignal(index);
+}
+
 }  // namespace s21

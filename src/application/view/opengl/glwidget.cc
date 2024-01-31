@@ -2,23 +2,24 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "glwidget.h"
-#include "stb_image.h"
 
 #include <QDebug>
+
+#include "stb_image.h"
 /* #include <QFile> */
 #include <iostream>
 #include <vector>
 
 namespace s21 {
-GLWidget::GLWidget() {
+GLWidget::GLWidget()
+    : bg_color_(100, 100, 100, 1), projection_(true), solid_(false) {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
 
 GLWidget::~GLWidget() {
   makeCurrent();
-  for (auto &item : GLBuffers_)
-    delete item;
+  for (auto &item : GLBuffers_) delete item;
   program_->disableAttributeArray(0);
   program_->release();
   delete program_;
@@ -46,6 +47,10 @@ void GLWidget::Scale(double value, int model_number) {
   GLBuffers_[model_number]->Scale(value);
 }
 
+void GLWidget::SwitchProjection(int index) { projection_ = index; }
+
+void GLWidget::SwitchWireframe(int index) { solid_ = index; }
+
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();
@@ -62,22 +67,28 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  if (solid_) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  } else {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  }
   /* const qreal retinaScale = devicePixelRatio(); */
   /* glViewport(0, 0, width() * retinaScale, height() * retinaScale); */
   // Draw the scene:
-  glClearColor(0.2, 0.1, 0.1, 1.0);
+  glClearColor(bg_color_.redF(), bg_color_.greenF(), bg_color_.blueF(),
+               bg_color_.alphaF());
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glDepthFunc(GL_LESS);
   program_->bind();
-  
+
   // GLuint texture_id;
   // glGenTextures(1, &texture_id);
   // glBindTexture(GL_TEXTURE_2D, texture_id);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// Set texture wrapping to GL_REPEAT (usually basic wrapping method)
+  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// Set
+  // texture wrapping to GL_REPEAT (usually basic wrapping method)
   // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  
+
   // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -87,8 +98,8 @@ void GLWidget::paintGL() {
   //               "view/opengl/mramor.jpeg",
   //               &width, &height, &channels, 0);
 
-  // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-  // glGenerateMipmap(GL_TEXTURE_2D);
+  // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+  // GL_UNSIGNED_BYTE, image); glGenerateMipmap(GL_TEXTURE_2D);
   // stbi_image_free(image);
   // glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -122,11 +133,12 @@ void GLWidget::LoadShaders() {
 }
 
 void GLWidget::LoadCommonUniforms() {
-
   QMatrix4x4 perspective_matrix{};
-  perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
+  if (projection_) {
+    perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
+  }
   perspective_matrix.translate(-0.0, -0.0, -2.0);
   program_->setUniformValue("perspectiveMatrix", perspective_matrix);
 }
 
-} // namespace s21
+}  // namespace s21

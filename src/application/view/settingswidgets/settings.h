@@ -20,7 +20,7 @@ class ASettings : public QWidget {
 
  signals:
   void ColorSignal();
-  void ComboBoxSignal(const QString &index);
+  void ComboBoxSignal(int index);
 
  protected:
   QVBoxLayout *layout_;
@@ -57,7 +57,7 @@ class ExtraSceneSettings : public SceneSettings {
   void ExtraComboBoxSlot();
 
  signals:
-  void ExtraComboBoxSignal(const QString &index);
+  void ExtraComboBoxSignal(int index);
 
  private:
   void InitFields() override;

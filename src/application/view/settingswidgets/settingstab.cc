@@ -59,23 +59,21 @@ void SettingsTab::EdgeColorSlot() {
   emit TabEdgeColorSignal();
 }
 
-void SettingsTab::SceneOptionSlot(const QString &index) {
-  std::cout << "Scene option " << index.toStdString() << std::endl;
+void SettingsTab::SceneOptionSlot(int index) {
   emit TabSceneOptionSignal(index);
 }
 
-void SettingsTab::ExtraSceneOptionSlot(const QString &index) {
-  std::cout << "ExtraScene option " << index.toStdString() << std::endl;
+void SettingsTab::ExtraSceneOptionSlot(int index) {
   emit TabExtraSceneOptionSignal(index);
 }
 
-void SettingsTab::VertexOptionSlot(const QString &index) {
-  std::cout << "Vertex option " << index.toStdString() << std::endl;
+void SettingsTab::VertexOptionSlot(int index) {
+  std::cout << "Vertex option " << index << std::endl;
   emit TabVertexOptionSignal(index);
 }
 
-void SettingsTab::EdgeOptionSlot(const QString &index) {
-  std::cout << "Edge option " << index.toStdString() << std::endl;
+void SettingsTab::EdgeOptionSlot(int index) {
+  std::cout << "Edge option " << index << std::endl;
   emit TabEdgeOptionSignal(index);
 }
 
