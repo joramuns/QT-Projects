@@ -41,7 +41,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
   // temp settings
   QColor bg_color_;
-  bool projection_;
+  bool central_projection_;
   bool solid_;
 };
 }  // namespace s21

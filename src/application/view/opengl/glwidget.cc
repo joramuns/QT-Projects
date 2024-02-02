@@ -12,7 +12,7 @@
 
 namespace s21 {
 GLWidget::GLWidget()
-    : bg_color_(100, 100, 100, 1), projection_(true), solid_(false) {
+    : bg_color_(100, 100, 100, 1), central_projection_(false), solid_(false) {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
@@ -47,7 +47,7 @@ void GLWidget::Scale(double value, int model_number) {
   GLBuffers_[model_number]->Scale(value);
 }
 
-void GLWidget::SwitchProjection(int index) { projection_ = index; }
+void GLWidget::SwitchProjection(int index) { central_projection_ = index; }
 
 void GLWidget::SwitchWireframe(int index) { solid_ = index; }
 
@@ -134,10 +134,10 @@ void GLWidget::LoadShaders() {
 
 void GLWidget::LoadCommonUniforms() {
   QMatrix4x4 perspective_matrix{};
-  if (projection_) {
+  if (central_projection_) {
     perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
+    perspective_matrix.translate(-0.0, -0.0, -2.0);
   }
-  perspective_matrix.translate(-0.0, -0.0, -2.0);
   program_->setUniformValue("perspectiveMatrix", perspective_matrix);
 }
 

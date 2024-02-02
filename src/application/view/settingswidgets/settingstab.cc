@@ -7,7 +7,7 @@ namespace s21 {
 SettingsTab::SettingsTab() {
   scene_settings_ = new ExtraSceneSettings();
   scene_settings_->SetComboBoxOptions(
-      QVector<QString>{"Central projection", "Parallel projection"});
+      QVector<QString>{"Parallel projection", "Central projection"});
   scene_settings_->SetExtraComboBoxOptions(
       QVector<QString>{"Wireframe", "Solid"});
 
