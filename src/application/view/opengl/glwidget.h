@@ -24,6 +24,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void Scale(double value, int model_number);
   void SwitchProjection(int index);
   void SwitchWireframe(int index);
+  void SetSceneColor(QColor color);
 
  protected:
   /* void initializeGL() override; */

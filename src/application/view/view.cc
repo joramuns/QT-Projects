@@ -24,6 +24,8 @@ View::View() : QWidget(nullptr) {
           &View::SceneOptionSlot);
   connect(settings_tab, &SettingsTab::TabExtraSceneOptionSignal, this,
           &View::ExtraSceneOptionSlot);
+  connect(settings_tab, &SettingsTab::TabSceneColorSignal, this,
+          &View::SceneColorSlot);
 
   AppManagement *app_management = new AppManagement("Main menu");
   connect(app_management, &AppManagement::AppOpenFileSignal, this,
@@ -92,6 +94,10 @@ void View::SwitchWireframe(int index) {
   gl_widget_->update();
 }
 
+void View::ChangeSceneColor(QColor scene_color) {
+  gl_widget_->SetSceneColor(scene_color);
+}
+
 void View::ViewTransformSlot(double value, char axis, int type,
                              int model_number) {
   emit ViewTransformSignal(value, axis, type, model_number);
@@ -106,13 +112,15 @@ void View::CloseFileSlot() {
 }
 
 void View::SceneOptionSlot(int index) {
-  std::cout << "Scene option " << index << std::endl;
   emit SceneOptionSignal(index);
 }
 
 void View::ExtraSceneOptionSlot(int index) {
-  std::cout << "ExtraScene option " << index << std::endl;
   emit ExtraSceneOptionSignal(index);
+}
+
+void View::SceneColorSlot(QColor scene_color) {
+  emit SceneColorSignal(scene_color);
 }
 
 }  // namespace s21

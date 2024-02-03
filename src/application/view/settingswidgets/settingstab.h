@@ -2,6 +2,7 @@
 #define VIEW_SETTINGSWIDGETS_SETTINGSTAB_H_
 
 #include <QTabWidget>
+#include <QColorDialog>
 
 #include "settings.h"
 
@@ -24,7 +25,7 @@ class SettingsTab final : public QTabWidget {
   void EdgeSizeSlot(double value);
 
  signals:
-  void TabSceneColorSignal();
+  void TabSceneColorSignal(QColor scene_color);
   void TabVertexColorSignal();
   void TabEdgeColorSignal();
   void TabSceneOptionSignal(int index);

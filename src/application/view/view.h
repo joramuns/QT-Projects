@@ -31,6 +31,7 @@ class View final : public QWidget {
   void RemoveListWidgetItem(int model_number);
   void SwitchProjection(int index);
   void SwitchWireframe(int index);
+  void ChangeSceneColor(QColor scene_color);
 
  private slots:
   void ViewTransformSlot(double value, char axis, int type, int model_number);
@@ -38,6 +39,7 @@ class View final : public QWidget {
   void CloseFileSlot();
   void SceneOptionSlot(int index);
   void ExtraSceneOptionSlot(int index);
+  void SceneColorSlot(QColor scene_color);
 
  signals:
   void ViewTransformSignal(double value, char axis, int type, int model_number);
@@ -45,6 +47,7 @@ class View final : public QWidget {
   void CloseFileSignal(int model_number);
   void SceneOptionSignal(int index);
   void ExtraSceneOptionSignal(int index);
+  void SceneColorSignal(QColor scene_color);
 
  private:
   QGridLayout *main_layout_;

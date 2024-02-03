@@ -3,9 +3,9 @@
 
 #include <QWidget>
 
+#include "../model/fasade/fasade.h"
 #include "../model/shaderprogram.h"
 #include "../view/view.h"
-#include "../model/fasade/fasade.h"
 
 namespace s21 {
 class Controller final : public QObject {
@@ -15,11 +15,13 @@ class Controller final : public QObject {
   Controller(View *v, Fasade *f);
 
  private slots:
-  void ControllerTransformSlot(double value, char axis, int type, int model_number);
+  void ControllerTransformSlot(double value, char axis, int type,
+                               int model_number);
   void ControllerOpenFileSlot(QString filename);
   void ControllerCloseFileSlot(int model_number);
   void ControllerSceneOptionSlot(int index);
   void ControllerExtraSceneOptionSlot(int index);
+  void ControllerSceneColor(QColor scene_color);
 
  private:
   View *view_;

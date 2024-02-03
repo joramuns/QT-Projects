@@ -20,6 +20,9 @@ Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
 
   connect(view_, &View::ExtraSceneOptionSignal, this,
           &Controller::ControllerExtraSceneOptionSlot);
+
+  connect(view_, &View::SceneColorSignal, this,
+          &Controller::ControllerSceneColor);
 }
 
 void Controller::ControllerTransformSlot(double value, char axis, int type,
@@ -61,6 +64,10 @@ void Controller::ControllerSceneOptionSlot(int index) {
 
 void Controller::ControllerExtraSceneOptionSlot(int index) {
   view_->SwitchWireframe(index);
+}
+
+void Controller::ControllerSceneColor(QColor scene_color) {
+  view_->ChangeSceneColor(scene_color);
 }
 
 }  // namespace s21

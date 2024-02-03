@@ -51,6 +51,9 @@ void GLWidget::SwitchProjection(int index) { central_projection_ = index; }
 
 void GLWidget::SwitchWireframe(int index) { solid_ = index; }
 
+void GLWidget::SetSceneColor(QColor color) { 
+  bg_color_ = color; }
+
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();

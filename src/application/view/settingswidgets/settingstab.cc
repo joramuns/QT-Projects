@@ -45,8 +45,8 @@ SettingsTab::SettingsTab() {
 }
 
 void SettingsTab::SceneColorSlot() {
-  std::cout << "Scene color tab" << std::endl;
-  emit TabSceneColorSignal();
+  QColor scene_color = QColorDialog::getColor(Qt::white, this);
+  emit TabSceneColorSignal(scene_color);
 }
 
 void SettingsTab::VertexColorSlot() {
