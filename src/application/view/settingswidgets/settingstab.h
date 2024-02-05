@@ -27,7 +27,7 @@ class SettingsTab final : public QTabWidget {
 
  signals:
   void TabSceneColorSignal(QColor scene_color);
-  void TabVertexColorSignal();
+  void TabVertexColorSignal(QVector3D vertex_color);
   void TabEdgeColorSignal(QVector3D edge_color);
   void TabSceneOptionSignal(int index);
   void TabExtraSceneOptionSignal(int index);

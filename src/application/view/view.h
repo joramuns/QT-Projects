@@ -41,6 +41,7 @@ class View final : public QWidget {
   void SceneOptionSlot(int index);
   void ExtraSceneOptionSlot(int index);
   void SceneColorSlot(QColor scene_color);
+  void VertexColorSlot(QVector3D vertex_color);
   void EdgeColorSlot(QVector3D edge_color);
 
  signals:
@@ -50,6 +51,7 @@ class View final : public QWidget {
   void SceneOptionSignal(int index);
   void ExtraSceneOptionSignal(int index);
   void SceneColorSignal(QColor scene_color);
+  void VertexColorSignal(QVector3D vertex_color);
   void EdgeColorSignal(QVector3D edge_color);
 
  private:
