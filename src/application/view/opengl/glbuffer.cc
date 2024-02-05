@@ -2,7 +2,12 @@
 
 namespace s21 {
 GLBuffer::GLBuffer()
-    : move_uniform_{0.0}, rotate_uniform_{0.0}, scale_uniform_{1.0} {
+    : move_uniform_{0.0},
+      rotate_uniform_{0.0},
+      scale_uniform_{1.0},
+      vert_color_(0, 100, 100, 1),
+      edge_color_(0, 0, 100, 1)
+{
   initializeOpenGLFunctions();
   VAO_ = new QOpenGLVertexArrayObject;
 
@@ -19,8 +24,7 @@ GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices,
                    QOpenGLShaderProgram *program)
     : GLBuffer() {
   program_ = program;
-  if (!program->bind())
-    qDebug() << "Program failure:\n" << program->log();
+  if (!program->bind()) qDebug() << "Program failure:\n" << program->log();
   LoadData(vertices);
   Release();
   program->release();
@@ -70,8 +74,7 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices) {
 
 void GLBuffer::LoadUniforms() {
   const QVector3D light_color{1.0f, 1.0f, 1.0f};
-  const QVector3D model_color{0.85f, 0.85f, 0.85f};
-  program_->setUniformValue("modelColor", model_color);
+  /* program_->setUniformValue("modelColor", edge_color_); */
   program_->setUniformValue("lightColor", light_color);
 
   program_->setUniformValue("translateVector", move_uniform_.GetChangeVector());
@@ -79,11 +82,6 @@ void GLBuffer::LoadUniforms() {
   program_->setUniformValue("rotateVector", rotate_uniform_.GetChangeVector());
 
   program_->setUniformValue("scaleVector", scale_uniform_.GetChangeVector());
-
-  QMatrix4x4 perspective_matrix{};
-  perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
-  perspective_matrix.translate(-0.0, -0.0, -2.0);
-  program_->setUniformValue("perspectiveMatrix", perspective_matrix);
 }
 
 GLuint GLBuffer::GetBuffSize() const noexcept {
@@ -99,4 +97,4 @@ void GLBuffer::Move(double value, char axis) {
 }
 
 void GLBuffer::Scale(double value) { scale_uniform_.Change(value, 'A'); }
-} // namespace s21
+}  // namespace s21

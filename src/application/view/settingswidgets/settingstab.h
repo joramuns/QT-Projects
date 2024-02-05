@@ -1,8 +1,9 @@
 #ifndef VIEW_SETTINGSWIDGETS_SETTINGSTAB_H_
 #define VIEW_SETTINGSWIDGETS_SETTINGSTAB_H_
 
-#include <QTabWidget>
 #include <QColorDialog>
+#include <QTabWidget>
+#include <QVector3D>
 
 #include "settings.h"
 
@@ -27,7 +28,7 @@ class SettingsTab final : public QTabWidget {
  signals:
   void TabSceneColorSignal(QColor scene_color);
   void TabVertexColorSignal();
-  void TabEdgeColorSignal();
+  void TabEdgeColorSignal(QVector3D edge_color);
   void TabSceneOptionSignal(int index);
   void TabExtraSceneOptionSignal(int index);
   void TabVertexOptionSignal(int index);

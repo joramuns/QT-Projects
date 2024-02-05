@@ -56,7 +56,9 @@ void SettingsTab::VertexColorSlot() {
 
 void SettingsTab::EdgeColorSlot() {
   std::cout << "Edge color tab" << std::endl;
-  emit TabEdgeColorSignal();
+  QColor edge_color = QColorDialog::getColor(Qt::white, this);
+  QVector3D edge_vcolor{edge_color.redF(), edge_color.greenF(), edge_color.blueF()};
+  emit TabEdgeColorSignal(edge_vcolor);
 }
 
 void SettingsTab::SceneOptionSlot(int index) {

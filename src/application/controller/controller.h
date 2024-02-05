@@ -22,6 +22,7 @@ class Controller final : public QObject {
   void ControllerSceneOptionSlot(int index);
   void ControllerExtraSceneOptionSlot(int index);
   void ControllerSceneColor(QColor scene_color);
+  void ControllerEdgeColor(QVector3D edge_color);
 
  private:
   View *view_;

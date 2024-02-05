@@ -12,7 +12,14 @@
 
 namespace s21 {
 GLWidget::GLWidget()
-    : bg_color_(100, 100, 100, 1), central_projection_(false), solid_(false) {
+    : bg_color_(100, 100, 100, 1),
+      vert_color_(198, 23, 23, 1),
+      edge_color_(198, 0, 100),
+      central_projection_(false),
+      solid_(false),
+      vert_type_(2),
+      vert_size_(10.0),
+      dashed_lines_(false) {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
@@ -51,8 +58,9 @@ void GLWidget::SwitchProjection(int index) { central_projection_ = index; }
 
 void GLWidget::SwitchWireframe(int index) { solid_ = index; }
 
-void GLWidget::SetSceneColor(QColor color) { 
-  bg_color_ = color; }
+void GLWidget::SetSceneColor(QColor color) { bg_color_ = color; }
+
+void GLWidget::SetEdgeColor(QVector3D color) { edge_color_ = color; }
 
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
@@ -115,6 +123,20 @@ void GLWidget::paintGL() {
     LoadCommonUniforms();
 
     glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());
+    if (dashed_lines_) {
+    }
+    switch (vert_type_) {
+      case 2:
+        glEnable(GL_POINT_SMOOTH);
+      case 1:
+        glPointSize(vert_size_);
+        glDrawArrays(GL_POINTS, 0, GLBuffers_[i]->GetBuffSize());
+      case 0:
+        break;
+      default:
+        glDisable(GL_POINT_SMOOTH);
+        break;
+    }
     GLBuffers_[i]->Release();
     // GLBuffers_[i]->BindNormals();
     // GLBuffers_[i]->ReleaseNormals();
@@ -142,6 +164,7 @@ void GLWidget::LoadCommonUniforms() {
     perspective_matrix.translate(-0.0, -0.0, -2.0);
   }
   program_->setUniformValue("perspectiveMatrix", perspective_matrix);
+  program_->setUniformValue("modelColor", edge_color_);
 }
 
 }  // namespace s21

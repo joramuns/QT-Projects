@@ -1,6 +1,7 @@
 #ifndef VIEW_OPENGL_GLBUFFER_H_
 #define VIEW_OPENGL_GLBUFFER_H_
 
+#include <QColor>
 #include <QOpenGLBuffer>
 #include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLShaderProgram>
@@ -8,13 +9,11 @@
 
 #include "transform_class.h"
 
-
 namespace s21 {
 class GLBuffer : QOpenGLFunctions_4_1_Core {
  public:
   GLBuffer();
-  GLBuffer(const std::vector<GLfloat> &vertices,
-           QOpenGLShaderProgram *program);
+  GLBuffer(const std::vector<GLfloat> &vertices, QOpenGLShaderProgram *program);
   GLBuffer(const GLBuffer &other) = delete;
   GLBuffer(GLBuffer &&other) = delete;
   ~GLBuffer();
@@ -41,10 +40,12 @@ class GLBuffer : QOpenGLFunctions_4_1_Core {
   // QOpenGLVertexArrayObject *VAO_normals_;
   // QOpenGLBuffer *VBO_normals_;
   // QOpenGLBuffer *EBO_normals_;
-  
+
   Axes move_uniform_;
   Axes rotate_uniform_;
   Axes scale_uniform_;
+  QColor vert_color_;
+  QColor edge_color_;
 };
 }  // namespace s21
 

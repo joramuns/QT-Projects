@@ -26,6 +26,8 @@ View::View() : QWidget(nullptr) {
           &View::ExtraSceneOptionSlot);
   connect(settings_tab, &SettingsTab::TabSceneColorSignal, this,
           &View::SceneColorSlot);
+  connect(settings_tab, &SettingsTab::TabEdgeColorSignal, this,
+          &View::EdgeColorSlot);
 
   AppManagement *app_management = new AppManagement("Main menu");
   connect(app_management, &AppManagement::AppOpenFileSignal, this,
@@ -98,6 +100,10 @@ void View::ChangeSceneColor(QColor scene_color) {
   gl_widget_->SetSceneColor(scene_color);
 }
 
+void View::ChangeEdgeColor(QVector3D edge_color) {
+  gl_widget_->SetEdgeColor(edge_color);
+}
+
 void View::ViewTransformSlot(double value, char axis, int type,
                              int model_number) {
   emit ViewTransformSignal(value, axis, type, model_number);
@@ -111,9 +117,7 @@ void View::CloseFileSlot() {
   }
 }
 
-void View::SceneOptionSlot(int index) {
-  emit SceneOptionSignal(index);
-}
+void View::SceneOptionSlot(int index) { emit SceneOptionSignal(index); }
 
 void View::ExtraSceneOptionSlot(int index) {
   emit ExtraSceneOptionSignal(index);
@@ -121,6 +125,10 @@ void View::ExtraSceneOptionSlot(int index) {
 
 void View::SceneColorSlot(QColor scene_color) {
   emit SceneColorSignal(scene_color);
+}
+
+void View::EdgeColorSlot(QVector3D edge_color) {
+  emit EdgeColorSignal(edge_color);
 }
 
 }  // namespace s21
