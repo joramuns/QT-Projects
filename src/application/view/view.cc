@@ -127,6 +127,10 @@ void View::SceneColorSlot(QColor scene_color) {
   emit SceneColorSignal(scene_color);
 }
 
+void View::VertexColorSlot(QVector3D vertex_color) {
+  emit VertexColorSignal(vertex_color);
+}
+
 void View::EdgeColorSlot(QVector3D edge_color) {
   emit EdgeColorSignal(edge_color);
 }
