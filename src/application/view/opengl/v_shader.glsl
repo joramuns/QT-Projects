@@ -6,6 +6,9 @@ layout(location = 2) in vec2 texCoord;
 out vec3 Normal;
 out vec3 FragPos;
 out vec2 TexCoord;
+flat out vec3 startPos;
+out vec3 vertPos;
+
 
 uniform vec3 translateVector;
 uniform vec3 rotateVector;
@@ -92,4 +95,7 @@ void main() {
   FragPos = vec3(translation * rotation * scaling * myPos);
   Normal = normal;
   TexCoord = texCoord;
+
+  vertPos = gl_Position.xyz / gl_Position.w;
+  startPos = vertPos;
 }
