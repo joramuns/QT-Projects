@@ -26,6 +26,8 @@ View::View() : QWidget(nullptr) {
           &View::ExtraSceneOptionSlot);
   connect(settings_tab, &SettingsTab::TabSceneColorSignal, this,
           &View::SceneColorSlot);
+  connect(settings_tab, &SettingsTab::TabVertexColorSignal, this,
+          &View::VertexColorSlot);
   connect(settings_tab, &SettingsTab::TabEdgeColorSignal, this,
           &View::EdgeColorSlot);
 
@@ -98,6 +100,10 @@ void View::SwitchWireframe(int index) {
 
 void View::ChangeSceneColor(QColor scene_color) {
   gl_widget_->SetSceneColor(scene_color);
+}
+
+void View::ChangeVertexColor(QVector3D vertex_color) {
+  gl_widget_->SetVertexColor(vertex_color);
 }
 
 void View::ChangeEdgeColor(QVector3D edge_color) {

@@ -13,13 +13,13 @@
 namespace s21 {
 GLWidget::GLWidget()
     : bg_color_(100, 100, 100, 1),
-      vert_color_(198, 23, 23, 1),
-      edge_color_(198, 0, 100),
+      vert_color_(0.95, 0.95, 0.95),
+      edge_color_(0.95, 0.15, 0.85),
       central_projection_(false),
       solid_(false),
       vert_type_(2),
       vert_size_(10.0),
-      dashed_lines_(false) {
+      dashed_lines_(true) {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
@@ -59,6 +59,8 @@ void GLWidget::SwitchProjection(int index) { central_projection_ = index; }
 void GLWidget::SwitchWireframe(int index) { solid_ = index; }
 
 void GLWidget::SetSceneColor(QColor color) { bg_color_ = color; }
+
+void GLWidget::SetVertexColor(QVector3D color) { vert_color_ = color; }
 
 void GLWidget::SetEdgeColor(QVector3D color) { edge_color_ = color; }
 
@@ -125,17 +127,12 @@ void GLWidget::paintGL() {
     glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());
     if (dashed_lines_) {
     }
-    switch (vert_type_) {
-      case 2:
-        glEnable(GL_POINT_SMOOTH);
-      case 1:
-        glPointSize(vert_size_);
-        glDrawArrays(GL_POINTS, 0, GLBuffers_[i]->GetBuffSize());
-      case 0:
-        break;
-      default:
-        glDisable(GL_POINT_SMOOTH);
-        break;
+    if (vert_type_) {
+      program_->setUniformValue("vertexType", vert_type_);
+      program_->setUniformValue("modelColor", vert_color_);
+      glPointSize(vert_size_);
+      glDrawArrays(GL_POINTS, 0, GLBuffers_[i]->GetBuffSize());
+      program_->setUniformValue("vertexType", 0);
     }
     GLBuffers_[i]->Release();
     // GLBuffers_[i]->BindNormals();
@@ -165,6 +162,8 @@ void GLWidget::LoadCommonUniforms() {
   }
   program_->setUniformValue("perspectiveMatrix", perspective_matrix);
   program_->setUniformValue("modelColor", edge_color_);
+  program_->setUniformValue("dashedLines", dashed_lines_);
+  program_->setUniformValue("resolution", width(), height());
 }
 
 }  // namespace s21

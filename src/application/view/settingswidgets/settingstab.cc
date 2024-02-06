@@ -50,7 +50,6 @@ void SettingsTab::SceneColorSlot() {
 }
 
 void SettingsTab::VertexColorSlot() {
-  std::cout << "Vertex color tab" << std::endl;
   QColor vertex_color = QColorDialog::getColor(Qt::white, this);
   QVector3D vertex_vcolor{vertex_color.redF(), vertex_color.greenF(), vertex_color.blueF()};
   emit TabVertexColorSignal(vertex_vcolor);

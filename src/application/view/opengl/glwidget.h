@@ -25,6 +25,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void SwitchProjection(int index);
   void SwitchWireframe(int index);
   void SetSceneColor(QColor color);
+  void SetVertexColor(QVector3D color);
   void SetEdgeColor(QVector3D color);
 
  protected:
@@ -43,7 +44,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
   // temp settings
   QColor bg_color_;
-  QColor vert_color_;
+  QVector3D vert_color_;
   QVector3D edge_color_;
   bool central_projection_;
   bool solid_;

@@ -44,8 +44,6 @@ class GLBuffer : QOpenGLFunctions_4_1_Core {
   Axes move_uniform_;
   Axes rotate_uniform_;
   Axes scale_uniform_;
-  QColor vert_color_;
-  QColor edge_color_;
 };
 }  // namespace s21
 

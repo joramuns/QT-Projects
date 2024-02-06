@@ -24,6 +24,9 @@ Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
   connect(view_, &View::SceneColorSignal, this,
           &Controller::ControllerSceneColor);
 
+  connect(view_, &View::VertexColorSignal, this,
+          &Controller::ControllerVertexColor);
+
   connect(view_, &View::EdgeColorSignal, this,
           &Controller::ControllerEdgeColor);
 }
@@ -71,6 +74,10 @@ void Controller::ControllerExtraSceneOptionSlot(int index) {
 
 void Controller::ControllerSceneColor(QColor scene_color) {
   view_->ChangeSceneColor(scene_color);
+}
+
+void Controller::ControllerVertexColor(QVector3D vertex_color) {
+  view_->ChangeVertexColor(vertex_color);
 }
 
 void Controller::ControllerEdgeColor(QVector3D edge_color) {

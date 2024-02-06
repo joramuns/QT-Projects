@@ -32,6 +32,7 @@ class View final : public QWidget {
   void SwitchProjection(int index);
   void SwitchWireframe(int index);
   void ChangeSceneColor(QColor scene_color);
+  void ChangeVertexColor(QVector3D vertex_color);
   void ChangeEdgeColor(QVector3D edge_color);
 
  private slots:

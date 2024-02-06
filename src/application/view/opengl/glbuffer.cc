@@ -1,13 +1,9 @@
 #include "glbuffer.h"
+#include <iostream>
 
 namespace s21 {
 GLBuffer::GLBuffer()
-    : move_uniform_{0.0},
-      rotate_uniform_{0.0},
-      scale_uniform_{1.0},
-      vert_color_(0, 100, 100, 1),
-      edge_color_(0, 0, 100, 1)
-{
+    : move_uniform_{0.0}, rotate_uniform_{0.0}, scale_uniform_{1.0} {
   initializeOpenGLFunctions();
   VAO_ = new QOpenGLVertexArrayObject;
 
@@ -74,7 +70,6 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices) {
 
 void GLBuffer::LoadUniforms() {
   const QVector3D light_color{1.0f, 1.0f, 1.0f};
-  /* program_->setUniformValue("modelColor", edge_color_); */
   program_->setUniformValue("lightColor", light_color);
 
   program_->setUniformValue("translateVector", move_uniform_.GetChangeVector());
@@ -82,6 +77,10 @@ void GLBuffer::LoadUniforms() {
   program_->setUniformValue("rotateVector", rotate_uniform_.GetChangeVector());
 
   program_->setUniformValue("scaleVector", scale_uniform_.GetChangeVector());
+
+  std::cout << "scale : " <<  scale_uniform_.GetChangeVector()[0] << std::endl;
+  program_->setUniformValue("gapSize", 10 * scale_uniform_.GetChangeVector()[0]);
+  program_->setUniformValue("dashSize", 10 * scale_uniform_.GetChangeVector()[0]);
 }
 
 GLuint GLBuffer::GetBuffSize() const noexcept {
