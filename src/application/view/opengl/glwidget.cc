@@ -64,6 +64,12 @@ void GLWidget::SetVertexColor(QVector3D color) { vert_color_ = color; }
 
 void GLWidget::SetEdgeColor(QVector3D color) { edge_color_ = color; }
 
+void GLWidget::SetVertexOption(int index) { vert_type_ = index; }
+
+void GLWidget::SetEdgeOption(int index) {
+  dashed_lines_ = static_cast<bool>(index);
+}
+
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();

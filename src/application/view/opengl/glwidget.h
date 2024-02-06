@@ -27,6 +27,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void SetSceneColor(QColor color);
   void SetVertexColor(QVector3D color);
   void SetEdgeColor(QVector3D color);
+  void SetVertexOption(int index);
+  void SetEdgeOption(int index);
 
  protected:
   /* void initializeGL() override; */

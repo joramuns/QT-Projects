@@ -24,6 +24,8 @@ class Controller final : public QObject {
   void ControllerSceneColor(QColor scene_color);
   void ControllerVertexColor(QVector3D vertex_color);
   void ControllerEdgeColor(QVector3D edge_color);
+  void ControllerVertexOption(int index);
+  void ControllerEdgeOption(int index);
 
  private:
   View *view_;

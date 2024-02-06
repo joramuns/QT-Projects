@@ -13,7 +13,7 @@ SettingsTab::SettingsTab() {
 
   vertex_settings_ = new ModelSettings();
   vertex_settings_->SetComboBoxOptions(
-      QVector<QString>{"None", "Round", "Square"});
+      QVector<QString>{"None", "Square", "Round"});
 
   edge_settings_ = new ModelSettings();
   edge_settings_->SetComboBoxOptions(QVector<QString>{"Solid", "Dashed"});

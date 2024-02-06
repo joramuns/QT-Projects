@@ -31,6 +31,11 @@ View::View() : QWidget(nullptr) {
   connect(settings_tab, &SettingsTab::TabEdgeColorSignal, this,
           &View::EdgeColorSlot);
 
+  connect(settings_tab, &SettingsTab::TabVertexOptionSignal, this,
+          &View::VertexOptionSlot);
+  connect(settings_tab, &SettingsTab::TabEdgeOptionSignal, this,
+          &View::EdgeOptionSlot);
+
   AppManagement *app_management = new AppManagement("Main menu");
   connect(app_management, &AppManagement::AppOpenFileSignal, this,
           &View::OpenFileSlot);
@@ -110,6 +115,18 @@ void View::ChangeEdgeColor(QVector3D edge_color) {
   gl_widget_->SetEdgeColor(edge_color);
 }
 
+void View::ChangeVertexOption(int index) {
+  gl_widget_->SetVertexOption(index);
+  gl_widget_->update();
+}
+
+void View::ChangeEdgeOption(int index) {
+  gl_widget_->SetEdgeOption(index);
+  gl_widget_->update();
+}
+
+  void SetEdgeOption(int index);
+
 void View::ViewTransformSlot(double value, char axis, int type,
                              int model_number) {
   emit ViewTransformSignal(value, axis, type, model_number);
@@ -139,6 +156,14 @@ void View::VertexColorSlot(QVector3D vertex_color) {
 
 void View::EdgeColorSlot(QVector3D edge_color) {
   emit EdgeColorSignal(edge_color);
+}
+
+void View::VertexOptionSlot(int index) {
+  emit VertexOptionSignal(index);
+}
+
+void View::EdgeOptionSlot(int index) {
+  emit EdgeOptionSignal(index);
 }
 
 }  // namespace s21

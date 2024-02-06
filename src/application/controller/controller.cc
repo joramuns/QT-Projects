@@ -29,6 +29,12 @@ Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
 
   connect(view_, &View::EdgeColorSignal, this,
           &Controller::ControllerEdgeColor);
+
+  connect(view_, &View::VertexOptionSignal, this,
+          &Controller::ControllerVertexOption);
+
+  connect(view_, &View::EdgeOptionSignal, this,
+          &Controller::ControllerEdgeOption);
 }
 
 void Controller::ControllerTransformSlot(double value, char axis, int type,
@@ -81,8 +87,15 @@ void Controller::ControllerVertexColor(QVector3D vertex_color) {
 }
 
 void Controller::ControllerEdgeColor(QVector3D edge_color) {
-  std::cout << "edge color : " << edge_color[0] << " " << edge_color[1] << " " << edge_color[2] << std::endl;
   view_->ChangeEdgeColor(edge_color);
+}
+
+void Controller::ControllerVertexOption(int index) {
+  view_->ChangeVertexOption(index);
+}
+
+void Controller::ControllerEdgeOption(int index) {
+  view_->ChangeEdgeOption(index);
 }
 
 }  // namespace s21
