@@ -1,5 +1,5 @@
-#ifndef VIEW_OPENGL_GLWIDGET_H_
-#define VIEW_OPENGL_GLWIDGET_H_
+#ifndef MODEL_CONTEXT_GLWIDGET_H_
+#define MODEL_CONTEXT_GLWIDGET_H_
 
 
 #include <QOpenGLBuffer>
@@ -8,8 +8,8 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLWidget>
 
-#include "transform_class.h"
-#include "glbuffer.h"
+/* #include "transform_class.h" */
+#include "../buffer/glbuffer.h"
 
 namespace s21 {
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
@@ -59,4 +59,4 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 };
 }  // namespace s21
 
-#endif  // VIEW_OPENGL_GLWIDGET_H_
+#endif  // MODEL_CONTEXT_GLWIDGET_H_

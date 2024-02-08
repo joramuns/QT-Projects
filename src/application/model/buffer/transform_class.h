@@ -1,5 +1,5 @@
-#ifndef VIEW_OPENGL_TRANSFORM_CLASS_H_
-#define VIEW_OPENGL_TRANSFORM_CLASS_H_
+#ifndef MODEL_BUFFER_TRANSFORM_CLASS_H_
+#define MODEL_BUFFER_TRANSFORM_CLASS_H_
 
 #include <QOpenGLShaderProgram>
 
@@ -17,4 +17,4 @@ class Axes {
   GLfloat z_;
 };
 }  // namespace s21
-#endif  // VIEW_OPENGL_TRANSFORM_CLASS_H_
+#endif  // MODEL_BUFFER_TRANSFORM_CLASS_H_

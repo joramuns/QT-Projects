@@ -1,5 +1,5 @@
-#ifndef VIEW_OPENGL_GLBUFFER_H_
-#define VIEW_OPENGL_GLBUFFER_H_
+#ifndef MODEL_BUFFER_GLBUFFER_H_
+#define MODEL_BUFFER_GLBUFFER_H_
 
 #include <QColor>
 #include <QOpenGLBuffer>
@@ -47,4 +47,4 @@ class GLBuffer : QOpenGLFunctions_4_1_Core {
 };
 }  // namespace s21
 
-#endif  // VIEW_OPENGL_GLBUFFER_H_
+#endif  // MODEL_BUFFER_GLBUFFER_H_

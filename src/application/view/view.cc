@@ -1,10 +1,7 @@
 #include "view.h"
 
-// TEMP
-#include <iostream>
-
 namespace s21 {
-View::View() : QWidget(nullptr) {
+View::View(GLWidget *context) : QWidget(nullptr) {
   main_layout_ = new QGridLayout(this);
   setWindowTitle("3D Viewer 2.0");
   /* setFixedSize(500, 500); */
@@ -57,7 +54,7 @@ View::View() : QWidget(nullptr) {
 
   QGroupBox *group_box = new QGroupBox();
   QVBoxLayout *group_layout = new QVBoxLayout(group_box);
-  gl_widget_ = new GLWidget();
+  gl_widget_ = context;
   group_layout->addWidget(gl_widget_);
 
   QGroupBox *list_box = new QGroupBox();
@@ -70,77 +67,15 @@ View::View() : QWidget(nullptr) {
   main_layout_->addWidget(list_box, 1, 0, 1, 6);
 }
 
-void View::LoadModel(std::vector<GLfloat> vertices) {
-  gl_widget_->LoadModel(vertices);
-}
-
-void View::UnloadModel(int model_number) {
-  gl_widget_->UnloadModel(model_number);
-  list_widget_->removeItemWidget(list_widget_->takeItem(model_number));
-}
-
-void View::Rotate(double value, char axis, int model_number) {
-  gl_widget_->Rotate(value, axis, model_number);
-  gl_widget_->update();
-}
-
-void View::Move(double value, char axis, int model_number) {
-  gl_widget_->Move(value, axis, model_number);
-  gl_widget_->update();
-}
-
-void View::Scale(double value, int model_number) {
-  gl_widget_->Scale(value, model_number);
-  gl_widget_->update();
-}
-
 void View::AddListWidgetItem(const QString filename) {
   new QListWidgetItem(filename, list_widget_);
 }
 
-void View::SwitchProjection(int index) {
-  gl_widget_->SwitchProjection(index);
-  gl_widget_->update();
+void View::RemoveListWidgetItem(int model_number) {
+  list_widget_->removeItemWidget(list_widget_->takeItem(model_number));
 }
 
-void View::SwitchWireframe(int index) {
-  gl_widget_->SwitchWireframe(index);
-  gl_widget_->update();
-}
-
-void View::ChangeSceneColor(QColor scene_color) {
-  gl_widget_->SetSceneColor(scene_color);
-}
-
-void View::ChangeVertexColor(QVector3D vertex_color) {
-  gl_widget_->SetVertexColor(vertex_color);
-}
-
-void View::ChangeEdgeColor(QVector3D edge_color) {
-  gl_widget_->SetEdgeColor(edge_color);
-}
-
-void View::ChangeVertexOption(int index) {
-  gl_widget_->SetVertexOption(index);
-  gl_widget_->update();
-}
-
-void View::ChangeEdgeOption(int index) {
-  gl_widget_->SetEdgeOption(index);
-  gl_widget_->update();
-}
-
-void View::ChangeVertexSize(double value) {
-  gl_widget_->SetVertexSize(value);
-  gl_widget_->update();
-}
-
-void View::ChangeEdgeSize(double value) {
-  gl_widget_->SetEdgeSize(value);
-  gl_widget_->update();
-}
-
-void SetEdgeOption(int index);
+/* Slots */
 
 void View::ViewTransformSlot(double value, char axis, int type,
                              int model_number) {

@@ -10,8 +10,9 @@
 #include <QTextEdit>
 #include <QWidget>
 
-#include "app_management.h"
-#include "opengl/glwidget.h"
+// temp glwidget
+#include "../model/context/glwidget.h"
+#include "mainwidgets/app_management.h"
 #include "settingswidgets/settingstab.h"
 #include "transformwidgets/transform_tab.h"
 
@@ -20,24 +21,11 @@ class View final : public QWidget {
   Q_OBJECT
 
  public:
-  View();
+  View() = delete;
+  explicit View(GLWidget *context);
 
-  void LoadModel(std::vector<GLfloat> vertices);
-  void UnloadModel(int model_number);
-  void Rotate(double value, char axis, int model_number);
-  void Move(double value, char axis, int model_number);
-  void Scale(double value, int model_number);
   void AddListWidgetItem(const QString filename);
   void RemoveListWidgetItem(int model_number);
-  void SwitchProjection(int index);
-  void SwitchWireframe(int index);
-  void ChangeSceneColor(QColor scene_color);
-  void ChangeVertexColor(QVector3D vertex_color);
-  void ChangeEdgeColor(QVector3D edge_color);
-  void ChangeVertexOption(int index);
-  void ChangeEdgeOption(int index);
-  void ChangeVertexSize(double value);
-  void ChangeEdgeSize(double value);
 
  private slots:
   void ViewTransformSlot(double value, char axis, int type, int model_number);
@@ -69,7 +57,7 @@ class View final : public QWidget {
 
  private:
   QGridLayout *main_layout_;
-  GLWidget *gl_widget_;
+  QOpenGLWidget *gl_widget_;
   QListWidget *list_widget_;
 };
 }  // namespace s21
