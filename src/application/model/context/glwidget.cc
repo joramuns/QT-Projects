@@ -4,7 +4,6 @@
 #include "glwidget.h"
 
 #include <QDebug>
-#include <iostream>
 #include <vector>
 
 namespace s21 {
@@ -73,7 +72,6 @@ void GLWidget::SetEdgeSize(double value) {
 }
 
 void GLWidget::SetVertexSize(double value) {
-  std::cout << "glwidget size vert " << value << " " << vert_size_ << std::endl;
   vert_size_ = static_cast<GLfloat>(value);
 }
 
@@ -109,7 +107,6 @@ void GLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glDepthFunc(GL_LESS);
   program_->bind();
-  std::cout << "glwidget edge size: " << edge_size_ << std::endl;
 
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
