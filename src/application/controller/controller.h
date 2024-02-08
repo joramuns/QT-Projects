@@ -26,6 +26,8 @@ class Controller final : public QObject {
   void ControllerEdgeColor(QVector3D edge_color);
   void ControllerVertexOption(int index);
   void ControllerEdgeOption(int index);
+  void ControllerVertexSize(double value);
+  void ControllerEdgeSize(double value);
 
  private:
   View *view_;

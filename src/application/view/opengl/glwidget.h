@@ -29,6 +29,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void SetEdgeColor(QVector3D color);
   void SetVertexOption(int index);
   void SetEdgeOption(int index);
+  void SetVertexSize(double value);
+  void SetEdgeSize(double value);
 
  protected:
   /* void initializeGL() override; */
@@ -52,6 +54,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   bool solid_;
   int vert_type_;
   GLfloat vert_size_;
+  GLfloat edge_size_;
   bool dashed_lines_;
 };
 }  // namespace s21

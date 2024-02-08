@@ -36,6 +36,8 @@ class View final : public QWidget {
   void ChangeEdgeColor(QVector3D edge_color);
   void ChangeVertexOption(int index);
   void ChangeEdgeOption(int index);
+  void ChangeVertexSize(double value);
+  void ChangeEdgeSize(double value);
 
  private slots:
   void ViewTransformSlot(double value, char axis, int type, int model_number);
@@ -48,6 +50,8 @@ class View final : public QWidget {
   void EdgeColorSlot(QVector3D edge_color);
   void VertexOptionSlot(int index);
   void EdgeOptionSlot(int index);
+  void VertexSizeSlot(double value);
+  void EdgeSizeSlot(double value);
 
  signals:
   void ViewTransformSignal(double value, char axis, int type, int model_number);
@@ -60,6 +64,8 @@ class View final : public QWidget {
   void EdgeColorSignal(QVector3D edge_color);
   void VertexOptionSignal(int index);
   void EdgeOptionSignal(int index);
+  void VertexSizeSignal(double value);
+  void EdgeSizeSignal(double value);
 
  private:
   QGridLayout *main_layout_;

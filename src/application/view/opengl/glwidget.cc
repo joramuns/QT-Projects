@@ -70,6 +70,15 @@ void GLWidget::SetEdgeOption(int index) {
   dashed_lines_ = static_cast<bool>(index);
 }
 
+void GLWidget::SetEdgeSize(double value) {
+  edge_size_ = static_cast<GLfloat>(value);
+}
+
+void GLWidget::SetVertexSize(double value) {
+  std::cout << "glwidget size vert " << value << " " << vert_size_ << std::endl;
+  vert_size_ = static_cast<GLfloat>(value);
+}
+
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();
@@ -86,9 +95,14 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
+  float lineWidth[2];
+glGetFloatv(GL_SMOOTH_LINE_WIDTH_RANGE, lineWidth);
+std::cout << "WIDTH TEST: " << lineWidth[0] << " " << lineWidth[1] << std::endl;
   if (solid_) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   } else {
+    glEnable(GL_LINE_SMOOTH);
+    glLineWidth(edge_size_);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   }
   /* const qreal retinaScale = devicePixelRatio(); */
@@ -100,30 +114,7 @@ void GLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glDepthFunc(GL_LESS);
   program_->bind();
-
-  // GLuint texture_id;
-  // glGenTextures(1, &texture_id);
-  // glBindTexture(GL_TEXTURE_2D, texture_id);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// Set
-  // texture wrapping to GL_REPEAT (usually basic wrapping method)
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-  // int width, height, channels;
-  // unsigned char *image =
-  //     stbi_load("/Users/mammiemi/Project/CPP4_3DViewer_v2.0-2/src/application/"
-  //               "view/opengl/mramor.jpeg",
-  //               &width, &height, &channels, 0);
-
-  // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-  // GL_UNSIGNED_BYTE, image); glGenerateMipmap(GL_TEXTURE_2D);
-  // stbi_image_free(image);
-  // glBindTexture(GL_TEXTURE_2D, 0);
-
-  // glActiveTexture(GL_TEXTURE0 + 0);
-  // glBindTexture(GL_TEXTURE_2D, texture_id);
+  std::cout << "glwidget edge size: " << edge_size_ << std::endl;
 
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
@@ -131,8 +122,6 @@ void GLWidget::paintGL() {
     LoadCommonUniforms();
 
     glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());
-    if (dashed_lines_) {
-    }
     if (vert_type_) {
       program_->setUniformValue("vertexType", vert_type_);
       program_->setUniformValue("modelColor", vert_color_);
@@ -141,10 +130,7 @@ void GLWidget::paintGL() {
       program_->setUniformValue("vertexType", 0);
     }
     GLBuffers_[i]->Release();
-    // GLBuffers_[i]->BindNormals();
-    // GLBuffers_[i]->ReleaseNormals();
   }
-  // glEnable(GL_DEPTH_TEST);
   program_->release();
 }
 

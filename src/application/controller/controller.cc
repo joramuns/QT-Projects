@@ -35,6 +35,12 @@ Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
 
   connect(view_, &View::EdgeOptionSignal, this,
           &Controller::ControllerEdgeOption);
+
+  connect(view_, &View::VertexSizeSignal, this,
+          &Controller::ControllerVertexSize);
+
+  connect(view_, &View::EdgeSizeSignal, this,
+          &Controller::ControllerEdgeSize);
 }
 
 void Controller::ControllerTransformSlot(double value, char axis, int type,
@@ -96,6 +102,14 @@ void Controller::ControllerVertexOption(int index) {
 
 void Controller::ControllerEdgeOption(int index) {
   view_->ChangeEdgeOption(index);
+}
+
+void Controller::ControllerVertexSize(double value) {
+  view_->ChangeVertexSize(value);
+}
+
+void Controller::ControllerEdgeSize(double value) {
+  view_->ChangeEdgeSize(value);
 }
 
 }  // namespace s21

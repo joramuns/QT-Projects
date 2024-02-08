@@ -53,9 +53,7 @@ void ExtraSceneSettings::ConnectFields() {
           &ExtraSceneSettings::ExtraComboBoxSlot);
 }
 
-void ExtraSceneSettings::InitLayouts() {
-  layout_->addWidget(wireframe_type_);
-}
+void ExtraSceneSettings::InitLayouts() { layout_->addWidget(wireframe_type_); }
 
 void ExtraSceneSettings::SetExtraComboBoxOptions(
     const QVector<QString> &labels) {
@@ -78,7 +76,14 @@ void ModelSettings::SpinBoxSlot() {
   emit SpinBoxSignal(static_cast<QDoubleSpinBox *>(sender())->value());
 }
 
-void ModelSettings::InitFields() { size_ = new QDoubleSpinBox(); }
+void ModelSettings::InitFields() {
+  size_ = new QDoubleSpinBox();
+  size_->setDecimals(1);
+  size_->setSingleStep(0.1);
+  size_->setMinimum(0.1);
+  size_->setMaximum(10.0);
+  size_->setValue(1.0);
+}
 
 void ModelSettings::ConnectFields() {
   connect(size_, &QDoubleSpinBox::valueChanged, this,
