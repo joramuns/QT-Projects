@@ -39,8 +39,7 @@ Controller::Controller(View *v, Facade *f) : view_(v), facade_(f) {
   connect(view_, &View::VertexSizeSignal, this,
           &Controller::ControllerVertexSize);
 
-  connect(view_, &View::EdgeSizeSignal, this,
-          &Controller::ControllerEdgeSize);
+  connect(view_, &View::EdgeSizeSignal, this, &Controller::ControllerEdgeSize);
 }
 
 void Controller::ControllerTransformSlot(double value, char axis, int type,
@@ -60,8 +59,10 @@ void Controller::ControllerTransformSlot(double value, char axis, int type,
 
 void Controller::ControllerOpenFileSlot(QString filename) {
   std::cout << "Open file " << filename.toStdString() << std::endl;
-  facade_->AddModel(filename.toStdString());
-  view_->AddListWidgetItem(filename);
+  if (filename.size()) {
+    facade_->AddModel(filename.toStdString());
+    view_->AddListWidgetItem(filename);
+  }
 }
 
 void Controller::ControllerCloseFileSlot(int model_number) {
