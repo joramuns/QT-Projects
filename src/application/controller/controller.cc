@@ -5,7 +5,7 @@
 #include <vector>
 
 namespace s21 {
-Controller::Controller(View *v, Fasade *f) : view_(v), fasade_(f) {
+Controller::Controller(View *v, Facade *f) : view_(v), facade_(f) {
   connect(view_, &View::ViewTransformSignal, this,
           &Controller::ControllerTransformSlot);
 
@@ -47,69 +47,64 @@ void Controller::ControllerTransformSlot(double value, char axis, int type,
                                          int model_number) {
   std::cout << (type ? axis == 'S' ? "Scale " : "Move " : "Rotate ")
             << "tab: " << axis << " " << value << " " << std::endl;
-  if (fasade_->CountModel() && model_number >= 0) {
+  if (facade_->CountModel() && model_number >= 0) {
     if (type == ROTATE) {
-      view_->Rotate(value, axis, model_number);
+      facade_->Rotate(value, axis, model_number);
     } else if (type == MOVE) {
-      view_->Move(value, axis, model_number);
+      facade_->Move(value, axis, model_number);
     } else if (type == SCALE) {
-      view_->Scale(value, model_number);
+      facade_->Scale(value, model_number);
     }
   }
 }
 
 void Controller::ControllerOpenFileSlot(QString filename) {
   std::cout << "Open file " << filename.toStdString() << std::endl;
-  ObjectModel a = fasade_->AddModel(filename.toStdString());
-  std::vector<GLfloat> vertices;
-  for (const auto &item : a.GetVertices()) {
-    vertices.insert(vertices.end(), item.begin(), item.end());
-  }
-  view_->LoadModel(vertices);
+  facade_->AddModel(filename.toStdString());
   view_->AddListWidgetItem(filename);
 }
 
 void Controller::ControllerCloseFileSlot(int model_number) {
-  if (fasade_->CountModel()) {
-    fasade_->RemoveModel(model_number);
-    view_->UnloadModel(model_number);
+  if (facade_->CountModel()) {
+    facade_->RemoveModel(model_number);
+    view_->RemoveListWidgetItem(model_number);
   }
 }
 
 void Controller::ControllerSceneOptionSlot(int index) {
-  view_->SwitchProjection(index);
+  facade_->SwitchProjection(index);
 }
 
 void Controller::ControllerExtraSceneOptionSlot(int index) {
-  view_->SwitchWireframe(index);
+  facade_->SwitchWireframe(index);
 }
 
 void Controller::ControllerSceneColor(QColor scene_color) {
-  view_->ChangeSceneColor(scene_color);
+  facade_->ChangeSceneColor(scene_color);
 }
 
 void Controller::ControllerVertexColor(QVector3D vertex_color) {
-  view_->ChangeVertexColor(vertex_color);
+  facade_->ChangeVertexColor(vertex_color);
 }
 
 void Controller::ControllerEdgeColor(QVector3D edge_color) {
-  view_->ChangeEdgeColor(edge_color);
+  facade_->ChangeEdgeColor(edge_color);
 }
 
 void Controller::ControllerVertexOption(int index) {
-  view_->ChangeVertexOption(index);
+  facade_->ChangeVertexOption(index);
 }
 
 void Controller::ControllerEdgeOption(int index) {
-  view_->ChangeEdgeOption(index);
+  facade_->ChangeEdgeOption(index);
 }
 
 void Controller::ControllerVertexSize(double value) {
-  view_->ChangeVertexSize(value);
+  facade_->ChangeVertexSize(value);
 }
 
 void Controller::ControllerEdgeSize(double value) {
-  view_->ChangeEdgeSize(value);
+  facade_->ChangeEdgeSize(value);
 }
 
 }  // namespace s21

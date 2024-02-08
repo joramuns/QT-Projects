@@ -3,8 +3,7 @@
 
 #include <QWidget>
 
-#include "../model/fasade/fasade.h"
-#include "../model/shaderprogram.h"
+#include "../model/facade/facade.h"
 #include "../view/view.h"
 
 namespace s21 {
@@ -12,7 +11,7 @@ class Controller final : public QObject {
   Q_OBJECT
 
  public:
-  Controller(View *v, Fasade *f);
+  Controller(View *v, Facade *f);
 
  private slots:
   void ControllerTransformSlot(double value, char axis, int type,
@@ -31,8 +30,7 @@ class Controller final : public QObject {
 
  private:
   View *view_;
-  Fasade *fasade_;
-  int kek = 0;
+  Facade *facade_;
 };
 }  // namespace s21
 
