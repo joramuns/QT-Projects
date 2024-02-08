@@ -22,23 +22,21 @@ set(SOURCES
   view/transformwidgets/scale_buttons.cc
   view/settingswidgets/settings.cc
   view/settingswidgets/settingstab.cc
-  view/app_management.cc
-  view/opengl/glwidget.cc
-  view/opengl/glbuffer.cc
-  view/opengl/v_shader.glsl
-  view/opengl/transform_class.cc
+  view/mainwidgets/app_management.cc
   controller/controller.cc
-  model/shaderprogram.cc
 
-  model/fasade/fasade.cc
   model/object_model.cc
   model/parser/parser.cc
   model/parser/indices_pars/faces_strategy.cc
   model/parser/packer/coordinate_packer.cc
+  model/facade/facade.cc
+  model/context/glwidget.cc
+  model/buffer/glbuffer.cc
+  model/buffer/transform_class.cc
 )
 
 set(RESOURCES
-  view/resources.qrc
+  resources.qrc
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport OpenGLWidgets)
