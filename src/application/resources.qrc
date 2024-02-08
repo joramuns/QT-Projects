@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/">
+        <file alias="f_shader">model/context/f_shader.glsl</file>
+        <file alias="v_shader">model/context/v_shader.glsl</file>
+    </qresource>
+</RCC>

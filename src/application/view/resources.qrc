@@ -1,6 +1,0 @@
-<!DOCTYPE RCC><RCC version="1.0">
-    <qresource prefix="/">
-        <file alias="f_shader">opengl/f_shader.glsl</file>
-        <file alias="v_shader">opengl/v_shader.glsl</file>
-    </qresource>
-</RCC>
