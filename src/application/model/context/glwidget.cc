@@ -16,6 +16,7 @@ GLWidget::GLWidget()
       solid_(false),
       vert_type_(2),
       vert_size_(10.0),
+      edge_size_(1.0),
       dashed_lines_(false) {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
@@ -92,10 +93,6 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
-  float lineWidth[2];
-  glGetFloatv(GL_SMOOTH_LINE_WIDTH_RANGE, lineWidth);
-  std::cout << "WIDTH TEST: " << lineWidth[0] << " " << lineWidth[1]
-            << std::endl;
   if (solid_) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   } else {

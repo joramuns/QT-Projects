@@ -58,7 +58,6 @@ void Controller::ControllerTransformSlot(double value, char axis, int type,
 }
 
 void Controller::ControllerOpenFileSlot(QString filename) {
-  std::cout << "Open file " << filename.toStdString() << std::endl;
   if (filename.size()) {
     facade_->AddModel(filename.toStdString());
     view_->AddListWidgetItem(filename);
