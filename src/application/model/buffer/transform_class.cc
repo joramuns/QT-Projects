@@ -1,8 +1,5 @@
 #include "transform_class.h"
 
-// TEMP
-#include <iostream>
-
 namespace s21 {
 Axes::Axes(double init) : x_(init), y_(init), z_(init) {}
 

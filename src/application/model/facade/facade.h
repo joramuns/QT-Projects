@@ -1,28 +1,32 @@
 #ifndef CPP4_3DVIEWER_V2_MODEL_FACADE_FACADE_H
 #define CPP4_3DVIEWER_V2_MODEL_FACADE_FACADE_H
+
 #include <vector>
 
-#include "../parser/parser.h"
-#include "../object_model.h"
 #include "../context/glwidget.h"
-
+#include "../object_model.h"
+#include "../parser/parser.h"
 
 namespace s21 {
 class Facade {
-public:
+ public:
   Facade();
+  ~Facade();
 
   void AddModel(const std::string &filename) noexcept;
   void RemoveModel(int model_number) noexcept;
   ObjectModel GetModel(const unsigned int index) const noexcept;
   std::size_t CountModel() const noexcept;
   GLWidget *GetContext() const noexcept;
-  //debug
+  // debug
   void PrintDate() const noexcept;
 
+  /* Model management */
   void Rotate(double value, char axis, int model_number);
   void Move(double value, char axis, int model_number);
   void Scale(double value, int model_number);
+
+  /* Scene management */
   void SwitchProjection(int index);
   void SwitchWireframe(int index);
   void ChangeSceneColor(QColor scene_color);
@@ -33,10 +37,10 @@ public:
   void ChangeVertexSize(double value);
   void ChangeEdgeSize(double value);
 
-private:
+ private:
   std::vector<ObjectModel> models_;
   GLWidget *context_;
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_MODEL_FACADE_FACADE_H
+#endif  // CPP4_3DVIEWER_V2_MODEL_FACADE_FACADE_H

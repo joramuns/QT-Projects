@@ -22,6 +22,7 @@ class View final : public QWidget {
 
  public:
   View() = delete;
+  ~View();
   explicit View(GLWidget *context);
 
   void AddListWidgetItem(const QString filename);
@@ -57,7 +58,7 @@ class View final : public QWidget {
 
  private:
   QGridLayout *main_layout_;
-  QOpenGLWidget *gl_widget_;
+  GLWidget *gl_widget_;
   QListWidget *list_widget_;
 };
 }  // namespace s21

@@ -1,5 +1,5 @@
-#ifndef MODEL_BUFFER_TRANSFORM_CLASS_H_
-#define MODEL_BUFFER_TRANSFORM_CLASS_H_
+#ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_BUFFER_TRANSFORM_CLASS_H_
+#define CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_BUFFER_TRANSFORM_CLASS_H_
 
 #include <QOpenGLShaderProgram>
 
@@ -7,6 +7,7 @@ namespace s21 {
 class Axes {
  public:
   Axes() = delete;
+
   explicit Axes(double init);
   void Change(double value, char axis);
   QVector3D GetChangeVector();
@@ -17,4 +18,4 @@ class Axes {
   GLfloat z_;
 };
 }  // namespace s21
-#endif  // MODEL_BUFFER_TRANSFORM_CLASS_H_
+#endif  // CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_BUFFER_TRANSFORM_CLASS_H_

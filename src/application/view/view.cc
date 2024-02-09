@@ -1,6 +1,9 @@
 #include "view.h"
 
+#include <iostream>
+
 namespace s21 {
+  View::~View() { std::cout << "View dtor" << std::endl; }
 View::View(GLWidget *context) : QWidget(nullptr) {
   main_layout_ = new QGridLayout(this);
   setWindowTitle("3D Viewer 2.0");
@@ -72,6 +75,7 @@ void View::AddListWidgetItem(const QString filename) {
 }
 
 void View::RemoveListWidgetItem(int model_number) {
+  delete list_widget_->takeItem(model_number);
   list_widget_->removeItemWidget(list_widget_->takeItem(model_number));
 }
 

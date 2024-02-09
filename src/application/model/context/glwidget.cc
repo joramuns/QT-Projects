@@ -1,10 +1,6 @@
-#define GL_SILENCE_DEPRECATION
-#define STB_IMAGE_IMPLEMENTATION
-
 #include "glwidget.h"
 
-#include <QDebug>
-#include <vector>
+#include <iostream>
 
 namespace s21 {
 GLWidget::GLWidget()
@@ -22,6 +18,7 @@ GLWidget::GLWidget()
 }
 
 GLWidget::~GLWidget() {
+  std::cout << "GLWidget dtor" << std::endl;
   makeCurrent();
   for (auto &item : GLBuffers_) delete item;
   program_->disableAttributeArray(0);
@@ -35,6 +32,7 @@ void GLWidget::LoadModel(std::vector<GLfloat> vertices) {
 }
 
 void GLWidget::UnloadModel(int model_number) {
+  delete GLBuffers_[model_number];
   GLBuffers_.erase(GLBuffers_.begin() + model_number);
   update();
 }
@@ -91,6 +89,23 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
+  SceneLoader();
+  ModelLoader();
+}
+
+void GLWidget::LoadShaders() {
+  program_ = new QOpenGLShaderProgram();
+  if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/v_shader"))
+    qDebug() << "Vertex shader errors:\n" << program_->log();
+
+  if (!program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/f_shader"))
+    qDebug() << "Fragment shader errors:\n" << program_->log();
+
+  if (!program_->link())
+    qDebug() << "Shader linker errors:\n" << program_->log();
+}
+
+void GLWidget::SceneLoader() {
   if (solid_) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   } else {
@@ -98,16 +113,15 @@ void GLWidget::paintGL() {
     glLineWidth(edge_size_);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   }
-  /* const qreal retinaScale = devicePixelRatio(); */
-  /* glViewport(0, 0, width() * retinaScale, height() * retinaScale); */
-  // Draw the scene:
   glClearColor(bg_color_.redF(), bg_color_.greenF(), bg_color_.blueF(),
                bg_color_.alphaF());
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glDepthFunc(GL_LESS);
-  program_->bind();
+}
 
+void GLWidget::ModelLoader() {
+  program_->bind();
   for (std::size_t i = 0; i < GLBuffers_.size(); ++i) {
     GLBuffers_[i]->Bind();
     GLBuffers_[i]->LoadUniforms();
@@ -124,18 +138,6 @@ void GLWidget::paintGL() {
     GLBuffers_[i]->Release();
   }
   program_->release();
-}
-
-void GLWidget::LoadShaders() {
-  program_ = new QOpenGLShaderProgram();
-  if (!program_->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/v_shader"))
-    qDebug() << "Vertex shader errors:\n" << program_->log();
-
-  if (!program_->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/f_shader"))
-    qDebug() << "Fragment shader errors:\n" << program_->log();
-
-  if (!program_->link())
-    qDebug() << "Shader linker errors:\n" << program_->log();
 }
 
 void GLWidget::LoadCommonUniforms() {

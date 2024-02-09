@@ -1,51 +1,12 @@
 #include "controller.h"
 
-// TEMP
-#include <iostream>
-#include <vector>
-
 namespace s21 {
 Controller::Controller(View *v, Facade *f) : view_(v), facade_(f) {
-  connect(view_, &View::ViewTransformSignal, this,
-          &Controller::ControllerTransformSlot);
-
-  connect(view_, &View::OpenFileSignal, this,
-          &Controller::ControllerOpenFileSlot);
-
-  connect(view_, &View::CloseFileSignal, this,
-          &Controller::ControllerCloseFileSlot);
-
-  connect(view_, &View::SceneOptionSignal, this,
-          &Controller::ControllerSceneOptionSlot);
-
-  connect(view_, &View::ExtraSceneOptionSignal, this,
-          &Controller::ControllerExtraSceneOptionSlot);
-
-  connect(view_, &View::SceneColorSignal, this,
-          &Controller::ControllerSceneColor);
-
-  connect(view_, &View::VertexColorSignal, this,
-          &Controller::ControllerVertexColor);
-
-  connect(view_, &View::EdgeColorSignal, this,
-          &Controller::ControllerEdgeColor);
-
-  connect(view_, &View::VertexOptionSignal, this,
-          &Controller::ControllerVertexOption);
-
-  connect(view_, &View::EdgeOptionSignal, this,
-          &Controller::ControllerEdgeOption);
-
-  connect(view_, &View::VertexSizeSignal, this,
-          &Controller::ControllerVertexSize);
-
-  connect(view_, &View::EdgeSizeSignal, this, &Controller::ControllerEdgeSize);
+  ConnectFields();
 }
 
 void Controller::ControllerTransformSlot(double value, char axis, int type,
                                          int model_number) {
-  std::cout << (type ? axis == 'S' ? "Scale " : "Move " : "Rotate ")
-            << "tab: " << axis << " " << value << " " << std::endl;
   if (facade_->CountModel() && model_number >= 0) {
     if (type == ROTATE) {
       facade_->Rotate(value, axis, model_number);
@@ -105,6 +66,43 @@ void Controller::ControllerVertexSize(double value) {
 
 void Controller::ControllerEdgeSize(double value) {
   facade_->ChangeEdgeSize(value);
+}
+
+void Controller::ConnectFields() const {
+  connect(view_, &View::ViewTransformSignal, this,
+          &Controller::ControllerTransformSlot);
+
+  connect(view_, &View::OpenFileSignal, this,
+          &Controller::ControllerOpenFileSlot);
+
+  connect(view_, &View::CloseFileSignal, this,
+          &Controller::ControllerCloseFileSlot);
+
+  connect(view_, &View::SceneOptionSignal, this,
+          &Controller::ControllerSceneOptionSlot);
+
+  connect(view_, &View::ExtraSceneOptionSignal, this,
+          &Controller::ControllerExtraSceneOptionSlot);
+
+  connect(view_, &View::SceneColorSignal, this,
+          &Controller::ControllerSceneColor);
+
+  connect(view_, &View::VertexColorSignal, this,
+          &Controller::ControllerVertexColor);
+
+  connect(view_, &View::EdgeColorSignal, this,
+          &Controller::ControllerEdgeColor);
+
+  connect(view_, &View::VertexOptionSignal, this,
+          &Controller::ControllerVertexOption);
+
+  connect(view_, &View::EdgeOptionSignal, this,
+          &Controller::ControllerEdgeOption);
+
+  connect(view_, &View::VertexSizeSignal, this,
+          &Controller::ControllerVertexSize);
+
+  connect(view_, &View::EdgeSizeSignal, this, &Controller::ControllerEdgeSize);
 }
 
 }  // namespace s21

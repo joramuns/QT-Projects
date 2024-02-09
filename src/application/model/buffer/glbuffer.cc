@@ -1,42 +1,28 @@
 #include "glbuffer.h"
+
 #include <iostream>
 
 namespace s21 {
-GLBuffer::GLBuffer()
-    : move_uniform_{0.0}, rotate_uniform_{0.0}, scale_uniform_{1.0} {
-  initializeOpenGLFunctions();
-  VAO_ = new QOpenGLVertexArrayObject;
-
-  VBO_ = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-
-  VBO_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-
-  // EBO_ = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-
-  // EBO_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-}
-
 GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices,
                    QOpenGLShaderProgram *program)
-    : GLBuffer() {
-  program_ = program;
+    : program_(program),
+      VAO_(new QOpenGLVertexArrayObject),
+      VBO_(new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer)),
+      move_uniform_{0.0},
+      rotate_uniform_{0.0},
+      scale_uniform_{1.0} {
+  initializeOpenGLFunctions();
+  VBO_->setUsagePattern(QOpenGLBuffer::DynamicDraw);
   if (!program->bind()) qDebug() << "Program failure:\n" << program->log();
   LoadData(vertices);
   Release();
-  program->release();
 }
 
 GLBuffer::~GLBuffer() {
   VAO_->destroy();
   VBO_->destroy();
-  // EBO_->destroy();
   delete VAO_;
   delete VBO_;
-  // delete EBO_;
-  // VBO_normals_->destroy();
-  // EBO_normals_->destroy();
-  // delete VBO_normals_;
-  // delete EBO_normals_;
 }
 
 void GLBuffer::Bind() const noexcept {
@@ -78,9 +64,11 @@ void GLBuffer::LoadUniforms() {
 
   program_->setUniformValue("scaleVector", scale_uniform_.GetChangeVector());
 
-  std::cout << "scale : " <<  scale_uniform_.GetChangeVector()[0] << std::endl;
-  program_->setUniformValue("gapSize", 10 * scale_uniform_.GetChangeVector()[0]);
-  program_->setUniformValue("dashSize", 10 * scale_uniform_.GetChangeVector()[0]);
+  std::cout << "scale : " << scale_uniform_.GetChangeVector()[0] << std::endl;
+  program_->setUniformValue("gapSize",
+                            10 * scale_uniform_.GetChangeVector()[0]);
+  program_->setUniformValue("dashSize",
+                            10 * scale_uniform_.GetChangeVector()[0]);
 }
 
 GLuint GLBuffer::GetBuffSize() const noexcept {

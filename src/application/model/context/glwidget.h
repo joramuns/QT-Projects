@@ -1,27 +1,30 @@
-#ifndef MODEL_CONTEXT_GLWIDGET_H_
-#define MODEL_CONTEXT_GLWIDGET_H_
+#ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_CONTEXT_GLWIDGET_H_
+#define CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_CONTEXT_GLWIDGET_H_
 
-
-#include <QOpenGLBuffer>
-#include <QOpenGLFunctions_4_1_Core>
-#include <QOpenGLShaderProgram>
-#include <QOpenGLVertexArrayObject>
 #include <QOpenGLWidget>
 
-/* #include "transform_class.h" */
 #include "../buffer/glbuffer.h"
 
 namespace s21 {
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
  public:
   GLWidget();
+
+  GLWidget(const GLWidget &other) = delete;
+  GLWidget(GLWidget &&other) = delete;
+  GLWidget &operator=(const GLWidget &other) = delete;
+  GLWidget &operator=(GLWidget &&other) = delete;
+
   ~GLWidget();
 
+  /* Model management */
   void LoadModel(std::vector<GLfloat> vertices);
   void UnloadModel(int model_number);
   void Rotate(double value, char axis, int model_number);
   void Move(double value, char axis, int model_number);
   void Scale(double value, int model_number);
+
+  /* Scene management */
   void SwitchProjection(int index);
   void SwitchWireframe(int index);
   void SetSceneColor(QColor color);
@@ -33,13 +36,14 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void SetEdgeSize(double value);
 
  protected:
-  /* void initializeGL() override; */
   void initializeGL() override;
   void resizeGL(int w, int h) override;
   void paintGL() override;
 
  private:
   void LoadShaders();
+  void SceneLoader();
+  void ModelLoader();
   void LoadCommonUniforms();
 
  private:
@@ -59,4 +63,4 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 };
 }  // namespace s21
 
-#endif  // MODEL_CONTEXT_GLWIDGET_H_
+#endif  // CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_CONTEXT_GLWIDGET_H_

@@ -3,6 +3,8 @@
 namespace s21 {
 Facade::Facade() : context_(new GLWidget){};
 
+Facade::~Facade() { std::cout << "facade context: " << context_ << std::endl; }
+
 void Facade::AddModel(const std::string &filename) noexcept {
   ObjectModel model(filename);
   models_.push_back(model);

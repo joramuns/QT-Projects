@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_CONTROLLER_H_
-#define CONTROLLER_CONTROLLER_H_
+#ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_CONTROLLER_CONTROLLER_H_
+#define CPP4_3DVIEWER_V2_0_2_APPLICATION_CONTROLLER_CONTROLLER_H_
 
 #include <QWidget>
 
@@ -29,9 +29,12 @@ class Controller final : public QObject {
   void ControllerEdgeSize(double value);
 
  private:
+  void ConnectFields() const;
+
+ private:
   View *view_;
   Facade *facade_;
 };
 }  // namespace s21
 
-#endif  // CONTROLLER_CONTROLLER_H_
+#endif  // CPP4_3DVIEWER_V2_0_2_APPLICATION_CONTROLLER_CONTROLLER_H_
