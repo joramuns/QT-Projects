@@ -6,7 +6,7 @@
 #define BUTTON_SIZE 80
 
 namespace s21 {
-/// @brief Класс определяющий базовое поведение кнопок, отвечающих за
+/// @brief Класс определяющий базовые свойства кнопок, отвечающих за
 /// трансформацию 3-х мерного объекта
 class TButton final : public QPushButton {
   Q_OBJECT
