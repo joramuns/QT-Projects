@@ -7,27 +7,34 @@
 #include "transform_buttons.h"
 
 namespace s21 {
+/// @brief Класс инициализирующий "макеты" вкладок кнопок
 class TransformationTab final : public QTabWidget {
   Q_OBJECT
 
- public:
+public:
+  /// @brief Конструктор по умолчанию
   TransformationTab();
 
- private slots:
+private slots:
+  /// @brief Слот выпускающий сигнал ??????????????????????
   void TransformTabSlot(double value, char axis, int type);
 
- signals:
+signals:
   void TransformTabSignal(double value, char axis, int type);
 
- private:
+private:
+  /// @brief Метод инициализирует вкладки, которые в свою очередь запускают
+  /// инициализацию кнопок и выстраивают расположение
   void InitFields();
+
+  /// @brief
   void ConnectFields();
 
- private:
-  TransformButtons *rotate_buttons_;
-  TransformButtons *move_buttons_;
-  ScaleButtons *scale_buttons_;
+private:
+  TransformButtons *rotate_buttons_; ///< указатель на объект вкладки кнопок вращения
+  TransformButtons *move_buttons_;   ///< укзатель на объект влкадки кнопок перемещения
+  ScaleButtons *scale_buttons_;      ///< укзатель на объект вкладки кнопок масштабирования
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // VIEW_TRANSFORM_TAB_H_
+#endif // VIEW_TRANSFORM_TAB_H_
