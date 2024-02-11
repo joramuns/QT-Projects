@@ -40,10 +40,13 @@ signals:
   void TabEdgeSizeSignal(double value);
 
 private:
+  /// @brief Иницилизация вкладок настроек
   void InitFields();
 
+  /// @brief Подключение сигналов к обработчикам
   void ConnectFields();
 
+  /// @brief Вынесение вкладок на  "макет" интерфейса
   void AddTab();
 
 private:
