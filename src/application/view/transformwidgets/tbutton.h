@@ -12,8 +12,8 @@ class TButton final : public QPushButton {
   Q_OBJECT
 public:
   /// @brief Конструктор, инициализирующий кнопку и определяющий ее базовое поведение
-  /// @param text Отображаемый на кнопке текст 
-  explicit TButton(const QString &text);
+  /// @param label Отображаемый на кнопке текст 
+  explicit TButton(const QString &label);
 };
 } // namespace s21
 
