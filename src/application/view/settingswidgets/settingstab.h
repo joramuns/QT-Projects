@@ -50,9 +50,9 @@ private:
   void AddTab();
 
 private:
-  ExtraSceneSettings *scene_settings_;
-  ModelSettings *vertex_settings_;
-  ModelSettings *edge_settings_;
+  ExtraSceneSettings *scene_settings_; ///< указатель на виджет управления отображением 3-х мерного объекта
+  ModelSettings *vertex_settings_;     ///< указатель на виджет управления отображением вершин
+  ModelSettings *edge_settings_;       ///< указатель на вилжет управления отображением ребер
 };
 } // namespace s21
 
