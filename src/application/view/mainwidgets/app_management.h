@@ -7,31 +7,43 @@
 #include <QVBoxLayout>
 
 namespace s21 {
+/// @brief Класс отвечающий за инициализацию и добавление в интерфейс
+/// пользователя core кнопок управления, а также кнопок скриншота и скринкаста
 class AppManagement : public QGroupBox {
   Q_OBJECT
 
- public:
+public:
   AppManagement() = delete;
+
+  /// @brief Констурктор класса с параметрами
+  /// @param label Имя группы кнопок
   explicit AppManagement(const QString &label);
 
- signals:
+signals:
   void AppOpenFileSignal(QString filename);
   void AppCloseFileSignal();
 
- public slots:
+public slots:
   void AppOpenFileSlot();
   void AppCloseFileSlot();
 
- private:
+private:
+  /// @brief Инициализирует core кнопки
   void InitFields();
+
+  /// @brief  Добавляет core кнопки в интерфейс пользователя
   void InitLayouts();
 
- private:
-  QPushButton *open_button_;
-  QPushButton *close_button_;
-  QPushButton *shot_button_;
-  QPushButton *cast_button_;
+private:
+  QPushButton *
+      open_button_; ///< указатель на объект кнопки отвечающей за открытие файла
+  QPushButton *close_button_; ///< указатель на объект кнопки отвечающей за
+                              ///< закрытие файла
+  QPushButton
+      *shot_button_; ///< указатель на объект кнопки отвечающей за скриншот
+  QPushButton
+      *cast_button_; ///< указатель на объект кнопки отвечающей за скринкаст
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // VIEW_APP_MANAGEMENT_H_
+#endif // VIEW_APP_MANAGEMENT_H_
