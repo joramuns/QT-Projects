@@ -31,6 +31,9 @@ private:
   /// @brief Инициализирует core кнопки
   void InitFields();
 
+  /// @brief Связывает кнопки с обработчиком событий
+  void ConnectFields();
+
   /// @brief  Добавляет core кнопки в интерфейс пользователя
   void InitLayouts();
 

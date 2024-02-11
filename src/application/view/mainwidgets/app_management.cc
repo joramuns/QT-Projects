@@ -21,13 +21,16 @@ void AppManagement::AppCloseFileSlot() {
 
 void AppManagement::InitFields() {
   open_button_ = new QPushButton("Open file");
-  connect(open_button_, &QPushButton::clicked, this,
-          &AppManagement::AppOpenFileSlot);
   close_button_ = new QPushButton("Close file");
-  connect(close_button_, &QPushButton::clicked, this,
-          &AppManagement::AppCloseFileSlot);
   shot_button_ = new QPushButton("Screenshot");
   cast_button_ = new QPushButton("Screencast");
+}
+
+void AppManagement::ConnectFields() {
+  connect(open_button_, &QPushButton::clicked, this,
+          &AppManagement::AppOpenFileSlot);
+  connect(close_button_, &QPushButton::clicked, this,
+          &AppManagement::AppCloseFileSlot);
 }
 
 void AppManagement::InitLayouts() {
