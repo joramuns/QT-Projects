@@ -5,6 +5,12 @@
 
 namespace s21 {
 SettingsTab::SettingsTab() {
+  InitFields();
+  ConnectFields();
+  AddTab();
+}
+
+void SettingsTab::InitFields() {
   scene_settings_ = new ExtraSceneSettings();
   scene_settings_->SetComboBoxOptions(
       QVector<QString>{"Parallel projection", "Central projection"});
@@ -17,7 +23,9 @@ SettingsTab::SettingsTab() {
 
   edge_settings_ = new ModelSettings();
   edge_settings_->SetComboBoxOptions(QVector<QString>{"Solid", "Dashed"});
+}
 
+void SettingsTab::ConnectFields() {
   connect(scene_settings_, &SceneSettings::ColorSignal, this,
           &SettingsTab::SceneColorSlot);
   connect(vertex_settings_, &SceneSettings::ColorSignal, this,
@@ -38,7 +46,9 @@ SettingsTab::SettingsTab() {
           &SettingsTab::VertexSizeSlot);
   connect(edge_settings_, &ModelSettings::SpinBoxSignal, this,
           &SettingsTab::EdgeSizeSlot);
+}
 
+void SettingsTab::AddTab() {
   addTab(scene_settings_, "Common");
   addTab(vertex_settings_, "Vertex");
   addTab(edge_settings_, "Edge");
@@ -51,13 +61,15 @@ void SettingsTab::SceneColorSlot() {
 
 void SettingsTab::VertexColorSlot() {
   QColor vertex_color = QColorDialog::getColor(Qt::white, this);
-  QVector3D vertex_vcolor{vertex_color.redF(), vertex_color.greenF(), vertex_color.blueF()};
+  QVector3D vertex_vcolor{vertex_color.redF(), vertex_color.greenF(),
+                          vertex_color.blueF()};
   emit TabVertexColorSignal(vertex_vcolor);
 }
 
 void SettingsTab::EdgeColorSlot() {
   QColor edge_color = QColorDialog::getColor(Qt::white, this);
-  QVector3D edge_vcolor{edge_color.redF(), edge_color.greenF(), edge_color.blueF()};
+  QVector3D edge_vcolor{edge_color.redF(), edge_color.greenF(),
+                        edge_color.blueF()};
   emit TabEdgeColorSignal(edge_vcolor);
 }
 
@@ -87,4 +99,4 @@ void SettingsTab::EdgeSizeSlot(double value) {
   std::cout << "Edge size: " << value << std::endl;
   emit TabEdgeSizeSignal(value);
 }
-}  // namespace s21
+} // namespace s21

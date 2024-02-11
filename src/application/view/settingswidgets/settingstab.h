@@ -40,6 +40,13 @@ signals:
   void TabEdgeSizeSignal(double value);
 
 private:
+  void InitFields();
+
+  void ConnectFields();
+
+  void AddTab();
+
+private:
   ExtraSceneSettings *scene_settings_;
   ModelSettings *vertex_settings_;
   ModelSettings *edge_settings_;
