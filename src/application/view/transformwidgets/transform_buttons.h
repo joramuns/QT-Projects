@@ -28,36 +28,60 @@
 #define SPACING 30
 
 namespace s21 {
+/// @brief Класс служит для инициализации и организации на "макете" кнопок
+/// управления 3-х мерным объектом
 class TransformButtons final : public QWidget {
   Q_OBJECT
 
- public:
+public:
+  /// @brief Конструктор по умолчанию - удален
   TransformButtons() = delete;
+
+  /// @brief Конструктор инициализирующий кнопки управления афинными
+  /// трансформациями
+  /// @param labels Двумерный массив символов для нанесения их на каждую кнопку
+  /// @param type Указывает тип трансформации (перемещение/вращение)
   TransformButtons(const QChar labels[2][3], int type);
 
- public slots:
+public slots:
+  /// @brief Слот выпускающий сигнал для обработки нажатия на кнопку
   void TransformSlot(double value, char axis, int type);
 
- signals:
+signals:
+  /// @brief Сигнал выпускаемый для обработки нажатия на кнопку
   void TransformSignal(double value, char axis, int type);
 
- private:
+private:
+  /// @brief Метод инициализирующий объекты кнопок
+  /// @param labels Двумерный массив символов для нанесения их на каждую кнопку
   void InitFields(const QChar labels[2][3]);
+
+  /// @brief Метод связывающий нажатие кнопок со слотом
+  /// @param type Указывает тип трансформаций (перемещение/вращение)
   void ConnectFields(int type);
+
+  /// @brief Метод инициализирующий "макет" и располагающий на нем кнопки
   void InitLayouts();
 
- private:
-  TButton *x_increase_;
-  TButton *x_decrease_;
+private:
+  TButton *x_increase_; ///< укзатель на объект кнопки инкремента (вдоль/вокруг)
+                        ///< оси Х
+  TButton *x_decrease_; ///< укзатель на объект кнопки декремента (вдоль/вокруг)
+                        ///< оси Х
 
-  TButton *y_increase_;
-  TButton *y_decrease_;
+  TButton *y_increase_; ///< укзатель на объект кнопки инкремента (вдоль/вокруг)
+                        ///< оси Y
+  TButton *y_decrease_; ///< укзатель на объект кнопки декремента (вдоль/вокруг)
+                        ///< оси Y
 
-  TButton *z_increase_;
-  TButton *z_decrease_;
+  TButton *z_increase_; ///< укзатель на объект кнопки инкремента (вдоль/вокруг)
+                        ///< оси Z
+  TButton *z_decrease_; ///< укзатель на объект кнопки инкремента (вдоль/вокруг)
+                        ///< оси Z
 
-  QDoubleSpinBox *step_;
+  QDoubleSpinBox *step_; ///< указатель на объект поля ввода значения величины
+                         ///< трансофрмации (перемещение/вращение)
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // TRANSFORM_BUTTONS_H_
+#endif // TRANSFORM_BUTTONS_H_
