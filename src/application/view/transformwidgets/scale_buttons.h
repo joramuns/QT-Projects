@@ -13,29 +13,41 @@
 #define SCALE 2
 
 namespace s21 {
+/// @brief Класс служит для инициализации кнопок управления масштабом
 class ScaleButtons final : public QWidget {
   Q_OBJECT
 
- public:
+public:
+  /// @brief Констурктор по умолчанию
   ScaleButtons();
 
- public slots:
+public slots:
+  /// @brief Слот выпускающий сигнал обработчику
   void ScaleSlot(double value, char axis, int type);
 
- signals:
+signals:
+  /// @brief Сигнал обработчику, посылаемый при нажатии кнопок управления
+  /// масштабом
   void ScaleSignal(double value, char axis, int type);
 
- private:
+private:
+  /// @brief Инициализация кнопок управления
   void InitFields();
+
+  /// @brief Связка кнопок со слотами обработчиками сигналов
   void ConnectFields();
+
+  /// @brief Инициализация "макетов" и расположение на них кнопок управления
+  /// масштабом
   void InitLayouts();
 
- private:
-  QPushButton *increase_;
-  QPushButton *decrease_;
+private:
+  QPushButton *increase_; ///< указатель на объект кнопки инкремента масштаба
+  QPushButton *decrease_; ///< указатель на объект кнопки декремента масштаба
 
-  QDoubleSpinBox *step_;
+  QDoubleSpinBox
+      *step_; ///< указатель на объект поля ввода значения величины масштаба
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // VIEW_SCALEBUTTONS_H_
+#endif // VIEW_SCALEBUTTONS_H_
