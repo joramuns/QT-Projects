@@ -17,18 +17,23 @@
 #include "transformwidgets/transform_tab.h"
 
 namespace s21 {
+/// @brief Класс верхнего уровня пользовательсокого интерфейса, который
+/// организовывает инициализацию, коннекты и расположение управляющих элементов
+/// интерфейса для пользователя
 class View final : public QWidget {
   Q_OBJECT
 
- public:
+public:
   View() = delete;
   ~View();
+  /// @brief 
+  /// @param context 
   explicit View(GLWidget *context);
 
   void AddListWidgetItem(const QString filename);
   void RemoveListWidgetItem(int model_number);
 
- private slots:
+private slots:
   void ViewTransformSlot(double value, char axis, int type, int model_number);
   void OpenFileSlot(QString filename);
   void CloseFileSlot();
@@ -42,7 +47,7 @@ class View final : public QWidget {
   void VertexSizeSlot(double value);
   void EdgeSizeSlot(double value);
 
- signals:
+signals:
   void ViewTransformSignal(double value, char axis, int type, int model_number);
   void OpenFileSignal(QString filename);
   void CloseFileSignal(int model_number);
@@ -56,11 +61,11 @@ class View final : public QWidget {
   void VertexSizeSignal(double value);
   void EdgeSizeSignal(double value);
 
- private:
+private:
   QGridLayout *main_layout_;
   GLWidget *gl_widget_;
   QListWidget *list_widget_;
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // VIEW_H_
+#endif // VIEW_H_
