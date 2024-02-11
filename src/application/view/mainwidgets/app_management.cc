@@ -6,6 +6,7 @@
 namespace s21 {
 AppManagement::AppManagement(const QString &label) : QGroupBox(label) {
   InitFields();
+  ConnectFields();
   InitLayouts();
 }
 
