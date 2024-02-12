@@ -1,6 +1,7 @@
 #ifndef VIEW_H_
 #define VIEW_H_
 
+#include <QCloseEvent>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
@@ -23,17 +24,17 @@ namespace s21 {
 class View final : public QWidget {
   Q_OBJECT
 
-public:
+ public:
   View() = delete;
   ~View();
-  /// @brief 
-  /// @param context 
+  /// @brief
+  /// @param context
   explicit View(GLWidget *context);
 
   void AddListWidgetItem(const QString filename);
   void RemoveListWidgetItem(int model_number);
 
-private slots:
+ private slots:
   void ViewTransformSlot(double value, char axis, int type, int model_number);
   void OpenFileSlot(QString filename);
   void CloseFileSlot();
@@ -47,7 +48,7 @@ private slots:
   void VertexSizeSlot(double value);
   void EdgeSizeSlot(double value);
 
-signals:
+ signals:
   void ViewTransformSignal(double value, char axis, int type, int model_number);
   void OpenFileSignal(QString filename);
   void CloseFileSignal(int model_number);
@@ -61,11 +62,14 @@ signals:
   void VertexSizeSignal(double value);
   void EdgeSizeSignal(double value);
 
-private:
+ private:
+  void closeEvent(QCloseEvent *event);
+
+ private:
   QGridLayout *main_layout_;
   GLWidget *gl_widget_;
   QListWidget *list_widget_;
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // VIEW_H_
+#endif  // VIEW_H_

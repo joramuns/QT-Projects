@@ -65,7 +65,7 @@ void Parser::DataClear() noexcept {
   delete faces_pars_;
 };
 
-void Parser::DebugPrint() noexcept {
+/* void Parser::DebugPrint() noexcept { */
   // std::cout << "V: ";
   // for (const auto &item : vertex_faces_) {
   //   for (const auto it : item) {
@@ -82,13 +82,11 @@ void Parser::DebugPrint() noexcept {
   // }
   // std::cout << std::endl;
 
-  std::cout << "N: ";
-  for (const auto &item : normal_faces_) {
-    for (const auto it : item) {
-      std::cout << it << " ";
-    }
-  }
-  std::cout << std::endl;
+  /*   for (const auto it : item) { */
+  /*     std::cout << it << " "; */
+  /*   } */
+  /* } */
+  /* std::cout << std::endl; */
   // for (const auto item : all_vertices_) {
   //   std::cout << std::endl << "Model verices :";
   //   for (size_t i = 0; i < item.size(); ++i) {
@@ -118,7 +116,7 @@ void Parser::DebugPrint() noexcept {
   //   }
   //   std::cout << std::endl;
   // }
-};
+/* }; */
 
 void Parser::AddPoint(std::istringstream &data) noexcept {
   PointCoordinates vertex;

@@ -11,6 +11,7 @@
 #include <QOpenGLWidget>
 
 #include "../buffer/glbuffer.h"
+#include "../settings_singleton.h"
 
 namespace s21 {
 /// @brief Класс GLWidget наследник QOpenGLWidget, позволяет работать с 3-х
@@ -130,6 +131,7 @@ private:
   QOpenGLShaderProgram *program_; ///< Указатель на объект шейдерной программы
   std::vector<GLBuffer *> GLBuffers_; ///<
 
+  SettingsSingleton &settings_;
   // temp settings
   QColor bg_color_;         ///< цвет сцены
   QVector3D vert_color_;    ///< цвет вершин

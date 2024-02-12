@@ -1,24 +1,20 @@
 #include "glwidget.h"
 
-#include <iostream>
-
 namespace s21 {
-GLWidget::GLWidget()
-    : bg_color_(100, 100, 100, 1),
-      vert_color_(0.95, 0.95, 0.95),
-      edge_color_(0.95, 0.15, 0.85),
-      central_projection_(false),
-      solid_(false),
-      vert_type_(2),
-      vert_size_(10.0),
-      edge_size_(1.0),
-      dashed_lines_(false) {
+GLWidget::GLWidget() : settings_(SettingsSingleton::GetInstance()) {
+  bg_color_ = settings_.GetBGColor();
+  vert_color_ = settings_.GetVertexColor();
+  edge_color_ = settings_.GetEdgeColor();
+  central_projection_ = settings_.GetProjectionType();
+  solid_ = settings_.GetPolygonType();
+  vert_type_ = settings_.GetVertexType();
+  vert_size_ = settings_.GetVertexSize();
+  dashed_lines_ = settings_.GetEdgeSize();
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
 
 GLWidget::~GLWidget() {
-  std::cout << "GLWidget dtor" << std::endl;
   makeCurrent();
   for (auto &item : GLBuffers_) delete item;
   program_->disableAttributeArray(0);
