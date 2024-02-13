@@ -1,8 +1,8 @@
 #ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_VIEW_SETTINGS_SINGLETON_H_
 #define CPP4_3DVIEWER_V2_0_2_APPLICATION_VIEW_SETTINGS_SINGLETON_H_
 
-#include <QOpenGLWidget>
 #include <QApplication>
+#include <QOpenGLWidget>
 #include <QSettings>
 #include <QVector3D>
 
@@ -16,25 +16,43 @@ class SettingsSingleton {
   SettingsSingleton &operator=(SettingsSingleton &&other) = delete;
   ~SettingsSingleton() = default;
 
-  const QColor &GetBGColor() const noexcept;      
-  const QVector3D &GetVertexColor() const noexcept;
-  const QVector3D &GetEdgeColor() const noexcept;
-  bool GetProjectionType() const noexcept;
-  bool GetPolygonType() const noexcept;
-  int GetVertexType() const noexcept;
-  GLfloat GetVertexSize() const noexcept;
-  GLfloat GetEdgeSize() const noexcept;
-  bool GetEdgeType() const noexcept;
   void WriteSettings();
-  const QColor &GetBGColor(const QColor &color) const noexcept;      
-  const QVector3D &GetVertexColor() const noexcept;
-  const QVector3D &GetEdgeColor() const noexcept;
-  bool GetProjectionType() const noexcept;
-  bool GetPolygonType() const noexcept;
-  int GetVertexType() const noexcept;
-  GLfloat GetVertexSize() const noexcept;
-  GLfloat GetEdgeSize() const noexcept;
-  bool GetEdgeType() const noexcept;
+
+  /* Accessors */
+  inline const QColor &GetBGColor() const noexcept { return bg_color_; };
+  inline const QVector3D &GetVertexColor() const noexcept {
+    return vert_color_;
+  };
+  inline const QVector3D &GetEdgeColor() const noexcept { return edge_color_; };
+  inline bool GetProjectionType() const noexcept {
+    return central_projection_;
+  };
+  inline bool GetPolygonType() const noexcept { return solid_; };
+  inline int GetVertexType() const noexcept { return vert_type_; };
+  inline GLfloat GetVertexSize() const noexcept { return vert_size_; };
+  inline GLfloat GetEdgeSize() const noexcept { return edge_size_; };
+  inline bool GetEdgeType() const noexcept { return dashed_lines_; };
+
+  /* Mutators */
+  inline void SetBGColor(const QColor &color) noexcept { bg_color_ = color; };
+  inline void SetVertexColor(const QVector3D &color) noexcept {
+    vert_color_ = color;
+  };
+  inline void SetEdgeColor(const QVector3D &color) noexcept {
+    edge_color_ = color;
+  };
+  inline void SetProjectionType(const bool setter) noexcept {
+    central_projection_ = setter;
+  };
+  inline void SetPolygonType(const bool setter) noexcept { solid_ = setter; };
+  inline void SetVertexType(const int setter) noexcept { vert_type_ = setter; };
+  inline void SetVertexSize(const GLfloat value) noexcept {
+    vert_size_ = value;
+  };
+  inline void SetEdgeSize(const GLfloat value) noexcept { edge_size_ = value; };
+  inline void SetEdgeType(const bool setter) noexcept {
+    dashed_lines_ = setter;
+  };
 
  private:
   SettingsSingleton();

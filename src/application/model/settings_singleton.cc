@@ -11,31 +11,6 @@ SettingsSingleton &SettingsSingleton::GetInstance() {
   return instance;
 }
 
-const QColor &SettingsSingleton::GetBGColor() const noexcept {
-  return bg_color_;
-}
-
-const QVector3D &SettingsSingleton::GetVertexColor() const noexcept {
-  return vert_color_;
-}
-
-const QVector3D &SettingsSingleton::GetEdgeColor() const noexcept {
-  return edge_color_;
-}
-
-bool SettingsSingleton::GetProjectionType() const noexcept {
-  return central_projection_;
-}
-
-bool SettingsSingleton::GetPolygonType() const noexcept { return solid_; }
-
-int SettingsSingleton::GetVertexType() const noexcept { return vert_type_; }
-
-GLfloat SettingsSingleton::GetVertexSize() const noexcept { return vert_size_; }
-
-GLfloat SettingsSingleton::GetEdgeSize() const noexcept { return edge_size_; }
-
-bool SettingsSingleton::GetEdgeType() const noexcept { return dashed_lines_; }
 
 void SettingsSingleton::WriteSettings() {
   settings_.setValue("background color", bg_color_);
