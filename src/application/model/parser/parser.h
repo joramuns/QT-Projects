@@ -97,7 +97,7 @@ private:
   /// отрисовки 3-х мерной модели в OpenGL
   void Packer() noexcept;
 
-  // void DebugPrint() noexcept;
+  void DebugPrint() noexcept;
 
 private:
   /// @brief Вектор координат вершин для одного 3-х мерного объекта(возможна

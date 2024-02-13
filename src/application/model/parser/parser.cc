@@ -2,19 +2,16 @@
 
 namespace s21 {
 Parser::Parser(const std::string &filename) {
-  ReadObj(filename);
-  Packer();
+  if(!ReadObj(filename)) {
+    Packer();
+  }
 };
 
 Parser::~Parser(){};
 
-std::vector<std::vector<GLfloat>> Parser::GetCoordinates() const noexcept {
+std::vector< std::vector<GLfloat> > Parser::GetCoordinates() const noexcept {
   return coordinates_;
 };
-
-// std::vector<std::vector<GLint>> Parser::GetNormalIndexes() const noexcept {
-//   return normal_faces_;
-// };
 
 /* Private functions */
 int Parser::ReadObj(const std::string &filename) {
