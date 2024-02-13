@@ -17,7 +17,7 @@ namespace s21 {
 /// @brief Класс GLWidget наследник QOpenGLWidget, позволяет работать с 3-х
 /// мерной моделью, ее сценой в OpenGL
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
-public:
+ public:
   /// @brief Конструктор по умолчанию
   GLWidget();
 
@@ -68,41 +68,51 @@ public:
 
   /// @brief Метод позволяющий менять тип проекции 3-х мерного объекта
   /// @param index Тип проекции
-  void SwitchProjection(int index);
+  inline void SwitchProjection(int index) {
+    settings_.SetProjectionType(index);
+  }
 
   /// @brief Метод позволяющий менять тип отображения 3-х мерного объекта
   /// @param index Тип отображения
-  void SwitchWireframe(int index);
+  inline void SwitchWireframe(int index) { settings_.SetPolygonType(index); }
 
   /// @brief Метод позволяющий установить цвет сцены
   /// @param color Требуемый цвет сцены
-  void SetSceneColor(QColor color);
+  inline void SetSceneColor(QColor color) { settings_.SetBGColor(color); }
 
   /// @brief Метод позволяющий установить цвет вершин
   /// @param color Требуемый цвет вершин
-  void SetVertexColor(QVector3D color);
+  inline void SetVertexColor(QVector3D color) {
+    settings_.SetVertexColor(color);
+  }
 
   /// @brief Метод позволяющий установить цвет ребер
   /// @param color Требуемый цвет ребер
-  void SetEdgeColor(QVector3D color);
+  inline void SetEdgeColor(QVector3D color) { settings_.SetEdgeColor(color); }
 
   /// @brief Метод позволяющий установить тип отображения вершин
   /// @param index Тип отображения вершин
-  void SetVertexOption(int index);
+  inline void SetVertexOption(int index) { settings_.SetVertexType(index); }
 
   /// @brief Метод позволяющий установить тип отображения ребер
   /// @param index Тип отображения ребер
-  void SetEdgeOption(int index);
+  inline void SetEdgeOption(int index) {
+    settings_.SetEdgeType(static_cast<bool>(index));
+  }
 
   /// @brief Метод позволяющий установить значение отображаемого размера вершин
   /// @param value Значение величины отображаемых вершин
-  void SetVertexSize(double value);
+  inline void SetEdgeSize(double value) {
+    settings_.SetEdgeSize(static_cast<GLfloat>(value));
+  }
 
   /// @brief Метод  позволяющий установить значения отображаемого размера ребер
   /// @param value Значение величины отображаемых ребер
-  void SetEdgeSize(double value);
+  inline void SetVertexSize(double value) {
+    settings_.SetVertexSize(static_cast<GLfloat>(value));
+  }
 
-protected:
+ protected:
   /// @brief Метод произовдит инициализацию OpenGL функций
   void initializeGL() override;
 
@@ -114,7 +124,7 @@ protected:
   /// @brief
   void paintGL() override;
 
-private:
+ private:
   /// @brief Метод отвечающий за загрузку шейдеров
   void LoadShaders();
 
@@ -127,22 +137,12 @@ private:
   /// @brief Загрузка общих данных в шейдеры
   void LoadCommonUniforms();
 
-private:
-  QOpenGLShaderProgram *program_; ///< Указатель на объект шейдерной программы
-  std::vector<GLBuffer *> GLBuffers_; ///<
+ private:
+  QOpenGLShaderProgram *program_;  ///< Указатель на объект шейдерной программы
+  std::vector<GLBuffer *> GLBuffers_;  ///<
 
   SettingsSingleton &settings_;
-  // temp settings
-  QColor bg_color_;         ///< цвет сцены
-  QVector3D vert_color_;    ///< цвет вершин
-  QVector3D edge_color_;    ///< цвет ребер
-  bool central_projection_; ///< тип проекции
-  bool solid_;              ///< тип отображения
-  int vert_type_;           ///< тип отображения вершин
-  GLfloat vert_size_; ///< значение величины отображаемых вершин
-  GLfloat edge_size_; ///< значение величины отображаемых ребер
-  bool dashed_lines_; ///< тип отображения ребер
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_CONTEXT_GLWIDGET_H_
+#endif  // CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_CONTEXT_GLWIDGET_H_

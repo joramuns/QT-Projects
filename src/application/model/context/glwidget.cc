@@ -2,14 +2,6 @@
 
 namespace s21 {
 GLWidget::GLWidget() : settings_(SettingsSingleton::GetInstance()) {
-  bg_color_ = settings_.GetBGColor();
-  vert_color_ = settings_.GetVertexColor();
-  edge_color_ = settings_.GetEdgeColor();
-  central_projection_ = settings_.GetProjectionType();
-  solid_ = settings_.GetPolygonType();
-  vert_type_ = settings_.GetVertexType();
-  vert_size_ = settings_.GetVertexSize();
-  dashed_lines_ = settings_.GetEdgeSize();
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
@@ -45,30 +37,6 @@ void GLWidget::Scale(double value, int model_number) {
   GLBuffers_[model_number]->Scale(value);
 }
 
-void GLWidget::SwitchProjection(int index) { central_projection_ = index; }
-
-void GLWidget::SwitchWireframe(int index) { solid_ = index; }
-
-void GLWidget::SetSceneColor(QColor color) { bg_color_ = color; }
-
-void GLWidget::SetVertexColor(QVector3D color) { vert_color_ = color; }
-
-void GLWidget::SetEdgeColor(QVector3D color) { edge_color_ = color; }
-
-void GLWidget::SetVertexOption(int index) { vert_type_ = index; }
-
-void GLWidget::SetEdgeOption(int index) {
-  dashed_lines_ = static_cast<bool>(index);
-}
-
-void GLWidget::SetEdgeSize(double value) {
-  edge_size_ = static_cast<GLfloat>(value);
-}
-
-void GLWidget::SetVertexSize(double value) {
-  vert_size_ = static_cast<GLfloat>(value);
-}
-
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();
@@ -102,15 +70,16 @@ void GLWidget::LoadShaders() {
 }
 
 void GLWidget::SceneLoader() {
-  if (solid_) {
+  if (settings_.GetPolygonType()) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   } else {
     glEnable(GL_LINE_SMOOTH);
-    glLineWidth(edge_size_);
+    glLineWidth(settings_.GetEdgeSize());
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   }
-  glClearColor(bg_color_.redF(), bg_color_.greenF(), bg_color_.blueF(),
-               bg_color_.alphaF());
+  const QColor bg_color = settings_.GetBGColor();
+  glClearColor(bg_color.redF(), bg_color.greenF(), bg_color.blueF(),
+               bg_color.alphaF());
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glDepthFunc(GL_LESS);
@@ -124,10 +93,10 @@ void GLWidget::ModelLoader() {
     LoadCommonUniforms();
 
     glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());
-    if (vert_type_) {
-      program_->setUniformValue("vertexType", vert_type_);
-      program_->setUniformValue("modelColor", vert_color_);
-      glPointSize(vert_size_);
+    if (settings_.GetVertexType()) {
+      program_->setUniformValue("vertexType", settings_.GetVertexType());
+      program_->setUniformValue("modelColor", settings_.GetVertexColor());
+      glPointSize(settings_.GetVertexSize());
       glDrawArrays(GL_POINTS, 0, GLBuffers_[i]->GetBuffSize());
       program_->setUniformValue("vertexType", 0);
     }
@@ -138,13 +107,13 @@ void GLWidget::ModelLoader() {
 
 void GLWidget::LoadCommonUniforms() {
   QMatrix4x4 perspective_matrix{};
-  if (central_projection_) {
+  if (settings_.GetProjectionType()) {
     perspective_matrix.perspective(30.0, 1.0, 0.1, 90.0);
     perspective_matrix.translate(-0.0, -0.0, -2.0);
   }
   program_->setUniformValue("perspectiveMatrix", perspective_matrix);
-  program_->setUniformValue("modelColor", edge_color_);
-  program_->setUniformValue("dashedLines", dashed_lines_);
+  program_->setUniformValue("modelColor", settings_.GetEdgeColor());
+  program_->setUniformValue("dashedLines", settings_.GetEdgeType());
   program_->setUniformValue("resolution", width(), height());
 }
 
