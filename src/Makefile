@@ -41,6 +41,10 @@ open: install
 	# @open $(BINDIR)/$(TARGET)
 	@./$(BINDIR)/$(TARGET)/Contents/MacOS/3DViewer
 
+xopen: 
+	# @open $(BINDIR)/$(TARGET)
+	@./$(BINDIR)/$(TARGET)/Contents/MacOS/3DViewer
+
 dist: install
 	@echo "Creating a distribution file for the program..."
 	@tar -czf $(DISTTARGET) $(TARGET)
