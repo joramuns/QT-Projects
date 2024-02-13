@@ -1,8 +1,5 @@
 #include "settingstab.h"
 
-// TEMP
-#include <iostream>
-
 namespace s21 {
 SettingsTab::SettingsTab() {
   InitFields();
@@ -82,21 +79,17 @@ void SettingsTab::ExtraSceneOptionSlot(int index) {
 }
 
 void SettingsTab::VertexOptionSlot(int index) {
-  std::cout << "Vertex option " << index << std::endl;
   emit TabVertexOptionSignal(index);
 }
 
 void SettingsTab::EdgeOptionSlot(int index) {
-  std::cout << "Edge option " << index << std::endl;
   emit TabEdgeOptionSignal(index);
 }
 
 void SettingsTab::VertexSizeSlot(double value) {
-  std::cout << "Vertex size: " << value << std::endl;
   emit TabVertexSizeSignal(value);
 }
 void SettingsTab::EdgeSizeSlot(double value) {
-  std::cout << "Edge size: " << value << std::endl;
   emit TabEdgeSizeSignal(value);
 }
 } // namespace s21

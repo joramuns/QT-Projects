@@ -1,8 +1,5 @@
 #include "transform_buttons.h"
 
-// TEMP
-#include <iostream>
-
 namespace s21 {
 TransformButtons::TransformButtons(const QChar labels[2][3], int type) {
   InitFields(labels);

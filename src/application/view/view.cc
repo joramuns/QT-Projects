@@ -59,7 +59,6 @@ View::View(GLWidget *context) : QWidget(nullptr) {
   QVBoxLayout *group_layout = new QVBoxLayout(group_box);
   gl_widget_ = context;
   group_layout->addWidget(gl_widget_);
-  std::cout << "view gl widget " << context << std::endl;
 
   QGroupBox *list_box = new QGroupBox();
   QHBoxLayout *list_layout = new QHBoxLayout(list_box);
@@ -124,7 +123,6 @@ void View::EdgeSizeSlot(double value) { emit EdgeSizeSignal(value); }
 void View::closeEvent(QCloseEvent *event) {
   SettingsSingleton &settings = SettingsSingleton::GetInstance();
   settings.WriteSettings();
-  std::cout << "Close event" << std::endl;
   event->accept();
 }
 

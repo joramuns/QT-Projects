@@ -1,8 +1,5 @@
 #include "app_management.h"
 
-// TEMP
-#include <iostream>
-
 namespace s21 {
 AppManagement::AppManagement(const QString &label) : QGroupBox(label) {
   InitFields();

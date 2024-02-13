@@ -1,7 +1,5 @@
 #include "glbuffer.h"
 
-#include <iostream>
-
 namespace s21 {
 GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices,
                    QOpenGLShaderProgram *program)
@@ -64,7 +62,6 @@ void GLBuffer::LoadUniforms() {
 
   program_->setUniformValue("scaleVector", scale_uniform_.GetChangeVector());
 
-  std::cout << "scale : " << scale_uniform_.GetChangeVector()[0] << std::endl;
   program_->setUniformValue("gapSize",
                             10 * scale_uniform_.GetChangeVector()[0]);
   program_->setUniformValue("dashSize",
