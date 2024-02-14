@@ -104,6 +104,8 @@ class Facade {
   /// @param value Новое значение размера ребер
   void ChangeEdgeSize(double value);
 
+  void TakeScreenshot(const QString &filename);
+
  private:
   int models_ = 0;
   /* std::vector<ObjectModel> models_; ///< Вектор 3-х мерных объектов */

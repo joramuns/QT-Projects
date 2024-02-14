@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace s21 {
-  View::~View() { std::cout << "View dtor" << std::endl; }
+View::~View() { std::cout << "View dtor" << std::endl; }
 View::View(GLWidget *context) : QWidget(nullptr) {
   main_layout_ = new QGridLayout(this);
   setWindowTitle("3D Viewer 2.0");
@@ -46,6 +46,8 @@ View::View(GLWidget *context) : QWidget(nullptr) {
           &View::OpenFileSlot);
   connect(app_management, &AppManagement::AppCloseFileSignal, this,
           &View::CloseFileSlot);
+  connect(app_management, &AppManagement::AppScreenshotSignal, this,
+          &View::ScreenshotSlot);
 
   menu_layout->addStretch();
   menu_layout->addWidget(transformation_tab);
@@ -118,6 +120,10 @@ void View::EdgeOptionSlot(int index) { emit EdgeOptionSignal(index); }
 void View::VertexSizeSlot(double value) { emit VertexSizeSignal(value); }
 
 void View::EdgeSizeSlot(double value) { emit EdgeSizeSignal(value); }
+
+void View::ScreenshotSlot(const QString &filename) {
+  emit ScreenshotSignal(filename);
+}
 
 void View::closeEvent(QCloseEvent *event) {
   SettingsSingleton &settings = SettingsSingleton::GetInstance();

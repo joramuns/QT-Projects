@@ -47,6 +47,7 @@ class View final : public QWidget {
   void EdgeOptionSlot(int index);
   void VertexSizeSlot(double value);
   void EdgeSizeSlot(double value);
+  void ScreenshotSlot(const QString &filename);
 
  signals:
   void ViewTransformSignal(double value, char axis, int type, int model_number);
@@ -61,6 +62,7 @@ class View final : public QWidget {
   void EdgeOptionSignal(int index);
   void VertexSizeSignal(double value);
   void EdgeSizeSignal(double value);
+  void ScreenshotSignal(const QString &filename);
 
  private:
   void closeEvent(QCloseEvent *event);

@@ -37,6 +37,11 @@ void GLWidget::Scale(double value, int model_number) {
   GLBuffers_[model_number]->Scale(value);
 }
 
+void GLWidget::SaveScreenshot(const QString &filename) {
+  QImage screenshot = grabFramebuffer();
+  screenshot.save(filename);
+}
+
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();

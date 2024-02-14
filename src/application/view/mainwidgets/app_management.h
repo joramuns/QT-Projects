@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QGroupBox>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -12,22 +13,24 @@ namespace s21 {
 class AppManagement : public QGroupBox {
   Q_OBJECT
 
-public:
+ public:
   AppManagement() = delete;
 
   /// @brief Констурктор класса с параметрами
   /// @param label Имя группы кнопок
   explicit AppManagement(const QString &label);
 
-signals:
-  void AppOpenFileSignal(QString filename);
+ signals:
+  void AppOpenFileSignal(const QString &filename);
   void AppCloseFileSignal();
+  void AppScreenshotSignal(const QString &filename);
 
-public slots:
+ public slots:
   void AppOpenFileSlot();
   void AppCloseFileSlot();
+  void AppScreenshotSlot();
 
-private:
+ private:
   /// @brief Инициализирует core кнопки
   void InitFields();
 
@@ -37,16 +40,16 @@ private:
   /// @brief  Добавляет core кнопки в интерфейс пользователя
   void InitLayouts();
 
-private:
-  QPushButton *
-      open_button_; ///< указатель на объект кнопки отвечающей за открытие файла
-  QPushButton *close_button_; ///< указатель на объект кнопки отвечающей за
-                              ///< закрытие файла
+ private:
+  QPushButton *open_button_;  ///< указатель на объект кнопки отвечающей за
+                              ///< открытие файла
+  QPushButton *close_button_;  ///< указатель на объект кнопки отвечающей за
+                               ///< закрытие файла
   QPushButton
-      *shot_button_; ///< указатель на объект кнопки отвечающей за скриншот
+      *shot_button_;  ///< указатель на объект кнопки отвечающей за скриншот
   QPushButton
-      *cast_button_; ///< указатель на объект кнопки отвечающей за скринкаст
+      *cast_button_;  ///< указатель на объект кнопки отвечающей за скринкаст
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // VIEW_APP_MANAGEMENT_H_
+#endif  // VIEW_APP_MANAGEMENT_H_

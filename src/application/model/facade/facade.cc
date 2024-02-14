@@ -83,4 +83,9 @@ void Facade::ChangeEdgeSize(double value) {
   context_->SetEdgeSize(value);
   context_->update();
 }
+
+void Facade::TakeScreenshot(const QString &filename) {
+  context_->SaveScreenshot(filename);
+}
+
 }  // namespace s21

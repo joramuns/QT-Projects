@@ -68,6 +68,10 @@ void Controller::ControllerEdgeSize(double value) {
   facade_->ChangeEdgeSize(value);
 }
 
+void Controller::ControllerScreenshotslot(const QString &filename) {
+  facade_->TakeScreenshot(filename);
+}
+
 void Controller::ConnectFields() const {
   connect(view_, &View::ViewTransformSignal, this,
           &Controller::ControllerTransformSlot);
@@ -103,6 +107,9 @@ void Controller::ConnectFields() const {
           &Controller::ControllerVertexSize);
 
   connect(view_, &View::EdgeSizeSignal, this, &Controller::ControllerEdgeSize);
+
+  connect(view_, &View::ScreenshotSignal, this,
+          &Controller::ControllerScreenshotslot);
 }
 
 }  // namespace s21

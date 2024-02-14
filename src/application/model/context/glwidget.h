@@ -64,6 +64,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   /// @param model_number Индекс 3-х мерного объекта
   void Scale(double value, int model_number);
 
+  void SaveScreenshot(const QString &filename);
+
   /* Scene management */
 
   /// @brief Метод позволяющий менять тип проекции 3-х мерного объекта
@@ -136,6 +138,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
   /// @brief Загрузка общих данных в шейдеры
   void LoadCommonUniforms();
+
+
 
  private:
   QOpenGLShaderProgram *program_;  ///< Указатель на объект шейдерной программы
