@@ -7,7 +7,7 @@ Controller::Controller(View *v, Facade *f) : view_(v), facade_(f) {
 
 void Controller::ControllerTransformSlot(double value, char axis, int type,
                                          int model_number) {
-  if (facade_->CountModel() && model_number >= 0) {
+  if (facade_->GetCountModel() && model_number >= 0) {
     if (type == ROTATE) {
       facade_->Rotate(value, axis, model_number);
     } else if (type == MOVE) {
@@ -26,7 +26,7 @@ void Controller::ControllerOpenFileSlot(QString filename) {
 }
 
 void Controller::ControllerCloseFileSlot(int model_number) {
-  if (facade_->CountModel()) {
+  if (facade_->GetCountModel()) {
     facade_->RemoveModel(model_number);
     view_->RemoveListWidgetItem(model_number);
   }

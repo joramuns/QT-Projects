@@ -7,7 +7,7 @@ Facade::~Facade() { std::cout << "facade context: " << context_ << std::endl; }
 
 void Facade::AddModel(const std::string &filename) noexcept {
   ObjectModel model(filename);
-  models_.push_back(model);
+  ++models_;
 
   std::vector<GLfloat> vertices;
   for (const auto &item : model.GetVertices()) {
@@ -17,23 +17,15 @@ void Facade::AddModel(const std::string &filename) noexcept {
 };
 
 void Facade::RemoveModel(int model_number) noexcept {
-  models_.erase(models_.begin() + model_number);
+  --models_;
   context_->UnloadModel(model_number);
 }
 
-std::size_t Facade::CountModel() const noexcept { return models_.size(); }
-
 void Facade::PrintDate() const noexcept {
-  for (const ObjectModel &item : models_) {
-    item.PrintResult();
-  }
+  /* for (const ObjectModel &item : models_) { */
+  /*   item.PrintResult(); */
+  /* } */
 };
-
-ObjectModel Facade::GetModel(const unsigned int index) const noexcept {
-  return models_[index];
-};
-
-GLWidget *Facade::GetContext() const noexcept { return context_; }
 
 void Facade::Rotate(double value, char axis, int model_number) {
   context_->Rotate(value, axis, model_number);

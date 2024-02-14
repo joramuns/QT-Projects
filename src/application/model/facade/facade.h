@@ -18,7 +18,7 @@ namespace s21 {
 /// @brief Класс реализует паттерн Фасад, дающий пользователю интерфейс
 /// взаимодействия с моделью 3D_Viewer
 class Facade {
-public:
+ public:
   /// @brief Конструктор по умолчанию
   Facade();
 
@@ -36,13 +36,13 @@ public:
   /// @brief Возвращает экземпляр класса 3-х мерного объекта по индексу
   /// @param index Индекс 3-х мерного объекта
   /// @return Экземпляр класса 3-х мерного объекта
-  ObjectModel GetModel(const unsigned int index) const noexcept;
+  /* ObjectModel GetModel(const unsigned int index) const noexcept; */
 
   /// @brief Возвращает размер массива 3-х мерных объектов
-  std::size_t CountModel() const noexcept;
+  inline int GetCountModel() const noexcept { return models_; };
 
   /// @brief Возвращает указтель на виджет OpenGL
-  GLWidget *GetContext() const noexcept;
+  inline GLWidget *GetContext() const noexcept { return context_; }
 
   // debug
   void PrintDate() const noexcept;
@@ -104,10 +104,11 @@ public:
   /// @param value Новое значение размера ребер
   void ChangeEdgeSize(double value);
 
-private:
-  std::vector<ObjectModel> models_; ///< Вектор 3-х мерных объектов
-  GLWidget *context_;               ///<
+ private:
+  int models_ = 0;
+  /* std::vector<ObjectModel> models_; ///< Вектор 3-х мерных объектов */
+  GLWidget *context_;  ///<
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_MODEL_FACADE_FACADE_H
+#endif  // CPP4_3DVIEWER_V2_MODEL_FACADE_FACADE_H
