@@ -76,7 +76,6 @@ void View::AddListWidgetItem(const QString filename) {
 
 void View::RemoveListWidgetItem(int model_number) {
   delete list_widget_->takeItem(model_number);
-  list_widget_->removeItemWidget(list_widget_->takeItem(model_number));
 }
 
 /* Slots */
