@@ -6,6 +6,7 @@
 #include <QVector3D>
 
 #include "settings.h"
+#include "../../model/settings_singleton.h"
 
 namespace s21 {
 /// @brief Класс определяющий инициализацию вкладок настроек
@@ -48,6 +49,8 @@ private:
 
   /// @brief Вынесение вкладок на  "макет" интерфейса
   void AddTab();
+
+  void ReadSettings();
 
 private:
   ExtraSceneSettings *scene_settings_; ///< указатель на виджет управления отображением 3-х мерного объекта

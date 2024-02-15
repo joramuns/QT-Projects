@@ -3,6 +3,7 @@
 namespace s21 {
 SettingsTab::SettingsTab() {
   InitFields();
+  ReadSettings();
   ConnectFields();
   AddTab();
 }
@@ -49,6 +50,16 @@ void SettingsTab::AddTab() {
   addTab(scene_settings_, "Common");
   addTab(vertex_settings_, "Vertex");
   addTab(edge_settings_, "Edge");
+}
+
+void SettingsTab::ReadSettings() {
+  SettingsSingleton &settings = SettingsSingleton::GetInstance();
+  scene_settings_->SetComboBox(settings.GetProjectionType());
+  scene_settings_->SetExtraComboBox(settings.GetPolygonType());
+  vertex_settings_->SetComboBox(settings.GetVertexType());
+  vertex_settings_->SetSpinBox(settings.GetVertexSize());
+  edge_settings_->SetComboBox(settings.GetEdgeType());
+  edge_settings_->SetSpinBox(settings.GetEdgeSize());
 }
 
 void SettingsTab::SceneColorSlot() {

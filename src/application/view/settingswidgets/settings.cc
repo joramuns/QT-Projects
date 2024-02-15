@@ -40,6 +40,10 @@ void SceneSettings::SetComboBoxOptions(const QVector<QString> &labels) {
   }
 }
 
+void SceneSettings::SetComboBox(const int index) {
+  type_->setCurrentIndex(index);
+}
+
 ExtraSceneSettings::ExtraSceneSettings() {
   InitFields();
   ConnectFields();
@@ -60,6 +64,10 @@ void ExtraSceneSettings::SetExtraComboBoxOptions(
   for (const auto &item : labels) {
     wireframe_type_->addItem(item);
   }
+}
+
+void ExtraSceneSettings::SetExtraComboBox(const int index) {
+  wireframe_type_->setCurrentIndex(index);
 }
 
 void ExtraSceneSettings::ExtraComboBoxSlot() {
@@ -91,4 +99,8 @@ void ModelSettings::ConnectFields() {
 }
 
 void ModelSettings::InitLayouts() { layout_->addWidget(size_); }
+
+void ModelSettings::SetSpinBox(const double value) {
+  size_->setValue(value);
+}
 }  // namespace s21
