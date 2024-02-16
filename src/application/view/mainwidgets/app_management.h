@@ -24,11 +24,13 @@ class AppManagement : public QGroupBox {
   void AppOpenFileSignal(const QString &filename);
   void AppCloseFileSignal();
   void AppScreenshotSignal(const QString &filename);
+  void AppGifSignal(const QString &filename);
 
  public slots:
   void AppOpenFileSlot();
   void AppCloseFileSlot();
   void AppScreenshotSlot();
+  void AppGifSlot();
 
  private:
   /// @brief Инициализирует core кнопки

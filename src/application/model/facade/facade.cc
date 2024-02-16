@@ -88,4 +88,8 @@ void Facade::TakeScreenshot(const QString &filename) {
   context_->SaveScreenshot(filename);
 }
 
+void Facade::TakeGif(const QString &filename) {
+  context_->SaveGif(filename);
+}
+
 }  // namespace s21

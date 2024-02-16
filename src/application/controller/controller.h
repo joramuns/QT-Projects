@@ -71,7 +71,9 @@ private slots:
   /// @param value значение величины ребер
   void ControllerEdgeSize(double value);
 
-  void ControllerScreenshotslot(const QString &filename);
+  void ControllerScreenshotSlot(const QString &filename);
+
+  void ControllerGifSlot(const QString &filename);
 
 private:
   /// @brief Метод связывающий сигналы отображения со слотами обработчиками в

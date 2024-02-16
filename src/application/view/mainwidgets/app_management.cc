@@ -25,6 +25,16 @@ void AppManagement::AppScreenshotSlot() {
   }
 }
 
+void AppManagement::AppGifSlot() {
+  QString filename = QFileDialog::getSaveFileName(
+      this, "СКРИНШОТАНУТЬ?", "", "Images (*.bmp *.png *.jpeg)");
+  if (filename.isEmpty()) {
+    QMessageBox::critical(0, "Error", "File can not be created!");
+  } else {
+    emit AppGifSignal(filename);
+  }
+}
+
 void AppManagement::InitFields() {
   open_button_ = new QPushButton("Open file");
   close_button_ = new QPushButton("Close file");
@@ -39,6 +49,8 @@ void AppManagement::ConnectFields() {
           &AppManagement::AppCloseFileSlot);
   connect(shot_button_, &QPushButton::clicked, this,
           &AppManagement::AppScreenshotSlot);
+  connect(cast_button_, &QPushButton::clicked, this,
+          &AppManagement::AppGifSlot);
 }
 
 void AppManagement::InitLayouts() {

@@ -48,6 +48,7 @@ class View final : public QWidget {
   void VertexSizeSlot(double value);
   void EdgeSizeSlot(double value);
   void ScreenshotSlot(const QString &filename);
+  void GifSlot(const QString &filename);
 
  signals:
   void ViewTransformSignal(double value, char axis, int type, int model_number);
@@ -63,6 +64,7 @@ class View final : public QWidget {
   void VertexSizeSignal(double value);
   void EdgeSizeSignal(double value);
   void ScreenshotSignal(const QString &filename);
+  void GifSignal(const QString &filename);
 
  private:
   void closeEvent(QCloseEvent *event);

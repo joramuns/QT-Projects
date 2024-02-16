@@ -7,8 +7,10 @@
 */
 #ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_CONTEXT_GLWIDGET_H_
 #define CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_CONTEXT_GLWIDGET_H_
+#define kGifFrameNumber 50
 
 #include <QOpenGLWidget>
+#include <QTimer>
 
 #include "../buffer/glbuffer.h"
 #include "../settings_singleton.h"
@@ -65,6 +67,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   void Scale(double value, int model_number);
 
   void SaveScreenshot(const QString &filename);
+
+  void SaveGif(const QString &filename);
 
   /* Scene management */
 
@@ -139,6 +143,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   /// @brief Загрузка общих данных в шейдеры
   void LoadCommonUniforms();
 
+  void GifFrameGrabber();
+
 
 
  private:
@@ -146,6 +152,10 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   std::vector<GLBuffer *> GLBuffers_;  ///<
 
   SettingsSingleton &settings_;
+
+  // TEMP
+  std::vector<QImage> gif_frames_;
+  QTimer timer_;
 };
 }  // namespace s21
 

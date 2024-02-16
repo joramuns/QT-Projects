@@ -125,6 +125,10 @@ void View::ScreenshotSlot(const QString &filename) {
   emit ScreenshotSignal(filename);
 }
 
+void View::GifSlot(const QString &filename) {
+  emit GifSignal(filename);
+}
+
 void View::closeEvent(QCloseEvent *event) {
   SettingsSingleton &settings = SettingsSingleton::GetInstance();
   settings.WriteSettings();

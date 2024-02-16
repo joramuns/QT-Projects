@@ -42,6 +42,14 @@ void GLWidget::SaveScreenshot(const QString &filename) {
   screenshot.save(filename);
 }
 
+void GLWidget::SaveGif(const QString &filename) {
+  if (!gif_frames_.size()) {
+    connect(timer_, &QTimer::timeout, this, &GLWidget::GifFrameGrabber);
+  }
+  QImage gif_frame = grabFramebuffer();
+  gif_frame.save(filename);
+}
+
 void GLWidget::initializeGL() {
   // Set up the rendering context, load shaders and other resources, etc.:
   LoadShaders();
