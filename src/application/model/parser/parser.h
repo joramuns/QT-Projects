@@ -21,6 +21,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <regex>
 
 #include "indices_pars/faces_strategy.h"
 #include "packer/coordinate_packer.h"
@@ -100,6 +101,14 @@ private:
   /// @brief Сортирует и упаковывает данные в один вектор для дальнейшей
   /// отрисовки 3-х мерной модели в OpenGL
   void Packer() noexcept;
+
+  bool IsVertexData(const std::string &data) const noexcept;
+
+  bool IsTexturesData(const std::string &data) const noexcept;
+
+  bool IsNormalsData(const std::string &data) const noexcept;
+
+  bool IsValidData() const noexcept; 
 
   void DebugPrint() noexcept;
 
