@@ -7,11 +7,15 @@
 */
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
+
+#ifdef __APPLE__
 #include <OpenGL/gl.h>
-// #include <GL/glut.h>
-// #include <glm/glm.hpp>
-/* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
-/* brew install glm */
+#endif  // __APPLE__
+
+#ifdef __linux__
+#include <GL/glut.h>
+#endif // __linux__
+
 #include <fstream>
 #include <iostream>
 #include <sstream>

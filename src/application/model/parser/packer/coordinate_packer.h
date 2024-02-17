@@ -9,7 +9,14 @@
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_PACKER_COORDINATE_PACKER_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_PACKER_COORDINATE_PACKER_H
 
+#ifdef __APPLE__
 #include <OpenGL/gl.h>
+#endif  // __APPLE__
+
+#ifdef __linux__
+#include <GL/glut.h>
+#endif // __linux__
+
 #include <vector>
 
 namespace s21 {
