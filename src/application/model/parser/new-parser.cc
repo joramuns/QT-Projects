@@ -45,7 +45,10 @@ void NewParser::DataRead(const std::string &filename) noexcept {
       } else if (prefix == "vt" && vertices_is_read) {
         textures_is_read = TexturesRead(&file, file_position);
         file.seekg(file_position);
-      }
+      } else if (prefix == "vn" && vertices_is_read) {
+        normals_is_read = NormalsRead(&file, file_position);
+        file.seekg(file_position);
+      } else if (prefix == "f " && vertices_is_read)
       file_position = file.tellg();
     }
   }
@@ -139,14 +142,43 @@ void NewParser::TexturesPointFill(const std::string &data) noexcept {
   }
 }
 
-bool NewParser::NormalsRead(std::ifstream *file, int &file_position) const noexcept {
-
+bool NewParser::NormalsRead(std::ifstream *file, int &file_position) noexcept {
+  bool result = true;
+  file->seekg(file_position);
+  std::string data_line;
+  std::getline(*file, data_line);
+  std::string prefix = data_line.substr(0, 2);
+  while (prefix == "vn") {
+    if (IsNormalsData(data_line)) {
+      NormalsPointFill(data_line);
+    } else {
+      result = false;
+    }
+    std::getline(*file, data_line);
+    file_position = file->tellg();
+    prefix = data_line.substr(0, 2);
+  }
+  if (result) {
+    all_normals_.push_back(normals_);
+  } else {
+    normals_.clear();
+  }
+  return result;
 }
 
 bool NewParser::IsNormalsData(const std::string &data) const noexcept {
-
+  return std::regex_search(data, normals_pattern_);
 }
 
-void NewParser::NormalsPointFill(const std::string &data) noexcept;
+void NewParser::NormalsPointFill(const std::string &data) noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  while (it != end) {
+    normals_.push_back(std::stod(it->str()));
+    ++it;
+  }
+}
 
 } // namespace s21
