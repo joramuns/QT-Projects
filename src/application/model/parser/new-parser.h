@@ -43,16 +43,32 @@ private:
   void DataRead(const std::string &filename) noexcept;
 
   bool VertexRead(std::ifstream *file, int &file_position) noexcept;
-
   bool IsVertexData(const std::string &data) const noexcept;
-
   void VertexPointFill(const std::string &data) noexcept;
+
+  bool TexturesRead(std::ifstream *file, int &file_position) noexcept;
+  bool IsTexturesData(const std::string &data) const noexcept;
+  void TexturesPointFill(const std::string &data) noexcept;
+
+  bool NormalsRead(std::ifstream *file, int &file_position) const noexcept;
+  bool IsNormalsData(const std::string &data) const noexcept;
+  void NormalsPointFill(const std::string &data) noexcept;
 
 private:
   std::vector<std::vector<GLfloat>> coordinates_;
 
   std::vector<GLfloat> vertices_;
   std::vector<std::vector<GLfloat>> all_vertices_;
+  
+  std::vector<GLfloat> textures_;
+  std::vector<std::vector<GLfloat>> all_textures_;
+
+  bool vertices_is_read{false};
+  bool textures_is_read{false};
+  bool normals_is_read{false};
+  
+  std::regex vertices_pattern_{"-?\\b\\d+(\\.\\d+)?\\b(.*\\b-?\\d+(\\.\\d+)?\\b){2,3}"};
+  std::regex textures_pattern {"-?\\b\\d+(\\.\\d+)?\\b.*-?\\b\\d+(\\.\\d+)?\\b"};
 };
 } // namespace s21
 
