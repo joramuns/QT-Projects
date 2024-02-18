@@ -17,29 +17,43 @@
 #endif // __linux__
 
 #include <fstream>
+#include <regex>
 #include <sstream>
-#include <vector>
 #include <string>
+#include <vector>
 
-//for debug
+#include "struct/coordinatestruct.h"
+
+// for debug
 #include <iostream>
-
 
 namespace s21 {
 class NewParser {
-    public:
+public:
+  explicit NewParser(const std::string &filename);
 
-    explicit NewParser(const std::string &filename);
+  ~NewParser() = default;
 
-    ~NewParser();
+  std::vector<std::vector<GLfloat>> GetCoordinates() const noexcept;
 
-    std::vector < std::vector<GLfloat> > GetCoordinates() const noexcept;
+private:
+  bool IsCorrectFileFormat(const std::string &filename) const noexcept;
+  bool IsFileExist(const std::string &filename) const noexcept;
 
-    private:
+  void DataRead(const std::string &filename) noexcept;
 
-    bool IsCorrectFileFormat(const std::string &filename) const noexcept;
-    bool IsFileExist(const std::string &filename) const noexcept;
+  bool VertexRead(std::ifstream *file, int &file_position) noexcept;
 
-    void DataRead(const std::string &filename) const noexcept;
+  bool IsVertexData(const std::string &data) const noexcept;
+
+  void VertexPointFill(const std::string &data) noexcept;
+
+private:
+  std::vector<std::vector<GLfloat>> coordinates_;
+
+  std::vector<GLfloat> vertices_;
+  std::vector<std::vector<GLfloat>> all_vertices_;
 };
 } // namespace s21
+
+#endif

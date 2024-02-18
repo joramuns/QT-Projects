@@ -8,6 +8,7 @@ NewParser::NewParser(const std::string &filename) {
   } else if (!IsFileExist(filename)) {
     throw std::invalid_argument("\n File does not exist");
   } else {
+    DataRead(filename);
   }
 }
 
@@ -28,13 +29,70 @@ bool NewParser::IsFileExist(const std::string &filename) const noexcept {
   return result;
 }
 
-void NewParser::DataRead(const std::string &filename) const noexcept {
+void NewParser::DataRead(const std::string &filename) noexcept {
   std::ifstream file;
   file.open(filename, std::ios::in);
   std::string line;
   int file_position;
   while (std::getline(file, line)) {
-    
+    if (line.size() < 3) {
+      file_position = file.tellg();
+    } else {
+      std::string prefix = line.substr(0, 2);
+      if (prefix == "v " && VertexRead(&file, file_position)) {
+      }
+      file_position = file.tellg();
+    }
+  }
+  file.close();
+}
+
+bool NewParser::VertexRead(std::ifstream *file, int &file_position) noexcept {
+  bool result = true;
+  file->seekg(file_position);
+  std::string data_line;
+  std::getline(*file, data_line);
+  std::string prefix = data_line.substr(0, 2);
+  while (prefix == "v ") {
+    if (IsVertexData(data_line)) {
+      VertexPointFill(data_line);
+    } else {
+      result = false;
+      break;
+    }
+    std::getline(*file, data_line);
+    file_position = file->tellg();
+    prefix = data_line.substr(0, 2);
+  }
+  if (result) {
+    all_vertices_.push_back(vertices_);
+  }
+  return result;
+}
+
+bool NewParser::IsVertexData(const std::string &data) const noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b(.*\\b-?\\d+(\\.\\d+)?\\b){2,3}");
+  return std::regex_search(data, pattern);
+}
+
+void NewParser::VertexPointFill(const std::string &data) noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  for (int i = 0; i < 4; ++i) {
+    if (it != end) {
+      double coordinate = std::stod(it->str());
+      if (i == 3 && (coordinate > 1 || coordinate < 0)) {
+        vertices_.push_back(1);
+      } else {
+        vertices_.push_back(std::stod(it->str()));
+        ++it;
+      }
+    } else {
+      vertices_.push_back(1);
+    }
   }
 }
+
 } // namespace s21
