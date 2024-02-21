@@ -7,7 +7,7 @@
 
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
-#endif  // __APPLE__
+#endif // __APPLE__
 
 #ifdef __linux__
 #include <GL/glut.h>
@@ -15,6 +15,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <regex>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -30,7 +31,7 @@ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param file_pos  Позиция с которой начинается считывание данных
-  FacesStrategy(std::ifstream *file, const int file_pos);
+  FacesStrategy(std::ifstream *file, int &file_pos);
 
   /// @brief Виртуальный деструктор
   virtual ~FacesStrategy(){};
@@ -50,7 +51,11 @@ public:
   /// @brief Core функция, выполняющая считывание данных и сохранение, для
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
-  virtual int Pars() = 0;
+  virtual bool Pars() = 0;
+
+  virtual bool IsValid(const std::string &data_line) const = 0;
+  virtual void IndicesFill(std::vector<GLint> &v_tmp,
+                           const std::string &data) const = 0;
 
 protected:
   /// @brief Функция отвечает за теселяцию индексов полигонов, организовывает
@@ -64,14 +69,14 @@ protected:
   std::ifstream
       *file_; ///< Файловый поток, из которого происходит чтение данных
 
+  int &file_position_;
+
   std::vector<GLint>
       vertices_; ///< Целевой(преобразованный) вектор индексов вершин
   std::vector<GLint>
       texutres_; ///< Целевой(преобразованный) вектор индексов текстур
   std::vector<GLint>
       normals_; ///< Целевой(преобразованный) вектор индексов нормалей
-
-private:
 };
 
 /// @brief Класс наследник обеспечивающий работу с индексами ВЕРШИН
@@ -80,12 +85,15 @@ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param file_pos  Позиция с которой начинается считывание данных
-  VertexStrategy(std::ifstream *file, const int file_pos);
+  VertexStrategy(std::ifstream *file, int &file_pos);
 
   /// @brief Core функция, выполняющая считывание данных и сохранение, для
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
-  int Pars() noexcept override;
+  bool Pars() noexcept override;
+  bool IsValid(const std::string &data_line) const noexcept override;
+  void IndicesFill(std::vector<GLint> &v_tmp,
+                   const std::string &data) const noexcept override;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН и ТЕКСТУР
@@ -94,12 +102,12 @@ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param file_pos  Позиция с которой начинается считывание данных
-  VertexTexturesStrategy(std::ifstream *file, const int file_pos);
+  VertexTexturesStrategy(std::ifstream *file, int &file_pos);
 
   /// @brief Core функция, выполняющая считывание данных и сохранение, для
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
-  int Pars() noexcept override;
+  bool Pars() noexcept override;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН и НОРМАЛЕЙ
@@ -108,12 +116,12 @@ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param file_pos  Позиция с которой начинается считывание данных
-  VertexNormalsStrategy(std::ifstream *file, const int file_pos);
+  VertexNormalsStrategy(std::ifstream *file, int &file_pos);
 
   /// @brief Core функция, выполняющая считывание данных и сохранение, для
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
-  int Pars() noexcept override;
+  bool Pars() noexcept override;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН, ТЕКСТУР и
@@ -123,12 +131,12 @@ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param file_pos  Позиция с которой начинается считывание данных
-  VertexTexturesNormalsStrategy(std::ifstream *file, const int file_pos);
+  VertexTexturesNormalsStrategy(std::ifstream *file, int &file_pos);
 
   /// @brief Core функция, выполняющая считывание данных и сохранение, для
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
-  int Pars() noexcept override;
+  bool Pars() noexcept override;
 };
 
 } // namespace s21

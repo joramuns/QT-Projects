@@ -1,8 +1,8 @@
 #include "faces_strategy.h"
 
 namespace s21 {
-FacesStrategy::FacesStrategy(std::ifstream *file, const int file_pos)
-    : file_(file) {
+FacesStrategy::FacesStrategy(std::ifstream *file, int &file_pos)
+    : file_(file), file_position_(file_pos) {
   file_->seekg(file_pos);
 };
 
@@ -30,35 +30,51 @@ void FacesStrategy::TesselationFill(
   }
 };
 
-VertexStrategy::VertexStrategy(std::ifstream *file, const int file_pos)
+VertexStrategy::VertexStrategy(std::ifstream *file, int &file_pos)
     : FacesStrategy(file, file_pos){};
 
-int VertexStrategy::Pars() noexcept {
-  std::string line;
-  int position = -1;
-  while (std::getline(*file_, line)) {
-    if (line.size() < 3) {
-      continue;
-    }
-    std::string prefix = line.substr(0, 2);
-    // Already checked condition?
-    if (prefix == "v ") break;
-    std::istringstream data(line.substr(2));
+bool VertexStrategy::Pars() noexcept {
+  bool result{true};
+  std::string data_line;
+  std::getline(*file_, data_line);
+  std::string prefix = data_line.substr(0, 2);
+  while (prefix == "f ") {
     std::vector<GLint> v_tmp;
-    while (data.peek() != EOF && prefix == "f ") {
-      GLint v;
-      data >> v;
-      v_tmp.push_back(v);
-      data.get();
+    if (IsValid(data_line)) {
+      IndicesFill(v_tmp, data_line);
+    } else {
+      result = false;
     }
     TesselationFill(v_tmp, vertices_);
-    position = file_->tellg();
+    if (std::getline(*file_, data_line)) {
+      file_position_ = file_->tellg();
+      prefix = data_line.substr(0, 2);
+    } else {
+      break;
+    }
   }
-  return position;
+  return result;
 };
 
+bool VertexStrategy::IsValid(const std::string &data_line) const noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  return std::regex_search(data_line, pattern);
+}
+
+void VertexStrategy::IndicesFill(std::vector<GLint> &v_tmp,
+                                 const std::string &data) const noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  while (it != end) {
+    v_tmp.push_back(std::stoi(it->str()));
+    ++it;
+  }
+}
+
 VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
-                                               const int file_pos)
+                                               int &file_pos)
     : FacesStrategy(file, file_pos){};
 
 int VertexTexturesStrategy::Pars() noexcept {
@@ -66,7 +82,8 @@ int VertexTexturesStrategy::Pars() noexcept {
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ") break;
+    if (prefix == "v ")
+      break;
     std::istringstream data(line.substr(2));
     std::vector<GLint> v_tmp;
     std::vector<GLint> vt_tmp;
@@ -87,8 +104,7 @@ int VertexTexturesStrategy::Pars() noexcept {
   return position;
 }
 
-VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file,
-                                             const int file_pos)
+VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file, int &file_pos)
     : FacesStrategy(file, file_pos){};
 
 int VertexNormalsStrategy::Pars() noexcept {
@@ -96,7 +112,8 @@ int VertexNormalsStrategy::Pars() noexcept {
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ") break;
+    if (prefix == "v ")
+      break;
     std::istringstream data(line.substr(2));
     std::vector<GLint> v_tmp;
     std::vector<GLint> vn_tmp;
@@ -119,7 +136,7 @@ int VertexNormalsStrategy::Pars() noexcept {
 }
 
 VertexTexturesNormalsStrategy::VertexTexturesNormalsStrategy(
-    std::ifstream *file, const int file_pos)
+    std::ifstream *file, int &file_pos)
     : FacesStrategy(file, file_pos){};
 
 int VertexTexturesNormalsStrategy::Pars() noexcept {
@@ -127,7 +144,8 @@ int VertexTexturesNormalsStrategy::Pars() noexcept {
   int position = -1;
   while (std::getline(*file_, line)) {
     std::string prefix = line.substr(0, 2);
-    if (prefix == "v ") break;
+    if (prefix == "v ")
+      break;
     std::istringstream data(line.substr(2));
     std::vector<GLint> v_tmp;
     std::vector<GLint> vt_tmp;
@@ -155,4 +173,4 @@ int VertexTexturesNormalsStrategy::Pars() noexcept {
   return position;
 }
 
-}  // namespace s21
+} // namespace s21
