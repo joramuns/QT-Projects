@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "struct/coordinatestruct.h"
+#include "indices_pars/faces_strategy.h"
 
 // for debug
 #include <iostream>
@@ -54,6 +55,8 @@ private:
   bool IsNormalsData(const std::string &data) const noexcept;
   void NormalsPointFill(const std::string &data) noexcept;
 
+  void SetStrategy(std::ifstream *file, int current_position) noexcept;
+
 private:
   std::vector<std::vector<GLfloat>> coordinates_;
 
@@ -66,15 +69,17 @@ private:
   std::vector<GLfloat> normals_;
   std::vector<std::vector<GLfloat>> all_normals_;
 
-  bool vertices_is_read{false};
-  bool textures_is_read{false};
-  bool normals_is_read{false};
+  bool vertices_is_read_{false};
+  bool textures_is_read_{false};
+  bool normals_is_read_{false};
 
   std::regex vertices_pattern_{
       "-?\\b\\d+(\\.\\d+)?\\b(.*\\b-?\\d+(\\.\\d+)?\\b){2,3}"};
   std::regex textures_pattern{"-?\\b\\d+(\\.\\d+)?\\b.*-?\\b\\d+(\\.\\d+)?\\b"};
   std::regex normals_pattern_{
       "-?\\b\\d+(\\.\\d+)?\\b.*-?\\b\\d+(\\.\\d+)?\\b.*-?\\b\\d+(\\.\\d+)?\\b"};
+  
+  FacesStrategy *face_parser_;
 };
 } // namespace s21
 

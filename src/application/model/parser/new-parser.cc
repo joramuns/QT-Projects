@@ -40,15 +40,17 @@ void NewParser::DataRead(const std::string &filename) noexcept {
     } else {
       std::string prefix = line.substr(0, 2);
       if (prefix == "v ") {
-        vertices_is_read = VertexRead(&file, file_position);
+        vertices_is_read_ = VertexRead(&file, file_position);
         file.seekg(file_position);
-      } else if (prefix == "vt" && vertices_is_read) {
-        textures_is_read = TexturesRead(&file, file_position);
+      } else if (prefix == "vt" && vertices_is_read_) {
+        textures_is_read_ = TexturesRead(&file, file_position);
         file.seekg(file_position);
-      } else if (prefix == "vn" && vertices_is_read) {
-        normals_is_read = NormalsRead(&file, file_position);
+      } else if (prefix == "vn" && vertices_is_read_) {
+        normals_is_read_ = NormalsRead(&file, file_position);
         file.seekg(file_position);
-      } else if (prefix == "f " && vertices_is_read)
+      } else if (prefix == "f " && vertices_is_read_) {
+        SetStrategy(&file, file_position);
+      }
       file_position = file.tellg();
     }
   }
@@ -178,6 +180,18 @@ void NewParser::NormalsPointFill(const std::string &data) noexcept {
   while (it != end) {
     normals_.push_back(std::stod(it->str()));
     ++it;
+  }
+}
+
+void NewParser::SetStrategy(std::ifstream *file, int current_position) noexcept {
+  if (!textures_is_read_ && !normals_is_read_) {
+    face_parser_ = new VertexStrategy(file, current_position);
+  } else if (textures_is_read_ && !normals_is_read_) {
+    face_parser_ = new VertexTexturesStrategy(file, current_position);
+  } else if (!textures_is_read_ && normals_is_read_) {
+    face_parser_ = new VertexNormalsStrategy(file, current_position);
+  } else {
+    face_parser_ = new VertexTexturesNormalsStrategy(file, current_position);
   }
 }
 
