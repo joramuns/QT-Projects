@@ -69,9 +69,12 @@ bool NewParser::VertexRead(std::ifstream *file, int &file_position) noexcept {
     } else {
       result = false;
     }
-    std::getline(*file, data_line);
-    file_position = file->tellg();
-    prefix = data_line.substr(0, 2);
+    if (std::getline(*file, data_line)) {
+      file_position = file->tellg();
+      prefix = data_line.substr(0, 2);
+    } else {
+      break;
+    }
   }
   if (result) {
     all_vertices_.push_back(vertices_);
@@ -117,9 +120,12 @@ bool NewParser::TexturesRead(std::ifstream *file, int &file_position) noexcept {
     } else {
       result = false;
     }
-    std::getline(*file, data_line);
-    file_position = file->tellg();
-    prefix = data_line.substr(0, 2);
+    if (std::getline(*file, data_line)) {
+      file_position = file->tellg();
+      prefix = data_line.substr(0, 2);
+    } else {
+      break;
+    }
   }
   if (result) {
     all_textures_.push_back(textures_);
@@ -156,9 +162,12 @@ bool NewParser::NormalsRead(std::ifstream *file, int &file_position) noexcept {
     } else {
       result = false;
     }
-    std::getline(*file, data_line);
-    file_position = file->tellg();
-    prefix = data_line.substr(0, 2);
+    if (std::getline(*file, data_line)) {
+      file_position = file->tellg();
+      prefix = data_line.substr(0, 2);
+    } else {
+      break;
+    }
   }
   if (result) {
     all_normals_.push_back(normals_);
@@ -183,7 +192,8 @@ void NewParser::NormalsPointFill(const std::string &data) noexcept {
   }
 }
 
-void NewParser::SetStrategy(std::ifstream *file, int current_position) noexcept {
+void NewParser::SetStrategy(std::ifstream *file,
+                            int current_position) noexcept {
   if (!textures_is_read_ && !normals_is_read_) {
     face_parser_ = new VertexStrategy(file, current_position);
   } else if (textures_is_read_ && !normals_is_read_) {
