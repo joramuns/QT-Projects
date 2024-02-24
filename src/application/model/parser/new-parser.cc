@@ -52,7 +52,10 @@ void NewParser::DataRead(const std::string &filename) noexcept {
         // file_position = file.tellg();
         SetStrategy(&file, file_position);
         file.seekg(file_position);
-        face_parser_->Pars();
+        if (face_parser_->Pars()) {
+          ///need get index
+        }
+        /// need data clear after filling
       }
       file_position = file.tellg();
     }
