@@ -132,7 +132,7 @@ public:
 private:
   void IndicesFill(std::vector<GLint> &v_tmp,
                    const std::string &data) const noexcept override = 0;
-  void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> vn_tmp,
+  void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vn_tmp,
                    const std::string &data) const noexcept;
 };
 

@@ -109,31 +109,38 @@ VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file, int &file_pos)
     : FacesStrategy(file, file_pos){};
 
 bool VertexNormalsStrategy::Pars() noexcept {
-  std::string line;
-  int position = -1;
-  while (std::getline(*file_, line)) {
-    std::string prefix = line.substr(0, 2);
-    if (prefix == "v ")
-      break;
-    std::istringstream data(line.substr(2));
+  bool result{true};
+  std::string data_line;
+  while (std::getline(*file_, data_line) && data_line.substr(0, 2) == "f ") {
     std::vector<GLint> v_tmp;
     std::vector<GLint> vn_tmp;
-    while (data.peek() != EOF && prefix == "f ") {
-      int v;
-      data >> v;
-      v_tmp.push_back(v);
-      data.get();
-      data.get();
-      int vn;
-      data >> vn;
-      vn_tmp.push_back(vn);
-      data.get();
+    if (IsValid(data_line)) {
+      IndicesFill(v_tmp, vn_tmp, data_line);
+    } else {
+      result = false;
     }
     TesselationFill(v_tmp, vertices_);
     TesselationFill(vn_tmp, normals_);
-    position = file_->tellg();
+    file_position_ = file_->tellg();
   }
-  return position;
+  return result;
+}
+
+void VertexNormalsStrategy::IndicesFill(
+    std::vector<GLint> &v_tmp, std::vector<GLint> &vn_tmp,
+    const std::string &data) const noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  while (it != end) {
+    v_tmp.push_back(std::stoi(it->str()));
+    ++it;
+    if (it != end) {
+      vn_tmp.push_back(std::stoi(it->str()));
+      ++it;
+    }
+  }
 }
 
 VertexTexturesNormalsStrategy::VertexTexturesNormalsStrategy(
