@@ -36,9 +36,7 @@ VertexStrategy::VertexStrategy(std::ifstream *file, int &file_pos)
 bool VertexStrategy::Pars() noexcept {
   bool result{true};
   std::string data_line;
-  std::getline(*file_, data_line);
-  std::string prefix = data_line.substr(0, 2);
-  while (prefix == "f ") {
+  while (std::getline(*file_, data_line) && data_line.substr(0, 2) == "f ") {
     std::vector<GLint> v_tmp;
     if (IsValid(data_line)) {
       IndicesFill(v_tmp, data_line);
@@ -46,12 +44,7 @@ bool VertexStrategy::Pars() noexcept {
       result = false;
     }
     TesselationFill(v_tmp, vertices_);
-    if (std::getline(*file_, data_line)) {
-      file_position_ = file_->tellg();
-      prefix = data_line.substr(0, 2);
-    } else {
-      break;
-    }
+    file_position_ = file_->tellg();
   }
   return result;
 };
@@ -77,7 +70,7 @@ VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
                                                int &file_pos)
     : FacesStrategy(file, file_pos){};
 
-int VertexTexturesStrategy::Pars() noexcept {
+bool VertexTexturesStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
