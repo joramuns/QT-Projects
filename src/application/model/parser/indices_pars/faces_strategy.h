@@ -52,10 +52,9 @@ public:
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
   virtual bool Pars() = 0;
-
-  virtual bool IsValid(const std::string &data_line) const = 0;
   virtual void IndicesFill(std::vector<GLint> &v_tmp,
                            const std::string &data) const = 0;
+  bool IsValid(const std::string &data_line) const noexcept;
 
 protected:
   /// @brief Функция отвечает за теселяцию индексов полигонов, организовывает
@@ -74,7 +73,7 @@ protected:
   std::vector<GLint>
       vertices_; ///< Целевой(преобразованный) вектор индексов вершин
   std::vector<GLint>
-      texutres_; ///< Целевой(преобразованный) вектор индексов текстур
+      textures_; ///< Целевой(преобразованный) вектор индексов текстур
   std::vector<GLint>
       normals_; ///< Целевой(преобразованный) вектор индексов нормалей
 };
@@ -91,7 +90,8 @@ public:
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
   bool Pars() noexcept override;
-  bool IsValid(const std::string &data_line) const noexcept override;
+
+private:
   void IndicesFill(std::vector<GLint> &v_tmp,
                    const std::string &data) const noexcept override;
 };
@@ -108,6 +108,12 @@ public:
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
   bool Pars() noexcept override;
+
+private:
+  void IndicesFill(std::vector<GLint> &v_tmp,
+                   const std::string &data) const noexcept override = 0;
+  void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vt_tmp,
+                   const std::string &data) const noexcept;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН и НОРМАЛЕЙ
@@ -122,6 +128,12 @@ public:
   /// дальнейшего использования
   /// @return Позицию в потоке на которой закончилось считывание
   bool Pars() noexcept override;
+
+private:
+  void IndicesFill(std::vector<GLint> &v_tmp,
+                   const std::string &data) const noexcept override = 0;
+  void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> vn_tmp,
+                   const std::string &data) const noexcept;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН, ТЕКСТУР и

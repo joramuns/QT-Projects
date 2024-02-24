@@ -6,12 +6,17 @@ FacesStrategy::FacesStrategy(std::ifstream *file, int &file_pos)
   file_->seekg(file_pos);
 };
 
+bool FacesStrategy::IsValid(const std::string &data_line) const noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  return std::regex_search(data_line, pattern);
+}
+
 std::vector<GLint> FacesStrategy::GetVertices() const noexcept {
   return vertices_;
 };
 
 std::vector<GLint> FacesStrategy::GetTextures() const noexcept {
-  return texutres_;
+  return textures_;
 };
 
 std::vector<GLint> FacesStrategy::GetNormals() const noexcept {
@@ -49,11 +54,6 @@ bool VertexStrategy::Pars() noexcept {
   return result;
 };
 
-bool VertexStrategy::IsValid(const std::string &data_line) const noexcept {
-  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
-  return std::regex_search(data_line, pattern);
-}
-
 void VertexStrategy::IndicesFill(std::vector<GLint> &v_tmp,
                                  const std::string &data) const noexcept {
   std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
@@ -71,36 +71,44 @@ VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
     : FacesStrategy(file, file_pos){};
 
 bool VertexTexturesStrategy::Pars() noexcept {
-  std::string line;
-  int position = -1;
-  while (std::getline(*file_, line)) {
-    std::string prefix = line.substr(0, 2);
-    if (prefix == "v ")
-      break;
-    std::istringstream data(line.substr(2));
+  bool result{true};
+  std::string data_line;
+  while (std::getline(*file_, data_line) && data_line.substr(0, 2) == "f ") {
     std::vector<GLint> v_tmp;
     std::vector<GLint> vt_tmp;
-    while (data.peek() != EOF && prefix == "f ") {
-      int v;
-      data >> v;
-      v_tmp.push_back(v);
-      data.get();
-      int vt;
-      data >> vt;
-      vt_tmp.push_back(vt);
-      data.get();
+    if (IsValid(data_line)) {
+      IndicesFill(v_tmp, vt_tmp, data_line);
+    } else {
+      result = false;
     }
     TesselationFill(v_tmp, vertices_);
-    TesselationFill(vt_tmp, texutres_);
-    position = file_->tellg();
+    TesselationFill(vt_tmp, textures_);
+    file_position_ = file_->tellg();
   }
-  return position;
+  return result;
+}
+
+void VertexTexturesStrategy::IndicesFill(
+    std::vector<GLint> &v_tmp, std::vector<GLint> &vt_tmp,
+    const std::string &data) const noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  while (it != end) {
+    v_tmp.push_back(std::stoi(it->str()));
+    ++it;
+    if (it != end) {
+      vt_tmp.push_back(std::stoi(it->str()));
+      ++it;
+    }
+  }
 }
 
 VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file, int &file_pos)
     : FacesStrategy(file, file_pos){};
 
-int VertexNormalsStrategy::Pars() noexcept {
+bool VertexNormalsStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
@@ -132,7 +140,7 @@ VertexTexturesNormalsStrategy::VertexTexturesNormalsStrategy(
     std::ifstream *file, int &file_pos)
     : FacesStrategy(file, file_pos){};
 
-int VertexTexturesNormalsStrategy::Pars() noexcept {
+bool VertexTexturesNormalsStrategy::Pars() noexcept {
   std::string line;
   int position = -1;
   while (std::getline(*file_, line)) {
