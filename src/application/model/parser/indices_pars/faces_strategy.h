@@ -61,6 +61,7 @@ protected:
   /// @param type_of_indexes Целевой(преобразованный) вектор индексов
   void TesselationFill(const std::vector<GLint> &indexes,
                        std::vector<GLint> &type_of_indexes) noexcept;
+  virtual bool IsSuccess() const noexcept = 0;
 
 protected:
   std::ifstream
@@ -92,6 +93,7 @@ public:
 private:
   void IndicesFill(std::vector<GLint> &v_tmp,
                    const std::string &data) const noexcept;
+  bool IsSuccess() const noexcept override;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН и ТЕКСТУР
@@ -110,6 +112,7 @@ public:
 private:
   void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vt_tmp,
                    const std::string &data) const noexcept;
+  bool IsSuccess() const noexcept override;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН и НОРМАЛЕЙ
@@ -128,6 +131,7 @@ public:
 private:
   void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vn_tmp,
                    const std::string &data) const noexcept;
+  bool IsSuccess() const noexcept override;
 };
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН, ТЕКСТУР и
@@ -148,6 +152,7 @@ private:
   void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vt_tmp,
                    std::vector<GLint> &vn_tmp,
                    const std::string &data) const noexcept;
+  bool IsSuccess() const noexcept override;
 };
 
 } // namespace s21

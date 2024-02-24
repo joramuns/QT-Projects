@@ -53,6 +53,9 @@ bool VertexStrategy::Pars() noexcept {
       current_positionition_ = file_->tellg();
     }
   }
+  if (result) {
+    result = IsSuccess();
+  }
   return result;
 };
 
@@ -67,6 +70,8 @@ void VertexStrategy::IndicesFill(std::vector<GLint> &v_tmp,
     ++it;
   }
 }
+
+bool VertexStrategy::IsSuccess() const noexcept { return (!vertices_.empty()); }
 
 VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
                                                int &current_position)
@@ -89,6 +94,9 @@ bool VertexTexturesStrategy::Pars() noexcept {
       current_positionition_ = file_->tellg();
     }
   }
+  if (result) {
+    result = IsSuccess();
+  }
   return result;
 }
 
@@ -107,6 +115,12 @@ void VertexTexturesStrategy::IndicesFill(
       ++it;
     }
   }
+}
+
+bool VertexTexturesStrategy::IsSuccess() const noexcept {
+  bool condition_one = (!vertices_.empty() && !textures_.empty());
+  bool condition_two = (vertices_.size() == textures_.size());
+  return (condition_one && condition_two);
 }
 
 VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file,
@@ -130,6 +144,9 @@ bool VertexNormalsStrategy::Pars() noexcept {
       current_positionition_ = file_->tellg();
     }
   }
+  if (result) {
+    result = IsSuccess();
+  }
   return result;
 }
 
@@ -148,6 +165,12 @@ void VertexNormalsStrategy::IndicesFill(
       ++it;
     }
   }
+}
+
+bool VertexNormalsStrategy::IsSuccess() const noexcept {
+  bool condition_one = (!vertices_.empty() && !normals_.empty());
+  bool condition_two = (vertices_.size() && normals_.size());
+  return (condition_one && condition_two);
 }
 
 VertexTexturesNormalsStrategy::VertexTexturesNormalsStrategy(
@@ -173,6 +196,9 @@ bool VertexTexturesNormalsStrategy::Pars() noexcept {
       current_positionition_ = file_->tellg();
     }
   }
+  if (result) {
+    result = IsSuccess();
+  }
   return result;
 }
 
@@ -195,6 +221,14 @@ void VertexTexturesNormalsStrategy::IndicesFill(
       ++it;
     }
   }
+}
+
+bool VertexTexturesNormalsStrategy::IsSuccess() const noexcept {
+  bool condition_one =
+      (!vertices_.empty() && !textures_.empty() && !normals_.empty());
+  bool condition_two = (vertices_.size() == textures_.size() &&
+                        vertices_.size() == normals_.size());
+  return (condition_one && condition_two);
 }
 
 } // namespace s21
