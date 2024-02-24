@@ -1,9 +1,9 @@
 #include "faces_strategy.h"
 
 namespace s21 {
-FacesStrategy::FacesStrategy(std::ifstream *file, int &file_pos)
-    : file_(file), file_position_(file_pos) {
-  file_->seekg(file_pos);
+FacesStrategy::FacesStrategy(std::ifstream *file, int &current_position)
+    : file_(file), current_positionition_(current_position) {
+  file_->seekg(current_position);
 };
 
 bool FacesStrategy::IsValid(const std::string &data_line) const noexcept {
@@ -35,21 +35,23 @@ void FacesStrategy::TesselationFill(
   }
 };
 
-VertexStrategy::VertexStrategy(std::ifstream *file, int &file_pos)
-    : FacesStrategy(file, file_pos){};
+VertexStrategy::VertexStrategy(std::ifstream *file, int &current_position)
+    : FacesStrategy(file, current_position){};
 
 bool VertexStrategy::Pars() noexcept {
   bool result{true};
   std::string data_line;
-  while (std::getline(*file_, data_line) && data_line.substr(0, 2) == "f ") {
-    std::vector<GLint> v_tmp;
-    if (IsValid(data_line)) {
-      IndicesFill(v_tmp, data_line);
-    } else {
-      result = false;
+  while (std::getline(*file_, data_line)) {
+    if (data_line.substr(0, 2) == "f ") {
+      std::vector<GLint> v_tmp;
+      if (IsValid(data_line)) {
+        IndicesFill(v_tmp, data_line);
+      } else {
+        result = false;
+      }
+      TesselationFill(v_tmp, vertices_);
+      current_positionition_ = file_->tellg();
     }
-    TesselationFill(v_tmp, vertices_);
-    file_position_ = file_->tellg();
   }
   return result;
 };
@@ -67,23 +69,25 @@ void VertexStrategy::IndicesFill(std::vector<GLint> &v_tmp,
 }
 
 VertexTexturesStrategy::VertexTexturesStrategy(std::ifstream *file,
-                                               int &file_pos)
-    : FacesStrategy(file, file_pos){};
+                                               int &current_position)
+    : FacesStrategy(file, current_position){};
 
 bool VertexTexturesStrategy::Pars() noexcept {
   bool result{true};
   std::string data_line;
   while (std::getline(*file_, data_line) && data_line.substr(0, 2) == "f ") {
-    std::vector<GLint> v_tmp;
-    std::vector<GLint> vt_tmp;
-    if (IsValid(data_line)) {
-      IndicesFill(v_tmp, vt_tmp, data_line);
-    } else {
-      result = false;
+    if (data_line.substr(0, 2) == "f ") {
+      std::vector<GLint> v_tmp;
+      std::vector<GLint> vt_tmp;
+      if (IsValid(data_line)) {
+        IndicesFill(v_tmp, vt_tmp, data_line);
+      } else {
+        result = false;
+      }
+      TesselationFill(v_tmp, vertices_);
+      TesselationFill(vt_tmp, textures_);
+      current_positionition_ = file_->tellg();
     }
-    TesselationFill(v_tmp, vertices_);
-    TesselationFill(vt_tmp, textures_);
-    file_position_ = file_->tellg();
   }
   return result;
 }
@@ -105,23 +109,26 @@ void VertexTexturesStrategy::IndicesFill(
   }
 }
 
-VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file, int &file_pos)
-    : FacesStrategy(file, file_pos){};
+VertexNormalsStrategy::VertexNormalsStrategy(std::ifstream *file,
+                                             int &current_position)
+    : FacesStrategy(file, current_position){};
 
 bool VertexNormalsStrategy::Pars() noexcept {
   bool result{true};
   std::string data_line;
   while (std::getline(*file_, data_line) && data_line.substr(0, 2) == "f ") {
-    std::vector<GLint> v_tmp;
-    std::vector<GLint> vn_tmp;
-    if (IsValid(data_line)) {
-      IndicesFill(v_tmp, vn_tmp, data_line);
-    } else {
-      result = false;
+    if (data_line.substr(0, 2) == "f ") {
+      std::vector<GLint> v_tmp;
+      std::vector<GLint> vn_tmp;
+      if (IsValid(data_line)) {
+        IndicesFill(v_tmp, vn_tmp, data_line);
+      } else {
+        result = false;
+      }
+      TesselationFill(v_tmp, vertices_);
+      TesselationFill(vn_tmp, normals_);
+      current_positionition_ = file_->tellg();
     }
-    TesselationFill(v_tmp, vertices_);
-    TesselationFill(vn_tmp, normals_);
-    file_position_ = file_->tellg();
   }
   return result;
 }
@@ -144,41 +151,50 @@ void VertexNormalsStrategy::IndicesFill(
 }
 
 VertexTexturesNormalsStrategy::VertexTexturesNormalsStrategy(
-    std::ifstream *file, int &file_pos)
-    : FacesStrategy(file, file_pos){};
+    std::ifstream *file, int &current_position)
+    : FacesStrategy(file, current_position){};
 
 bool VertexTexturesNormalsStrategy::Pars() noexcept {
-  std::string line;
-  int position = -1;
-  while (std::getline(*file_, line)) {
-    std::string prefix = line.substr(0, 2);
-    if (prefix == "v ")
-      break;
-    std::istringstream data(line.substr(2));
-    std::vector<GLint> v_tmp;
-    std::vector<GLint> vt_tmp;
-    std::vector<GLint> vn_tmp;
-    while (data.peek() != EOF && prefix == "f ") {
-      int v;
-      data >> v;
-      v_tmp.push_back(v);
-      data.get();
-      int vt;
-      data >> vt;
-      vt_tmp.push_back(vt);
-      data.get();
-      int vn;
-      data >> vn;
-      vn_tmp.push_back(vn);
-      data.get();
+  bool result{true};
+  std::string data_line;
+  while (std::getline(*file_, data_line) && data_line.substr(0, 2) == "f ") {
+    if (data_line.substr(0, 2) == "f ") {
+      std::vector<GLint> v_tmp;
+      std::vector<GLint> vt_tmp;
+      std::vector<GLint> vn_tmp;
+      if (IsValid(data_line)) {
+        IndicesFill(v_tmp, vt_tmp, vn_tmp, data_line);
+      } else {
+        result = false;
+      }
+      TesselationFill(v_tmp, vertices_);
+      TesselationFill(vt_tmp, textures_);
+      TesselationFill(vn_tmp, normals_);
+      current_positionition_ = file_->tellg();
     }
-    TesselationFill(v_tmp, vertices_);
-    TesselationFill(vt_tmp, texutres_);
-    TesselationFill(vn_tmp, normals_);
-    position = file_->tellg();
   }
+  return result;
+}
 
-  return position;
+void VertexTexturesNormalsStrategy::IndicesFill(
+    std::vector<GLint> &v_tmp, std::vector<GLint> &vt_tmp,
+    std::vector<GLint> &vn_tmp, const std::string &data) const noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  while (it != end) {
+    v_tmp.push_back(std::stoi(it->str()));
+    ++it;
+    if (it != end) {
+      vt_tmp.push_back(std::stoi(it->str()));
+      ++it;
+    }
+    if (it != end) {
+      vn_tmp.push_back(std::stoi(it->str()));
+      ++it;
+    }
+  }
 }
 
 } // namespace s21

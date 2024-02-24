@@ -49,7 +49,10 @@ void NewParser::DataRead(const std::string &filename) noexcept {
         normals_is_read_ = NormalsRead(&file, file_position);
         file.seekg(file_position);
       } else if (prefix == "f " && vertices_is_read_) {
+        // file_position = file.tellg();
         SetStrategy(&file, file_position);
+        file.seekg(file_position);
+        face_parser_->Pars();
       }
       file_position = file.tellg();
     }
@@ -193,7 +196,7 @@ void NewParser::NormalsPointFill(const std::string &data) noexcept {
 }
 
 void NewParser::SetStrategy(std::ifstream *file,
-                            int current_position) noexcept {
+                            int &current_position) noexcept {
   if (!textures_is_read_ && !normals_is_read_) {
     face_parser_ = new VertexStrategy(file, current_position);
   } else if (textures_is_read_ && !normals_is_read_) {

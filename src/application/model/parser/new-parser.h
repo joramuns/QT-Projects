@@ -55,7 +55,7 @@ private:
   bool IsNormalsData(const std::string &data) const noexcept;
   void NormalsPointFill(const std::string &data) noexcept;
 
-  void SetStrategy(std::ifstream *file, int current_position) noexcept;
+  void SetStrategy(std::ifstream *file, int &current_position) noexcept;
 
 private:
   std::vector<std::vector<GLfloat>> coordinates_;
