@@ -22,8 +22,9 @@
 #include <string>
 #include <vector>
 
-#include "struct/coordinatestruct.h"
 #include "indices_pars/faces_strategy.h"
+#include "struct/coordinatestruct.h"
+#include "packer/coordinate_packer.h"
 
 // for debug
 #include <iostream>
@@ -36,6 +37,9 @@ public:
   ~NewParser() = default;
 
   std::vector<std::vector<GLfloat>> GetCoordinates() const noexcept;
+  bool GetReadStatus() const noexcept;
+  bool GetTexturesStatus() const noexcept;
+  bool GetNormalsStatus() const noexcept;
 
 private:
   bool IsCorrectFileFormat(const std::string &filename) const noexcept;
@@ -56,6 +60,12 @@ private:
   void NormalsPointFill(const std::string &data) noexcept;
 
   void SetStrategy(std::ifstream *file, int &current_position) noexcept;
+  void GetIndexes() noexcept;
+  void ClearData() noexcept;
+  /// @brief Сортирует и упаковывает данные в один вектор для дальнейшей
+  /// отрисовки 3-х мерной модели в OpenGL
+  void Packer() noexcept;
+
 
 private:
   std::vector<std::vector<GLfloat>> coordinates_;
@@ -65,21 +75,34 @@ private:
 
   std::vector<GLfloat> textures_;
   std::vector<std::vector<GLfloat>> all_textures_;
-  
+
   std::vector<GLfloat> normals_;
   std::vector<std::vector<GLfloat>> all_normals_;
 
   bool vertices_is_read_{false};
   bool textures_is_read_{false};
   bool normals_is_read_{false};
+  bool faces_is_read_{false};
 
   std::regex vertices_pattern_{
       "-?\\b\\d+(\\.\\d+)?\\b(.*\\b-?\\d+(\\.\\d+)?\\b){2,3}"};
   std::regex textures_pattern{"-?\\b\\d+(\\.\\d+)?\\b.*-?\\b\\d+(\\.\\d+)?\\b"};
   std::regex normals_pattern_{
       "-?\\b\\d+(\\.\\d+)?\\b.*-?\\b\\d+(\\.\\d+)?\\b.*-?\\b\\d+(\\.\\d+)?\\b"};
-  
+
   FacesStrategy *face_parser_;
+
+  /// @brief Вектор векторов индексов всех координат вершин для 3-х мерной
+  /// модели
+  std::vector<std::vector<GLint>> vertex_faces_;
+
+  /// @brief Вектор векторов индексов всех координат текстур для 3-х мерной
+  /// модели
+  std::vector<std::vector<GLint>> texture_faces_;
+
+  /// @brief Вектор векторов индексов всех координат нормалей для 3-х мерной
+  /// модели
+  std::vector<std::vector<GLint>> normal_faces_;
 };
 } // namespace s21
 
