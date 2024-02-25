@@ -45,6 +45,7 @@ protected:
   /// @brief Core функция отвечающая за сортировку всех значений в корректном
   /// порядке
   virtual void Pack() = 0;
+  bool CheckRange(const std::vector<GLfloat> vec, const GLint &index) const noexcept; 
 
 protected:
   std::vector<std::vector<GLfloat>>
@@ -60,6 +61,7 @@ protected:
   std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       normals_; ///< Пара векторов векторов координат нормалей и векторов
                 ///< векторов соответствующих индексов
+  bool is_pack_{true};
 };
 
 /// @brief Дочерний класс отвечающий за упаковку данных координат ВЕРШИН в
