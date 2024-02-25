@@ -1,4 +1,4 @@
-CXX=g++
+CXX=g++ -fsanitize=address
 TEST_FLAGS=-lgtest_main  -lgtest -lpthread -pthread -lGL -lGLU -lglut
 
 all: run
@@ -6,7 +6,7 @@ all: run
 object:
 	$(CXX) $(TEST_FLAGS) -c ../application/model/parser/indices_pars/faces_strategy.cc
 	$(CXX) $(TEST_FLAGS) -c ../application/model/parser/packer/coordinate_packer.cc
-	$(CXX) $(TEST_FLAGS) -c ../application/model/parser/parser.cc
+	$(CXX) $(TEST_FLAGS) -c ../application/model/parser/new-parser.cc
 	$(CXX) $(TEST_FLAGS) -c tests.cc
 
 link: object
