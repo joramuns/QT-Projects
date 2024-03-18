@@ -89,7 +89,7 @@ void ModelSettings::InitFields() {
   size_->setDecimals(1);
   size_->setSingleStep(0.1);
   size_->setMinimum(0.1);
-  size_->setMaximum(10.0);
+  size_->setMaximum(30.0);
   size_->setValue(1.0);
 }
 
