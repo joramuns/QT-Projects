@@ -1,217 +1,233 @@
 #include "parser.h"
 
 namespace s21 {
+
 Parser::Parser(const std::string &filename) {
-  std::string postfix = filename.substr(filename.length() - 3, 3);
-  if (postfix == "obj" && !ReadObj(filename)) {
-    if (IsValidData()) {
-      Packer();
-    } else {
-      coordinates_.clear();
-    }
-  } else if (postfix != "obj") {
-    throw std::invalid_argument("\nInvalid file format");
+  if (!IsCorrectFileFormat(filename)) {
+    throw std::invalid_argument("\n Invalid file format");
+  } else if (!IsFileExist(filename)) {
+    throw std::invalid_argument("\n File does not exist");
   } else {
-    throw std::invalid_argument("\nFile does not exist");
+    DataRead(filename);
+    if (vertices_is_read_ && faces_is_read_) {
+      Packer();
+    }
   }
-};
+}
 
-Parser::~Parser(){};
+bool Parser::IsCorrectFileFormat(const std::string &filename) const noexcept {
+  return (filename.substr(filename.length() - 3, 3) == "obj");
+}
 
-std::vector<std::vector<GLfloat>> Parser::GetCoordinates() const noexcept {
-  return coordinates_;
-};
+bool Parser::IsFileExist(const std::string &filename) const noexcept {
+  bool result = true;
+  std::ifstream file;
+  file.open(filename, std::ios::in);
+  if (!file) {
+    result = false;
+  } else {
+    file.close();
+  }
+  return result;
+}
 
-/* Private functions */
-int Parser::ReadObj(const std::string &filename) {
+void Parser::DataRead(const std::string &filename) noexcept {
   std::ifstream file;
   file.open(filename, std::ios::in);
   std::string line;
-  if (!file) {
-    return BAD_FILENAME;
-  } else {
-    int file_position;
-    while (std::getline(file, line)) {
-      if (line.size() < 3) {
-        continue;
-      }
+  int file_position;
+  while (std::getline(file, line)) {
+    if (line.size() < 3) {
+      file_position = file.tellg();
+    } else {
       std::string prefix = line.substr(0, 2);
-      std::istringstream data(line.substr(2));
       if (prefix == "v ") {
-        AddPoint(data);
-      } else if (prefix == "vt") {
-        // AddTexturePoint(data);
-      } else if (prefix == "vn") {
-        AddNormalsPoint(data);
-      } else if (prefix == "f ") {
-        if (!vertex_points_.empty()) {
-          AddPointInArray();
-          SetStrategy(&file, file_position);
-          file.seekg(faces_pars_->Pars());
+        vertices_is_read_ = VertexRead(&file, file_position);
+        file.seekg(file_position);
+      } else if (prefix == "vt" && vertices_is_read_) {
+        textures_is_read_ = TexturesRead(&file, file_position);
+        file.seekg(file_position);
+      } else if (prefix == "vn" && vertices_is_read_) {
+        normals_is_read_ = NormalsRead(&file, file_position);
+        file.seekg(file_position);
+      } else if (prefix == "f " && vertices_is_read_) {
+        SetStrategy(&file, file_position);
+        file.seekg(file_position);
+        if (face_parser_->Pars()) {
+          faces_is_read_ = true;
           GetIndexes();
-          DataClear();
+        } else {
+          ClearData();
         }
       }
       file_position = file.tellg();
     }
   }
-  // DebugPrint();
-  return 0;
-};
-
-void Parser::AddPointInArray() noexcept {
-  if (!vertex_points_.empty())
-    all_vertices_.push_back(vertex_points_);
-  if (!texture_points_.empty())
-    all_textures_.push_back(texture_points_);
-  if (!normal_points_.empty())
-    all_normals_.push_back(normal_points_);
-};
-
-void Parser::DataClear() noexcept {
-  vertex_points_.clear();
-  texture_points_.clear();
-  normal_points_.clear();
-  delete faces_pars_;
-};
-
-/* void Parser::DebugPrint() noexcept { */
-  // std::cout << "V: ";
-  // for (const auto &item : vertex_faces_) {
-  //   for (const auto it : item) {
-  //     std::cout << it << " ";
-  //   }
-  // }
-  // std::cout << std::endl;
-
-  // std::cout << "T: ";
-  // for (const auto &item : texture_faces_) {
-  //   for (const auto it : item) {
-  //     std::cout << it << " ";
-  //   }
-  // }
-  // std::cout << std::endl;
-
-  /*   for (const auto it : item) { */
-  /*     std::cout << it << " "; */
-  /*   } */
-  /* } */
-  /* std::cout << std::endl; */
-  // for (const auto item : all_vertices_) {
-  //   std::cout << std::endl << "Model verices :";
-  //   for (size_t i = 0; i < item.size(); ++i) {
-  //     if (i % 4 == 0)
-  //       std::cout << std::endl;
-  //     std::cout << item[i] << " ||| ";
-  //   }
-  //   std::cout << std::endl;
-  // }
-
-  // for (const auto item : all_textures_) {
-  //   std::cout << std::endl << "Model textures :";
-  //   for (size_t i = 0; i < item.size(); ++i) {
-  //     if (i % 3 == 0)
-  //       std::cout << std::endl;
-  //     std::cout << item[i] << " <|> ";
-  //   }
-  //   std::cout << std::endl;
-  // }
-
-  // for (const auto item : all_normals_) {
-  //   std::cout << std::endl << "Model normals :";
-  //   for (size_t i = 0; i < item.size(); ++i) {
-  //     if (i % 3 == 0)
-  //       std::cout << std::endl;
-  //     std::cout << item[i] << " >|< ";
-  //   }
-  //   std::cout << std::endl;
-  // }
-/* }; */
-
-void Parser::AddPoint(std::istringstream &data) noexcept {
-  if (IsVertexData(data.str())) {
-    PointCoordinates vertex;
-    data >> vertex.x;
-    data >> vertex.y;
-    data >> vertex.z;
-    data >> vertex.a;
-    StructFill(vertex);
-  }
-};
-
-bool Parser::IsVertexData(const std::string &data) const noexcept {
-  std::regex pattern("\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\."
-                     "\\d+)?\\b(.*\\b\\d+(\\.\\d+)?\\b)?");
-  return std::regex_search(data, pattern);
+  file.close();
 }
 
-bool Parser::IsNormalsData(const std::string &data) const noexcept {
-  std::regex pattern(
-      "\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b");
-  return std::regex_search(data, pattern);
+bool Parser::VertexRead(std::ifstream *file, int &file_position) noexcept {
+  bool result = true;
+  file->seekg(file_position);
+  std::string data_line;
+  std::getline(*file, data_line);
+  std::string prefix = data_line.substr(0, 2);
+  while (prefix == "v ") {
+    if (IsVertexData(data_line)) {
+      VertexPointFill(data_line);
+    } else {
+      result = false;
+    }
+    if (std::getline(*file, data_line)) {
+      file_position = file->tellg();
+      prefix = data_line.substr(0, 2);
+    } else {
+      break;
+    }
+  }
+  if (result) {
+    all_vertices_.push_back(vertices_);
+    vertices_.clear();
+  } else {
+    vertices_.clear();
+  }
+  return result;
+}
+
+bool Parser::IsVertexData(const std::string &data) const noexcept {
+  return std::regex_search(data, vertices_pattern_);
+}
+
+void Parser::VertexPointFill(const std::string &data) noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  for (int i = 0; i < 4; ++i) {
+    if (it != end) {
+      double coordinate = std::stod(it->str());
+      if (i == 3 && (coordinate > 1 || coordinate < 0)) {
+        vertices_.push_back(1);
+      } else {
+        vertices_.push_back(std::stod(it->str()));
+        ++it;
+      }
+    } else {
+      vertices_.push_back(1);
+    }
+  }
+}
+
+bool Parser::TexturesRead(std::ifstream *file, int &file_position) noexcept {
+  bool result = true;
+  file->seekg(file_position);
+  std::string data_line;
+  std::getline(*file, data_line);
+  std::string prefix = data_line.substr(0, 2);
+  while (prefix == "vt") {
+    if (IsTexturesData(data_line)) {
+      TexturesPointFill(data_line);
+    } else {
+      result = false;
+    }
+    if (std::getline(*file, data_line)) {
+      file_position = file->tellg();
+      prefix = data_line.substr(0, 2);
+    } else {
+      break;
+    }
+  }
+  if (result) {
+    all_textures_.push_back(textures_);
+    textures_.clear();
+  } else {
+    textures_.clear();
+  }
+  return result;
 }
 
 bool Parser::IsTexturesData(const std::string &data) const noexcept {
-  std::regex pattern("\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b");
-  return std::regex_search(data, pattern);
+  return std::regex_search(data, textures_pattern);
 }
 
-void Parser::AddTexturePoint(std::istringstream &data) noexcept {
-  if (IsTexturesData(data.str()) && !vertex_points_.empty()) {
-    TexturesCoordinates textures;
-    data >> textures.u;
-    data >> textures.v;
-    // data >> textures.w;
-    StructFill(textures);
+void Parser::TexturesPointFill(const std::string &data) noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  while (it != end) {
+    textures_.push_back(std::stod(it->str()));
+    ++it;
   }
-};
+}
 
-void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
-  if (IsNormalsData(data.str()) && !vertex_points_.empty()) {
-    NormalsCoordinate normals;
-    data >> normals.x;
-    data >> normals.y;
-    data >> normals.z;
-    StructFill(normals);
+bool Parser::NormalsRead(std::ifstream *file, int &file_position) noexcept {
+  bool result = true;
+  file->seekg(file_position);
+  std::string data_line;
+  std::getline(*file, data_line);
+  std::string prefix = data_line.substr(0, 2);
+  while (prefix == "vn") {
+    if (IsNormalsData(data_line)) {
+      NormalsPointFill(data_line);
+    } else {
+      result = false;
+    }
+    if (std::getline(*file, data_line)) {
+      file_position = file->tellg();
+      prefix = data_line.substr(0, 2);
+    } else {
+      break;
+    }
   }
-};
-
-void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
-  if (texture_points_.empty() && normal_points_.empty()) { // v
-    faces_pars_ = new VertexStrategy(file, current_position);
-  } else if (!texture_points_.empty() && normal_points_.empty()) { // v/vt
-    faces_pars_ = new VertexTexturesStrategy(file, current_position);
-  } else if (texture_points_.empty() && !normal_points_.empty()) { // v//vn
-    faces_pars_ = new VertexNormalsStrategy(file, current_position);
+  if (result) {
+    all_normals_.push_back(normals_);
+    normals_.clear();
   } else {
-    faces_pars_ = new VertexTexturesNormalsStrategy(file, current_position);
+    normals_.clear();
   }
-};
+  return result;
+}
 
-void Parser::StructFill(const PointCoordinates &vertices_struct) noexcept {
-  vertex_points_.push_back(vertices_struct.x);
-  vertex_points_.push_back(vertices_struct.y);
-  vertex_points_.push_back(vertices_struct.z);
-  vertex_points_.push_back(vertices_struct.a);
-};
+bool Parser::IsNormalsData(const std::string &data) const noexcept {
+  return std::regex_search(data, normals_pattern_);
+}
 
-void Parser::StructFill(const TexturesCoordinates &textures_struct) noexcept {
-  texture_points_.push_back(textures_struct.u);
-  texture_points_.push_back(textures_struct.v);
-  // texture_points_.push_back(textures_struct.w);
-};
+void Parser::NormalsPointFill(const std::string &data) noexcept {
+  std::regex pattern("-?\\b\\d+(\\.\\d+)?\\b");
+  std::regex_iterator<std::string::const_iterator> it(data.begin(), data.end(),
+                                                      pattern);
+  std::regex_iterator<std::string::const_iterator> end;
+  while (it != end) {
+    normals_.push_back(std::stod(it->str()));
+    ++it;
+  }
+}
 
-void Parser::StructFill(const NormalsCoordinate &normals_struct) noexcept {
-  normal_points_.push_back(normals_struct.x);
-  normal_points_.push_back(normals_struct.y);
-  normal_points_.push_back(normals_struct.z);
-};
+void Parser::SetStrategy(std::ifstream *file, int &current_position) noexcept {
+  if (!textures_is_read_ && !normals_is_read_) {
+    face_parser_ = new VertexStrategy(file, current_position);
+  } else if (textures_is_read_ && !normals_is_read_) {
+    face_parser_ = new VertexTexturesStrategy(file, current_position);
+  } else if (!textures_is_read_ && normals_is_read_) {
+    face_parser_ = new VertexNormalsStrategy(file, current_position);
+  } else {
+    face_parser_ = new VertexTexturesNormalsStrategy(file, current_position);
+  }
+}
 
 void Parser::GetIndexes() noexcept {
-  vertex_faces_.push_back(faces_pars_->GetVertices());
-  texture_faces_.push_back(faces_pars_->GetTextures());
-  normal_faces_.push_back(faces_pars_->GetNormals());
-};
+  vertex_faces_.push_back(face_parser_->GetVertices());
+  texture_faces_.push_back(face_parser_->GetTextures());
+  normal_faces_.push_back(face_parser_->GetNormals());
+  ClearData();
+}
+
+void Parser::ClearData() noexcept {
+  if (face_parser_ != nullptr) {
+    delete face_parser_;
+  }
+}
 
 void Parser::Packer() noexcept {
   std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
@@ -223,14 +239,12 @@ void Parser::Packer() noexcept {
 
   CoordinatePacker *packer = nullptr;
 
-  if (all_textures_.empty() && all_normals_.empty()) { // v
+  if (!textures_is_read_ && !normals_is_read_) {  // v
     packer = new VertexCoordinatePacker(vertices);
-  } else if (!all_textures_.empty() && all_normals_.empty()) { // v/vt
+  } else if (textures_is_read_ && !normals_is_read_) {  // v/vt
     packer = new VertexTexturesCoordinatePacker(vertices, textures);
-  } else if (all_textures_.empty() && !all_normals_.empty()) { // v//vn
+  } else if (!textures_is_read_ && normals_is_read_) {  // v//vn
     packer = new VertexNormalsCoordinatePacker(vertices, normals);
-  } else if (all_vertices_.empty() && all_normals_.empty() &&
-             all_textures_.empty()) {
   } else {
     packer =
         new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
@@ -240,6 +254,10 @@ void Parser::Packer() noexcept {
   delete packer;
 }
 
-bool Parser::IsValidData() const noexcept { return (!all_vertices_.empty()); }
+bool Parser::GetReadStatus() const noexcept { return !coordinates_.empty(); }
 
-} // namespace s21
+bool Parser::GetTexturesStatus() const noexcept { return textures_is_read_; }
+
+bool Parser::GetNormalsStatus() const noexcept { return normals_is_read_; }
+
+}  // namespace s21

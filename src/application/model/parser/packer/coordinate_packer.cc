@@ -1,4 +1,5 @@
 #include "coordinate_packer.h"
+
 #include <iostream>
 namespace s21 {
 CoordinatePacker::CoordinatePacker(
@@ -6,14 +7,14 @@ CoordinatePacker::CoordinatePacker(
                     std::vector<std::vector<GLint>>> &vertices) noexcept
     : vertices_(vertices) {}
 
-std::vector<std::vector<GLfloat>>
-CoordinatePacker::GetCoordinates() const noexcept {
+std::vector<std::vector<GLfloat>> CoordinatePacker::GetCoordinates()
+    const noexcept {
   return all_coordinates_;
 };
 
-bool CoordinatePacker::CheckRange(const std::vector<GLfloat> vec,
+bool CoordinatePacker::CheckRange(const std::vector<GLfloat> &vec,
                                   const GLint &index) const noexcept {
-  return (index < vec.size());
+  return (index < static_cast<GLint>(vec.size()));
 }
 
 VertexCoordinatePacker::VertexCoordinatePacker(
@@ -120,8 +121,7 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
         }
         if (CheckRange(normals_.first[i], index_normals * 3 + k)) {
           GLfloat norm_coordinate = normals_.first[i][index_normals * 3 + k];
-          if (norm_coordinate < 0)
-            norm_coordinate *= -1;
+          if (norm_coordinate < 0) norm_coordinate *= -1;
           tmp.push_back(norm_coordinate);
         } else {
           is_pack_ = false;
@@ -181,8 +181,7 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
         }
         if (CheckRange(normals_.first[i], index_normals * 3 + k)) {
           GLfloat norm_coordinate = normals_.first[i][index_normals * 3 + k];
-          if (norm_coordinate < 0)
-            norm_coordinate *= -1;
+          if (norm_coordinate < 0) norm_coordinate *= -1;
           tmp.push_back(norm_coordinate);
         } else {
           is_pack_ = false;
@@ -196,4 +195,4 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
   }
 };
 
-} // namespace s21
+}  // namespace s21

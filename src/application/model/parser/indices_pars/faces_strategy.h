@@ -7,11 +7,11 @@
 
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
-#endif // __APPLE__
+#endif  // __APPLE__
 
 #ifdef __linux__
 #include <GL/glut.h>
-#endif // __linux__
+#endif  // __linux__
 
 #include <fstream>
 #include <iostream>
@@ -24,7 +24,7 @@ namespace s21 {
 /// @brief Родительский абстрактный класс, который описывает базовое поведение
 /// для всех наследников.
 class FacesStrategy {
-public:
+ public:
   /// @brief Конструктор по умолчанию - удален.
   FacesStrategy() = delete;
 
@@ -54,7 +54,7 @@ public:
   virtual bool Pars() = 0;
   bool IsValid(const std::string &data_line) const noexcept;
 
-protected:
+ protected:
   /// @brief Функция отвечает за теселяцию индексов полигонов, организовывает
   /// правильный порядок индексов в векторе
   /// @param indexes Исходный вектор индексов
@@ -63,23 +63,23 @@ protected:
                        std::vector<GLint> &type_of_indexes) noexcept;
   virtual bool IsSuccess() const noexcept = 0;
 
-protected:
+ protected:
   std::ifstream
-      *file_; ///< Файловый поток, из которого происходит чтение данных
+      *file_;  ///< Файловый поток, из которого происходит чтение данных
 
   int &current_positionition_;
 
   std::vector<GLint>
-      vertices_; ///< Целевой(преобразованный) вектор индексов вершин
+      vertices_;  ///< Целевой(преобразованный) вектор индексов вершин
   std::vector<GLint>
-      textures_; ///< Целевой(преобразованный) вектор индексов текстур
+      textures_;  ///< Целевой(преобразованный) вектор индексов текстур
   std::vector<GLint>
-      normals_; ///< Целевой(преобразованный) вектор индексов нормалей
+      normals_;  ///< Целевой(преобразованный) вектор индексов нормалей
 };
 
 /// @brief Класс наследник обеспечивающий работу с индексами ВЕРШИН
 class VertexStrategy : public FacesStrategy {
-public:
+ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param current_position  Позиция с которой начинается считывание данных
@@ -90,7 +90,7 @@ public:
   /// @return Позицию в потоке на которой закончилось считывание
   bool Pars() noexcept override;
 
-private:
+ private:
   void IndicesFill(std::vector<GLint> &v_tmp,
                    const std::string &data) const noexcept;
   bool IsSuccess() const noexcept override;
@@ -98,7 +98,7 @@ private:
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН и ТЕКСТУР
 class VertexTexturesStrategy : public FacesStrategy {
-public:
+ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param current_position  Позиция с которой начинается считывание данных
@@ -109,7 +109,7 @@ public:
   /// @return Позицию в потоке на которой закончилось считывание
   bool Pars() noexcept override;
 
-private:
+ private:
   void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vt_tmp,
                    const std::string &data) const noexcept;
   bool IsSuccess() const noexcept override;
@@ -117,7 +117,7 @@ private:
 
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН и НОРМАЛЕЙ
 class VertexNormalsStrategy : public FacesStrategy {
-public:
+ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param current_position  Позиция с которой начинается считывание данных
@@ -128,7 +128,7 @@ public:
   /// @return Позицию в потоке на которой закончилось считывание
   bool Pars() noexcept override;
 
-private:
+ private:
   void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vn_tmp,
                    const std::string &data) const noexcept;
   bool IsSuccess() const noexcept override;
@@ -137,7 +137,7 @@ private:
 /// @brief Класс наследник, обеспечивающий работу с индексами ВЕРШИН, ТЕКСТУР и
 /// НОРМАЛЕЙ
 class VertexTexturesNormalsStrategy : public FacesStrategy {
-public:
+ public:
   /// @brief Конструктор с входными параметрами
   /// @param file Файловый поток из которого мы читаем данные
   /// @param current_position  Позиция с которой начинается считывание данных
@@ -148,12 +148,12 @@ public:
   /// @return Позицию в потоке на которой закончилось считывание
   bool Pars() noexcept override;
 
-private:
+ private:
   void IndicesFill(std::vector<GLint> &v_tmp, std::vector<GLint> &vt_tmp,
                    std::vector<GLint> &vn_tmp,
                    const std::string &data) const noexcept;
   bool IsSuccess() const noexcept override;
 };
 
-} // namespace s21
-#endif // CPP4_3DVIEWER_V2_MODEL_PARSER_FACES_STRATEGY_H
+}  // namespace s21
+#endif  // CPP4_3DVIEWER_V2_MODEL_PARSER_FACES_STRATEGY_H

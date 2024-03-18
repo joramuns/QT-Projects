@@ -15,7 +15,7 @@
 
 #ifdef __linux__
 #include <GL/glut.h>
-#endif // __linux__
+#endif  // __linux__
 
 #include <vector>
 
@@ -23,7 +23,7 @@ namespace s21 {
 /// @brief Родительский класс упаковщика, который описывает базовое поведение
 /// классов наследников
 class CoordinatePacker {
-public:
+ public:
   /// @brief Конструктор по умолчанию - удален
   CoordinatePacker() = delete;
 
@@ -41,33 +41,34 @@ public:
   /// @return Отсортированный вектор всех точек 3-х мерного объекта
   std::vector<std::vector<GLfloat>> GetCoordinates() const noexcept;
 
-protected:
+ protected:
   /// @brief Core функция отвечающая за сортировку всех значений в корректном
   /// порядке
   virtual void Pack() = 0;
-  bool CheckRange(const std::vector<GLfloat> vec, const GLint &index) const noexcept; 
+  bool CheckRange(const std::vector<GLfloat> &vec,
+                  const GLint &index) const noexcept;
 
-protected:
+ protected:
   std::vector<std::vector<GLfloat>>
-      all_coordinates_; ///< Целевой вектор упакованных данных, возвращаемый
-                        ///< пользователю для дальнейшей работы с ними в OpenGL
+      all_coordinates_;  ///< Целевой вектор упакованных данных, возвращаемый
+                         ///< пользователю для дальнейшей работы с ними в OpenGL
 
   std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
-      vertices_; ///< Пара векторов векторов координат вершин и векторов
-                 ///< векторов соответствующих индексов
+      vertices_;  ///< Пара векторов векторов координат вершин и векторов
+                  ///< векторов соответствующих индексов
   std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
-      textures_; ///< Пара векторов векторов координат текстур и векторов
-                 ///< векторов соответствующих индексов
+      textures_;  ///< Пара векторов векторов координат текстур и векторов
+                  ///< векторов соответствующих индексов
   std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
-      normals_; ///< Пара векторов векторов координат нормалей и векторов
-                ///< векторов соответствующих индексов
+      normals_;  ///< Пара векторов векторов координат нормалей и векторов
+                 ///< векторов соответствующих индексов
   bool is_pack_{true};
 };
 
 /// @brief Дочерний класс отвечающий за упаковку данных координат ВЕРШИН в
 /// соответствии с индексами
 class VertexCoordinatePacker : public CoordinatePacker {
-public:
+ public:
   /// @brief Конструктор с параметрами
   /// @param vertices Пара векторов векторов координат вершин и векторов
   /// векторов соответствующих индексов
@@ -75,7 +76,7 @@ public:
       const std::pair<std::vector<std::vector<GLfloat>>,
                       std::vector<std::vector<GLint>>> &vertices) noexcept;
 
-private:
+ private:
   /// @brief Core функция отвечающая за сортировку всех значений координат
   /// ВЕРШИН в корректном порядке
   void Pack() noexcept override;
@@ -84,7 +85,7 @@ private:
 /// @brief Дочерний класс отвечающий за упаковку данных координат ВЕРШИН и
 /// ТЕКСТУР в соответствии с их индексами
 class VertexTexturesCoordinatePacker : public CoordinatePacker {
-public:
+ public:
   /// @brief Конструктор с параметрами
   /// @param vertices Пара векторов векторов координат вершин и векторов
   /// векторов соответствующих индексов
@@ -96,7 +97,7 @@ public:
       const std::pair<std::vector<std::vector<GLfloat>>,
                       std::vector<std::vector<GLint>>> &textures) noexcept;
 
-private:
+ private:
   /// @brief  Core функция отвечающая за сортировку всех значений координат
   /// ВЕРШИН И ТЕКСТУР в корректном порядке
   void Pack() noexcept override;
@@ -105,7 +106,7 @@ private:
 /// @brief Дочерний класс отвечающий за упаковку данных координат ВЕРШИН и
 /// НОРМАЛЕЙ в соответствии с их индексами
 class VertexNormalsCoordinatePacker : public CoordinatePacker {
-public:
+ public:
   /// @brief Конструктор с параметрами
   /// @param vertices Пара векторов векторов координат вершин и векторов
   /// векторов соответствующих индексов
@@ -117,7 +118,7 @@ public:
       const std::pair<std::vector<std::vector<GLfloat>>,
                       std::vector<std::vector<GLint>>> &normals) noexcept;
 
-private:
+ private:
   /// @brief Core функция отвечающая за сортировку всех значений координат
   /// ВЕРШИН и НОРМАЛЕЙ в корректном порядке
   void Pack() noexcept override;
@@ -126,7 +127,7 @@ private:
 /// @brief Дочерний класс отвечающий за упаковку данных координат ВЕРШИН,
 /// ТЕКСТУР и НОРМАЛЕЙ  в соответствии с их индексами
 class VertexTexturesNormalsCoordinatePacker : public CoordinatePacker {
-public:
+ public:
   /// @brief Конструктор с параметрами
   /// @param vertices Пара векторов векторов координат вершин и векторов
   /// векторов соответствующих индексов
@@ -142,11 +143,11 @@ public:
       const std::pair<std::vector<std::vector<GLfloat>>,
                       std::vector<std::vector<GLint>>> &normals) noexcept;
 
-private:
+ private:
   /// @brief Core функция отвечающая за сортировку всех значений координат
   /// ВЕРШИН, ТЕКСТУР и НОРМАЛЕЙ в корректном порядке
   void Pack() noexcept override;
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_MODEL_PARSER_PACKER_COORDINATE_PACKER_H
+#endif  // CPP4_3DVIEWER_V2_MODEL_PARSER_PACKER_COORDINATE_PACKER_H

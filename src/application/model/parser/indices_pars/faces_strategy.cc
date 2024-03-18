@@ -231,4 +231,4 @@ bool VertexTexturesNormalsStrategy::IsSuccess() const noexcept {
   return (condition_one && condition_two);
 }
 
-} // namespace s21
+}  // namespace s21
