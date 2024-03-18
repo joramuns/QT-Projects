@@ -1,4 +1,5 @@
 #include "glwidget.h"
+#include <iostream>
 
 namespace s21 {
 GLWidget::GLWidget()
@@ -44,10 +45,9 @@ void GLWidget::SaveScreenshot(const QString &filename) {
 }
 
 void GLWidget::SaveGif(const QString &filename) {
-  if (!timer_) {
+  if (!timer_counter_) {
     timer_ = new QTimer(this);
     gifwriter_ = new GifWriter{};
-    timer_counter_ = 0;
     connect(timer_, &QTimer::timeout, this, &GLWidget::GifFrameGrabber);
     QByteArray byte_array = filename.toLocal8Bit();
     GifBegin(gifwriter_, byte_array.data(), 640, 480, 10, 8, false);
@@ -148,6 +148,7 @@ void GLWidget::GifFrameGrabber() {
     GifEnd(gifwriter_);
     timer_->stop();
     delete timer_;
+    timer_counter_ = 0;
     delete gifwriter_;
   }
 }
