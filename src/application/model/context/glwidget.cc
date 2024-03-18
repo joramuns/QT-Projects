@@ -1,7 +1,8 @@
 #include "glwidget.h"
 
 namespace s21 {
-GLWidget::GLWidget() : settings_(SettingsSingleton::GetInstance()) {
+GLWidget::GLWidget()
+    : settings_(SettingsSingleton::GetInstance()), timer_counter_(0) {
   /* setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); */
   setMinimumWidth(660);
 }
@@ -43,11 +44,15 @@ void GLWidget::SaveScreenshot(const QString &filename) {
 }
 
 void GLWidget::SaveGif(const QString &filename) {
-  if (!gif_frames_.size()) {
+  if (!timer_) {
+    timer_ = new QTimer(this);
+    gifwriter_ = new GifWriter{};
+    timer_counter_ = 0;
     connect(timer_, &QTimer::timeout, this, &GLWidget::GifFrameGrabber);
+    QByteArray byte_array = filename.toLocal8Bit();
+    GifBegin(gifwriter_, byte_array.data(), 640, 480, 10, 8, false);
+    timer_->start(100);
   }
-  QImage gif_frame = grabFramebuffer();
-  gif_frame.save(filename);
 }
 
 void GLWidget::initializeGL() {
@@ -128,6 +133,23 @@ void GLWidget::LoadCommonUniforms() {
   program_->setUniformValue("modelColor", settings_.GetEdgeColor());
   program_->setUniformValue("dashedLines", settings_.GetEdgeType());
   program_->setUniformValue("resolution", width(), height());
+}
+
+void GLWidget::GifFrameGrabber() {
+  if (timer_counter_ < 50) {
+    const uchar *gif_frame = grabFramebuffer()
+                                 .scaled(640, 480)
+                                 .convertToFormat(QImage::Format_Indexed8)
+                                 .convertToFormat(QImage::Format_RGBA8888)
+                                 .constBits();
+    GifWriteFrame(gifwriter_, gif_frame, 640, 480, 10, 8, false);
+    ++timer_counter_;
+  } else {
+    GifEnd(gifwriter_);
+    timer_->stop();
+    delete timer_;
+    delete gifwriter_;
+  }
 }
 
 }  // namespace s21

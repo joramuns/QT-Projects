@@ -31,6 +31,7 @@ set(SOURCES
   model/parser/packer/coordinate_packer.cc
   model/facade/facade.cc
   model/context/glwidget.cc
+  model/context/gif.cc
   model/buffer/glbuffer.cc
   model/buffer/transform_class.cc
   model/settings_singleton.cc

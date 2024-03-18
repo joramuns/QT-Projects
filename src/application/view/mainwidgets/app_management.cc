@@ -27,7 +27,7 @@ void AppManagement::AppScreenshotSlot() {
 
 void AppManagement::AppGifSlot() {
   QString filename = QFileDialog::getSaveFileName(
-      this, "СКРИНШОТАНУТЬ?", "", "Images (*.bmp *.png *.jpeg)");
+      this, "ВЕДОСЕК СНЯДЬ?", "", "Images (*.gif)");
   if (filename.isEmpty()) {
     QMessageBox::critical(0, "Error", "File can not be created!");
   } else {

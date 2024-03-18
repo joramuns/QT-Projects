@@ -14,6 +14,7 @@
 
 #include "../buffer/glbuffer.h"
 #include "../settings_singleton.h"
+#include "gif.h"
 
 namespace s21 {
 /// @brief Класс GLWidget наследник QOpenGLWidget, позволяет работать с 3-х
@@ -145,8 +146,6 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
   void GifFrameGrabber();
 
-
-
  private:
   QOpenGLShaderProgram *program_;  ///< Указатель на объект шейдерной программы
   std::vector<GLBuffer *> GLBuffers_;  ///<
@@ -154,8 +153,9 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   SettingsSingleton &settings_;
 
   // TEMP
-  std::vector<QImage> gif_frames_;
-  QTimer timer_;
+  QTimer *timer_;
+  int timer_counter_;
+  GifWriter *gifwriter_;
 };
 }  // namespace s21
 

@@ -48,6 +48,8 @@ View::View(GLWidget *context) : QWidget(nullptr) {
           &View::CloseFileSlot);
   connect(app_management, &AppManagement::AppScreenshotSignal, this,
           &View::ScreenshotSlot);
+  connect(app_management, &AppManagement::AppGifSignal, this,
+          &View::GifSlot);
 
   menu_layout->addStretch();
   menu_layout->addWidget(transformation_tab);
