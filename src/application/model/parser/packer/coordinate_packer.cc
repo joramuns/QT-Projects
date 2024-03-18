@@ -14,6 +14,7 @@ std::vector<std::vector<GLfloat>> CoordinatePacker::GetCoordinates()
 
 bool CoordinatePacker::CheckRange(const std::vector<GLfloat> &vec,
                                   const GLint &index) const noexcept {
+  std::cout << vec.size() << " - size " << index << " - index" << std::endl;
   return (index < static_cast<GLint>(vec.size()));
 }
 
@@ -130,9 +131,9 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
     }
     all_coordinates_.push_back(tmp);
   }
-  if (!is_pack_) {
-    all_coordinates_.clear();
-  }
+  // if (!is_pack_) {
+  //   all_coordinates_.clear();
+  // }
 };
 
 VertexTexturesNormalsCoordinatePacker::VertexTexturesNormalsCoordinatePacker(
@@ -184,6 +185,7 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
           if (norm_coordinate < 0) norm_coordinate *= -1;
           tmp.push_back(norm_coordinate);
         } else {
+          std::cout << "zalet" << std::endl;
           is_pack_ = false;
         }
       }
