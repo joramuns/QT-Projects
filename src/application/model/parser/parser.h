@@ -7,16 +7,21 @@
 */
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_PARSER_H
+
+#ifdef __APPLE__
 #include <OpenGL/gl.h>
-// #include <GL/glut.h>
-// #include <glm/glm.hpp>
-/* -I/Users/joramuns/.brew/Cellar/glm/0.9.9.8/include */
-/* brew install glm */
+#endif  // __APPLE__
+
+#ifdef __linux__
+#include <GL/glut.h>
+#endif // __linux__
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <regex>
 
 #include "indices_pars/faces_strategy.h"
 #include "packer/coordinate_packer.h"
@@ -97,7 +102,15 @@ private:
   /// отрисовки 3-х мерной модели в OpenGL
   void Packer() noexcept;
 
-  // void DebugPrint() noexcept;
+  bool IsVertexData(const std::string &data) const noexcept;
+
+  bool IsTexturesData(const std::string &data) const noexcept;
+
+  bool IsNormalsData(const std::string &data) const noexcept;
+
+  bool IsValidData() const noexcept; 
+
+  void DebugPrint() noexcept;
 
 private:
   /// @brief Вектор координат вершин для одного 3-х мерного объекта(возможна

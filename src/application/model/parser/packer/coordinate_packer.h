@@ -9,7 +9,14 @@
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_PACKER_COORDINATE_PACKER_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_PACKER_COORDINATE_PACKER_H
 
+#ifdef __APPLE__
 #include <OpenGL/gl.h>
+#endif  // __APPLE__
+
+#ifdef __linux__
+#include <GL/glut.h>
+#endif // __linux__
+
 #include <vector>
 
 namespace s21 {
@@ -38,6 +45,7 @@ protected:
   /// @brief Core функция отвечающая за сортировку всех значений в корректном
   /// порядке
   virtual void Pack() = 0;
+  bool CheckRange(const std::vector<GLfloat> vec, const GLint &index) const noexcept; 
 
 protected:
   std::vector<std::vector<GLfloat>>
@@ -53,6 +61,7 @@ protected:
   std::pair<std::vector<std::vector<GLfloat>>, std::vector<std::vector<GLint>>>
       normals_; ///< Пара векторов векторов координат нормалей и векторов
                 ///< векторов соответствующих индексов
+  bool is_pack_{true};
 };
 
 /// @brief Дочерний класс отвечающий за упаковку данных координат ВЕРШИН в

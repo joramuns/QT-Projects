@@ -2,8 +2,18 @@
 
 namespace s21 {
 Parser::Parser(const std::string &filename) {
-  ReadObj(filename);
-  Packer();
+  std::string postfix = filename.substr(filename.length() - 3, 3);
+  if (postfix == "obj" && !ReadObj(filename)) {
+    if (IsValidData()) {
+      Packer();
+    } else {
+      coordinates_.clear();
+    }
+  } else if (postfix != "obj") {
+    throw std::invalid_argument("\nInvalid file format");
+  } else {
+    throw std::invalid_argument("\nFile does not exist");
+  }
 };
 
 Parser::~Parser(){};
@@ -11,10 +21,6 @@ Parser::~Parser(){};
 std::vector<std::vector<GLfloat>> Parser::GetCoordinates() const noexcept {
   return coordinates_;
 };
-
-// std::vector<std::vector<GLint>> Parser::GetNormalIndexes() const noexcept {
-//   return normal_faces_;
-// };
 
 /* Private functions */
 int Parser::ReadObj(const std::string &filename) {
@@ -38,24 +44,28 @@ int Parser::ReadObj(const std::string &filename) {
       } else if (prefix == "vn") {
         AddNormalsPoint(data);
       } else if (prefix == "f ") {
-        AddPointInArray();
-        SetStrategy(&file, file_position);
-        file.seekg(faces_pars_->Pars());
-        GetIndexes();
-        DataClear();
+        if (!vertex_points_.empty()) {
+          AddPointInArray();
+          SetStrategy(&file, file_position);
+          file.seekg(faces_pars_->Pars());
+          GetIndexes();
+          DataClear();
+        }
       }
       file_position = file.tellg();
     }
   }
   // DebugPrint();
-  Packer();
   return 0;
 };
 
 void Parser::AddPointInArray() noexcept {
-  all_vertices_.push_back(vertex_points_);
-  all_textures_.push_back(texture_points_);
-  all_normals_.push_back(normal_points_);
+  if (!vertex_points_.empty())
+    all_vertices_.push_back(vertex_points_);
+  if (!texture_points_.empty())
+    all_textures_.push_back(texture_points_);
+  if (!normal_points_.empty())
+    all_normals_.push_back(normal_points_);
 };
 
 void Parser::DataClear() noexcept {
@@ -119,28 +129,51 @@ void Parser::DataClear() noexcept {
 /* }; */
 
 void Parser::AddPoint(std::istringstream &data) noexcept {
-  PointCoordinates vertex;
-  data >> vertex.x;
-  data >> vertex.y;
-  data >> vertex.z;
-  data >> vertex.a;
-  StructFill(vertex);
+  if (IsVertexData(data.str())) {
+    PointCoordinates vertex;
+    data >> vertex.x;
+    data >> vertex.y;
+    data >> vertex.z;
+    data >> vertex.a;
+    StructFill(vertex);
+  }
 };
 
+bool Parser::IsVertexData(const std::string &data) const noexcept {
+  std::regex pattern("\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\."
+                     "\\d+)?\\b(.*\\b\\d+(\\.\\d+)?\\b)?");
+  return std::regex_search(data, pattern);
+}
+
+bool Parser::IsNormalsData(const std::string &data) const noexcept {
+  std::regex pattern(
+      "\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b");
+  return std::regex_search(data, pattern);
+}
+
+bool Parser::IsTexturesData(const std::string &data) const noexcept {
+  std::regex pattern("\\b\\d+(\\.\\d+)?\\b.*\\b\\d+(\\.\\d+)?\\b");
+  return std::regex_search(data, pattern);
+}
+
 void Parser::AddTexturePoint(std::istringstream &data) noexcept {
-  TexturesCoordinates textures;
-  data >> textures.u;
-  data >> textures.v;
-  // data >> textures.w;
-  StructFill(textures);
+  if (IsTexturesData(data.str()) && !vertex_points_.empty()) {
+    TexturesCoordinates textures;
+    data >> textures.u;
+    data >> textures.v;
+    // data >> textures.w;
+    StructFill(textures);
+  }
 };
 
 void Parser::AddNormalsPoint(std::istringstream &data) noexcept {
-  NormalsCoordinate normals;
-  data >> normals.x;
-  data >> normals.y;
-  data >> normals.z;
-  StructFill(normals);
+  if (IsNormalsData(data.str()) && !vertex_points_.empty()) {
+    NormalsCoordinate normals;
+    data >> normals.x;
+    data >> normals.y;
+    data >> normals.z;
+    StructFill(normals);
+  }
 };
 
 void Parser::SetStrategy(std::ifstream *file, int current_position) noexcept {
@@ -190,18 +223,23 @@ void Parser::Packer() noexcept {
 
   CoordinatePacker *packer = nullptr;
 
-  if (all_textures_[0].empty() && all_normals_[0].empty()) { // v
+  if (all_textures_.empty() && all_normals_.empty()) { // v
     packer = new VertexCoordinatePacker(vertices);
-  } else if (!all_textures_[0].empty() && all_normals_[0].empty()) { // v/vt
+  } else if (!all_textures_.empty() && all_normals_.empty()) { // v/vt
     packer = new VertexTexturesCoordinatePacker(vertices, textures);
-  } else if (all_textures_[0].empty() && !all_normals_[0].empty()) { // v//vn
+  } else if (all_textures_.empty() && !all_normals_.empty()) { // v//vn
     packer = new VertexNormalsCoordinatePacker(vertices, normals);
+  } else if (all_vertices_.empty() && all_normals_.empty() &&
+             all_textures_.empty()) {
   } else {
-    packer = new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
+    packer =
+        new VertexTexturesNormalsCoordinatePacker(vertices, textures, normals);
   }
   coordinates_ = packer->GetCoordinates();
-  
+
   delete packer;
 }
+
+bool Parser::IsValidData() const noexcept { return (!all_vertices_.empty()); }
 
 } // namespace s21

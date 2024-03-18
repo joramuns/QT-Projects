@@ -27,7 +27,7 @@ private:
   /// инициализацию кнопок и выстраивают расположение
   void InitFields();
 
-  /// @brief
+  /// @brief Метод подключения сигналов к слотам обработчикам
   void ConnectFields();
 
 private:

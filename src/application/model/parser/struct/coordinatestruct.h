@@ -7,8 +7,14 @@
 */
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_COORDINATE_STRUCT_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_COORDINATE_STRUCT_H
-// #include <GL/glut.h>
+
+#ifdef __APPLE__
 #include <OpenGL/gl.h>
+#endif  // __APPLE__
+
+#ifdef __linux__
+#include <GL/glut.h>
+#endif // __linux__
 
 namespace s21 {
 
