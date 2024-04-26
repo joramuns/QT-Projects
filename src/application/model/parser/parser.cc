@@ -35,7 +35,7 @@ void Parser::DataRead(const std::string &filename) noexcept {
   std::ifstream file;
   file.open(filename, std::ios::in);
   std::string line;
-  int file_position;
+  int file_position = 0;
   while (std::getline(file, line)) {
     if (line.size() < 3) {
       file_position = file.tellg();
@@ -79,8 +79,10 @@ bool Parser::VertexRead(std::ifstream *file, int &file_position) noexcept {
       result = false;
     }
     if (std::getline(*file, data_line)) {
-      file_position = file->tellg();
       prefix = data_line.substr(0, 2);
+      if (prefix == "v ") {
+        file_position = file->tellg();
+      }
     } else {
       break;
     }
@@ -131,8 +133,10 @@ bool Parser::TexturesRead(std::ifstream *file, int &file_position) noexcept {
       result = false;
     }
     if (std::getline(*file, data_line)) {
-      file_position = file->tellg();
       prefix = data_line.substr(0, 2);
+      if (prefix == "vt") {
+        file_position = file->tellg();
+      }
     } else {
       break;
     }
@@ -174,8 +178,10 @@ bool Parser::NormalsRead(std::ifstream *file, int &file_position) noexcept {
       result = false;
     }
     if (std::getline(*file, data_line)) {
-      file_position = file->tellg();
       prefix = data_line.substr(0, 2);
+      if (prefix == "vn") {
+        file_position = file->tellg();
+      }
     } else {
       break;
     }
