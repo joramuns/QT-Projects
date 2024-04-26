@@ -21,7 +21,9 @@ bool CoordinatePacker::CheckRange(const std::vector<GLfloat> &vec,
 VertexCoordinatePacker::VertexCoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
                     std::vector<std::vector<GLint>>> &vertices) noexcept
-    : CoordinatePacker(vertices){};
+: CoordinatePacker(vertices){
+  Pack();
+};
 
 void VertexCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.second.size(); ++i) {
