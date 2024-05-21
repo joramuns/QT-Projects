@@ -7,18 +7,17 @@
 
 #ifdef __linux__
 #include <GL/glut.h>
-#endif // __linux__
-
-#include <string>
-#include <vector>
+#endif  // __linux__
 
 #include <iostream>
+#include <string>
+#include <vector>
 
 #include "parser/parser.h"
 
 namespace s21 {
 class ObjectModel {
-public:
+ public:
   ObjectModel() = delete;
   explicit ObjectModel(const std::string &filename);
   ~ObjectModel();
@@ -30,10 +29,12 @@ public:
   std::vector<std::vector<GLuint>> GetVertexIndexes() const noexcept;
   std::vector<std::vector<GLuint>> GetTextureIndexes() const noexcept;
   std::vector<std::vector<GLuint>> GetNormalIndexes() const noexcept;
+  int GetStride() const noexcept;
 
-  //debug
+  // debug
   void PrintResult() const noexcept;
-private:
+
+ private:
   /// need class Setting
   std::string filename_;
   std::vector<std::vector<GLfloat>> all_vertices_;
@@ -43,7 +44,8 @@ private:
   std::vector<std::vector<GLuint>> vertex_indexes_;
   std::vector<std::vector<GLuint>> texture_indexes_;
   std::vector<std::vector<GLuint>> normal_indexes_;
+  int stride_;
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_MODEL_OBJECT_MODEL_H
+#endif  // CPP4_3DVIEWER_V2_MODEL_OBJECT_MODEL_H

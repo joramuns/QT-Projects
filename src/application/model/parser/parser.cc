@@ -66,8 +66,8 @@ void Parser::DataRead(const std::string &filename) noexcept {
   file.close();
 }
 
-bool Parser::VertexRead(std::ifstream *file, int &file_position) noexcept {
-  bool result = true;
+int Parser::VertexRead(std::ifstream *file, int &file_position) noexcept {
+  int result = 4;
   file->seekg(file_position);
   std::string data_line;
   std::getline(*file, data_line);
@@ -76,11 +76,11 @@ bool Parser::VertexRead(std::ifstream *file, int &file_position) noexcept {
     if (IsVertexData(data_line)) {
       VertexPointFill(data_line);
     } else {
-      result = false;
+      result = 0;
     }
     if (std::getline(*file, data_line)) {
       prefix = data_line.substr(0, 2);
-      if (prefix == "v ") {
+      if (prefix == "v " || data_line.size() == 1) {
         file_position = file->tellg();
       }
     } else {
@@ -120,8 +120,8 @@ void Parser::VertexPointFill(const std::string &data) noexcept {
   }
 }
 
-bool Parser::TexturesRead(std::ifstream *file, int &file_position) noexcept {
-  bool result = true;
+int Parser::TexturesRead(std::ifstream *file, int &file_position) noexcept {
+  int result = 2;
   file->seekg(file_position);
   std::string data_line;
   std::getline(*file, data_line);
@@ -130,11 +130,11 @@ bool Parser::TexturesRead(std::ifstream *file, int &file_position) noexcept {
     if (IsTexturesData(data_line)) {
       TexturesPointFill(data_line);
     } else {
-      result = false;
+      result = 0;
     }
     if (std::getline(*file, data_line)) {
       prefix = data_line.substr(0, 2);
-      if (prefix == "vt") {
+      if (prefix == "vt" || data_line.size() == 1) {
         file_position = file->tellg();
       }
     } else {
@@ -165,8 +165,8 @@ void Parser::TexturesPointFill(const std::string &data) noexcept {
   }
 }
 
-bool Parser::NormalsRead(std::ifstream *file, int &file_position) noexcept {
-  bool result = true;
+int Parser::NormalsRead(std::ifstream *file, int &file_position) noexcept {
+  int result = 3;
   file->seekg(file_position);
   std::string data_line;
   std::getline(*file, data_line);
@@ -175,11 +175,11 @@ bool Parser::NormalsRead(std::ifstream *file, int &file_position) noexcept {
     if (IsNormalsData(data_line)) {
       NormalsPointFill(data_line);
     } else {
-      result = false;
+      result = 0;
     }
     if (std::getline(*file, data_line)) {
       prefix = data_line.substr(0, 2);
-      if (prefix == "vn") {
+      if (prefix == "vn" || data_line.size() == 1) {
         file_position = file->tellg();
       }
     } else {
@@ -265,5 +265,9 @@ bool Parser::GetReadStatus() const noexcept { return !coordinates_.empty(); }
 bool Parser::GetTexturesStatus() const noexcept { return textures_is_read_; }
 
 bool Parser::GetNormalsStatus() const noexcept { return normals_is_read_; }
+
+int Parser::GetStride() const noexcept {
+  return vertices_is_read_ + normals_is_read_ + textures_is_read_;
+}
 
 }  // namespace s21

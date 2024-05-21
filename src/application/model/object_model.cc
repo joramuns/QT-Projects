@@ -5,6 +5,7 @@ namespace s21 {
 ObjectModel::ObjectModel(const std::string &filename) : filename_(filename) {
   Parser core_pars(filename_);
   all_vertices_ = core_pars.GetCoordinates();
+  stride_ = core_pars.GetStride();
   // all_textures_ = core_pars.GetTextures();
   // all_normals_ = core_pars.GetNormals();
 
@@ -102,18 +103,20 @@ std::vector<std::vector<GLfloat>> ObjectModel::GetNormals() const noexcept {
   return all_normals_;
 };
 
-std::vector<std::vector<GLuint>>
-ObjectModel::GetVertexIndexes() const noexcept {
+int ObjectModel::GetStride() const noexcept { return stride_; }
+
+std::vector<std::vector<GLuint>> ObjectModel::GetVertexIndexes()
+    const noexcept {
   return vertex_indexes_;
 };
 
-std::vector<std::vector<GLuint>>
-ObjectModel::GetTextureIndexes() const noexcept {
+std::vector<std::vector<GLuint>> ObjectModel::GetTextureIndexes()
+    const noexcept {
   return texture_indexes_;
 };
 
-std::vector<std::vector<GLuint>>
-ObjectModel::GetNormalIndexes() const noexcept {
+std::vector<std::vector<GLuint>> ObjectModel::GetNormalIndexes()
+    const noexcept {
   return normal_indexes_;
 };
-} // namespace s21
+}  // namespace s21

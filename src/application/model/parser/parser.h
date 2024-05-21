@@ -42,6 +42,7 @@ class Parser {
   bool GetReadStatus() const noexcept;
   bool GetTexturesStatus() const noexcept;
   bool GetNormalsStatus() const noexcept;
+  int GetStride() const noexcept;
 
  private:
   bool IsCorrectFileFormat(const std::string &filename) const noexcept;
@@ -49,15 +50,15 @@ class Parser {
 
   void DataRead(const std::string &filename) noexcept;
 
-  bool VertexRead(std::ifstream *file, int &file_position) noexcept;
+  int VertexRead(std::ifstream *file, int &file_position) noexcept;
   bool IsVertexData(const std::string &data) const noexcept;
   void VertexPointFill(const std::string &data) noexcept;
 
-  bool TexturesRead(std::ifstream *file, int &file_position) noexcept;
+  int TexturesRead(std::ifstream *file, int &file_position) noexcept;
   bool IsTexturesData(const std::string &data) const noexcept;
   void TexturesPointFill(const std::string &data) noexcept;
 
-  bool NormalsRead(std::ifstream *file, int &file_position) noexcept;
+  int NormalsRead(std::ifstream *file, int &file_position) noexcept;
   bool IsNormalsData(const std::string &data) const noexcept;
   void NormalsPointFill(const std::string &data) noexcept;
 
@@ -80,9 +81,9 @@ class Parser {
   std::vector<GLfloat> normals_;
   std::vector<std::vector<GLfloat>> all_normals_;
 
-  bool vertices_is_read_{false};
-  bool textures_is_read_{false};
-  bool normals_is_read_{false};
+  int vertices_is_read_{0};
+  int textures_is_read_{0};
+  int normals_is_read_{0};
   bool faces_is_read_{false};
 
   std::regex vertices_pattern_{
