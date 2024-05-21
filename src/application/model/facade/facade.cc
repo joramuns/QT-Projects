@@ -13,7 +13,7 @@ void Facade::AddModel(const std::string &filename) noexcept {
   for (const auto &item : model.GetVertices()) {
     vertices.insert(vertices.end(), item.begin(), item.end());
   }
-  context_->LoadModel(vertices);
+  context_->LoadModel(vertices, model.GetStride());
 };
 
 void Facade::RemoveModel(int model_number) noexcept {
