@@ -14,22 +14,27 @@ std::vector<std::vector<GLfloat>> CoordinatePacker::GetCoordinates()
 
 bool CoordinatePacker::CheckRange(const std::vector<GLfloat> &vec,
                                   const GLint &index) const noexcept {
-  std::cout << vec.size() << " - size " << index << " - index" << std::endl;
+  /* std::cout << index << " - index " << vec.size() << " - size " << "bool - "
+   * << (index < static_cast<GLint>(vec.size())) << std::endl; */
   return (index < static_cast<GLint>(vec.size()));
 }
 
 VertexCoordinatePacker::VertexCoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
                     std::vector<std::vector<GLint>>> &vertices) noexcept
-: CoordinatePacker(vertices){
+    : CoordinatePacker(vertices) {
   Pack();
 };
 
 void VertexCoordinatePacker::Pack() noexcept {
-  for (size_t i = 0; i < vertices_.second.size(); ++i) {
+  for (size_t i = 0lu; i < vertices_.second.size(); ++i) {
     std::vector<GLfloat> tmp;
+    GLint index_stride = 0;
+    if (i > 0) {
+      index_stride = vertices_.first[i - 1].size() / 4;
+    }
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
-      GLint index_vertices = vertices_.second[i][j];
+      GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
           index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
@@ -61,8 +66,12 @@ VertexTexturesCoordinatePacker::VertexTexturesCoordinatePacker(
 void VertexTexturesCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.second.size(); ++i) {
     std::vector<GLfloat> tmp;
+    GLint index_stride = 0;
+    if (i > 0) {
+      index_stride = vertices_.first[i - 1].size() / 4;
+    }
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
-      GLint index_vertices = vertices_.second[i][j];
+      GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
           index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
@@ -105,8 +114,12 @@ VertexNormalsCoordinatePacker::VertexNormalsCoordinatePacker(
 void VertexNormalsCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.first.size(); ++i) {
     std::vector<GLfloat> tmp;
+    GLint index_stride = 0;
+    if (i > 0) {
+      index_stride = vertices_.first[i - 1].size() / 4;
+    }
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
-      GLint index_vertices = vertices_.second[i][j];
+      GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
           index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
@@ -154,8 +167,16 @@ VertexTexturesNormalsCoordinatePacker::VertexTexturesNormalsCoordinatePacker(
 void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
   for (size_t i = 0; i < vertices_.second.size(); ++i) {
     std::vector<GLfloat> tmp;
+    GLint index_stride = 0;
+    GLint index_textures_stride = 0;
+    GLint index_normals_stride = 0;
+    if (i > 0) {
+      index_stride = vertices_.first[i - 1].size() / 4;
+      index_textures_stride = textures_.first[i - 1].size() / 2;
+      index_normals_stride = normals_.first[i - 1].size() / 3;
+    }
     for (size_t j = 0; j < vertices_.second[i].size(); ++j) {
-      GLint index_vertices = vertices_.second[i][j];
+      GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
           index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
@@ -163,10 +184,13 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
         if (CheckRange(vertices_.first[i], index_vertices * 4 + k)) {
           tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
         } else {
+          std::cout << "vertices zalet" << index_vertices << std::endl;
+          std::cout << vertices_.first[i].size() << " "
+                    << (index_vertices * 4 + k) << std::endl;
           is_pack_ = false;
         }
       }
-      GLint index_textures = textures_.second[i][j];
+      GLint index_textures = textures_.second[i][j] - index_textures_stride;
       for (size_t k = 0; k < 2; ++k) {
         if (index_textures < 0) {
           index_textures = (normals_.first[i].size() / 2) + (++index_textures);
@@ -174,10 +198,11 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
         if (CheckRange(textures_.first[i], index_textures * 2 + k)) {
           tmp.push_back(textures_.first[i][index_textures * 2 + k]);
         } else {
+          std::cout << "textures zalet" << std::endl;
           is_pack_ = false;
         }
       }
-      GLint index_normals = normals_.second[i][j];
+      GLint index_normals = normals_.second[i][j] - index_normals_stride;
       for (size_t k = 0; k < 3; ++k) {
         if (index_normals < 0) {
           index_normals = (normals_.first[i].size() / 3) + (++index_normals);
@@ -187,7 +212,7 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
           if (norm_coordinate < 0) norm_coordinate *= -1;
           tmp.push_back(norm_coordinate);
         } else {
-          std::cout << "zalet" << std::endl;
+          std::cout << "normals zalet" << std::endl;
           is_pack_ = false;
         }
       }
