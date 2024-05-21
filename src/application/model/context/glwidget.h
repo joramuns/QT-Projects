@@ -43,7 +43,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
   /// @brief Метод отвечает за загрузку данных в OpenGL
   /// @param vertices  отсортированный вектор координат 3-х мерного объекта
-  void LoadModel(std::vector<GLfloat> vertices);
+  void LoadModel(std::vector<GLfloat> vertices, int stride);
 
   /// @brief Удаление/очитка данных 3-х мерного объекта по индексу
   /// @param model_number Индекс 3-х мерного объекта

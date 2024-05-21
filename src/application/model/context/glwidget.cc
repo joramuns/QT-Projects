@@ -17,8 +17,8 @@ GLWidget::~GLWidget() {
   delete program_;
 }
 
-void GLWidget::LoadModel(std::vector<GLfloat> vertices) {
-  GLBuffers_.emplace_back(new GLBuffer(vertices, program_));
+void GLWidget::LoadModel(std::vector<GLfloat> vertices, int stride) {
+  GLBuffers_.emplace_back(new GLBuffer(vertices, stride, program_));
   update();
 }
 

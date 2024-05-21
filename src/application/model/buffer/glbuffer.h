@@ -11,14 +11,15 @@
 namespace s21 {
 /// @brief Класс служит для работы с данными 3-х мерного объекта в OpenGL
 class GLBuffer : QOpenGLFunctions_4_1_Core {
-public:
+ public:
   /// @brief Конструктор по умолчанию - удален
   GLBuffer() = delete;
 
   /// @brief Конструктор с параметрами
   /// @param vertices Данные координат 3-х мерного объекта
   /// @param program  Шейдерная программа для отрисовки
-  GLBuffer(const std::vector<GLfloat> &vertices, QOpenGLShaderProgram *program);
+  GLBuffer(const std::vector<GLfloat> &vertices, int stride,
+           QOpenGLShaderProgram *program);
 
   /// @brief Конструктор копирования - удален
   GLBuffer(const GLBuffer &other) = delete;
@@ -45,7 +46,7 @@ public:
 
   /// @brief Метод передающий данные 3-х мерной модели на видеокарту
   /// @param vertices отсортированный массив координат 3-х мерной модели
-  void LoadData(const std::vector<GLfloat> &vertices);
+  void LoadData(const std::vector<GLfloat> &vertices, int stride);
 
   /// @brief Загрузка данных шейдера
   void LoadUniforms();
@@ -69,16 +70,16 @@ public:
   /// @param value Значение величины масштабирования
   void Scale(double value);
 
-private:
-  QOpenGLShaderProgram *program_; ///< указатель на объект шейдерной программы
-  QOpenGLVertexArrayObject *VAO_; ///< указатель на объект буффера массивов
-  QOpenGLBuffer *VBO_;            ///< указатель на объект буффера вершин
-  QOpenGLBuffer *EBO_;            ///< указатель на объект буффера элементов
+ private:
+  QOpenGLShaderProgram *program_;  ///< указатель на объект шейдерной программы
+  QOpenGLVertexArrayObject *VAO_;  ///< указатель на объект буффера массивов
+  QOpenGLBuffer *VBO_;  ///< указатель на объект буффера вершин
+  QOpenGLBuffer *EBO_;  ///< указатель на объект буффера элементов
 
-  Axes move_uniform_;   ///< 
-  Axes rotate_uniform_; ///<
-  Axes scale_uniform_;  ///<
+  Axes move_uniform_;    ///<
+  Axes rotate_uniform_;  ///<
+  Axes scale_uniform_;   ///<
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_BUFFER_GLBUFFER_H_
+#endif  // CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_BUFFER_GLBUFFER_H_
