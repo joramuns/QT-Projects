@@ -28,10 +28,10 @@ void SettingsSingleton::WriteSettings() {
 void SettingsSingleton::ReadSettings() {
   bg_color_ =
       settings_.value("background color", QColor(0, 0, 0)).value<QColor>();
-  vert_color_ = settings_.value("vertex color", QVector3D(255, 255, 255))
+  vert_color_ = settings_.value("vertex color", QVector3D(1, 1, 1))
                     .value<QVector3D>();
   edge_color_ =
-      settings_.value("edge color", QVector3D(0, 255, 0)).value<QVector3D>();
+      settings_.value("edge color", QVector3D(0, 1, 0)).value<QVector3D>();
   central_projection_ = settings_.value("central projection").toBool();
   solid_ = settings_.value("solid").toBool();
   vert_type_ = settings_.value("vertex type").toInt();
