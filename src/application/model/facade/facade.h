@@ -27,7 +27,7 @@ class Facade {
 
   /// @brief Метод добавляет в модель обработку нового файла 3-х мерного объекта
   /// @param filename Абсолютный путь к файлу 3-х мерной модели в формате obj
-  void AddModel(const std::string &filename) noexcept;
+  std::string AddModel(const std::string &filename) noexcept;
 
   /// @brief Метод удаляет из модели данные о 3-х мерном объекте
   /// @param model_number Индекс 3-х мерного объекта, которую необходимо удалить

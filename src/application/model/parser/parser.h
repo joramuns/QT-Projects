@@ -30,6 +30,11 @@
 #include <iostream>
 
 namespace s21 {
+struct ModelInfo {
+  unsigned vertices{0};
+  unsigned edges{0};
+};
+
 class Parser {
  public:
   explicit Parser(const std::string &filename);
@@ -39,6 +44,8 @@ class Parser {
   inline std::vector<std::vector<GLfloat>> GetCoordinates() const noexcept {
     return coordinates_;
   };
+  inline unsigned GetVertNumber() const noexcept { return vert_number_; }
+  inline unsigned GetEdgeNumber() const noexcept { return edge_number_; }
   bool GetReadStatus() const noexcept;
   bool GetTexturesStatus() const noexcept;
   bool GetNormalsStatus() const noexcept;
@@ -84,6 +91,8 @@ class Parser {
   int vertices_is_read_{0};
   int textures_is_read_{0};
   int normals_is_read_{0};
+  unsigned vert_number_{0};
+  unsigned edge_number_{0};
   bool faces_is_read_{false};
 
   std::regex vertices_pattern_{

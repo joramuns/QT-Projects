@@ -33,7 +33,7 @@ class View final : public QWidget {
 
   /// @brief Создает новый виджет по имени файла и добавляет его в лист виджетов
   /// @param filename Имя файла (абсолютный путь)
-  void AddListWidgetItem(const QString filename);
+  void AddListWidgetItem(const std::string &model_info);
 
   /// @brief Удаляет из листа виджетов виджет 3-х мерного объекта по его номеру
   /// @param model_number Номер трехмерного объекта

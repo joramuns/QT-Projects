@@ -5,7 +5,7 @@ Facade::Facade() : context_(new GLWidget){};
 
 Facade::~Facade() { std::cout << "facade context: " << context_ << std::endl; }
 
-void Facade::AddModel(const std::string &filename) noexcept {
+std::string Facade::AddModel(const std::string &filename) noexcept {
   ObjectModel model(filename);
   ++models_;
 
@@ -14,6 +14,14 @@ void Facade::AddModel(const std::string &filename) noexcept {
     vertices.insert(vertices.end(), item.begin(), item.end());
   }
   context_->LoadModel(vertices, model.GetStride());
+
+  ModelInfo model_info = model.GetInfo();
+  std::string model_name =
+      filename.substr(filename.rfind("/") + 1) +
+      ", vertices: " + std::to_string(model_info.vertices) +
+      ", edges: " + std::to_string(model_info.edges);
+
+  return model_name;
 };
 
 void Facade::RemoveModel(int model_number) noexcept {
@@ -22,9 +30,9 @@ void Facade::RemoveModel(int model_number) noexcept {
 }
 
 void Facade::PrintDate() const noexcept {
-  /* for (const ObjectModel &item : models_) { */
-  /*   item.PrintResult(); */
-  /* } */
+    /* for (const ObjectModel &item : models_) { */
+    /*   item.PrintResult(); */
+    /* } */
 };
 
 void Facade::Rotate(double value, char axis, int model_number) {
@@ -88,8 +96,6 @@ void Facade::TakeScreenshot(const QString &filename) {
   context_->SaveScreenshot(filename);
 }
 
-void Facade::TakeGif(const QString &filename) {
-  context_->SaveGif(filename);
-}
+void Facade::TakeGif(const QString &filename) { context_->SaveGif(filename); }
 
 }  // namespace s21

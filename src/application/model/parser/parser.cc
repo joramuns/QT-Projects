@@ -9,6 +9,12 @@ Parser::Parser(const std::string &filename) {
     throw std::invalid_argument("\n File does not exist");
   } else {
     DataRead(filename);
+    for (const auto &elem : all_vertices_) {
+      vert_number_ += elem.size() / 4;
+    }
+    for (const auto &elem : vertex_faces_) {
+      edge_number_ += elem.size();
+    }
     if (vertices_is_read_ && faces_is_read_) {
       Packer();
     }

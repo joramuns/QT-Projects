@@ -6,6 +6,8 @@ ObjectModel::ObjectModel(const std::string &filename) : filename_(filename) {
   Parser core_pars(filename_);
   all_vertices_ = core_pars.GetCoordinates();
   stride_ = core_pars.GetStride();
+  model_info_.vertices = core_pars.GetVertNumber();
+  model_info_.edges = core_pars.GetEdgeNumber();
   // all_textures_ = core_pars.GetTextures();
   // all_normals_ = core_pars.GetNormals();
 

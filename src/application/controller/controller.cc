@@ -20,8 +20,8 @@ void Controller::ControllerTransformSlot(double value, char axis, int type,
 
 void Controller::ControllerOpenFileSlot(QString filename) {
   if (filename.size()) {
-    facade_->AddModel(filename.toStdString());
-    view_->AddListWidgetItem(filename);
+    std::string model_info = facade_->AddModel(filename.toStdString());
+    view_->AddListWidgetItem(model_info);
   }
 }
 

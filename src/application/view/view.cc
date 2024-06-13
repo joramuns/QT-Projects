@@ -74,8 +74,8 @@ View::View(GLWidget *context) : QWidget(nullptr) {
   main_layout_->addWidget(list_box, 1, 0, 1, 6);
 }
 
-void View::AddListWidgetItem(const QString filename) {
-  new QListWidgetItem(filename, list_widget_);
+void View::AddListWidgetItem(const std::string &model_info) {
+  new QListWidgetItem(QString::fromStdString(model_info), list_widget_);
 }
 
 void View::RemoveListWidgetItem(int model_number) {

@@ -30,6 +30,7 @@ class ObjectModel {
   std::vector<std::vector<GLuint>> GetTextureIndexes() const noexcept;
   std::vector<std::vector<GLuint>> GetNormalIndexes() const noexcept;
   int GetStride() const noexcept;
+  inline ModelInfo GetInfo() const noexcept { return model_info_; };
 
   // debug
   void PrintResult() const noexcept;
@@ -37,6 +38,7 @@ class ObjectModel {
  private:
   /// need class Setting
   std::string filename_;
+  ModelInfo model_info_;
   std::vector<std::vector<GLfloat>> all_vertices_;
   std::vector<std::vector<GLfloat>> all_textures_;
   std::vector<std::vector<GLfloat>> all_normals_;
