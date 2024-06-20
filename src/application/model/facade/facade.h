@@ -12,7 +12,9 @@
 
 #include "../context/glwidget.h"
 #include "../object_model.h"
+#include "../parser/OBJ_Loader.h"
 #include "../parser/parser.h"
+#include "../parser/vertex.h"
 
 namespace s21 {
 /// @brief Класс реализует паттерн Фасад, дающий пользователю интерфейс

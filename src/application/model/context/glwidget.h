@@ -13,6 +13,8 @@
 #include <QTimer>
 
 #include "../buffer/glbuffer.h"
+#include "../buffer/glbuffer2.h"
+#include "../parser/vertex.h"
 #include "../settings_singleton.h"
 #include "gif.h"
 
@@ -44,10 +46,12 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
   /// @brief Метод отвечает за загрузку данных в OpenGL
   /// @param vertices  отсортированный вектор координат 3-х мерного объекта
   void LoadModel(std::vector<GLfloat> vertices, int stride);
+  void LoadModel2(std::vector<Vertex> vertices);
 
   /// @brief Удаление/очитка данных 3-х мерного объекта по индексу
   /// @param model_number Индекс 3-х мерного объекта
   void UnloadModel(int model_number);
+  void UnloadModel2(int model_number);
 
   /// @brief Метод отвечает за вращение 3-х мерного объекта по индексу
   /// @param value Значение величины поворота
@@ -140,6 +144,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
   /// @brief Метод отвечающий за загрузку данных 3-х мерного объекта в OpenGL
   void ModelLoader();
+  void ModelLoader2();
 
   /// @brief Загрузка общих данных в шейдеры
   void LoadCommonUniforms();
@@ -148,7 +153,8 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
 
  private:
   QOpenGLShaderProgram *program_;  ///< Указатель на объект шейдерной программы
-  std::vector<GLBuffer *> GLBuffers_;  ///<
+  std::vector<GLBuffer *> GLBuffers_;    ///<
+  std::vector<GLBuffer2 *> GLBuffers2_;  ///<
 
   SettingsSingleton &settings_;
 

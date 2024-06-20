@@ -17,8 +17,14 @@ GLWidget::~GLWidget() {
   delete program_;
 }
 
+// old
 void GLWidget::LoadModel(std::vector<GLfloat> vertices, int stride) {
   GLBuffers_.emplace_back(new GLBuffer(vertices, stride, program_));
+  update();
+}
+
+void GLWidget::LoadModel2(std::vector<Vertex> vertices) {
+  GLBuffers2_.emplace_back(new GLBuffer2(vertices, program_));
   update();
 }
 
@@ -28,16 +34,25 @@ void GLWidget::UnloadModel(int model_number) {
   update();
 }
 
+void GLWidget::UnloadModel2(int model_number) {
+  delete GLBuffers2_[model_number];
+  GLBuffers2_.erase(GLBuffers2_.begin() + model_number);
+  update();
+}
+
 void GLWidget::Rotate(double value, char axis, int model_number) {
-  GLBuffers_[model_number]->Rotate(value, axis);
+  GLBuffers2_[model_number]->Rotate(value, axis);
+  /* GLBuffers_[model_number]->Rotate(value, axis); */
 }
 
 void GLWidget::Move(double value, char axis, int model_number) {
-  GLBuffers_[model_number]->Move(value, axis);
+  GLBuffers2_[model_number]->Move(value, axis);
+  /* GLBuffers_[model_number]->Move(value, axis); */
 }
 
 void GLWidget::Scale(double value, int model_number) {
-  GLBuffers_[model_number]->Scale(value);
+  GLBuffers2_[model_number]->Scale(value);
+  /* GLBuffers_[model_number]->Scale(value); */
 }
 
 void GLWidget::SaveScreenshot(const QString &filename) {
@@ -73,7 +88,8 @@ void GLWidget::resizeGL(int w, int h) {
 
 void GLWidget::paintGL() {
   SceneLoader();
-  ModelLoader();
+  ModelLoader2();
+  /* ModelLoader(); */
 }
 
 void GLWidget::LoadShaders() {
@@ -111,7 +127,7 @@ void GLWidget::ModelLoader() {
     GLBuffers_[i]->LoadUniforms();
     LoadCommonUniforms();
 
-    glDrawArrays(GL_TRIANGLES, 0, GLBuffers_[i]->GetBuffSize());
+    glDrawArrays(GL_TRIANGLE_FAN, 0, GLBuffers_[i]->GetBuffSize());
     if (settings_.GetVertexType()) {
       program_->setUniformValue("vertexType", settings_.GetVertexType());
       program_->setUniformValue("modelColor", settings_.GetVertexColor());
@@ -120,6 +136,26 @@ void GLWidget::ModelLoader() {
       program_->setUniformValue("vertexType", 0);
     }
     GLBuffers_[i]->Release();
+  }
+  program_->release();
+}
+
+void GLWidget::ModelLoader2() {
+  program_->bind();
+  for (std::size_t i = 0; i < GLBuffers2_.size(); ++i) {
+    GLBuffers2_[i]->Bind();
+    GLBuffers2_[i]->LoadUniforms();
+    LoadCommonUniforms();
+
+    glDrawArrays(GL_TRIANGLES, 0, GLBuffers2_[i]->GetBuffSize());
+    if (settings_.GetVertexType()) {
+      program_->setUniformValue("vertexType", settings_.GetVertexType());
+      program_->setUniformValue("modelColor", settings_.GetVertexColor());
+      glPointSize(settings_.GetVertexSize());
+      glDrawArrays(GL_POINTS, 0, GLBuffers2_[i]->GetBuffSize());
+      program_->setUniformValue("vertexType", 0);
+    }
+    GLBuffers2_[i]->Release();
   }
   program_->release();
 }
