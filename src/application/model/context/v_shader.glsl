@@ -1,5 +1,5 @@
 #version 410 core
-layout(location = 0) in vec3 aPos;
+layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec2 texCoord;
 
@@ -87,7 +87,7 @@ void main() {
   mat4 rotation = Rotation();
   mat4 translation = Translation();
   mat4 scaling = Scaling();
-  vec4 myPos = vec4(aPos, 1.0);
+  vec4 myPos = vec4(position, 1.0);
 
   mat4 mvp = perspective * translation * rotation * scaling;
 
