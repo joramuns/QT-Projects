@@ -3,8 +3,8 @@
 #include <iostream>
 
 namespace s21 {
-GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices,
-                   int stride, QOpenGLShaderProgram *program)
+GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices, int stride,
+                   QOpenGLShaderProgram *program)
     : program_(program),
       VAO_(new QOpenGLVertexArrayObject),
       VBO_(new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer)),
@@ -42,17 +42,22 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices, int stride) {
 
   Bind();
   VBO_->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
+  std::cout << "load data " << vertices.size() << std::endl;
   glEnableVertexAttribArray(0);
   std::cout << stride << std::endl;
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * stride,
                         (void *)0);
-  glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * stride,
-                        (void *)(4 * sizeof(GLfloat)));
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * stride,
-                        (void *)(7 * sizeof(GLfloat)));
-  // Release();
+  if (stride - 6 == 3 || stride - 4 == 3) {
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * stride,
+                          (void *)(4 * sizeof(GLfloat)));
+  }
+  if (stride - 7 == 2 || stride - 4 == 2) {
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * stride,
+                          (void *)((stride - 2) * sizeof(GLfloat)));
+  }
+  Release();
 }
 
 void GLBuffer::LoadUniforms() {
