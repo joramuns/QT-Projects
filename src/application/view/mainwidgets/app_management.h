@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса AppManagement
+*/
 #ifndef VIEW_APP_MANAGEMENT_H_
 #define VIEW_APP_MANAGEMENT_H_
 

@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса Controller
+*/
 #ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_CONTROLLER_CONTROLLER_H_
 #define CPP4_3DVIEWER_V2_0_2_APPLICATION_CONTROLLER_CONTROLLER_H_
 

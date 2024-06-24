@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса GLBuffer2
+*/
 #ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_BUFFER_GLBUFFER2_H_
 #define CPP4_3DVIEWER_V2_0_2_APPLICATION_MODEL_BUFFER_GLBUFFER2_H_
 

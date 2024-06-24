@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса SettingsTab
+*/
 #ifndef VIEW_SETTINGSWIDGETS_SETTINGSTAB_H_
 #define VIEW_SETTINGSWIDGETS_SETTINGSTAB_H_
 

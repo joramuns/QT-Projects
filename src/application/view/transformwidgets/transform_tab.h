@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса TransformationTab
+*/
 #ifndef VIEW_TRANSFORM_TAB_H_
 #define VIEW_TRANSFORM_TAB_H_
 

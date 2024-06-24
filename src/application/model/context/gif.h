@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса Controller
+*/
 #ifndef gigagaga_h
 #define gigagaga_h
 

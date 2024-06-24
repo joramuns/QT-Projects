@@ -1,9 +1,7 @@
 #include "view.h"
 
-#include <iostream>
-
 namespace s21 {
-View::~View() { std::cout << "View dtor" << std::endl; }
+View::~View() {}
 View::View(GLWidget *context) : QWidget(nullptr) {
   main_layout_ = new QGridLayout(this);
   setWindowTitle("3D Viewer 2.0");

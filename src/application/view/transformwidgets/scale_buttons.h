@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса ScaleButtons
+*/
 #ifndef VIEW_SCALEBUTTONS_H_
 #define VIEW_SCALEBUTTONS_H_
 

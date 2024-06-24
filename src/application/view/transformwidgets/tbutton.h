@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса TButton
+*/
 #ifndef VIEW_TBUTTON_H_
 #define VIEW_TBUTTON_H_
 

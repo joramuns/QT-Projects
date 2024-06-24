@@ -1,3 +1,8 @@
+/*!
+\file
+\brief Header-only библиотека для парсинга obj файлов.
+
+*/
 // OBJ_Loader.h - A Single Header OBJ Model Loader
 
 #pragma once

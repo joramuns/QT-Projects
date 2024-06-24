@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса ObjectModel
+*/
 #ifndef CPP4_3DVIEWER_V2_MODEL_OBJECT_MODEL_H
 #define CPP4_3DVIEWER_V2_MODEL_OBJECT_MODEL_H
 

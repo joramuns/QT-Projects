@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса TransformButtons
+*/
 #ifndef TRANSFORM_BUTTONS_H_
 #define TRANSFORM_BUTTONS_H_
 

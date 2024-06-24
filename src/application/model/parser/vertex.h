@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса Vertex
+*/
 #ifndef CPP4_3DVIEWER_V2_MODEL_PARSER_VERTEX_H
 #define CPP4_3DVIEWER_V2_MODEL_PARSER_VERTEX_H
 #include <QVector3D>

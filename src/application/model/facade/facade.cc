@@ -3,7 +3,7 @@
 namespace s21 {
 Facade::Facade() : context_(new GLWidget){};
 
-Facade::~Facade() { std::cout << "facade context: " << context_ << std::endl; }
+Facade::~Facade() {}
 
 std::string Facade::AddModel(const std::string &filename) noexcept {
   objl::Loader loader;

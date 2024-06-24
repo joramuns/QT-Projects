@@ -1,3 +1,9 @@
+/*!
+\file
+\brief Заголовочный файл с описанием класса.
+
+Данный файл содержит в себе определения класса SettingsSingleton
+*/
 #ifndef CPP4_3DVIEWER_V2_0_2_APPLICATION_VIEW_SETTINGS_SINGLETON_H_
 #define CPP4_3DVIEWER_V2_0_2_APPLICATION_VIEW_SETTINGS_SINGLETON_H_
 
