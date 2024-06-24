@@ -8,25 +8,12 @@ Facade::~Facade() { std::cout << "facade context: " << context_ << std::endl; }
 std::string Facade::AddModel(const std::string &filename) noexcept {
   objl::Loader loader;
   loader.LoadFile(filename);
-  /* std::cout << "LOADER " << loader.LoadedMeshes[0].MeshName << std::endl; */
   std::vector<Vertex> vertices;
   std::vector<unsigned int> indices;
   unsigned vert_number = 0;
   unsigned edge_number = 0;
 
   for (const auto &mesh : loader.LoadedMeshes) {
-    /* for (const auto &vertex : mesh.Vertices) { */
-    /*   Vertex v; */
-    /*   v.position = */
-    /*       QVector3D(vertex.Position.X, vertex.Position.Y, vertex.Position.Z);
-     */
-    /*   v.normal = QVector3D(vertex.Normal.X, vertex.Normal.Y,
-     * vertex.Normal.Z); */
-    /*   v.texCoord = */
-    /*       QVector2D(vertex.TextureCoordinate.X, vertex.TextureCoordinate.Y);
-     */
-    /*   vertices.push_back(v); */
-    /* } */
     for (const auto &item : mesh.Indices) {
       auto vi = mesh.Vertices[item];
       Vertex v;
@@ -35,7 +22,6 @@ std::string Facade::AddModel(const std::string &filename) noexcept {
       v.texCoord = QVector2D(vi.TextureCoordinate.X, vi.TextureCoordinate.Y);
       vertices.push_back(v);
     }
-    std::cout << "size index " << mesh.Indices.size() << std::endl;
     vert_number += mesh.Vertices.size();
     edge_number += mesh.Indices.size();
   }
@@ -46,22 +32,6 @@ std::string Facade::AddModel(const std::string &filename) noexcept {
                            ", vertices: " + std::to_string(vert_number) +
                            ", edges: " + std::to_string(edge_number);
   return model_name;
-  /* ObjectModel model(filename); */
-  /* ++models_; */
-
-  /* std::vector<GLfloat> vertices; */
-  /* for (const auto &item : model.GetVertices()) { */
-  /*   vertices.insert(vertices.end(), item.begin(), item.end()); */
-  /* } */
-  /* context_->LoadModel(vertices, model.GetStride()); */
-
-  /* ModelInfo model_info = model.GetInfo(); */
-  /* std::string model_name = */
-  /*     filename.substr(filename.rfind("/") + 1) + */
-  /*     ", vertices: " + std::to_string(model_info.vertices) + */
-  /*     ", edges: " + std::to_string(model_info.edges); */
-
-  /* return model_name; */
 };
 
 void Facade::RemoveModel(int model_number) noexcept {

@@ -5,20 +5,20 @@
 #include <QTabWidget>
 #include <QVector3D>
 
-#include "settings.h"
 #include "../../model/settings_singleton.h"
+#include "settings.h"
 
 namespace s21 {
 /// @brief Класс определяющий инициализацию вкладок настроек
 class SettingsTab final : public QTabWidget {
   Q_OBJECT
 
-public:
+ public:
   /// @brief Конструктор по умолачанию, инициализирует поля, подключает сигналы
   /// с обработчиками, добавляет вкладки настроек на "макет" интерфейса
   SettingsTab();
 
-public slots:
+ public slots:
   /// @brief Слот выпускающий сигнал смены цвета сцены
   void SceneColorSlot();
   /// @brief Слот выпускающий сигнал смены цвета вершин
@@ -44,7 +44,7 @@ public slots:
   /// @param value величина отображения граней
   void EdgeSizeSlot(double value);
 
-signals:
+ signals:
   /// @brief Сигнал смены цвета сцены
   /// @param scene_color цвет сцены
   void TabSceneColorSignal(QColor scene_color);
@@ -55,7 +55,7 @@ signals:
   /// @param edge_color цвет ребер
   void TabEdgeColorSignal(QVector3D edge_color);
   /// @brief Сигнал смены типа проекции
-  /// @param index тип проекции 
+  /// @param index тип проекции
   void TabSceneOptionSignal(int index);
   /// @brief Сигнал смены типа отображения граней
   /// @param index тип ототображения граней
@@ -73,7 +73,7 @@ signals:
   /// @param value величина отображения ребер
   void TabEdgeSizeSignal(double value);
 
-private:
+ private:
   /// @brief Иницилизация вкладок настроек
   void InitFields();
 
@@ -85,11 +85,14 @@ private:
 
   void ReadSettings();
 
-private:
-  ExtraSceneSettings *scene_settings_; ///< указатель на виджет управления отображением 3-х мерного объекта
-  ModelSettings *vertex_settings_;     ///< указатель на виджет управления отображением вершин
-  ModelSettings *edge_settings_;       ///< указатель на вилжет управления отображением ребер
+ private:
+  ExtraSceneSettings *scene_settings_;  ///< указатель на виджет управления
+                                        ///< отображением 3-х мерного объекта
+  ModelSettings *
+      vertex_settings_;  ///< указатель на виджет управления отображением вершин
+  ModelSettings
+      *edge_settings_;  ///< указатель на вилжет управления отображением ребер
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // VIEW_SETTINGSWIDGETS_SETTINGSTAB_H_
+#endif  // VIEW_SETTINGSWIDGETS_SETTINGSTAB_H_

@@ -11,7 +11,6 @@ SettingsSingleton &SettingsSingleton::GetInstance() {
   return instance;
 }
 
-
 void SettingsSingleton::WriteSettings() {
   settings_.setValue("background color", bg_color_);
   settings_.setValue("vertex color", vert_color_);
@@ -22,14 +21,13 @@ void SettingsSingleton::WriteSettings() {
   settings_.setValue("vertex size", vert_size_);
   settings_.setValue("edge size", edge_size_);
   settings_.setValue("dashed lines", dashed_lines_);
-  settings_.setValue("HALO", 0);
 }
 
 void SettingsSingleton::ReadSettings() {
   bg_color_ =
       settings_.value("background color", QColor(0, 0, 0)).value<QColor>();
-  vert_color_ = settings_.value("vertex color", QVector3D(1, 1, 1))
-                    .value<QVector3D>();
+  vert_color_ =
+      settings_.value("vertex color", QVector3D(1, 1, 1)).value<QVector3D>();
   edge_color_ =
       settings_.value("edge color", QVector3D(0, 1, 0)).value<QVector3D>();
   central_projection_ = settings_.value("central projection").toBool();

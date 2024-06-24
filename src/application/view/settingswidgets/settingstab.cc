@@ -93,14 +93,10 @@ void SettingsTab::VertexOptionSlot(int index) {
   emit TabVertexOptionSignal(index);
 }
 
-void SettingsTab::EdgeOptionSlot(int index) {
-  emit TabEdgeOptionSignal(index);
-}
+void SettingsTab::EdgeOptionSlot(int index) { emit TabEdgeOptionSignal(index); }
 
 void SettingsTab::VertexSizeSlot(double value) {
   emit TabVertexSizeSignal(value);
 }
-void SettingsTab::EdgeSizeSlot(double value) {
-  emit TabEdgeSizeSignal(value);
-}
-} // namespace s21
+void SettingsTab::EdgeSizeSlot(double value) { emit TabEdgeSizeSignal(value); }
+}  // namespace s21

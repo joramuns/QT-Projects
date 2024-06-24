@@ -4,8 +4,8 @@
 #include <QApplication>
 #include <QWidget>
 
-#include "view/view.h"
 #include "controller/controller.h"
 #include "model/facade/facade.h"
+#include "view/view.h"
 
 #endif  // MAIN_H_

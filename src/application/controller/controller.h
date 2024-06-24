@@ -12,13 +12,13 @@ namespace s21 {
 class Controller final : public QObject {
   Q_OBJECT
 
-public:
+ public:
   /// @brief Конструктор устанавливает связь между отображением и моделью
   /// @param v указатель на экземпляр класса отображения
   /// @param f укзаатель на экземпляр класса модели(фасада)
   Controller(View *v, Facade *f);
 
-private slots:
+ private slots:
   /// @brief Слот обрабатывающий сигнал о трансформации модели
   /// @param value
   /// @param axis
@@ -75,15 +75,15 @@ private slots:
 
   void ControllerGifSlot(const QString &filename);
 
-private:
+ private:
   /// @brief Метод связывающий сигналы отображения со слотами обработчиками в
   /// контроллере
   void ConnectFields() const;
 
-private:
-  View *view_;     ///< указатель на экземпляр класса отображения
-  Facade *facade_; ///< укзатель на экземпляр класса фасада
+ private:
+  View *view_;  ///< указатель на экземпляр класса отображения
+  Facade *facade_;  ///< укзатель на экземпляр класса фасада
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_0_2_APPLICATION_CONTROLLER_CONTROLLER_H_
+#endif  // CPP4_3DVIEWER_V2_0_2_APPLICATION_CONTROLLER_CONTROLLER_H_

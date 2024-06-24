@@ -1,6 +1,5 @@
 #include "coordinate_packer.h"
 
-#include <iostream>
 namespace s21 {
 CoordinatePacker::CoordinatePacker(
     const std::pair<std::vector<std::vector<GLfloat>>,
@@ -14,8 +13,6 @@ std::vector<std::vector<GLfloat>> CoordinatePacker::GetCoordinates()
 
 bool CoordinatePacker::CheckRange(const std::vector<GLfloat> &vec,
                                   const GLint &index) const noexcept {
-  /* std::cout << index << " - index " << vec.size() << " - size " << "bool - "
-   * << (index < static_cast<GLint>(vec.size())) << std::endl; */
   return (index < static_cast<GLint>(vec.size()));
 }
 
@@ -184,9 +181,6 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
         if (CheckRange(vertices_.first[i], index_vertices * 4 + k)) {
           tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
         } else {
-          std::cout << "vertices zalet" << index_vertices << std::endl;
-          std::cout << vertices_.first[i].size() << " "
-                    << (index_vertices * 4 + k) << std::endl;
           is_pack_ = false;
         }
       }
@@ -198,7 +192,6 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
         if (CheckRange(textures_.first[i], index_textures * 2 + k)) {
           tmp.push_back(textures_.first[i][index_textures * 2 + k]);
         } else {
-          std::cout << "textures zalet" << std::endl;
           is_pack_ = false;
         }
       }
@@ -212,7 +205,6 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
           if (norm_coordinate < 0) norm_coordinate *= -1;
           tmp.push_back(norm_coordinate);
         } else {
-          std::cout << "normals zalet" << std::endl;
           is_pack_ = false;
         }
       }

@@ -1,7 +1,5 @@
 #include "glbuffer.h"
 
-#include <iostream>
-
 namespace s21 {
 GLBuffer::GLBuffer(const std::vector<GLfloat> &vertices, int stride,
                    QOpenGLShaderProgram *program)
@@ -42,9 +40,7 @@ void GLBuffer::LoadData(const std::vector<GLfloat> &vertices, int stride) {
 
   Bind();
   VBO_->allocate(vertices.data(), vertices.size() * sizeof(GLfloat));
-  std::cout << "load data " << vertices.size() << std::endl;
   glEnableVertexAttribArray(0);
-  std::cout << stride << std::endl;
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * stride,
                         (void *)0);
   if (stride - 6 == 3 || stride - 4 == 3) {

@@ -115,8 +115,7 @@ void Controller::ConnectFields() const {
   connect(view_, &View::ScreenshotSignal, this,
           &Controller::ControllerScreenshotSlot);
 
-  connect(view_, &View::GifSignal, this,
-          &Controller::ControllerGifSlot);
+  connect(view_, &View::GifSignal, this, &Controller::ControllerGifSlot);
 }
 
 }  // namespace s21

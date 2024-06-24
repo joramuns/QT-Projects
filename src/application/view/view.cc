@@ -48,8 +48,7 @@ View::View(GLWidget *context) : QWidget(nullptr) {
           &View::CloseFileSlot);
   connect(app_management, &AppManagement::AppScreenshotSignal, this,
           &View::ScreenshotSlot);
-  connect(app_management, &AppManagement::AppGifSignal, this,
-          &View::GifSlot);
+  connect(app_management, &AppManagement::AppGifSignal, this, &View::GifSlot);
 
   menu_layout->addStretch();
   menu_layout->addWidget(transformation_tab);
@@ -127,9 +126,7 @@ void View::ScreenshotSlot(const QString &filename) {
   emit ScreenshotSignal(filename);
 }
 
-void View::GifSlot(const QString &filename) {
-  emit GifSignal(filename);
-}
+void View::GifSlot(const QString &filename) { emit GifSignal(filename); }
 
 void View::closeEvent(QCloseEvent *event) {
   SettingsSingleton &settings = SettingsSingleton::GetInstance();

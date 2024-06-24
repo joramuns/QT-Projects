@@ -27,7 +27,8 @@ class View final : public QWidget {
  public:
   View() = delete;
   ~View();
-  /// @brief Конструктор инициализирует поля, подключает кнопки к обработчикам и создает пользовательский интерфейс
+  /// @brief Конструктор инициализирует поля, подключает кнопки к обработчикам и
+  /// создает пользовательский интерфейс
   /// @param context  Указатель на виджет OpenGl
   explicit View(GLWidget *context);
 
@@ -39,15 +40,17 @@ class View final : public QWidget {
   /// @param model_number Номер трехмерного объекта
   void RemoveListWidgetItem(int model_number);
 
-private slots:
-  /// @brief Слот выпускающий сигнал обработчику на изменение координат 3-х мерного объекта
+ private slots:
+  /// @brief Слот выпускающий сигнал обработчику на изменение координат 3-х
+  /// мерного объекта
   /// @param value Значение величины изменений
   /// @param axis Ось изменений
-  /// @param type Тип изменений 
+  /// @param type Тип изменений
   /// @param model_number  ID модели
   void ViewTransformSlot(double value, char axis, int type, int model_number);
-  
-  /// @brief Слот выпускающий сигнал обработчику открытия файла 3-х мерного объекта
+
+  /// @brief Слот выпускающий сигнал обработчику открытия файла 3-х мерного
+  /// объекта
   /// @param filename Абсолютный путь к файлу 3-х мерного объекта
   void OpenFileSlot(QString filename);
 
@@ -57,8 +60,9 @@ private slots:
   /// @brief Слот выпускающий сигнал смены типа проекции 3-х мерного объекта
   /// @param index Тип проекции
   void SceneOptionSlot(int index);
-  
-  /// @brief Слот выпускающий сигнал смены типа отображения граней 3-х мерного объекта
+
+  /// @brief Слот выпускающий сигнал смены типа отображения граней 3-х мерного
+  /// объекта
   /// @param index Тип отображения граней
   void ExtraSceneOptionSlot(int index);
 
@@ -66,37 +70,43 @@ private slots:
   /// @param scene_color Цвет заднего фона
   void SceneColorSlot(QColor scene_color);
 
-  /// @brief Слот выпускающий сигнал смены цвета отображаемых вершин 3-х мерного объекта
+  /// @brief Слот выпускающий сигнал смены цвета отображаемых вершин 3-х мерного
+  /// объекта
   /// @param vertex_color Цвет вершин
   void VertexColorSlot(QVector3D vertex_color);
 
-  /// @brief Слот выпускающий сигнал смены цвета отображаемых ребер 3-х мерного объекта
+  /// @brief Слот выпускающий сигнал смены цвета отображаемых ребер 3-х мерного
+  /// объекта
   /// @param edge_color Цвет ребер
   void EdgeColorSlot(QVector3D edge_color);
 
-  /// @brief Слот выпускающий сигнал смены типа отображаемых вершин 3-х мерного объекта
+  /// @brief Слот выпускающий сигнал смены типа отображаемых вершин 3-х мерного
+  /// объекта
   /// @param index Тип отображения вершин
   void VertexOptionSlot(int index);
 
-  /// @brief Слот выпускающий сигнал смены типа отображаемых ребер 3-х мерного объекта
+  /// @brief Слот выпускающий сигнал смены типа отображаемых ребер 3-х мерного
+  /// объекта
   /// @param index Тип отображения ребер
   void EdgeOptionSlot(int index);
 
-  /// @brief Слот выпускающий сигнал смены размера отображаемых вершин 3-х мерного объекта
+  /// @brief Слот выпускающий сигнал смены размера отображаемых вершин 3-х
+  /// мерного объекта
   /// @param value Величина значения отображаемых вершин
   void VertexSizeSlot(double value);
 
-  /// @brief Слот выпускающий сигнал смены размера отображаемых ребер 3-х мерного объекта
+  /// @brief Слот выпускающий сигнал смены размера отображаемых ребер 3-х
+  /// мерного объекта
   /// @param value Величина значения отображаемых ребер
   void EdgeSizeSlot(double value);
   void ScreenshotSlot(const QString &filename);
   void GifSlot(const QString &filename);
 
-signals:
+ signals:
   /// @brief Сигнал изменения координат 3-х мерного объекта
   /// @param value Значение величины изменений
   /// @param axis Ось изменений
-  /// @param type Тип изменений 
+  /// @param type Тип изменений
   /// @param model_number  ID модели
   void ViewTransformSignal(double value, char axis, int type, int model_number);
 

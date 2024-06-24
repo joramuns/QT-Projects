@@ -10,11 +10,12 @@ namespace s21 {
 /// трансформацию 3-х мерного объекта
 class TButton final : public QPushButton {
   Q_OBJECT
-public:
-  /// @brief Конструктор, инициализирующий кнопку и определяющий ее базовое поведение
-  /// @param label Отображаемый на кнопке текст 
+ public:
+  /// @brief Конструктор, инициализирующий кнопку и определяющий ее базовое
+  /// поведение
+  /// @param label Отображаемый на кнопке текст
   explicit TButton(const QString &label);
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // VIEW_TBUTTON_H_
+#endif  // VIEW_TBUTTON_H_

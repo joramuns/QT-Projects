@@ -1,7 +1,5 @@
 #include "glwidget.h"
 
-#include <iostream>
-
 namespace s21 {
 GLWidget::GLWidget()
     : settings_(SettingsSingleton::GetInstance()), timer_counter_(0) {
@@ -175,9 +173,9 @@ void GLWidget::LoadCommonUniforms() {
 void GLWidget::GifFrameGrabber() {
   if (timer_counter_ < 50) {
     QImage gif_frame = grabFramebuffer()
-                                 .scaled(640, 480)
-                                 .convertToFormat(QImage::Format_Indexed8)
-                                 .convertToFormat(QImage::Format_RGBA8888);
+                           .scaled(640, 480)
+                           .convertToFormat(QImage::Format_Indexed8)
+                           .convertToFormat(QImage::Format_RGBA8888);
     GifWriteFrame(gifwriter_, gif_frame.constBits(), 640, 480, 10, 8, false);
     ++timer_counter_;
   } else {

@@ -1,7 +1,5 @@
 #include "glbuffer2.h"
 
-#include <iostream>
-
 namespace s21 {
 GLBuffer2::GLBuffer2(const std::vector<Vertex> &vertices,
                      QOpenGLShaderProgram *program)

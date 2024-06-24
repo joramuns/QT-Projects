@@ -72,7 +72,7 @@ class VertexCoordinatePacker : public CoordinatePacker {
   /// @brief Конструктор с параметрами
   /// @param vertices Пара векторов векторов координат вершин и векторов
   /// векторов соответствующих индексов
-  VertexCoordinatePacker(
+  explicit VertexCoordinatePacker(
       const std::pair<std::vector<std::vector<GLfloat>>,
                       std::vector<std::vector<GLint>>> &vertices) noexcept;
 

@@ -100,7 +100,5 @@ void ModelSettings::ConnectFields() {
 
 void ModelSettings::InitLayouts() { layout_->addWidget(size_); }
 
-void ModelSettings::SetSpinBox(const double value) {
-  size_->setValue(value);
-}
+void ModelSettings::SetSpinBox(const double value) { size_->setValue(value); }
 }  // namespace s21

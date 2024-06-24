@@ -14,7 +14,7 @@
 
 #ifdef __linux__
 #include <GL/glut.h>
-#endif // __linux__
+#endif  // __linux__
 
 namespace s21 {
 
@@ -41,6 +41,6 @@ struct NormalsCoordinate {
   GLfloat y;
   GLfloat z;
 };
-} // namespace s21
+}  // namespace s21
 
-#endif // CPP4_3DVIEWER_V2_MODEL_PARSER_COORDINATE_STRUCT_H
+#endif  // CPP4_3DVIEWER_V2_MODEL_PARSER_COORDINATE_STRUCT_H
