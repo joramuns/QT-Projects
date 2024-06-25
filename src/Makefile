@@ -1,17 +1,18 @@
-CXX=g++
+CXX=clang++
 STATLIB_BUILD=ar rcs
 CFLAGS=-Wall -Werror -Wextra -std=c++17
 ASAN=-fsanitize=address
 GCOV=--coverage
-LIB_FLAGS=-lgtest -pthread -I/usr/local/include -L/usr/local/lib/ 
+# LIB_FLAGS=-lgtest -pthread -I/usr/local/include -L/usr/local/lib/ $(pkg-config --cflags --libs gtest)
+LIB_FLAGS=-pthread -I/Users/joramuns/.brew/Cellar/googletest/1.14.0/include 
 VGFLAGS=--trace-children=yes --track-fds=all  --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 TARGET=3DViewer.app
 TEST_TARGET=test.out
-# LIB_TARGET=libbin/calc_model.a
+LIB_TARGET=libbin/viewer_model.a
 DISTTARGET=3DViewer_v2.0.tar.gz
 
-MODEL_SRCDIR=application/model
+MODEL_SRCDIR=application/model/parser
 TEST_SRCDIR=tests
 OBJDIR=bin
 LIBDIR=libbin
@@ -38,8 +39,8 @@ install:
 	@mv -f $(BUILDDIR)/$(TARGET) $(BINDIR)/$(TARGET)
 
 open: install
-	# @open $(BINDIR)/$(TARGET)
-	@./$(BINDIR)/$(TARGET)/Contents/MacOS/3DViewer
+	@open $(BINDIR)/$(TARGET)
+	# @./$(BINDIR)/$(TARGET)/Contents/MacOS/3DViewer
 
 xopen: 
 	# @open $(BINDIR)/$(TARGET)
@@ -47,7 +48,7 @@ xopen:
 
 dist: install
 	@echo "Creating a distribution file for the program..."
-	@tar -czf $(DISTTARGET) $(TARGET)
+	@tar -czf $(BINDIR)/$(DISTTARGET) $(BINDIR)/$(TARGET)
 
 uninstall: clean
 	@rm -rf $(TARGET)
@@ -112,5 +113,5 @@ clean:
 	@rm -rf dvi
 
 fclean: clean
-	@rm -rf $(OBJDIR) $(LIBDIR) $(BUILDDIR)
+	@rm -rf $(OBJDIR) $(LIBDIR) $(BUILDDIR) $(BINDIR)
 
