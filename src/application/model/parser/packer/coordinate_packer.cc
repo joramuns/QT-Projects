@@ -34,7 +34,8 @@ void VertexCoordinatePacker::Pack() noexcept {
       GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
-          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+          index_vertices++;
+          index_vertices += (vertices_.first[i].size() / 4);
         }
         if (CheckRange(vertices_.first[i], index_vertices * 4 + k)) {
           tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
@@ -71,7 +72,8 @@ void VertexTexturesCoordinatePacker::Pack() noexcept {
       GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
-          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+          index_vertices++;
+          index_vertices += (vertices_.first[i].size() / 4);
         }
         if (CheckRange(vertices_.first[i], index_vertices * 4 + k)) {
           tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
@@ -82,7 +84,8 @@ void VertexTexturesCoordinatePacker::Pack() noexcept {
       GLint index_textures = textures_.second[i][j];
       for (size_t k = 0; k < 2; ++k) {
         if (index_textures < 0) {
-          index_textures = (textures_.first[i].size() / 2) + (++index_textures);
+          index_textures++;
+          index_textures += (textures_.first[i].size() / 2);
         }
         if (CheckRange(textures_.first[i], index_textures * 2 + k)) {
           tmp.push_back(textures_.first[i][index_textures * 2 + k]);
@@ -119,7 +122,8 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
       GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
-          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+          index_vertices++;
+          index_vertices += (vertices_.first[i].size() / 4);
         }
         if (CheckRange(vertices_.first[i], index_vertices * 4 + k)) {
           tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
@@ -130,7 +134,8 @@ void VertexNormalsCoordinatePacker::Pack() noexcept {
       GLint index_normals = normals_.second[i][j];
       for (size_t k = 0; k < 3; ++k) {
         if (index_normals < 0) {
-          index_normals = (normals_.first[i].size() / 3) + (++index_normals);
+          index_normals++;
+          index_normals += (normals_.first[i].size() / 3);
         }
         if (CheckRange(normals_.first[i], index_normals * 3 + k)) {
           GLfloat norm_coordinate = normals_.first[i][index_normals * 3 + k];
@@ -176,7 +181,8 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
       GLint index_vertices = vertices_.second[i][j] - index_stride;
       for (size_t k = 0; k < 4; ++k) {
         if (index_vertices < 0) {
-          index_vertices = (vertices_.first[i].size() / 4) + (++index_vertices);
+          index_vertices++;
+          index_vertices += (vertices_.first[i].size() / 4);
         }
         if (CheckRange(vertices_.first[i], index_vertices * 4 + k)) {
           tmp.push_back(vertices_.first[i][index_vertices * 4 + k]);
@@ -187,7 +193,8 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
       GLint index_textures = textures_.second[i][j] - index_textures_stride;
       for (size_t k = 0; k < 2; ++k) {
         if (index_textures < 0) {
-          index_textures = (normals_.first[i].size() / 2) + (++index_textures);
+          index_textures++;
+          index_textures += (normals_.first[i].size() / 2);
         }
         if (CheckRange(textures_.first[i], index_textures * 2 + k)) {
           tmp.push_back(textures_.first[i][index_textures * 2 + k]);
@@ -198,7 +205,8 @@ void VertexTexturesNormalsCoordinatePacker::Pack() noexcept {
       GLint index_normals = normals_.second[i][j] - index_normals_stride;
       for (size_t k = 0; k < 3; ++k) {
         if (index_normals < 0) {
-          index_normals = (normals_.first[i].size() / 3) + (++index_normals);
+          index_normals++;
+          index_normals += (normals_.first[i].size() / 3);
         }
         if (CheckRange(normals_.first[i], index_normals * 3 + k)) {
           GLfloat norm_coordinate = normals_.first[i][index_normals * 3 + k];
