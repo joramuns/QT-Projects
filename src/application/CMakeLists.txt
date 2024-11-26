@@ -21,6 +21,7 @@ set(SOURCES
   view/transformwidgets/transform_tab.cc
   view/transformwidgets/scale_buttons.cc
   view/settingswidgets/settings.cc
+  view/settingswidgets/lightsettings.cc
   view/settingswidgets/settingstab.cc
   view/mainwidgets/app_management.cc
   controller/controller.cc

@@ -12,6 +12,7 @@
 #include <QVector3D>
 
 #include "../../model/settings_singleton.h"
+#include "lightsettings.h"
 #include "settings.h"
 
 namespace s21 {
@@ -98,6 +99,7 @@ class SettingsTab final : public QTabWidget {
       vertex_settings_;  ///< указатель на виджет управления отображением вершин
   ModelSettings
       *edge_settings_;  ///< указатель на вилжет управления отображением ребер
+  LightSettings *light_settings_;
 };
 }  // namespace s21
 

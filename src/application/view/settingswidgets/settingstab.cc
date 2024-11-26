@@ -21,6 +21,8 @@ void SettingsTab::InitFields() {
 
   edge_settings_ = new ModelSettings();
   edge_settings_->SetComboBoxOptions(QVector<QString>{"Solid", "Dashed"});
+
+  light_settings_ = new LightSettings();
 }
 
 void SettingsTab::ConnectFields() {
@@ -50,6 +52,7 @@ void SettingsTab::AddTab() {
   addTab(scene_settings_, "Common");
   addTab(vertex_settings_, "Vertex");
   addTab(edge_settings_, "Edge");
+  addTab(light_settings_, "Light");
 }
 
 void SettingsTab::ReadSettings() {
