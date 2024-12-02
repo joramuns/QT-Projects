@@ -23,7 +23,6 @@ void SettingsSingleton::WriteSettings() {
   settings_.setValue("dashed lines", dashed_lines_);
   settings_.setValue("light color", light_color_);
   settings_.setValue("light position", light_pos_);
-  settings_.setValue("light mode", light_mode_);
 }
 
 void SettingsSingleton::ReadSettings() {
@@ -38,10 +37,9 @@ void SettingsSingleton::ReadSettings() {
   light_pos_ =
       settings_.value("light position", QVector3D(1, 1, 1)).value<QVector3D>();
   central_projection_ = settings_.value("central projection").toBool();
-  solid_ = settings_.value("solid").toBool();
+  solid_ = settings_.value("solid").toInt();
   vert_type_ = settings_.value("vertex type").toInt();
   vert_size_ = settings_.value("vertex size").toFloat();
   edge_size_ = settings_.value("edge size").toFloat();
   dashed_lines_ = settings_.value("dashed lines").toBool();
-  light_mode_ = settings_.value("light mode").toInt();
 }

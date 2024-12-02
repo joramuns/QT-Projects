@@ -42,7 +42,7 @@ open: install
 	@open $(BINDIR)/$(TARGET)
 	# @./$(BINDIR)/$(TARGET)/Contents/MacOS/3DViewer
 
-xopen: 
+xopen: install
 	# @open $(BINDIR)/$(TARGET)
 	@./$(BINDIR)/$(TARGET)/Contents/MacOS/3DViewer
 

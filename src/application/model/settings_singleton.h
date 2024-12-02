@@ -56,7 +56,7 @@ class SettingsSingleton {
   inline void SetProjectionType(const bool setter) noexcept {
     central_projection_ = setter;
   };
-  inline void SetPolygonType(const bool setter) noexcept { solid_ = setter; };
+  inline void SetPolygonType(const int setter) noexcept { solid_ = setter; };
   inline void SetVertexType(const int setter) noexcept { vert_type_ = setter; };
   inline void SetVertexSize(const GLfloat value) noexcept {
     vert_size_ = value;
