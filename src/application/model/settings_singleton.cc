@@ -23,6 +23,7 @@ void SettingsSingleton::WriteSettings() {
   settings_.setValue("dashed lines", dashed_lines_);
   settings_.setValue("light color", light_color_);
   settings_.setValue("light position", light_pos_);
+  settings_.setValue("light mode", light_mode_);
 }
 
 void SettingsSingleton::ReadSettings() {
@@ -42,4 +43,5 @@ void SettingsSingleton::ReadSettings() {
   vert_size_ = settings_.value("vertex size").toFloat();
   edge_size_ = settings_.value("edge size").toFloat();
   dashed_lines_ = settings_.value("dashed lines").toBool();
+  light_mode_ = settings_.value("light mode").toInt();
 }

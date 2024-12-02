@@ -170,6 +170,7 @@ void GLWidget::LoadCommonUniforms() {
   program_->setUniformValue("resolution", width(), height());
   program_->setUniformValue("lightPos", settings_.GetLightPosition());
   program_->setUniformValue("lightColor", settings_.GetLightColor());
+  program_->setUniformValue("lightMode", settings_.GetPolygonType());
 }
 
 void GLWidget::GifFrameGrabber() {

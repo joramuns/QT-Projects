@@ -33,13 +33,17 @@ class SettingsSingleton {
   inline bool GetProjectionType() const noexcept {
     return central_projection_;
   };
-  inline bool GetPolygonType() const noexcept { return solid_; };
+  inline int GetPolygonType() const noexcept { return solid_; };
   inline int GetVertexType() const noexcept { return vert_type_; };
   inline GLfloat GetVertexSize() const noexcept { return vert_size_; };
   inline GLfloat GetEdgeSize() const noexcept { return edge_size_; };
   inline bool GetEdgeType() const noexcept { return dashed_lines_; };
-  inline const QVector3D &GetLightColor() const noexcept { return light_color_; }
-  inline const QVector3D &GetLightPosition() const noexcept { return light_pos_; }
+  inline const QVector3D &GetLightColor() const noexcept {
+    return light_color_;
+  }
+  inline const QVector3D &GetLightPosition() const noexcept {
+    return light_pos_;
+  }
 
   /* Mutators */
   inline void SetBGColor(const QColor &color) noexcept { bg_color_ = color; };
@@ -61,8 +65,12 @@ class SettingsSingleton {
   inline void SetEdgeType(const bool setter) noexcept {
     dashed_lines_ = setter;
   };
-  inline void SetLightPosition(const QVector3D pos) noexcept { light_pos_ = pos; }
-  inline void SetLightColor(const QVector3D color) noexcept { light_color_ = color; }
+  inline void SetLightPosition(const QVector3D pos) noexcept {
+    light_pos_ = pos;
+  }
+  inline void SetLightColor(const QVector3D color) noexcept {
+    light_color_ = color;
+  }
 
  private:
   SettingsSingleton();
@@ -71,13 +79,13 @@ class SettingsSingleton {
  private:
   QString current_path_;
   QSettings settings_;
-  QColor bg_color_;          ///< цвет сцены
-  QVector3D vert_color_;     ///< цвет вершин
-  QVector3D edge_color_;     ///< цвет ребер
+  QColor bg_color_;       ///< цвет сцены
+  QVector3D vert_color_;  ///< цвет вершин
+  QVector3D edge_color_;  ///< цвет ребер
   QVector3D light_pos_;
   QVector3D light_color_;
   bool central_projection_;  ///< тип проекции
-  bool solid_;               ///< тип отображения
+  int solid_;                ///< тип отображения
   int vert_type_;            ///< тип отображения вершин
   GLfloat vert_size_;  ///< значение величины отображаемых вершин
   GLfloat edge_size_;  ///< значение величины отображаемых ребер

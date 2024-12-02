@@ -13,7 +13,7 @@ void SettingsTab::InitFields() {
   scene_settings_->SetComboBoxOptions(
       QVector<QString>{"Parallel projection", "Central projection"});
   scene_settings_->SetExtraComboBoxOptions(
-      QVector<QString>{"Wireframe", "Solid"});
+      QVector<QString>{"Wireframe", "Flat shading", "Gouraud shading", "Phong shading"});
 
   vertex_settings_ = new ModelSettings();
   vertex_settings_->SetComboBoxOptions(
