@@ -163,8 +163,8 @@ class View final : public QWidget {
   void EdgeSizeSignal(double value);
   void ScreenshotSignal(const QString &filename);
   void GifSignal(const QString &filename);
-  void LightColorSignal(std::array<double, 3> args);
-  void LightPositionSignal(std::array<double, 3> args);
+  void LightColorSignal(QVector3D args);
+  void LightPositionSignal(QVector3D args);
 
  private:
   void closeEvent(QCloseEvent *event);

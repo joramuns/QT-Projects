@@ -4,6 +4,7 @@ in vec3 FragPos;
 in vec2 TexCoord;
 flat in vec3 startPos;
 in vec3 vertPos;
+in vec3 fragLightPos;
 
 
 out vec4 FragColor;
@@ -23,12 +24,11 @@ void main() {
   vec3 ambient = ambientStrength * lightColor;
   vec3 normal = normalize(Normal);
 
-  vec3 lightPos = vec3(1.0f, 1.0f, 1.0f);
-  vec3 lightDir = normalize(lightPos - FragPos);
+  vec3 lightDir = normalize(fragLightPos - FragPos);
   float diff = max(dot(normal, lightDir), 0.0);
   vec3 diffuse = diff * lightColor;
 
-  vec3 result = (ambient + diffuse) * modelColor;
+  vec3 result = (ambient + diffuse) * modelColor ;
 
   vec2 circCoord = 2.0 * gl_PointCoord - 1.0;
   if (vertexType == 2 && dot(circCoord, circCoord) > 1.0) {

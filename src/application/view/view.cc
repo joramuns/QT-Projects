@@ -132,11 +132,17 @@ void View::ScreenshotSlot(const QString &filename) {
 void View::GifSlot(const QString &filename) { emit GifSignal(filename); }
 
 void View::LightColorSlot(std::array<double, 3> args) {
-  emit LightColorSignal(args);
+  QVector3D vec =
+      QVector3D({static_cast<float>(args[0]), static_cast<float>(args[1]),
+                 static_cast<float>(args[2])});
+  emit LightColorSignal(vec);
 }
 
 void View::LightPositionSlot(std::array<double, 3> args) {
-  emit LightPositionSignal(args);
+  QVector3D vec =
+      QVector3D({static_cast<float>(args[0]), static_cast<float>(args[1]),
+                 static_cast<float>(args[2])});
+  emit LightPositionSignal(vec);
 }
 
 void View::closeEvent(QCloseEvent *event) {

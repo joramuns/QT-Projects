@@ -38,6 +38,8 @@ class SettingsSingleton {
   inline GLfloat GetVertexSize() const noexcept { return vert_size_; };
   inline GLfloat GetEdgeSize() const noexcept { return edge_size_; };
   inline bool GetEdgeType() const noexcept { return dashed_lines_; };
+  inline const QVector3D &GetLightColor() const noexcept { return light_color_; }
+  inline const QVector3D &GetLightPosition() const noexcept { return light_pos_; }
 
   /* Mutators */
   inline void SetBGColor(const QColor &color) noexcept { bg_color_ = color; };
@@ -59,6 +61,8 @@ class SettingsSingleton {
   inline void SetEdgeType(const bool setter) noexcept {
     dashed_lines_ = setter;
   };
+  inline void SetLightPosition(const QVector3D pos) noexcept { light_pos_ = pos; }
+  inline void SetLightColor(const QVector3D color) noexcept { light_color_ = color; }
 
  private:
   SettingsSingleton();
@@ -70,6 +74,8 @@ class SettingsSingleton {
   QColor bg_color_;          ///< цвет сцены
   QVector3D vert_color_;     ///< цвет вершин
   QVector3D edge_color_;     ///< цвет ребер
+  QVector3D light_pos_;
+  QVector3D light_color_;
   bool central_projection_;  ///< тип проекции
   bool solid_;               ///< тип отображения
   int vert_type_;            ///< тип отображения вершин

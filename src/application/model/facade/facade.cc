@@ -103,6 +103,16 @@ void Facade::ChangeEdgeSize(double value) {
   context_->update();
 }
 
+void Facade::ChangeLightColor(const QVector3D &value) {
+  context_->SetLightColor(value);
+  context_->update();
+}
+
+void Facade::ChangeLightPosition(const QVector3D &value) {
+  context_->SetLightPosition(value);
+  context_->update();
+}
+
 void Facade::TakeScreenshot(const QString &filename) {
   context_->SaveScreenshot(filename);
 }

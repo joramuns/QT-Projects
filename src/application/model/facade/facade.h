@@ -106,6 +106,9 @@ class Facade {
   /// @param value Новое значение размера ребер
   void ChangeEdgeSize(double value);
 
+  void ChangeLightColor(const QVector3D &value);
+  void ChangeLightPosition(const QVector3D &value);
+
   void TakeScreenshot(const QString &filename);
 
   void TakeGif(const QString &filename);

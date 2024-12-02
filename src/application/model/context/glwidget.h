@@ -123,6 +123,14 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core {
     settings_.SetVertexSize(static_cast<GLfloat>(value));
   }
 
+  inline void SetLightColor(QVector3D value) const noexcept {
+    settings_.SetLightColor(value);
+  }
+
+  inline void SetLightPosition(QVector3D value) const noexcept {
+    settings_.SetLightPosition(value);
+  }
+
  protected:
   /// @brief Метод произовдит инициализацию OpenGL функций
   void initializeGL() override;

@@ -76,11 +76,13 @@ void Controller::ControllerGifSlot(const QString &filename) {
   facade_->TakeGif(filename);
 }
 
-void Controller::ControllerLightColorSlot(std::array<double, 3> args) {
+void Controller::ControllerLightColorSlot(QVector3D args) {
+  facade_->ChangeLightColor(args);
   std::cout << args[0] << " " << args[1] << " " << args[2] << std::endl;
 }
 
-void Controller::ControllerLightPositionSlot(std::array<double, 3> args) {
+void Controller::ControllerLightPositionSlot(QVector3D args) {
+  facade_->ChangeLightPosition(args);
   std::cout << args[0] << " " << args[1] << " " << args[2] << std::endl;
 }
 

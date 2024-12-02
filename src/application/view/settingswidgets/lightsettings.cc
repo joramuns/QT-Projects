@@ -13,6 +13,8 @@ LightSettings::LightSettings(std::array<std::string, 3> labels,
 void LightSettings::SetDecimals(int prec) {
   for (int i = 0; i != 3; ++i) {
     inputs_[i]->setDecimals(prec);
+    auto step = 1 / std::pow(10, prec);
+    inputs_[i]->setSingleStep(step);
   }
 }
 

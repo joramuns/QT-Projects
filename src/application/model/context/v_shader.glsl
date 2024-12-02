@@ -8,12 +8,14 @@ out vec3 FragPos;
 out vec2 TexCoord;
 flat out vec3 startPos;
 out vec3 vertPos;
+out vec3 fragLightPos;
 
 
 uniform vec3 translateVector;
 uniform vec3 rotateVector;
 uniform vec3 scaleVector;
 uniform mat4 perspectiveMatrix;
+uniform vec3 lightPos;
 
 mat4 RotateX() {
   mat4 rotation = mat4(1.0f);
@@ -93,9 +95,13 @@ void main() {
 
   gl_Position = mvp * myPos;
   FragPos = vec3(translation * rotation * scaling * myPos);
-  Normal = normal;
+  //Normal = normal;
+  Normal = mat3(translation) * mat3(rotation) * normal;
+  //Normal = normalize(cross( vec3(mvp * (myPos + vec4(1.0, 0.0, 0.0, 0.0))) - vec3(mvp * myPos), vec3(mvp * (myPos + vec4(0.0, 1.0, 0.0, 0.0))) - vec3(mvp * myPos)));
   TexCoord = texCoord;
 
   vertPos = gl_Position.xyz / gl_Position.w;
   startPos = vertPos;
+
+  fragLightPos = (translation * vec4(lightPos, 1.0)).xyz;
 }

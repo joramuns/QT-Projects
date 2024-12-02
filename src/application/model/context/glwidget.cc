@@ -168,6 +168,8 @@ void GLWidget::LoadCommonUniforms() {
   program_->setUniformValue("modelColor", settings_.GetEdgeColor());
   program_->setUniformValue("dashedLines", settings_.GetEdgeType());
   program_->setUniformValue("resolution", width(), height());
+  program_->setUniformValue("lightPos", settings_.GetLightPosition());
+  program_->setUniformValue("lightColor", settings_.GetLightColor());
 }
 
 void GLWidget::GifFrameGrabber() {
