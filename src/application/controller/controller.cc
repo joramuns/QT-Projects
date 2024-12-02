@@ -76,6 +76,14 @@ void Controller::ControllerGifSlot(const QString &filename) {
   facade_->TakeGif(filename);
 }
 
+void Controller::ControllerLightColorSlot(std::array<double, 3> args) {
+  std::cout << args[0] << " " << args[1] << " " << args[2] << std::endl;
+}
+
+void Controller::ControllerLightPositionSlot(std::array<double, 3> args) {
+  std::cout << args[0] << " " << args[1] << " " << args[2] << std::endl;
+}
+
 void Controller::ConnectFields() const {
   connect(view_, &View::ViewTransformSignal, this,
           &Controller::ControllerTransformSlot);
@@ -116,6 +124,11 @@ void Controller::ConnectFields() const {
           &Controller::ControllerScreenshotSlot);
 
   connect(view_, &View::GifSignal, this, &Controller::ControllerGifSlot);
+
+  connect(view_, &View::LightColorSignal, this,
+          &Controller::ControllerLightColorSlot);
+  connect(view_, &View::LightPositionSignal, this,
+          &Controller::ControllerLightPositionSlot);
 }
 
 }  // namespace s21

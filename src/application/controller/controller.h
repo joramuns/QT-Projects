@@ -81,6 +81,9 @@ class Controller final : public QObject {
 
   void ControllerGifSlot(const QString &filename);
 
+  void ControllerLightColorSlot(std::array<double, 3> args);
+  void ControllerLightPositionSlot(std::array<double, 3> args);
+
  private:
   /// @brief Метод связывающий сигналы отображения со слотами обработчиками в
   /// контроллере

@@ -22,7 +22,10 @@ void SettingsTab::InitFields() {
   edge_settings_ = new ModelSettings();
   edge_settings_->SetComboBoxOptions(QVector<QString>{"Solid", "Dashed"});
 
-  light_settings_ = new LightSettings();
+  light_pos_settings_ =
+      new LightSettings({"X position", "Y position", "Z position"}, 1.0);
+  light_col_settings_ = new LightSettings({"Red", "Green", "Blue"}, 255.0);
+  light_col_settings_->SetDecimals(0);
 }
 
 void SettingsTab::ConnectFields() {
@@ -46,13 +49,19 @@ void SettingsTab::ConnectFields() {
           &SettingsTab::VertexSizeSlot);
   connect(edge_settings_, &ModelSettings::SpinBoxSignal, this,
           &SettingsTab::EdgeSizeSlot);
+
+  connect(light_pos_settings_, &LightSettings::PositionSignal, this,
+          &SettingsTab::TabLightPositionSignal);
+  connect(light_col_settings_, &LightSettings::PositionSignal, this,
+          &SettingsTab::TabLightColorSignal);
 }
 
 void SettingsTab::AddTab() {
   addTab(scene_settings_, "Common");
   addTab(vertex_settings_, "Vertex");
   addTab(edge_settings_, "Edge");
-  addTab(light_settings_, "Light");
+  addTab(light_pos_settings_, "Light position");
+  addTab(light_col_settings_, "Light color");
 }
 
 void SettingsTab::ReadSettings() {
@@ -102,4 +111,11 @@ void SettingsTab::VertexSizeSlot(double value) {
   emit TabVertexSizeSignal(value);
 }
 void SettingsTab::EdgeSizeSlot(double value) { emit TabEdgeSizeSignal(value); }
+
+void SettingsTab::LightColorSlot(std::array<double, 3> args) {
+  emit TabLightColorSignal(args);
+}
+void SettingsTab::LightPositionSlot(std::array<double, 3> args) {
+  emit TabLightPositionSignal(args);
+}
 }  // namespace s21

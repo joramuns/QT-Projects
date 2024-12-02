@@ -1,39 +1,38 @@
 #ifndef VIEW_LIGHTSETTINGS_H_
 #define VIEW_LIGHTSETTINGS_H_
 
-#include <QPushButton>
 #include <QDoubleSpinBox>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <array>
+#include <string>
 
 namespace s21 {
-  class LightSettings : public QWidget {
-    Q_OBJECT
+class LightSettings : public QWidget {
+  Q_OBJECT
 
-    public:
-      LightSettings();
-      virtual ~LightSettings() = default;
+ public:
+  LightSettings() = delete;
+  LightSettings(std::array<std::string, 3> labels, float bound_value);
+  virtual ~LightSettings() = default;
+  void SetDecimals(int prec);
 
-      public slots:
-        /* void ColorSlot(); */
-        /* void PositionSlot(); */
+ public slots:
+  void PositionSlot();
 
-signals:
-        void ColorSignal();
-        void PositionSignal();
+ signals:
+  void PositionSignal(std::array<double, 3> args);
 
-    private:
-        QVBoxLayout *layout_;
-        QPushButton *color_;
-        QDoubleSpinBox *x_pos_;
-        QDoubleSpinBox *y_pos_;
-        QDoubleSpinBox *z_pos_;
-        void InitFields();
-        void CreateLabelButton(QString text, QDoubleSpinBox *pos);
-        void ConnectFields();
-        void InitLayouts();
-  };
+ private:
+  std::array<std::string, 3> labels_;
+  float bound_value_;
+  QVBoxLayout *layout_;
+  std::array<QDoubleSpinBox *, 3> inputs_;
+  void InitFields();
+  void ConnectFields();
+};
 
 }  // namespace s21
 #endif  // VIEW_LIGHTSETTINGS_H_

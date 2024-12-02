@@ -107,6 +107,8 @@ class View final : public QWidget {
   void EdgeSizeSlot(double value);
   void ScreenshotSlot(const QString &filename);
   void GifSlot(const QString &filename);
+  void LightColorSlot(std::array<double, 3> args);
+  void LightPositionSlot(std::array<double, 3> args);
 
  signals:
   /// @brief Сигнал изменения координат 3-х мерного объекта
@@ -161,6 +163,8 @@ class View final : public QWidget {
   void EdgeSizeSignal(double value);
   void ScreenshotSignal(const QString &filename);
   void GifSignal(const QString &filename);
+  void LightColorSignal(std::array<double, 3> args);
+  void LightPositionSignal(std::array<double, 3> args);
 
  private:
   void closeEvent(QCloseEvent *event);

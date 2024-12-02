@@ -1,38 +1,51 @@
 #include "lightsettings.h"
 
 namespace s21 {
-LightSettings::LightSettings() {
+LightSettings::LightSettings(std::array<std::string, 3> labels,
+                             float bound_value)
+    : labels_(labels), bound_value_(bound_value) {
   layout_ = new QVBoxLayout();
   setLayout(layout_);
   InitFields();
   ConnectFields();
-  InitLayouts();
+}
+
+void LightSettings::SetDecimals(int prec) {
+  for (int i = 0; i != 3; ++i) {
+    inputs_[i]->setDecimals(prec);
+  }
 }
 
 void LightSettings::InitFields() {
-  color_ = new QPushButton("Light color");
-  CreateLabelButton("X position:", x_pos_);
-  CreateLabelButton("Y position:", y_pos_);
-  CreateLabelButton("Z position:", z_pos_);
+  for (int i = 0; i != 3; ++i) {
+    QHBoxLayout *hboxLayout = new QHBoxLayout();
+    QLabel *label = new QLabel(QString::fromStdString(labels_[i]));
+    inputs_[i] = new QDoubleSpinBox();
+    inputs_[i]->setRange(-bound_value_, bound_value_);
+    inputs_[i]->setValue(1.0);
+    inputs_[i]->setSingleStep(0.1);
+    inputs_[i]->setDecimals(1);
+    hboxLayout->addWidget(label);
+    hboxLayout->addWidget(inputs_[i]);
+    layout_->addLayout(hboxLayout);
+  }
 }
 
-void LightSettings::CreateLabelButton(QString text, QDoubleSpinBox *pos) {
-  QHBoxLayout *hboxLayout = new QHBoxLayout();
-  QLabel *label = new QLabel(text);
-  pos = new QDoubleSpinBox();
-  pos->setRange(-1.0, 1.0);
-  pos->setValue(1.0);
-  pos->setSingleStep(0.1);
-  pos->setDecimals(1);
-  hboxLayout->addWidget(label);
-  hboxLayout->addWidget(pos);
-  layout_->addLayout(hboxLayout);
-
+void LightSettings::ConnectFields() {
+  for (int i = 0; i != 3; ++i) {
+    connect(inputs_[i], &QDoubleSpinBox::valueChanged, this,
+            &LightSettings::PositionSlot);
+  }
 }
 
-void LightSettings::ConnectFields() {}
-
-void LightSettings::InitLayouts() {
-  layout_->addWidget(color_);
+void LightSettings::PositionSlot() {
+  std::array<double, 3> args;
+  for (int i = 0; i != 3; ++i) {
+    args[i] = inputs_[i]->value();
+  }
+  emit PositionSignal(args);
 }
+void PositionSignal(std::array<double, 3> args);
+
+/* } */
 }  // namespace s21

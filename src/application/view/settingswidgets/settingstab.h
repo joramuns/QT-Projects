@@ -50,6 +50,8 @@ class SettingsTab final : public QTabWidget {
   /// @brief Слот выпускающий сигнал смены величины отображения граней
   /// @param value величина отображения граней
   void EdgeSizeSlot(double value);
+  void LightColorSlot(std::array<double, 3> args);
+  void LightPositionSlot(std::array<double, 3> args);
 
  signals:
   /// @brief Сигнал смены цвета сцены
@@ -79,6 +81,8 @@ class SettingsTab final : public QTabWidget {
   /// @brief Сигнал смены величины отображения ребер
   /// @param value величина отображения ребер
   void TabEdgeSizeSignal(double value);
+  void TabLightColorSignal(std::array<double, 3> args);
+  void TabLightPositionSignal(std::array<double, 3> args);
 
  private:
   /// @brief Иницилизация вкладок настроек
@@ -99,7 +103,8 @@ class SettingsTab final : public QTabWidget {
       vertex_settings_;  ///< указатель на виджет управления отображением вершин
   ModelSettings
       *edge_settings_;  ///< указатель на вилжет управления отображением ребер
-  LightSettings *light_settings_;
+  LightSettings *light_pos_settings_;
+  LightSettings *light_col_settings_;
 };
 }  // namespace s21
 

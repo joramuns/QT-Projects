@@ -39,6 +39,11 @@ View::View(GLWidget *context) : QWidget(nullptr) {
   connect(settings_tab, &SettingsTab::TabEdgeSizeSignal, this,
           &View::EdgeSizeSlot);
 
+  connect(settings_tab, &SettingsTab::TabLightColorSignal, this,
+          &View::LightColorSlot);
+  connect(settings_tab, &SettingsTab::TabLightPositionSignal, this,
+          &View::LightPositionSlot);
+
   AppManagement *app_management = new AppManagement("Main menu");
   connect(app_management, &AppManagement::AppOpenFileSignal, this,
           &View::OpenFileSlot);
@@ -125,6 +130,14 @@ void View::ScreenshotSlot(const QString &filename) {
 }
 
 void View::GifSlot(const QString &filename) { emit GifSignal(filename); }
+
+void View::LightColorSlot(std::array<double, 3> args) {
+  emit LightColorSignal(args);
+}
+
+void View::LightPositionSlot(std::array<double, 3> args) {
+  emit LightPositionSignal(args);
+}
 
 void View::closeEvent(QCloseEvent *event) {
   SettingsSingleton &settings = SettingsSingleton::GetInstance();
